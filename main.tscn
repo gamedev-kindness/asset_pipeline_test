@@ -1,253 +1,33 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://characters/female_2018.tscn" type="PackedScene" id=2]
-[ext_resource path="res://characters/character.gd" type="Script" id=3]
-[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=4]
-[ext_resource path="res://characters/aplayer.gd" type="Script" id=5]
-[ext_resource path="res://characters/male_2018.tscn" type="PackedScene" id=6]
-[ext_resource path="res://characters/male/grab_from_back.anim" type="Animation" id=7]
-[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=8]
-[ext_resource path="res://characters/animtree_male.tres" type="AnimationNodeStateMachine" id=9]
+[ext_resource path="res://characters/male_2018.tscn" type="PackedScene" id=3]
 
-[sub_resource type="CapsuleShape" id=1]
-
-radius = 0.2
-height = 1.1
-
-[sub_resource type="AnimationNodeAnimation" id=2]
-
-animation = "kicked_to_bed"
-
-[sub_resource type="AnimationNodeBlendTree" id=3]
-
-nodes/Animation/node = SubResource( 2 )
-nodes/Animation/position = Vector2( 80, 120 )
-node_connections = [ "output", 0, "Animation" ]
-
-[sub_resource type="AnimationNodeAnimation" id=4]
-
-animation = "walk-loop"
-
-[sub_resource type="AnimationNodeAnimation" id=5]
-
-animation = "turn-right"
-
-[sub_resource type="AnimationNodeAnimation" id=6]
-
-animation = "blink"
-
-[sub_resource type="AnimationNodeAnimation" id=7]
-
-animation = "turn-left"
-
-[sub_resource type="AnimationNodeOneShot" id=8]
-
-filter_enabled = true
-filters = [ ".:orbicularis03_L", ".:orbicularis03_R", ".:orbicularis04_L", ".:orbicularis04_R" ]
-autorestart_random_delay = -9.0
-
-[sub_resource type="AnimationNodeTimeScale" id=9]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
 
 
-[sub_resource type="AnimationNodeOneShot" id=10]
-
-autorestart_random_delay = -42.0
-
-[sub_resource type="AnimationNodeOneShot" id=11]
-
-autorestart_random_delay = 0.376471
-
-[sub_resource type="AnimationNodeBlendTree" id=12]
-
-nodes/Animation/node = SubResource( 7 )
-nodes/Animation/position = Vector2( 80, 60 )
-"nodes/Animation 2/node" = SubResource( 4 )
-"nodes/Animation 2/position" = Vector2( 80, 240 )
-"nodes/Animation 3/node" = SubResource( 5 )
-"nodes/Animation 3/position" = Vector2( 80, 380 )
-"nodes/Animation 4/node" = SubResource( 6 )
-"nodes/Animation 4/position" = Vector2( 580, 340 )
-"nodes/OneShot 3/node" = SubResource( 8 )
-"nodes/OneShot 3/position" = Vector2( 1380, 280 )
-nodes/TimeScale/node = SubResource( 9 )
-nodes/TimeScale/position = Vector2( 1300, 100 )
-nodes/output/position = Vector2( 1560, 160 )
-nodes/turn_left/node = SubResource( 10 )
-nodes/turn_left/position = Vector2( 560, 60 )
-nodes/turn_right/node = SubResource( 11 )
-nodes/turn_right/position = Vector2( 920, 60 )
-node_connections = [ "output", 0, "OneShot 3", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "OneShot 3", 0, "TimeScale", "OneShot 3", 1, "Animation 4", "TimeScale", 0, "turn_right", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation" ]
-
-[sub_resource type="AnimationNodeAnimation" id=13]
-
-animation = "additive-wiggling-loop"
-
-[sub_resource type="AnimationNodeAnimation" id=14]
-
-animation = "blink"
-
-[sub_resource type="AnimationNodeAnimation" id=15]
-
-animation = "stand"
-
-[sub_resource type="AnimationNodeTimeScale" id=16]
-
-
-[sub_resource type="AnimationNodeOneShot" id=17]
-
-filter_enabled = true
-filters = [ ".:orbicularis03_L", ".:orbicularis03_R", ".:orbicularis04_L", ".:orbicularis04_R" ]
-fadein_time = 0.01
-fadeout_time = 0.01
-autorestart_random_delay = 0.376471
-
-[sub_resource type="AnimationNodeAdd2" id=18]
-
-
-[sub_resource type="AnimationNodeBlendTree" id=19]
-
-graph_offset = Vector2( 0, -37.25 )
-nodes/Animation/node = SubResource( 15 )
-nodes/Animation/position = Vector2( 420, 0 )
-"nodes/Animation 2/node" = SubResource( 13 )
-"nodes/Animation 2/position" = Vector2( 380, 300 )
-"nodes/Animation 3/node" = SubResource( 14 )
-"nodes/Animation 3/position" = Vector2( 400, 160 )
-nodes/TimeScale/node = SubResource( 16 )
-nodes/TimeScale/position = Vector2( 920, 140 )
-nodes/blink/node = SubResource( 17 )
-nodes/blink/position = Vector2( 620, 20 )
-nodes/output/position = Vector2( 1560, 120 )
-nodes/wiggle/node = SubResource( 18 )
-nodes/wiggle/position = Vector2( 1160, 80 )
-node_connections = [ "output", 0, "wiggle", "blink", 0, "Animation", "blink", 1, "Animation 3", "wiggle", 0, "blink", "wiggle", 1, "TimeScale", "TimeScale", 0, "Animation 2" ]
-
-[sub_resource type="AnimationNodeAnimation" id=20]
-
-animation = "default"
-
-[sub_resource type="AnimationNodeAnimation" id=21]
-
-animation = "stand-to-walk"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=22]
-
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=23]
-
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=24]
-
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=25]
-
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=26]
-
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
-
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=28]
-
-
-[sub_resource type="AnimationNodeStateMachine" id=29]
-
-states/KickedToBed/node = SubResource( 3 )
-states/KickedToBed/position = Vector2( 200, 294 )
-states/Navigate/node = SubResource( 12 )
-states/Navigate/position = Vector2( 356, 137 )
-states/Stand/node = SubResource( 19 )
-states/Stand/position = Vector2( 101, 37 )
-states/default/node = SubResource( 20 )
-states/default/position = Vector2( 75, 177 )
-states/stand-to-walk/node = SubResource( 21 )
-states/stand-to-walk/position = Vector2( 300, 37 )
-transitions = [ "Navigate", "Stand", SubResource( 22 ), "Stand", "stand-to-walk", SubResource( 23 ), "stand-to-walk", "Navigate", SubResource( 24 ), "Stand", "KickedToBed", SubResource( 25 ), "Navigate", "KickedToBed", SubResource( 26 ), "KickedToBed", "default", SubResource( 27 ), "default", "Stand", SubResource( 28 ) ]
-graph_offset = Vector2( 0, 87.464 )
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=30]
-
-
-[sub_resource type="CapsuleShape" id=31]
-
-radius = 0.32
-height = 1.1
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=32]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=31]
 
 
 [node name="root" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="female_2018" parent="." instance=ExtResource( 2 )]
-script = ExtResource( 3 )
 
 [node name="female_2018" parent="female_2018" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.16415e-10, -1.49012e-08, -1.19209e-07 )
 
-[node name="AnimationPlayer" parent="female_2018/female_2018" index="0"]
-anims/kicked_to_bed = ExtResource( 4 )
-script = ExtResource( 5 )
+[node name="AnimationTree" parent="female_2018" index="3"]
+parameters/playback = SubResource( 1 )
 
-[node name="CollisionShape" type="CollisionShape" parent="female_2018"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.753465, 0.0384378 )
-shape = SubResource( 1 )
-
-[node name="AnimationTree" type="AnimationTree" parent="female_2018"]
-tree_root = SubResource( 29 )
-anim_player = NodePath("../female_2018/AnimationPlayer")
-active = true
-root_motion_track = NodePath(".:root")
-parameters/playback = SubResource( 30 )
-"parameters/Navigate/OneShot 3/active" = false
-parameters/Navigate/TimeScale/scale = 1.0
-parameters/Navigate/turn_left/active = false
-parameters/Navigate/turn_right/active = false
-parameters/Stand/TimeScale/scale = 0.3
-parameters/Stand/blink/active = false
-parameters/Stand/wiggle/add_amount = 0.4
-
-[node name="RayCast" type="RayCast" parent="female_2018"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.23587, -0.111433 )
-enabled = true
-cast_to = Vector3( 0, 0, -0.4 )
-
-[node name="male_2018" parent="." instance=ExtResource( 6 )]
-script = ExtResource( 3 )
+[node name="male_2018" parent="." instance=ExtResource( 3 )]
 
 [node name="male_g_2018" parent="male_2018" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0 )
 
-[node name="AnimationPlayer" parent="male_2018/male_g_2018" index="0"]
-anims/grab_from_back = ExtResource( 7 )
-anims/kick_to_bed = ExtResource( 8 )
-script = ExtResource( 5 )
-
-[node name="CollisionShape" type="CollisionShape" parent="male_2018"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.879283, 0.0504503 )
-shape = SubResource( 31 )
-
-[node name="AnimationTree" type="AnimationTree" parent="male_2018"]
-tree_root = ExtResource( 9 )
-anim_player = NodePath("../male_g_2018/AnimationPlayer")
-active = true
-root_motion_track = NodePath(".:root")
-parameters/playback = SubResource( 32 )
-"parameters/Navigate/OneShot 3/active" = false
-parameters/Navigate/TimeScale/scale = 1.0
-parameters/Navigate/turn_left/active = false
-parameters/Navigate/turn_right/active = false
-parameters/Stand/TimeScale/scale = 1.0
-parameters/Stand/blink/active = false
-parameters/Stand/wiggle/add_amount = 0
-
-[node name="RayCast" type="RayCast" parent="male_2018"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20949, -0.24583 )
-enabled = true
-cast_to = Vector3( 0, 0, -0.4 )
+[node name="AnimationTree" parent="male_2018" index="3"]
+parameters/playback = SubResource( 31 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.943232, 0.332135, 0, -0.332135, 0.943232, 0, 1.42495, 1.63029 )

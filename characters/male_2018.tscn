@@ -1,6 +1,46 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://characters/male_2018.escn" type="PackedScene" id=1]
+[ext_resource path="res://characters/character.gd" type="Script" id=2]
+[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=3]
+[ext_resource path="res://characters/aplayer.gd" type="Script" id=4]
+[ext_resource path="res://characters/animtree_male.tres" type="AnimationNodeStateMachine" id=5]
+
+[sub_resource type="CapsuleShape" id=1]
+
+radius = 0.32
+height = 1.1
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=2]
+
 
 [node name="male_2018" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" parent="male_g_2018" index="0"]
+anims/kick_to_bed = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="." index="1"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.879, 0.05 )
+shape = SubResource( 1 )
+
+[node name="RayCast" type="RayCast" parent="." index="2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.245 )
+enabled = true
+cast_to = Vector3( 0, 0, -0.4 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="3"]
+tree_root = ExtResource( 5 )
+anim_player = NodePath("../male_g_2018/AnimationPlayer")
+active = true
+root_motion_track = NodePath(".:root")
+parameters/playback = SubResource( 2 )
+"parameters/Navigate/OneShot 3/active" = false
+parameters/Navigate/TimeScale/scale = 1.0
+parameters/Navigate/turn_left/active = false
+parameters/Navigate/turn_right/active = false
+parameters/Stand/TimeScale/scale = 1.0
+parameters/Stand/blink/active = false
+parameters/Stand/wiggle/add_amount = 0
 

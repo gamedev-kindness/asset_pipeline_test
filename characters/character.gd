@@ -81,14 +81,21 @@ func _process(delta):
 	var h_velocity = tf_fix.xform(orientation.origin) / delta
 	velocity.x = h_velocity.x
 	velocity.z = h_velocity.z
-	velocity += GRAVITY * delta
-	velocity = move_and_slide(velocity, Vector3(0, 1, 0))
+	if !action:
+		velocity += GRAVITY * delta
+	if !action:
+		velocity = move_and_slide(velocity, Vector3(0, 1, 0))
+	else:
+		if velocity.length() > 0.06:
+			velocity = move_and_slide(velocity, Vector3(0, 1, 0), true, 4, PI * 0.1, false)
+		print(velocity.length())
 	orientation.origin = Vector3()
 	orientation = orientation.orthonormalized()
 	global_transform.basis = orientation.basis
 	if action:
 		get_children()[0].rotation.y = PI
 		get_children()[0].rotation.x = 0
+	velocity = velocity * 0.9
 #	else:
 #		sm.travel("Navigation")
 #		move_and_slide(-transform.basis[2] * 0.5, Vector3(0, 1, 0))
