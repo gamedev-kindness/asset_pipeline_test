@@ -48,19 +48,19 @@ func _process(delta):
 		elif Input.is_action_pressed("ui_left"):
 			next = "Navigate"
 			$AnimationTree["parameters/Navigate/turn_left/active"] = true
-##			rotate(Vector3(0, 1, 0), PI * 0.4 * delta)
+#			rotate(Vector3(0, 1, 0), PI * 0.4 * delta)
 		elif Input.is_action_pressed("ui_up"):
 			next = "Navigate"
 		elif Input.is_action_pressed("activate") && $RayCast.is_colliding():
 			var other = $RayCast.get_collider()
 			other.emit_signal("passive_action")
 			emit_signal("active_action")
+			add_collision_exception_with(other)
 		else:
 			$AnimationTree["parameters/Navigate/turn_left/active"] = false
 			$AnimationTree["parameters/Navigate/turn_right/active"] = false
 		if !action:
 			sm.travel(next)
-		
 	var rm = $AnimationTree.get_root_motion_transform()
 	orientation *= rm
 	var h_velocity = orientation.origin / delta
@@ -74,4 +74,3 @@ func _process(delta):
 #	else:
 #		sm.travel("Navigation")
 #		move_and_slide(-transform.basis[2] * 0.5, Vector3(0, 1, 0))
-			
