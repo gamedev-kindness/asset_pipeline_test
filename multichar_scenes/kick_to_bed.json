@@ -1,0 +1,12 @@
+{
+"female_2018": {
+"anims": [ "res://characters/female/kicked_to_bed.anim" ],
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),
+"type": "female"
+},
+"male_g_2018": {
+"anims": [ "res://characters/male/kick_to_bed.anim" ],
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),
+"type": "male"
+}
+}

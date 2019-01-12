@@ -1,0 +1,12 @@
+{
+"female_2018001": {
+"anims": [ "res://characters/female/default.anim", "res://characters/female/grabbed_from_back.anim" ],
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),
+"type": "female"
+},
+"male_g_2018001": {
+"anims": [ "res://characters/male/grab_from_back.anim" ],
+"transform": Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 ),
+"type": "male"
+}
+}

@@ -1,0 +1,7 @@
+{
+"female_2018": {
+"anims": [ "res://characters/female/additive-wiggling-loop.anim", "res://characters/female/blink.anim", "res://characters/female/default.anim", "res://characters/female/eyes-close.anim", "res://characters/female/eyes-open.anim", "res://characters/female/stand.anim", "res://characters/female/stand-to-walk.anim", "res://characters/female/turn-left.anim", "res://characters/female/turn-right.anim", "res://characters/female/walk-loop.anim" ],
+"transform": Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 ),
+"type": "female"
+}
+}

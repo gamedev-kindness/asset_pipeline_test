@@ -1,0 +1,22 @@
+{
+"female_2018": {
+"anims": [ "res://characters/female/additive-wiggling-loop.anim", "res://characters/female/blink.anim", "res://characters/female/default.anim", "res://characters/female/eyes-close.anim", "res://characters/female/eyes-open.anim", "res://characters/female/stand.anim", "res://characters/female/stand-to-walk.anim", "res://characters/female/stand.001.anim", "res://characters/female/turn-left.anim", "res://characters/female/turn-right.anim", "res://characters/female/walk-loop.anim" ],
+"transform": Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 2.73566, 0.00864935, -3.29747 ),
+"type": "female"
+},
+"female_2018001": {
+"anims": [ "res://characters/female/additive-wiggling-loop.anim", "res://characters/female/blink.anim", "res://characters/female/default.anim", "res://characters/female/eyes-close.anim", "res://characters/female/eyes-open.anim", "res://characters/female/stand.anim", "res://characters/female/stand-to-walk.anim", "res://characters/female/stand.001.anim", "res://characters/female/turn-left.anim", "res://characters/female/turn-right.anim", "res://characters/female/walk-loop.anim" ],
+"transform": Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.53566, 0.00864935, -3.29747 ),
+"type": "female"
+},
+"female_2018002": {
+"anims": [ "res://characters/female/additive-wiggling-loop.anim", "res://characters/female/blink.anim", "res://characters/female/default.anim", "res://characters/female/eyes-close.anim", "res://characters/female/eyes-open.anim", "res://characters/female/stand.anim", "res://characters/female/stand-to-walk.anim", "res://characters/female/stand.001.anim", "res://characters/female/turn-left.anim", "res://characters/female/turn-right.anim", "res://characters/female/walk-loop.anim" ],
+"transform": Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.435665, 0.00864935, -3.29747 ),
+"type": "female"
+},
+"male_g_2018": {
+"anims": [ "res://characters/male/additive-wiggling-loop.anim", "res://characters/male/blink.anim", "res://characters/male/default.anim", "res://characters/male/eyes-close.anim", "res://characters/male/eyes-open.anim", "res://characters/male/stand.anim", "res://characters/male/stand-to-walk.anim", "res://characters/male/turn-left.anim", "res://characters/male/turn-right.anim", "res://characters/male/walk-loop.anim" ],
+"transform": Transform( -0.998515, -0.0544864, 2.38168e-09, 0, -4.37114e-08, -1, 0.0544864, -0.998515, 4.36465e-08, -1.08925, 0, 1.37949 ),
+"type": "male"
+}
+}

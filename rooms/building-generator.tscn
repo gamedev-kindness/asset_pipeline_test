@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://building-generator.gd" type="Script" id=1]
+
+[node name="building-generator" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="outside_walls" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="outside_walls"]
+build_mode = 1
+polygon = PoolVector2Array( 201.671, 148.128, 227.158, 132.211, 271.999, 136.835, 309.473, 137.862, 334.627, 176.362, 318.71, 210.903, 279.699, 210.756, 281.752, 175.849, 237.605, 172.769, 208.496, 205.051, 194.841, 181.642 )
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 266.217, 173.322 )
+current = true
+zoom = Vector2( 0.15, 0.15 )
+

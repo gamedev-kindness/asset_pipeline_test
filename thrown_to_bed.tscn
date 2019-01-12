@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://pair-scenes/torture.escn" type="PackedScene" id=1]
+[ext_resource path="res://thrown_to_bed.gd" type="Script" id=2]
+
+[node name="thrown_to_bed" index="0" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="." index="4"]
+transform = Transform( -0.315114, -0.353879, 0.880609, 0, 0.927881, 0.372876, -0.949054, 0.117498, -0.292388, 2.28803, 1.81532, -0.463071 )
+

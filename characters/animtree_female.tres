@@ -1,0 +1,154 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=28 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=20]
+
+animation = "kicked_to_bed"
+
+[sub_resource type="AnimationNodeBlendTree" id=21]
+
+nodes/Animation/node = SubResource( 20 )
+nodes/Animation/position = Vector2( 80, 120 )
+node_connections = [ "output", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=22]
+
+animation = "walk-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+
+animation = "turn-right"
+
+[sub_resource type="AnimationNodeAnimation" id=24]
+
+animation = "blink"
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+
+animation = "turn-left"
+
+[sub_resource type="AnimationNodeOneShot" id=26]
+
+filter_enabled = true
+filters = [ ".:orbicularis03_L", ".:orbicularis03_R", ".:orbicularis04_L", ".:orbicularis04_R" ]
+autorestart_random_delay = 0.0
+
+[sub_resource type="AnimationNodeTimeScale" id=27]
+
+
+[sub_resource type="AnimationNodeOneShot" id=28]
+
+autorestart_random_delay = 0.0
+
+[sub_resource type="AnimationNodeOneShot" id=29]
+
+autorestart_random_delay = 0.0
+
+[sub_resource type="AnimationNodeBlendTree" id=30]
+
+nodes/Animation/node = SubResource( 25 )
+nodes/Animation/position = Vector2( 80, 60 )
+"nodes/Animation 2/node" = SubResource( 22 )
+"nodes/Animation 2/position" = Vector2( 80, 240 )
+"nodes/Animation 3/node" = SubResource( 23 )
+"nodes/Animation 3/position" = Vector2( 80, 380 )
+"nodes/Animation 4/node" = SubResource( 24 )
+"nodes/Animation 4/position" = Vector2( 580, 340 )
+"nodes/OneShot 3/node" = SubResource( 26 )
+"nodes/OneShot 3/position" = Vector2( 1380, 280 )
+nodes/TimeScale/node = SubResource( 27 )
+nodes/TimeScale/position = Vector2( 1300, 100 )
+nodes/output/position = Vector2( 1560, 160 )
+nodes/turn_left/node = SubResource( 28 )
+nodes/turn_left/position = Vector2( 560, 60 )
+nodes/turn_right/node = SubResource( 29 )
+nodes/turn_right/position = Vector2( 920, 60 )
+node_connections = [ "output", 0, "OneShot 3", "OneShot 3", 0, "TimeScale", "OneShot 3", 1, "Animation 4", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "TimeScale", 0, "turn_right" ]
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+
+animation = "additive-wiggling-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+
+animation = "blink"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+
+animation = "stand"
+
+[sub_resource type="AnimationNodeTimeScale" id=16]
+
+
+[sub_resource type="AnimationNodeOneShot" id=17]
+
+filter_enabled = true
+filters = [ ".:orbicularis03_L", ".:orbicularis03_R", ".:orbicularis04_L", ".:orbicularis04_R" ]
+fadein_time = 0.01
+fadeout_time = 0.01
+autorestart_random_delay = 0.376471
+
+[sub_resource type="AnimationNodeAdd2" id=18]
+
+
+[sub_resource type="AnimationNodeBlendTree" id=19]
+
+graph_offset = Vector2( 0, -37.25 )
+nodes/Animation/node = SubResource( 15 )
+nodes/Animation/position = Vector2( 420, 0 )
+"nodes/Animation 2/node" = SubResource( 13 )
+"nodes/Animation 2/position" = Vector2( 380, 300 )
+"nodes/Animation 3/node" = SubResource( 14 )
+"nodes/Animation 3/position" = Vector2( 400, 160 )
+nodes/TimeScale/node = SubResource( 16 )
+nodes/TimeScale/position = Vector2( 920, 140 )
+nodes/blink/node = SubResource( 17 )
+nodes/blink/position = Vector2( 620, 20 )
+nodes/output/position = Vector2( 1560, 120 )
+nodes/wiggle/node = SubResource( 18 )
+nodes/wiggle/position = Vector2( 1160, 80 )
+node_connections = [ "output", 0, "wiggle", "blink", 0, "Animation", "blink", 1, "Animation 3", "wiggle", 0, "blink", "wiggle", 1, "TimeScale", "TimeScale", 0, "Animation 2" ]
+
+[sub_resource type="AnimationNodeAnimation" id=31]
+
+animation = "default"
+
+[sub_resource type="AnimationNodeAnimation" id=32]
+
+animation = "stand-to-walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=33]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=34]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=36]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=37]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=38]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+
+
+[resource]
+
+states/KickedToBed/node = SubResource( 21 )
+states/KickedToBed/position = Vector2( 200, 294 )
+states/Navigate/node = SubResource( 30 )
+states/Navigate/position = Vector2( 356, 137 )
+states/Stand/node = SubResource( 19 )
+states/Stand/position = Vector2( 101, 37 )
+states/default/node = SubResource( 31 )
+states/default/position = Vector2( 75, 177 )
+states/stand-to-walk/node = SubResource( 32 )
+states/stand-to-walk/position = Vector2( 300, 37 )
+transitions = [ "Navigate", "Stand", SubResource( 33 ), "Stand", "stand-to-walk", SubResource( 34 ), "stand-to-walk", "Navigate", SubResource( 35 ), "Stand", "KickedToBed", SubResource( 36 ), "Navigate", "KickedToBed", SubResource( 37 ), "KickedToBed", "default", SubResource( 38 ), "default", "Stand", SubResource( 39 ) ]
+
