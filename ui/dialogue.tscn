@@ -1,0 +1,509 @@
+[gd_scene format=2]
+
+[node name="dialogue" type="Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.2798
+margin_top = -0.131714
+margin_right = 20.2798
+margin_bottom = 63.8683
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer"]
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect"]
+position = Vector2( -0.444458, 0 )
+color = Color( 0.839216, 0.388235, 0.14902, 1 )
+polygon = PoolVector2Array( 17.049, 10.2222, 30.3824, 10.2222, 27.7157, 35.1111, 18.3824, 33.3333 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="HBoxContainer/ColorRect"]
+position = Vector2( -1.77779, 20 )
+color = Color( 0.839216, 0.388235, 0.14902, 1 )
+polygon = PoolVector2Array( 19.2712, 21.7778, 27.7157, 20.4445, 26.8268, 33.3334, 18.8268, 28.8889 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="face" type="Polygon2D" parent="HBoxContainer/ColorRect"]
+color = Color( 0.862745, 0.596078, 0.0941176, 1 )
+polygon = PoolVector2Array( 35.2953, 16.6337, 37.7974, 12.0247, 43.1966, 9.6543, 49.7809, 9.52264, 54.39, 11.7613, 56.6287, 16.5021, 55.0484, 25.7202, 50.7028, 31.7778, 45.3036, 32.6996, 40.1678, 31.1193, 37.139, 26.5103 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D4" type="Polygon2D" parent="HBoxContainer/ColorRect/face"]
+color = Color( 1, 0.184314, 0, 1 )
+polygon = PoolVector2Array( 40.1678, 23.7449, 42.9332, 26.2469, 45.567, 26.2469, 47.0155, 26.1152, 48.5958, 25.7202, 50.4394, 23.8765, 52.5464, 25.1934, 50.7028, 28.6173, 46.3571, 29.5391, 41.6163, 28.8807, 38.7192, 25.1934 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D5" type="Polygon2D" parent="HBoxContainer/ColorRect/face"]
+polygon = PoolVector2Array( 39.7727, 20.321, 39.3777, 17.2922, 39.641, 14.6584, 41.748, 13.8683, 43.3283, 14.9218, 43.855, 16.8971, 43.5916, 19.9259, 42.4065, 19.3992, 41.0896, 19.5309 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect/face/Polygon2D5"]
+color = Color( 0.2, 0.207843, 0.431373, 1 )
+polygon = PoolVector2Array( 40.2614, 19.8786, 39.9883, 17.7326, 40.4956, 16.4449, 41.1979, 15.9377, 41.9392, 15.9377, 42.4855, 16.4449, 42.8367, 17.5765, 42.7196, 19.4104, 41.7832, 19.3323, 40.8857, 19.5274 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D6" type="Polygon2D" parent="HBoxContainer/ColorRect/face"]
+position = Vector2( 8.23289, -0.078064 )
+rotation = 0.00264639
+scale = Vector2( 1, 1 )
+polygon = PoolVector2Array( 39.7727, 20.321, 39.3777, 17.2922, 39.641, 14.6584, 41.748, 13.8683, 43.3283, 14.9218, 43.855, 16.8971, 43.5916, 19.9259, 42.4065, 19.3992, 41.0896, 19.5309 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect/face/Polygon2D6"]
+color = Color( 0.2, 0.207843, 0.431373, 1 )
+polygon = PoolVector2Array( 40.2614, 19.8786, 39.9883, 17.7326, 40.4956, 16.4449, 41.1979, 15.9377, 41.9392, 15.9377, 42.4855, 16.4449, 42.8367, 17.5765, 42.7196, 19.4104, 41.7832, 19.3323, 40.8857, 19.5274 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D7" type="Polygon2D" parent="HBoxContainer/ColorRect/face"]
+color = Color( 0, 0, 0, 0.537255 )
+polygon = PoolVector2Array( 43.9292, 21.5954, 44.5535, 21.1272, 45.3338, 21.2833, 46.2313, 21.0491, 47.0897, 21.5174, 46.2313, 21.7515, 45.0217, 21.7125 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ColorRect2" type="ColorRect" parent="HBoxContainer"]
+margin_left = 68.0
+margin_right = 132.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="HBoxContainer/ColorRect2"]
+position = Vector2( 6.66666, 1.77777 )
+color = Color( 0.839216, 0.388235, 0.14902, 1 )
+polygon = PoolVector2Array( 17.049, 10.2222, 30.3824, 10.2222, 37.0505, 14.7921, 39.2712, 22.6667, 35.8214, 31.4725, 27.7157, 35.1111, 18.3824, 33.3333, 28.4469, 27.5219, 29.9379, 21.3333, 27.3934, 15.9334 )
+
+[node name="Polygon2D4" type="Polygon2D" parent="HBoxContainer/ColorRect2"]
+position = Vector2( 6.66666, 21.3333 )
+color = Color( 0.839216, 0.388235, 0.14902, 1 )
+polygon = PoolVector2Array( 19.2712, 21.7778, 27.7157, 20.4445, 26.8268, 33.3334, 18.8268, 28.8889 )
+
+[node name="face2" type="Polygon2D" parent="HBoxContainer/ColorRect2"]
+position = Vector2( -33.1029, 26.4691 )
+color = Color( 0.862745, 0.596078, 0.0941176, 1 )
+polygon = PoolVector2Array( 35.2953, 16.6337, 37.7974, 12.0247, 43.1966, 9.6543, 49.7809, 9.52264, 54.39, 11.7613, 56.6287, 16.5021, 55.0484, 25.7202, 50.7028, 31.7778, 45.3036, 32.6996, 40.1678, 31.1193, 37.139, 26.5103 )
+
+[node name="Polygon2D4" type="Polygon2D" parent="HBoxContainer/ColorRect2/face2"]
+color = Color( 1, 0.184314, 0, 1 )
+polygon = PoolVector2Array( 40.1678, 23.7449, 42.9332, 26.2469, 45.567, 26.2469, 47.0155, 26.1152, 48.5958, 25.7202, 50.4394, 23.8765, 52.5464, 25.1934, 50.7028, 28.6173, 46.3571, 29.5391, 41.6163, 28.8807, 38.7192, 25.1934 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D5" type="Polygon2D" parent="HBoxContainer/ColorRect2/face2"]
+polygon = PoolVector2Array( 39.7727, 20.321, 39.3777, 17.2922, 39.641, 14.6584, 41.748, 13.8683, 43.3283, 14.9218, 43.855, 16.8971, 43.5916, 19.9259, 42.4065, 19.3992, 41.0896, 19.5309 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect2/face2/Polygon2D5"]
+color = Color( 0.2, 0.207843, 0.431373, 1 )
+polygon = PoolVector2Array( 40.2614, 19.8786, 39.9883, 17.7326, 40.4956, 16.4449, 41.1979, 15.9377, 41.9392, 15.9377, 42.4855, 16.4449, 42.8367, 17.5765, 42.7196, 19.4104, 41.7832, 19.3323, 40.8857, 19.5274 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D6" type="Polygon2D" parent="HBoxContainer/ColorRect2/face2"]
+position = Vector2( 8.23289, -0.078064 )
+rotation = 0.00264639
+scale = Vector2( 1, 1 )
+polygon = PoolVector2Array( 39.7727, 20.321, 39.3777, 17.2922, 39.641, 14.6584, 41.748, 13.8683, 43.3283, 14.9218, 43.855, 16.8971, 43.5916, 19.9259, 42.4065, 19.3992, 41.0896, 19.5309 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect2/face2/Polygon2D6"]
+color = Color( 0.2, 0.207843, 0.431373, 1 )
+polygon = PoolVector2Array( 40.2614, 19.8786, 39.9883, 17.7326, 40.4956, 16.4449, 41.1979, 15.9377, 41.9392, 15.9377, 42.4855, 16.4449, 42.8367, 17.5765, 42.7196, 19.4104, 41.7832, 19.3323, 40.8857, 19.5274 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D7" type="Polygon2D" parent="HBoxContainer/ColorRect2/face2"]
+color = Color( 0, 0, 0, 0.537255 )
+polygon = PoolVector2Array( 43.9292, 21.5954, 44.5535, 21.1272, 45.3338, 21.2833, 46.2313, 21.0491, 47.0897, 21.5174, 46.2313, 21.7515, 45.0217, 21.7125 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ColorRect3" type="ColorRect" parent="HBoxContainer"]
+margin_left = 136.0
+margin_right = 200.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="HBoxContainer/ColorRect3"]
+position = Vector2( 10.8807, -0.855957 )
+color = Color( 0.0117647, 0.0117647, 0.0117647, 1 )
+polygon = PoolVector2Array( 17.049, 10.2222, 30.3824, 10.2222, 34.1917, 11.4557, 35.9328, 13.4876, 35.772, 15.3186, 38.2301, 17.25, 38.7569, 19.7082, 37.0011, 21.8152, 38.3179, 23.2198, 38.0546, 26.0292, 36.3865, 27.6094, 37.2644, 30.1553, 37.0889, 31.8234, 35.0697, 33.7548, 29.0998, 33.8426, 26.9928, 36.4764, 24.4469, 50.084, 22.6911, 52.4544, 19.5306, 52.63, 18.7404, 49.2061, 18.4771, 35.6862, 17.0946, 33.251, 14.3292, 30.683, 6.82303, 25.1522, 6.62521, 17.0745, 6.36185, 12.2459 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D4" type="Polygon2D" parent="HBoxContainer/ColorRect3"]
+position = Vector2( 10.5295, -1.03156 )
+color = Color( 0.282353, 0.243137, 0.243137, 0.494118 )
+polygon = PoolVector2Array( 16.809, 11.1046, 30.1533, 11.4557, 32.8749, 11.9825, 34.6307, 13.475, 34.6307, 15.582, 37.3522, 17.5134, 37.44, 19.6204, 36.2109, 21.3762, 37.9668, 23.7466, 37.1767, 25.5902, 35.333, 27.6094, 36.1232, 30.0676, 35.8598, 31.56, 34.0162, 32.7891, 28.2219, 32.9647, 26.3783, 36.0374, 23.6568, 50.1718, 22.5155, 51.8399, 20.1451, 51.7521, 19.7061, 49.3817, 19.5305, 35.774, 17.8409, 32.0438, 13.6927, 28.2908, 8.35938, 24.3401, 6.62521, 17.0745, 6.44962, 13.1238 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect3"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 39.0148, 13.6725, 39.0148, 14.726, 45.4236, 14.8138, 45.4236, 13.5847 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="HBoxContainer/ColorRect3"]
+position = Vector2( 2.04848, 6.26245 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 39.0148, 13.6725, 39.0148, 14.726, 42.1753, 14.8138, 45.4236, 14.8138, 45.4236, 13.5847, 43.3073, 13.6137 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D5" type="Polygon2D" parent="HBoxContainer/ColorRect3"]
+position = Vector2( 0.87793, 12.2908 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 39.0148, 13.6725, 39.0148, 14.726, 42.1753, 14.8138, 45.4236, 14.8138, 45.4236, 13.5847, 43.3073, 13.6137 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D6" type="Polygon2D" parent="HBoxContainer/ColorRect3"]
+color = Color( 0.592157, 0.301961, 0.372549, 1 )
+polygon = PoolVector2Array( 30.2872, 45.2812, 31.6333, 44.7545, 32.9209, 44.7545, 33.9159, 44.9301, 34.6182, 45.2812, 34.2085, 49.027, 33.3891, 50.4316, 31.4577, 50.4902, 30.7554, 50.3731, 29.9945, 47.7979 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D7" type="Polygon2D" parent="HBoxContainer/ColorRect3"]
+color = Color( 0, 0, 0, 0.317647 )
+polygon = PoolVector2Array( 30.1116, 44.3447, 31.2821, 43.7595, 32.7453, 43.7009, 34.15, 44.0521, 35.1449, 44.3447, 35.2035, 45.5739, 33.9744, 45.1056, 32.2771, 44.8715, 31.1651, 44.8715, 30.053, 45.2812 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D8" type="Polygon2D" parent="HBoxContainer/ColorRect3"]
+color = Color( 0.0156863, 0.0156863, 0.0156863, 0.282353 )
+polygon = PoolVector2Array( 31.048, 38.2579, 32.1015, 37.6727, 33.7988, 37.7312, 35.0279, 38.375, 34.9108, 39.3115, 33.3306, 38.6676, 32.2186, 38.6091, 31.1651, 39.0773 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ColorRect4" type="ColorRect" parent="HBoxContainer"]
+margin_left = 204.0
+margin_right = 268.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="HBoxContainer/ColorRect4"]
+position = Vector2( 52.7572, 55.8353 )
+rotation = -3.16665
+color = Color( 0.0117647, 0.0117647, 0.0117647, 1 )
+polygon = PoolVector2Array( 17.049, 10.2222, 30.3824, 10.2222, 34.1917, 11.4557, 35.9328, 13.4876, 35.772, 15.3186, 38.2301, 17.25, 38.7569, 19.7082, 37.0011, 21.8152, 38.3179, 23.2198, 38.0546, 26.0292, 36.3865, 27.6094, 37.2644, 30.1553, 37.0889, 31.8234, 35.0697, 33.7548, 29.0998, 33.8426, 26.9928, 36.4764, 24.4469, 50.084, 22.6911, 52.4544, 19.5306, 52.63, 18.7404, 49.2061, 18.4771, 35.6862, 17.0946, 33.251, 14.3292, 30.683, 6.82303, 25.1522, 6.62521, 17.0745, 6.36185, 12.2459 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D4" type="Polygon2D" parent="HBoxContainer/ColorRect4/Polygon2D3"]
+position = Vector2( -0.351166, -0.175598 )
+color = Color( 0.282353, 0.243137, 0.243137, 0.494118 )
+polygon = PoolVector2Array( 16.809, 11.1046, 30.1533, 11.4557, 32.8749, 11.9825, 34.6307, 13.475, 34.6307, 15.582, 37.3522, 17.5134, 37.44, 19.6204, 36.2109, 21.3762, 37.9668, 23.7466, 37.1767, 25.5902, 35.333, 27.6094, 36.1232, 30.0676, 35.8598, 31.56, 34.0162, 32.7891, 28.2219, 32.9647, 26.3783, 36.0374, 23.6568, 50.1718, 22.5155, 51.8399, 20.1451, 51.7521, 19.7061, 49.3817, 19.5305, 35.774, 17.8409, 32.0438, 13.6927, 28.2908, 8.35938, 24.3401, 6.62521, 17.0745, 6.44962, 13.1238 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect4/Polygon2D3"]
+position = Vector2( -10.8807, 0.855957 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 39.0148, 13.6725, 39.0148, 14.726, 45.4236, 14.8138, 45.4236, 13.5847 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="HBoxContainer/ColorRect4/Polygon2D3"]
+position = Vector2( -8.83218, 7.11841 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 39.0148, 13.6725, 39.0148, 14.726, 42.1753, 14.8138, 45.4236, 14.8138, 45.4236, 13.5847, 43.3073, 13.6137 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D5" type="Polygon2D" parent="HBoxContainer/ColorRect4/Polygon2D3"]
+position = Vector2( -10.0027, 13.1467 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 39.0148, 13.6725, 39.0148, 14.726, 42.1753, 14.8138, 45.4236, 14.8138, 45.4236, 13.5847, 43.3073, 13.6137 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D6" type="Polygon2D" parent="HBoxContainer/ColorRect4/Polygon2D3"]
+position = Vector2( -10.8807, 0.855957 )
+color = Color( 0.592157, 0.301961, 0.372549, 1 )
+polygon = PoolVector2Array( 30.2872, 45.2812, 31.6333, 44.7545, 32.9209, 44.7545, 33.9159, 44.9301, 34.6182, 45.2812, 34.2085, 49.027, 33.3891, 50.4316, 31.4577, 50.4902, 30.7554, 50.3731, 29.9945, 47.7979 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D7" type="Polygon2D" parent="HBoxContainer/ColorRect4/Polygon2D3"]
+position = Vector2( -10.8807, 0.855957 )
+color = Color( 0, 0, 0, 0.317647 )
+polygon = PoolVector2Array( 30.1116, 44.3447, 31.2821, 43.7595, 32.7453, 43.7009, 34.15, 44.0521, 35.1449, 44.3447, 35.2035, 45.5739, 33.9744, 45.1056, 32.2771, 44.8715, 31.1651, 44.8715, 30.053, 45.2812 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D8" type="Polygon2D" parent="HBoxContainer/ColorRect4/Polygon2D3"]
+position = Vector2( -10.8807, 0.855957 )
+color = Color( 0.0156863, 0.0156863, 0.0156863, 0.282353 )
+polygon = PoolVector2Array( 31.048, 38.2579, 32.1015, 37.6727, 33.7988, 37.7312, 35.0279, 38.375, 34.9108, 39.3115, 33.3306, 38.6676, 32.2186, 38.6091, 31.1651, 39.0773 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ColorRect5" type="ColorRect" parent="HBoxContainer"]
+margin_left = 272.0
+margin_right = 336.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect5"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 7.33337, 28.5905, 10.6914, 21.0844, 16.6173, 21.0844, 20.3704, 27.9979, 19.3828, 44.788, 14.8396, 48.9362, 8.71613, 48.1461, 5.95068, 42.8127 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D6" type="Polygon2D" parent="HBoxContainer/ColorRect5"]
+position = Vector2( 32.5926, 2.96295 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 7.92596, 32.1461, 11.6791, 25.2325, 14.8396, 24.8375, 19.3828, 31.9485, 19.3828, 44.788, 14.8396, 48.9362, 8.71613, 48.1461, 6.74078, 42.2202 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="HBoxContainer/ColorRect5"]
+position = Vector2( -0.39505, 13.037 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 8.32101, 33.9238, 10.4939, 29.7757, 16.0247, 30.1707, 19.1852, 34.3189, 18.1976, 40.4423, 17.0124, 44.9855, 13.8519, 49.9238, 10.8889, 49.9238, 8.1235, 43.0103 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D5" type="Polygon2D" parent="HBoxContainer/ColorRect5"]
+position = Vector2( 31.8025, 16.7901 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 8.32101, 33.9238, 10.4939, 29.7757, 16.0247, 30.1707, 19.1852, 34.3189, 12.8642, 40.6399, 20.3704, 41.6276, 19.7778, 44.788, 17.8025, 46.7633, 7.13583, 45.5782, 6.14819, 41.035 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D4" type="Polygon2D" parent="HBoxContainer/ColorRect5"]
+position = Vector2( -18.5679, 43.4569 )
+rotation = -1.61486
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 9.56989, 35.246, 12.1729, 30.0222, 16.0247, 30.1707, 19.1852, 34.3189, 18.1976, 40.4423, 17.0124, 44.9855, 14.4775, 49.5007, 10.8889, 49.9238, 10.3972, 43.3891 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D8" type="Polygon2D" parent="HBoxContainer/ColorRect5"]
+position = Vector2( 79.4075, 19.7532 )
+rotation = 1.48319
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 9.56989, 35.246, 12.1729, 30.0222, 16.0247, 30.1707, 16.7765, 34.1667, 18.1976, 40.4423, 16.0467, 46.9916, 0.923035, 43.0855, -1.52069, 39.3016, 11.6525, 42.8381 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D3" type="Polygon2D" parent="HBoxContainer/ColorRect5"]
+position = Vector2( 2.76544, -29.037 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 8.32101, 33.9238, 11.6791, 32.7386, 15.8272, 32.3436, 19.3828, 35.3066, 20.3704, 43.0103, 16.2223, 48.9362, 13.8519, 49.9238, 10.8889, 49.9238, 8.1235, 43.0103 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D7" type="Polygon2D" parent="HBoxContainer/ColorRect5"]
+position = Vector2( 33.3828, -18.5679 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 9.11115, 37.0844, 12.6667, 35.5041, 15.4321, 34.714, 18.7902, 37.4794, 18.3951, 43.9979, 16.2223, 48.9362, 13.8519, 49.9238, 10.8889, 49.9238, 7.92596, 44.5905 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ColorRect6" type="ColorRect" parent="HBoxContainer"]
+margin_left = 340.0
+margin_right = 404.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect6"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 7.33337, 28.5905, 10.6914, 21.0844, 16.6173, 21.0844, 20.3704, 27.9979, 19.3828, 44.788, 14.8396, 48.9362, 8.71613, 48.1461, 5.95068, 42.8127 )
+
+[node name="Polygon2D6" type="Polygon2D" parent="HBoxContainer/ColorRect6"]
+position = Vector2( 19.9506, 0.19751 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 7.92596, 32.1461, 11.6791, 25.2325, 14.8396, 24.8375, 19.3828, 31.9485, 19.3828, 44.788, 14.8396, 48.9362, 8.71613, 48.1461, 6.74078, 42.2202 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="HBoxContainer/ColorRect6"]
+position = Vector2( -0.39505, 13.037 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 8.32101, 33.9238, 10.4939, 29.7757, 16.0247, 30.1707, 19.1852, 34.3189, 18.1976, 40.4423, 17.0124, 44.9855, 13.8519, 49.9238, 10.8889, 49.9238, 8.1235, 43.0103 )
+
+[node name="Polygon2D5" type="Polygon2D" parent="HBoxContainer/ColorRect6"]
+position = Vector2( 19.2922, 13.6296 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 8.32101, 33.9238, 10.4939, 29.7757, 16.0247, 30.1707, 19.1852, 34.3189, 12.8642, 40.6399, 17.0247, 45.1441, 15.0494, 46.856, 12.5474, 49.3581, 7.13583, 45.5782, 6.14819, 41.035 )
+
+[node name="Polygon2D4" type="Polygon2D" parent="HBoxContainer/ColorRect6"]
+position = Vector2( -18.5679, 43.4569 )
+rotation = -1.61486
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 9.56989, 35.246, 12.1729, 30.0222, 16.0247, 30.1707, 19.1852, 34.3189, 18.1976, 40.4423, 17.0124, 44.9855, 13.5759, 52.9005, 11.9739, 53.3571, 10.3972, 43.3891 )
+
+[node name="Polygon2D8" type="Polygon2D" parent="HBoxContainer/ColorRect6"]
+position = Vector2( 66.7655, 16.9877 )
+rotation = 1.48319
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 9.78156, 32.0858, 12.1729, 30.0222, 16.0247, 30.1707, 16.7765, 34.1667, 18.1976, 40.4423, 16.0467, 46.9916, 4.48566, 35.1899, 7.04279, 33.1672, 9.18066, 34.4126, 12.6624, 38.4198 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="HBoxContainer/ColorRect6"]
+position = Vector2( 2.76544, -29.037 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 8.32101, 33.9238, 11.6791, 32.7386, 15.8272, 32.3436, 19.3828, 35.3066, 20.3704, 43.0103, 16.2223, 48.9362, 13.8519, 49.9238, 10.8889, 49.9238, 8.1235, 43.0103 )
+
+[node name="Polygon2D7" type="Polygon2D" parent="HBoxContainer/ColorRect6"]
+position = Vector2( 29.9589, -22.3868 )
+rotation = 0.204532
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 9.11115, 37.0844, 12.6667, 35.5041, 15.4321, 34.714, 18.7902, 37.4794, 18.3951, 43.9979, 16.2223, 48.9362, 13.8519, 49.9238, 10.8889, 49.9238, 7.92596, 44.5905 )
+
+[node name="Polygon2D9" type="Polygon2D" parent="HBoxContainer/ColorRect6"]
+color = Color( 1, 0, 0, 1 )
+polygon = PoolVector2Array( 30.391, 0.436218, 25.782, 8.0741, 28.284, 14.3951, 21.1729, 26.9053, 24.4651, 39.4156, 17.4857, 53.7695, 20.7778, 62.5926, 23.4116, 62.5926, 19.5927, 52.8477, 27.0988, 38.2305, 23.5433, 25.7202, 30.6544, 14.2634, 27.7573, 7.41565, 33.1564, 0.304504 )
+
+[node name="ColorRect7" type="ColorRect" parent="HBoxContainer"]
+margin_left = 408.0
+margin_right = 472.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 7.33337, 28.5905, 10.6914, 21.0844, 16.6173, 21.0844, 20.3704, 27.9979, 19.3828, 44.788, 14.8396, 48.9362, 8.71613, 48.1461, 5.95068, 42.8127 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D6" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+position = Vector2( 32.5926, 2.96295 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 7.92596, 32.1461, 11.6791, 25.2325, 14.8396, 24.8375, 19.3828, 31.9485, 19.3828, 44.788, 14.8396, 48.9362, 8.71613, 48.1461, 6.74078, 42.2202 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+position = Vector2( -0.39505, 13.037 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 8.32101, 33.9238, 10.4939, 29.7757, 16.0247, 30.1707, 19.1852, 34.3189, 18.1976, 40.4423, 17.0124, 44.9855, 13.8519, 49.9238, 10.8889, 49.9238, 8.1235, 43.0103 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D5" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+position = Vector2( 31.8025, 16.7901 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 8.32101, 33.9238, 10.4939, 29.7757, 16.0247, 30.1707, 19.1852, 34.3189, 12.8642, 40.6399, 20.3704, 41.6276, 19.7778, 44.788, 17.8025, 46.7633, 7.13583, 45.5782, 6.14819, 41.035 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D4" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+position = Vector2( -18.5679, 43.4569 )
+rotation = -1.61486
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 9.56989, 35.246, 12.1729, 30.0222, 16.0247, 30.1707, 19.1852, 34.3189, 15.6877, 40.8806, 22.0064, 44.0592, 23.8696, 46.6459, 17.8179, 46.379, 12.9404, 43.3958 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D8" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+position = Vector2( 79.4075, 19.7532 )
+rotation = 1.48319
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 9.56989, 35.246, 12.1729, 30.0222, 16.0247, 30.1707, 16.7765, 34.1667, 18.1976, 40.4423, 16.0467, 46.9916, 0.923035, 43.0855, -1.52069, 39.3016, 11.6525, 42.8381 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D3" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+position = Vector2( 2.76544, -29.037 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 8.32101, 33.9238, 11.6791, 32.7386, 15.8272, 32.3436, 19.3828, 35.3066, 20.3704, 43.0103, 16.2223, 48.9362, 13.8519, 49.9238, 10.8889, 49.9238, 8.1235, 43.0103 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D7" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+position = Vector2( 12.8395, -7.90125 )
+rotation = -0.46691
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 9.11115, 37.0844, 12.6667, 35.5041, 15.4321, 34.714, 18.7902, 37.4794, 18.3951, 43.9979, 16.2223, 48.9362, 13.8519, 49.9238, 10.8889, 49.9238, 7.92596, 44.5905 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D9" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+color = Color( 1, 0, 0, 1 )
+polygon = PoolVector2Array( 24.2158, 2.4115, 25.5326, 10.0494, 26.4544, 11.1029, 27.5079, 10.8395, 28.5614, 9.52264, 28.8248, 2.27985, 26.7178, 0.699585, 25.0059, 0.699585 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D10" type="Polygon2D" parent="HBoxContainer/ColorRect7"]
+position = Vector2( 0.131683, 7.63788 )
+color = Color( 1, 0, 0, 1 )
+polygon = PoolVector2Array( 25.2693, 6.23041, 25.5327, 9.25922, 26.8495, 9.91766, 27.508, 10.0494, 28.5615, 8.8642, 28.5615, 6.62549, 27.508, 4.51849, 26.1911, 4.78186 )
+__meta__ = {
+"_edit_lock_": true
+}
+
