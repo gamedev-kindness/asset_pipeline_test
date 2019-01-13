@@ -1,13 +1,15 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://characters/female_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
-[ext_resource path="res://characters/complete_assault_anim.tres" type="Animation" id=3]
-[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=4]
-[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=5]
-[ext_resource path="res://characters/aplayer.gd" type="Script" id=6]
-[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=7]
-[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=8]
+[ext_resource path="res://characters/skeleton_controls.gd" type="Script" id=3]
+[ext_resource path="res://characters/complete_assault_anim.tres" type="Animation" id=4]
+[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=5]
+[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=6]
+[ext_resource path="res://characters/aplayer.gd" type="Script" id=7]
+[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=8]
+[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=9]
+[ext_resource path="res://characters/awareness.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -23,17 +25,19 @@ height = 1.1
 radius = 0.1
 
 [node name="female_2018" index="0" instance=ExtResource( 1 )]
+collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="female_2018" parent="." index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -1.86265e-09, -1.28057e-09, 0 )
 bones/21/bound_children = [ NodePath("head") ]
+script = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="female_2018" index="0"]
-anims/complete_assault_anim = ExtResource( 3 )
-anims/kick_to_bed = ExtResource( 4 )
-anims/kicked_to_bed = ExtResource( 5 )
-script = ExtResource( 6 )
+anims/complete_assault_anim = ExtResource( 4 )
+anims/kick_to_bed = ExtResource( 5 )
+anims/kicked_to_bed = ExtResource( 6 )
+script = ExtResource( 7 )
 
 [node name="female_2018-toenail" parent="female_2018" index="10"]
 mesh = null
@@ -45,11 +49,11 @@ bone_name = "head"
 [node name="Camera" type="Camera" parent="female_2018/head" index="0"]
 transform = Transform( -1, 8.74228e-08, 0, -8.73871e-08, -0.999592, 0.0285846, 2.49895e-09, 0.0285846, 0.999591, 0, 0, 0 )
 
-[node name="SkeletonIK" type="SkeletonIK" parent="female_2018" index="13"]
-root_bone = "upperleg02_R"
-tip_bone = "foot_R"
-use_magnet = true
-target_node = NodePath("../../foot_ik_l")
+[node name="foot_ik_l" type="Spatial" parent="female_2018" index="13"]
+transform = Transform( 1, 0, 0, 0, -0.866025, 0.500001, 0, -0.5, -0.866026, 0.08, 0, 0 )
+
+[node name="foot_ik_r" type="Spatial" parent="female_2018" index="14"]
+transform = Transform( 1, 0, 0, 0, -0.866025, 0.500001, 0, -0.5, -0.866026, -0.08, 0, 0 )
 
 [node name="main_shape" type="CollisionShape" parent="." index="1"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.753, 0.038 )
@@ -61,7 +65,7 @@ enabled = true
 cast_to = Vector3( 0, 0, -0.4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="3"]
-tree_root = ExtResource( 7 )
+tree_root = ExtResource( 8 )
 anim_player = NodePath("../female_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
@@ -76,7 +80,7 @@ parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
 
-[node name="AI" parent="." index="4" instance=ExtResource( 8 )]
+[node name="AI" parent="." index="4" instance=ExtResource( 9 )]
 
 [node name="ray_far" type="RayCast" parent="." index="5"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.12 )
@@ -86,6 +90,5 @@ cast_to = Vector3( 0, -1, -1.5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0952968, 0 )
 shape = SubResource( 3 )
 
-[node name="foot_ik_l" type="Spatial" parent="." index="7"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0196714, 0.0147536 )
+[node name="awareness" parent="." index="7" instance=ExtResource( 10 )]
 

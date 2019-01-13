@@ -1,6 +1,7 @@
 extends KinematicBody
 signal active_action
 signal passive_action
+signal set_feet_ik
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -13,6 +14,16 @@ const GRAVITY = Vector3(0, -9.8, 0)
 var action = false
 var other
 var cooldown = 0.0
+var feet_ik_enabled = true
+
+var actions = {
+	"kick_to_bed": {
+			"active": "KickToBed",
+			"passive": "KickedToBed",
+			"ik": true,
+			"direction":"BACK"
+	}
+}
 func enable_fps_camera():
 	get_children()[0].get_node("head/Camera").current = true
 func disable_fps_camera():
@@ -21,30 +32,60 @@ func set_action_mode(m):
 	action = m
 	get_children()[0].rotation.y = PI
 	get_children()[0].rotation.x = 0
-#	print(name, " ", m)
-func do_active_action(other):
+	if !m:
+		emit_signal("set_feet_ik", false)
+func do_action(other, name):
+	var active = actions[name].active
+	var passive = actions[name].passive
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-#	print("active")
+	sm.travel(active)
+	if actions[name].ik:
+		emit_signal("set_feet_ik", true)
+		feet_ik_enabled = true
+	set_action_mode(true)
+	self.other = other
+	other.emit_signal("passive_action", self, passive, actions[name].ik)
+
+func get_action_direction(other):
 	var v1 = Vector2(orientation.basis[2].x, orientation.basis[2].z)
 	var v2 = Vector2(other.orientation.basis[2].x, other.orientation.basis[2].z)
 	var v_angle = abs(v1.angle_to(v2))
 	if v_angle < PI / 4.0:
-		print("BACK")
-		sm.travel("KickToBed")
-		set_action_mode(true)
-		self.other = other
-		other.emit_signal("passive_action", self)
+		return "BACK"
 	elif v_angle > PI / 2.0 + PI / 4.0:
-		print("FRONT")
+		return "FRONT"
 	else:
-		print("SIDE")
-	print(v_angle, " ", v1, " ", v2)
+		return "SIDE"
+	
+func do_active_action(other):
+	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+#	print("active")
+	if get_action_direction(other) == "BACK":
+		do_action(other, "kick_to_bed")
+#	var v1 = Vector2(orientation.basis[2].x, orientation.basis[2].z)
+#	var v2 = Vector2(other.orientation.basis[2].x, other.orientation.basis[2].z)
+#	var v_angle = abs(v1.angle_to(v2))
+#	if v_angle < PI / 4.0:
+#		print("BACK")
+#		sm.travel("KickToBed")
+#		set_action_mode(true)
+#		self.other = other
+#		other.emit_signal("passive_action", self)
+#	elif v_angle > PI / 2.0 + PI / 4.0:
+#		print("FRONT")
+#	else:
+#		print("SIDE")
+#	print(v_angle, " ", v1, " ", v2)
 #	print("kick ", sm.is_playing())
 #	print(sm.get_current_node())
-func do_passive_action(other):
+func do_passive_action(other, action, ik):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 #	print("passive")
-	sm.travel("KickedToBed")
+	sm.travel(action)
+	if ik:
+		emit_signal("set_feet_ik", true)
+		feet_ik_enabled = true
+		
 	var move_fix = Transform(Basis(), Vector3(0, 0, -0.5))
 	transform = other.transform * move_fix
 	set_action_mode(true)
@@ -82,12 +123,13 @@ func _process(delta):
 			orientation *= tf_turn
 		elif Input.is_action_pressed("ui_up"):
 			next = "Navigate"
-		elif Input.is_action_pressed("activate") && $RayCast.is_colliding() && cooldown < 0.1:
-			var other = $RayCast.get_collider()
-			if other.is_in_group("characters"):
-				emit_signal("active_action", other)
-				add_collision_exception_with(other)
-				cooldown = 1.5
+		elif Input.is_action_pressed("activate") && cooldown < 0.1:
+			var other = $awareness.get_actuator_body("characters")
+			if other != null:
+				if other.is_in_group("characters"):
+					emit_signal("active_action", other)
+					add_collision_exception_with(other)
+					cooldown = 1.5
 		else:
 			$AnimationTree["parameters/Navigate/turn_left/active"] = false
 			$AnimationTree["parameters/Navigate/turn_right/active"] = false
