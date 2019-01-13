@@ -26,7 +26,7 @@ func run(delta, obj, tree):
 #		print(next)
 		sm.travel(next)
 		if sm.get_current_node() == "Navigate":
-			var tf_turn = Transform(Quat(Vector3(0, 1, 0), PI * dir * 100.0 * delta))
+			var tf_turn = Transform(Quat(Vector3(0, 1, 0), PI * dir * delta))
 			obj.orientation *= tf_turn
 		change_count += delta
 		if change_count > change_frequency && !sleeping:

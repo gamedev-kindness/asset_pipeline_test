@@ -25,13 +25,20 @@ func set_action_mode(m):
 func do_active_action(other):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 #	print("active")
-	var v1 = Vector2(other.orientation.basis[2].x, orientation.basis[2].z)
-	var v2 = Vector2(other.orientation.basis[2].x, orientation.basis[2].z)
-	if abs(v1.angle_to(v2)) < PI / 4.0:
+	var v1 = Vector2(orientation.basis[2].x, orientation.basis[2].z)
+	var v2 = Vector2(other.orientation.basis[2].x, other.orientation.basis[2].z)
+	var v_angle = abs(v1.angle_to(v2))
+	if v_angle < PI / 4.0:
+		print("BACK")
 		sm.travel("KickToBed")
 		set_action_mode(true)
 		self.other = other
 		other.emit_signal("passive_action", self)
+	elif v_angle > PI / 2.0 + PI / 4.0:
+		print("FRONT")
+	else:
+		print("SIDE")
+	print(v_angle, " ", v1, " ", v2)
 #	print("kick ", sm.is_playing())
 #	print(sm.get_current_node())
 func do_passive_action(other):
@@ -56,7 +63,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var orientation = global_transform
+	orientation = global_transform
 	orientation.origin = Vector3()
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 	if posessed && !action && sm.get_current_node() != "Sleep":
