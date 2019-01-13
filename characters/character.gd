@@ -75,6 +75,9 @@ func _process(delta):
 				action = false
 				remove_collision_exception_with(other)
 				print("action stopped")
+	else:
+		if $AI.has_method("run") && !action:
+			$AI.run(delta, self, $AnimationTree)
 	var rm = $AnimationTree.get_root_motion_transform()
 	orientation *= rm
 	var tf_fix = Transform(Quat(Vector3(0, 1, 0), PI))
