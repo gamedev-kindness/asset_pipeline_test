@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
+[ext_resource path="res://furniture/bed.tscn" type="PackedScene" id=2]
 
 [node name="root" type="Spatial"]
 script = ExtResource( 1 )
@@ -29,6 +30,33 @@ operation = 2
 width = 7.8
 height = 3.0
 depth = 15.8
+
+[node name="bed" parent="CSGBox" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.89032, -1.30774, 7.34176 )
+
+[node name="bed2" parent="CSGBox" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.30774, 7.34176 )
+
+[node name="bed3" parent="CSGBox" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.89032, -1.30774, 7.34176 )
+
+[node name="bed4" parent="CSGBox" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.89032, -1.30774, -7.36925 )
+
+[node name="bed5" parent="CSGBox" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.84522, -1.30774, -7.36925 )
+
+[node name="bed6" parent="CSGBox" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.127825, -1.30774, -7.36925 )
+
+[node name="bed7" parent="CSGBox" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.80762, -1.30774, -5.6406 )
+
+[node name="bed8" parent="CSGBox" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.235852, -1.30774, -5.6406 )
+
+[node name="bed9" parent="CSGBox" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.78476, -1.30774, -5.6406 )
 
 [node name="Control" type="Control" parent="."]
 anchor_top = 1.0

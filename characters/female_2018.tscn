@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://characters/female_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
-[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=3]
-[ext_resource path="res://characters/aplayer.gd" type="Script" id=4]
-[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=5]
-[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://characters/complete_assault_anim.tres" type="Animation" id=3]
+[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=4]
+[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=5]
+[ext_resource path="res://characters/aplayer.gd" type="Script" id=6]
+[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=7]
+[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -16,14 +18,34 @@ height = 1.1
 [sub_resource type="AnimationNodeStateMachinePlayback" id=2]
 
 
-[node name="female_2018" instance=ExtResource( 1 )]
+[sub_resource type="SphereShape" id=3]
+
+radius = 0.1
+
+[node name="female_2018" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
-[node name="AnimationPlayer" parent="female_2018" index="0"]
-anims/kicked_to_bed = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="female_2018" parent="." index="0"]
+transform = Transform( 0.999476, 0.00983732, 0.030842, -0.027457, 0.762305, 0.646634, -0.0171499, -0.647143, 0.762175, -1.86265e-09, -1.28057e-09, 0 )
+bones/21/bound_children = [ NodePath("head") ]
 
-[node name="CollisionShape" type="CollisionShape" parent="." index="1"]
+[node name="AnimationPlayer" parent="female_2018" index="0"]
+anims/complete_assault_anim = ExtResource( 3 )
+anims/kick_to_bed = ExtResource( 4 )
+anims/kicked_to_bed = ExtResource( 5 )
+script = ExtResource( 6 )
+
+[node name="female_2018-toenail" parent="female_2018" index="10"]
+mesh = null
+
+[node name="head" type="BoneAttachment" parent="female_2018" index="12"]
+transform = Transform( 1, 2.05385e-14, 5.83054e-13, 2.71322e-13, -0.0270518, -0.999634, -3.20617e-15, 0.999634, -0.0270506, -1.86224e-09, 0.148655, -1.37609 )
+bone_name = "head"
+
+[node name="Camera" type="Camera" parent="female_2018/head" index="0"]
+transform = Transform( -1, 8.74228e-08, 0, -8.73871e-08, -0.999592, 0.0285846, 2.49895e-09, 0.0285846, 0.999591, 0, 0, 0 )
+
+[node name="main_shape" type="CollisionShape" parent="." index="1"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.753, 0.038 )
 shape = SubResource( 1 )
 
@@ -33,7 +55,7 @@ enabled = true
 cast_to = Vector3( 0, 0, -0.4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="3"]
-tree_root = ExtResource( 5 )
+tree_root = ExtResource( 7 )
 anim_player = NodePath("../female_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
@@ -42,13 +64,19 @@ parameters/playback = SubResource( 2 )
 parameters/Navigate/TimeScale/scale = 1.0
 parameters/Navigate/turn_left/active = false
 parameters/Navigate/turn_right/active = false
+parameters/Sleep/Blend2/blend_amount = 1.0
+parameters/Sleep/sleep_scale/scale = 1.0
 parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
 
-[node name="AI" parent="." index="4" instance=ExtResource( 6 )]
+[node name="AI" parent="." index="4" instance=ExtResource( 8 )]
 
 [node name="ray_far" type="RayCast" parent="." index="5"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.12 )
 cast_to = Vector3( 0, -1, -1.5 )
+
+[node name="minimal_shape" type="CollisionShape" parent="." index="6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0952968, 0 )
+shape = SubResource( 3 )
 

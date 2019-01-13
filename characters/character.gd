@@ -12,21 +12,35 @@ var velocity = Vector3()
 const GRAVITY = Vector3(0, -9.8, 0)
 var action = false
 var other
+var cooldown = 0.0
+func enable_fps_camera():
+	get_children()[0].get_node("head/Camera").current = true
+func disable_fps_camera():
+	get_children()[0].get_node("head/Camera").current = false
+func set_action_mode(m):
+	action = m
+	get_children()[0].rotation.y = PI
+	get_children()[0].rotation.x = 0
+#	print(name, " ", m)
 func do_active_action(other):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	print("active")
-	sm.travel("KickToBed")
-	action = true
-	self.other = other
+#	print("active")
+	var v1 = Vector2(other.orientation.basis[2].x, orientation.basis[2].z)
+	var v2 = Vector2(other.orientation.basis[2].x, orientation.basis[2].z)
+	if abs(v1.angle_to(v2)) < PI / 4.0:
+		sm.travel("KickToBed")
+		set_action_mode(true)
+		self.other = other
+		other.emit_signal("passive_action", self)
 #	print("kick ", sm.is_playing())
 #	print(sm.get_current_node())
 func do_passive_action(other):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	print("passive")
+#	print("passive")
 	sm.travel("KickedToBed")
 	var move_fix = Transform(Basis(), Vector3(0, 0, -0.5))
 	transform = other.transform * move_fix
-	action = true
+	set_action_mode(true)
 	self.other = other
 func _ready():
 	get_children()[0].rotation.y = PI
@@ -35,7 +49,8 @@ func _ready():
 	connect("passive_action", self, "do_passive_action")
 	$AnimationTree.active = true
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	sm.start("Stand")
+	sm.start("Sleep")
+	$main_shape.disabled = true
 #	sm.travel("Stand")
 
 
@@ -44,7 +59,7 @@ func _process(delta):
 	var orientation = global_transform
 	orientation.origin = Vector3()
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	if posessed:
+	if posessed && !action && sm.get_current_node() != "Sleep":
 		var next = "Stand"
 		if Input.is_action_pressed("ui_right"):
 			next = "Navigate"
@@ -60,11 +75,12 @@ func _process(delta):
 			orientation *= tf_turn
 		elif Input.is_action_pressed("ui_up"):
 			next = "Navigate"
-		elif Input.is_action_pressed("activate") && $RayCast.is_colliding():
+		elif Input.is_action_pressed("activate") && $RayCast.is_colliding() && cooldown < 0.1:
 			var other = $RayCast.get_collider()
-			other.emit_signal("passive_action", self)
-			emit_signal("active_action", other)
-			add_collision_exception_with(other)
+			if other.is_in_group("characters"):
+				emit_signal("active_action", other)
+				add_collision_exception_with(other)
+				cooldown = 1.5
 		else:
 			$AnimationTree["parameters/Navigate/turn_left/active"] = false
 			$AnimationTree["parameters/Navigate/turn_right/active"] = false
@@ -72,9 +88,26 @@ func _process(delta):
 			sm.travel(next)
 		else:
 			if !sm.is_playing():
-				action = false
+				set_action_mode(false)
 				remove_collision_exception_with(other)
-				print("action stopped")
+#				print("action stopped")
+	elif posessed && !action && sm.get_current_node() == "Sleep":
+		if Input.is_action_just_pressed("activate") && cooldown < 0.1:
+			cooldown = 1.0
+			if sm.is_playing():
+				sm.travel("Stand")
+				$main_shape.disabled = false
+
+	elif posessed && action:
+		if Input.is_action_just_pressed("activate") && cooldown < 0.1:
+			set_action_mode(false)
+			other.set_action_mode(false)
+			remove_collision_exception_with(other)
+			if sm.is_playing():
+				sm.travel("Stand")
+#			print("action stopped")
+			cooldown = 1.0
+		
 	else:
 		if $AI.has_method("run") && !action:
 			$AI.run(delta, self, $AnimationTree)
@@ -91,14 +124,14 @@ func _process(delta):
 	else:
 		if velocity.length() > 0.06:
 			velocity = move_and_slide(velocity, Vector3(0, 1, 0), true, 4, PI * 0.1, false)
-		print(velocity.length())
+#		print(velocity.length())
 	orientation.origin = Vector3()
 	orientation = orientation.orthonormalized()
 	global_transform.basis = orientation.basis
-	if action:
-		get_children()[0].rotation.y = PI
-		get_children()[0].rotation.x = 0
-	velocity = velocity * 0.9
+	if cooldown > 0.0:
+		cooldown -= delta
+	get_children()[0].rotation.y = PI
+	get_children()[0].rotation.x = 0
 #	else:
 #		sm.travel("Navigation")
 #		move_and_slide(-transform.basis[2] * 0.5, Vector3(0, 1, 0))
