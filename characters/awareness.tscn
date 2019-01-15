@@ -1,33 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://characters/awareness.gd" type="Script" id=1]
-
-[sub_resource type="CylinderShape" id=1]
-
-radius = 0.8
-
-[sub_resource type="SphereShape" id=2]
-
-radius = 8.0
 
 [node name="awareness" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="actuator" type="Area" parent="."]
-monitoring = false
-monitorable = false
-collision_layer = 2
-collision_mask = 3
+[node name="actuator_front_middle" type="RayCast" parent="."]
+cast_to = Vector3( 0, 0, -1 )
 
-[node name="CollisionShape" type="CollisionShape" parent="actuator"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01692, -0.426047 )
-shape = SubResource( 1 )
+[node name="actuator_front_left" type="RayCast" parent="."]
+transform = Transform( 0.984808, 0, 0.173648, 0, 1, 0, -0.173648, 0, 0.984808, -0.15, 0, 0 )
+cast_to = Vector3( 0, 0, -1 )
 
-[node name="awareness" type="Area" parent="."]
-monitoring = false
-monitorable = false
+[node name="actuator_front_right" type="RayCast" parent="."]
+transform = Transform( 0.984808, 0, -0.173648, 0, 1, 0, 0.173648, 0, 0.984808, 0.15, 0, 0 )
+cast_to = Vector3( 0, 0, -1 )
 
-[node name="CollisionShape" type="CollisionShape" parent="awareness"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05597, 0 )
-shape = SubResource( 2 )
+[node name="actuator3" type="RayCast" parent="."]
+cast_to = Vector3( 0, 0, -1 )
+
+[node name="actuator4" type="RayCast" parent="."]
+cast_to = Vector3( 0, 0, -1 )
 

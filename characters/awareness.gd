@@ -1,51 +1,78 @@
 extends Spatial
-
+signal character
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
 # Called when the node enters the scene tree for the first time.
-var actuator_disable = 0.1
-var awareness_disable = 0.1
-var actuator_bodies = []
-var awareness_bodies = []
+enum {STATE_INIT, STATE_CHECK_CLOSE, STATE_CHECK_ACTIVE, STATE_RAYCAST_UPDATE}
+var state = STATE_INIT
+var cooldown = 0.0
+var max_obj_sight_distance = 50.0
+var max_character_sight_distance = 12.0
+var characters = []
+var objects = []
+var active_items = []
+var character_nodes = []
+var item_nodes = []
+var active_angle = PI / 4
+var max_active_distance = 4.0
+var raycasts = []
+
 func _ready():
-	$actuator.monitorable = false
-	$actuator.monitoring = false
-	$awareness.monitorable = false
-	$awareness.monitoring = false
+	state = STATE_INIT
+	for r in get_children():
+		if r in RayCast:
+			r.add_exception(get_parent())
+			raycasts.push_back(r)
 
+func distance(n1: Spatial, n2: Spatial) -> float:
+	return n1.translation.distance_to(n2.translation)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-var loop_count = 0
-var time_count = 0.0
 func _physics_process(delta):
-	if time_count > 1.0:
-		time_count = 0.0
-		$actuator.monitoring = true
-		$awareness.monitoring = true
-		loop_count = 0
-	loop_count += 1
-	if loop_count == 3 && $actuator.monitoring:
-		actuator_bodies = $actuator.get_overlapping_bodies()
-		$actuator.monitoring = false
-	if loop_count == 3 && $awareness.monitoring:
-		awareness_bodies = $awareness.get_overlapping_bodies()
-		$awareness.monitoring = false
-	time_count += delta
+	if cooldown > 0.01:
+		return
+	if state == STATE_INIT:
+		character_nodes = get_tree().get_nodes_in_group("characters")
+		item_nodes = get_tree().get_nodes_in_group("pickup")
+		state = STATE_CHECK_CLOSE
+	elif state == STATE_CHECK_CLOSE:
+		for c in character_nodes:
+			if !c in characters && c != get_parent():
+				if distance(get_parent(), c) < max_character_sight_distance:
+					emit_signal("character", c)
+					characters.push_back(c)
+		for c in item_nodes:
+			if !c in objects:
+				if distance(get_parent(), c) < max_obj_sight_distance:
+					emit_signal("pickup", c)
+					objects.push_back(c)
+		state = STATE_RAYCAST_UPDATE
+	elif state == STATE_RAYCAST_UPDATE:
+		for r in raycasts:
+			r.force_raycast_update()
+		state = STATE_CHECK_ACTIVE
+	elif state == STATE_CHECK_ACTIVE:
+		var v1 = get_parent().transform.basis[2]
+		var p1 = Vector2(v1.x, v1.z)
+		for c in characters + objects:
+			if ! c in active_items:
+				if distance(get_parent(), c) < max_active_distance:
+					var v2 = c.transform.basis[2]
+					var p2 = Vector2(v2.x, v2.z)
+					if abs(p1.angle_to(p2)) < active_angle:
+						active_items.push_back(c)
+		state = STATE_INIT
+		cooldown = 1.0
+	cooldown -= delta
 func get_actuator_body(group):
-	if actuator_bodies.size() == 0:
-		return null
-	print(actuator_bodies.size())
 	var ret
 	var dst = -1
-	for b in actuator_bodies:
-		if !b.is_in_group(group) || b == get_parent():
-			print("excluding: ", b.name)
-			continue
-		print(b.name)
-		var ndst = get_parent().translation.distance_to(b.translation)
-		if dst < 0 || dst > ndst:
-			dst = ndst
-			ret = b
+	for i in active_items:
+		print(i.name)
+	for o in active_items:
+		if o.is_in_group(group):
+			if dst < 0 || distance(get_parent(), o) < dst:
+				dst = distance(get_parent(), o)
+				ret = o
 	return ret

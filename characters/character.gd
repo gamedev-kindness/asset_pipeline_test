@@ -15,6 +15,7 @@ var action = false
 var other
 var cooldown = 0.0
 var feet_ik_enabled = true
+var tps_target
 
 var actions = {
 	"kick_to_bed": {
@@ -99,6 +100,15 @@ func _ready():
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 	sm.start("Sleep")
 	$main_shape.disabled = true
+	var queue = [self]
+	while queue.size() > 0:
+		var p = queue[0]
+		queue.pop_front()
+		for m in p.get_children():
+			if m is BoneAttachment && m.name == "head":
+				tps_target = m
+				break
+			queue.push_back(m)
 #	sm.travel("Stand")
 
 

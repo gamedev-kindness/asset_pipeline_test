@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://camera/camera.gd" type="Script" id=1]
+[ext_resource path="res://camera/tps_camera.gd" type="Script" id=2]
+
+[node name="pos" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 0.943232, 0.332135, 0, -0.332135, 0.943232, 0, 1.42495, 1.63029 )
+script = ExtResource( 1 )
+
+[node name="tps_camera" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="fps_camera" type="Node" parent="."]
+
+[node name="front" type="RayCast" parent="."]
+cast_to = Vector3( 0, 0, -5 )
+
+[node name="back" type="RayCast" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -5 )
+
+[node name="left" type="RayCast" parent="."]
+cast_to = Vector3( -5, 0, 0 )
+
+[node name="right" type="RayCast" parent="."]
+cast_to = Vector3( 5, 0, 0 )
+
+[node name="bottom" type="RayCast" parent="."]
+cast_to = Vector3( 0, -2, 0 )
+
+[node name="top" type="RayCast" parent="."]
+cast_to = Vector3( 0, 2, 0 )
+
+[node name="Camera" type="Camera" parent="."]
+

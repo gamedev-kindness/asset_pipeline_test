@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+
+albedo_color = Color( 0.372549, 0.278431, 0.278431, 1 )
+
+[sub_resource type="CubeMesh" id=2]
+
+material = SubResource( 1 )
+size = Vector3( 4, 0.3, 4 )
+
+[sub_resource type="ConvexPolygonShape" id=3]
+
+points = PoolVector3Array( -2, 0.15, 2, 2, 0.15, -2, 2, 0.15, 2, -2, 0.15, -2, -2, -0.15, 2, 2, -0.15, -2, 2, -0.15, 2, -2, -0.15, -2, 2, 0.15, 2, -2, 0.15, -2, 2, 0.15, -2, -2, 0.15, 2, 2, -0.15, 2, -2, -0.15, -2, 2, -0.15, -2, -2, -0.15, 2, 2, 0.15, 2, -2, -0.15, 2, -2, 0.15, 2, 2, -0.15, 2, 2, 0.15, -2, -2, -0.15, -2, -2, 0.15, -2, 2, -0.15, -2 )
+
+[sub_resource type="SphereMesh" id=4]
+
+radius = 0.1
+height = 0.2
+
+[node name="corridoor" type="Spatial"]
+
+[node name="floor_center" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="floor_center"]
+
+[node name="CollisionShape" type="CollisionShape" parent="floor_center/StaticBody"]
+shape = SubResource( 3 )
+
+[node name="n1" type="Spatial" parent="." groups=[
+"attachment",
+"module_corridoor",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98, 0, 0 )
+
+[node name="n2" type="Spatial" parent="." groups=[
+"attachment",
+"module_corridoor",
+]]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.98, 0, 0 )
+
+[node name="n3" type="Spatial" parent="." groups=[
+"attachment",
+"module_corridoor",
+]]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -1.98 )
+
+[node name="n4" type="Spatial" parent="." groups=[
+"attachment",
+"module_corridoor",
+]]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 1.98 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59985, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+

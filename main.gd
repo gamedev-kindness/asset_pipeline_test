@@ -38,29 +38,35 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var fps_camera = false
 var cooldown = 0.0
+var posessed = false
 func _process(delta):
-	if camera_target != null:
-		if !fps_camera:
-			$Camera.look_at(camera_target.translation + Vector3(0, 1.4, 0), Vector3(0, 1, 0))
-			if Input.is_action_pressed("change_view") && cooldown < 0.1:
-				$Camera.current = false
-				fps_camera = true
-				camera_target.enable_fps_camera()
-				cooldown = 1.5
-				print("fps camera")
-		else:
-			if Input.is_action_pressed("change_view") && cooldown < 0.1:
-				$Camera.current = true
-				fps_camera = false
-				camera_target.disable_fps_camera()
-				cooldown = 1.0
-				print("tps camera")
-	else:
+#	if camera_target != null:
+#		if !fps_camera:
+#			pass
+##			$Camera.look_at(camera_target.translation + Vector3(0, 1.4, 0), Vector3(0, 1, 0))
+##			if Input.is_action_pressed("change_view") && cooldown < 0.1:
+##				$Camera.current = false
+##				fps_camera = true
+##				camera_target.enable_fps_camera()
+##				cooldown = 1.5
+##				print("fps camera")
+#		else:
+#			if Input.is_action_pressed("change_view") && cooldown < 0.1:
+#				$Camera.current = true
+#				fps_camera = false
+#				camera_target.disable_fps_camera()
+#				cooldown = 1.0
+#				print("tps camera")
+#	else:
+	if !posessed:
 		var chars = get_tree().get_nodes_in_group("characters")
 		for ch in chars:
+			print(ch.name)
 			if ch.name.begins_with("male"):
 				ch.posessed = true
-				camera_target = ch
+				print("posessed: ", ch.name)
+#				camera_target = ch
+				posessed = true
 				break
-	if cooldown > delta:
-		cooldown -= delta
+#	if cooldown > delta:
+#		cooldown -= delta
