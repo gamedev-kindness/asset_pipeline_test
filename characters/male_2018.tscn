@@ -13,8 +13,8 @@
 
 [sub_resource type="CapsuleShape" id=1]
 
-radius = 0.32
-height = 1.1
+radius = 0.25
+height = 1.23
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=2]
 
@@ -23,11 +23,12 @@ height = 1.1
 
 radius = 0.1
 
-[node name="male_2018" instance=ExtResource( 1 )]
+[node name="male_2018" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="male_g_2018" parent="." index="0"]
 transform = Transform( 0.999972, -0.00373505, 0.00652152, 0.00433851, 0.995457, -0.0951166, -0.00613663, 0.0951422, 0.995445, 9.31323e-10, 2.98023e-08, 0 )
+bones/14/bound_children = [ NodePath("head") ]
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="male_g_2018" index="0"]
