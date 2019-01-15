@@ -16,7 +16,7 @@ var active_items = []
 var character_nodes = []
 var item_nodes = []
 var active_angle = PI / 4
-var max_active_distance = 4.0
+var max_active_distance = 1.0
 var raycasts = []
 
 func _ready():
@@ -27,7 +27,7 @@ func _ready():
 			raycasts.push_back(r)
 
 func distance(n1: Spatial, n2: Spatial) -> float:
-	return n1.translation.distance_to(n2.translation)
+	return n1.global_transform.origin.distance_to(n2.global_transform.origin)
 
 func _physics_process(delta):
 	if cooldown > 0.01:
@@ -53,12 +53,12 @@ func _physics_process(delta):
 			r.force_raycast_update()
 		state = STATE_CHECK_ACTIVE
 	elif state == STATE_CHECK_ACTIVE:
-		var v1 = get_parent().transform.basis[2]
+		var v1 = get_parent().global_transform.basis[2]
 		var p1 = Vector2(v1.x, v1.z)
 		for c in characters + objects:
 			if ! c in active_items:
 				if distance(get_parent(), c) < max_active_distance:
-					var v2 = c.transform.basis[2]
+					var v2 = c.global_transform.basis[2]
 					var p2 = Vector2(v2.x, v2.z)
 					if abs(p1.angle_to(p2)) < active_angle:
 						active_items.push_back(c)

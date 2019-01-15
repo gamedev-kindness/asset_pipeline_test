@@ -5,13 +5,14 @@ onready var modules = [
 		load("res://rooms/bedroom_module.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
+		load("res://rooms/bedroom_module2.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
+		load("res://rooms/bedroom_module2.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
+		load("res://rooms/bedroom_module2.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
-		load("res://rooms/bedroom_module.tscn"),
-		load("res://rooms/bedroom_module.tscn"),
-		load("res://rooms/bedroom_module.tscn"),
+		load("res://rooms/bedroom_module2.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
 		load("res://rooms/corridoor_module.tscn"),
 		load("res://rooms/corridoor_module.tscn"),
@@ -53,7 +54,7 @@ var scene_aabbs = []
 var noise
 func _ready():
 	noise = OpenSimplexNoise.new()
-	noise.seed = 23232323
+	noise.seed = OS.get_unix_time()
 	noise.octaves = 1
 	noise.period = 3.0
 	for mc in modules:
@@ -93,16 +94,20 @@ const max_per_frame = 20
 const max_rooms = 40
 var preferred_dims = Vector2(40, 20)
 var room_count = 0
+var complete = false
 func _process(delta):
 	var count = 0
+	if complete:
+		return
 	while room_queue.size() > 0 && count < max_per_frame && room_count < max_rooms:
+		print("yumyum")
 		count += 1
 		var current = room_queue[0]
+		room_queue.pop_front()
 		if abs(current.t.origin.x) > preferred_dims.x:
 			continue
 		if abs(current.t.origin.z) > preferred_dims.y:
 			continue
-		room_queue.pop_front()
 		var attachments = current.a
 		var r = current.m.instance()
 		add_child(r)
@@ -130,6 +135,13 @@ func _process(delta):
 						scene_aabbs.push_back(aabb)
 						placed = true
 						break
+	print("sz: ", room_queue.size())
+	print("rc: ", room_count)
+	if room_count >= max_rooms || room_queue.size() == 0:
+		for k in get_tree().get_nodes_in_group("beds"):
+			k.emit_signal("spawn")
+		print("SPAWN complete")
+		complete = true
 #					else:
 #						print(aabb)
 #					if placed:

@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://camera/camera.gd" type="Script" id=1]
 [ext_resource path="res://camera/tps_camera.gd" type="Script" id=2]
+
+[sub_resource type="SphereShape" id=1]
+
+radius = 0.2
 
 [node name="pos" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 0.943232, 0.332135, 0, -0.332135, 0.943232, 0, 1.42495, 1.63029 )
@@ -31,5 +35,16 @@ cast_to = Vector3( 0, -2, 0 )
 [node name="top" type="RayCast" parent="."]
 cast_to = Vector3( 0, 2, 0 )
 
-[node name="Camera" type="Camera" parent="."]
+[node name="Camera" type="KinematicBody" parent="."]
+
+[node name="Camera" type="Camera" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 8.9407e-08, 0, -8.9407e-08, 1, 0, 0.0863751, -0.245297 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 8.9407e-08, 0, -8.9407e-08, 1, 0, 0.226221, -0.642446 )
+shape = SubResource( 1 )
 

@@ -12,6 +12,7 @@ func _ready():
 		if ch.posessed:
 			target = ch
 			break
+	$Camera.add_collision_exception_with(target)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,3 +32,21 @@ func _process(delta):
 			$tps_camera.run(delta, self, $Camera)
 		elif mode == MODE_TPS:
 			$fps_camera.run(delta, self, $Camera)
+func _physics_process(delta):
+	if target:
+		var space = get_world().direct_space_state
+		var data = space.intersect_ray(target.tps_target.global_transform.origin, $Camera.global_transform.origin, [$Camera])
+		if data:
+			if data.collider is StaticBody:
+				var pos = data.position
+				var cpos = $Camera.global_transform.origin
+				if pos.distance_to(cpos) > 2.0:
+					var tf = Transform()
+					tf.origin = pos + (pos - cpos).normalized() * 0.5 + Vector3(0, 0.3, 0)
+					tf.basis = $Camera.global_transform.basis
+					$Camera.global_transform = tf
+				else:
+					var tf = Transform()
+					tf.origin = pos + (pos - cpos).normalized() * 0.5 + Vector3(0, 0.3, 0)
+					tf.basis = $Camera.global_transform.basis
+					$Camera.global_transform = $Camera.global_transform.interpolate_with(tf, delta)	
