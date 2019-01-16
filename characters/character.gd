@@ -23,6 +23,12 @@ var actions = {
 			"passive": "KickedToBed",
 			"ik": true,
 			"direction":"BACK"
+	},
+	"grab_from_back": {
+			"active": "GrabFromBack",
+			"passive": "GrabbedFromBack",
+			"ik": true,
+			"direction":"BACK"
 	}
 }
 func enable_fps_camera():
@@ -62,7 +68,10 @@ func do_active_action(other):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 #	print("active")
 	if get_action_direction(other) == "BACK":
-		do_action(other, "kick_to_bed")
+		if randf() > 0.5:
+			do_action(other, "kick_to_bed")
+		else:
+			do_action(other, "grab_from_back")
 #	var v1 = Vector2(orientation.basis[2].x, orientation.basis[2].z)
 #	var v2 = Vector2(other.orientation.basis[2].x, other.orientation.basis[2].z)
 #	var v_angle = abs(v1.angle_to(v2))

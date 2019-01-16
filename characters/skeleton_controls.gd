@@ -29,7 +29,7 @@ func _ready():
 	foot_ik_l.stop()
 	
 	var base = get_parent()
-	base.connect("setfeet_ik", self, "set_feet_ik")
+	base.connect("set_feet_ik", self, "set_feet_ik")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

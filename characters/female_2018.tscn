@@ -1,15 +1,16 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://characters/female_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
 [ext_resource path="res://characters/skeleton_controls.gd" type="Script" id=3]
 [ext_resource path="res://characters/complete_assault_anim.tres" type="Animation" id=4]
-[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=5]
-[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=6]
-[ext_resource path="res://characters/aplayer.gd" type="Script" id=7]
-[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=8]
-[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=9]
-[ext_resource path="res://characters/awareness.tscn" type="PackedScene" id=10]
+[ext_resource path="res://characters/female/grabbed_from_back.anim" type="Animation" id=5]
+[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=6]
+[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=7]
+[ext_resource path="res://characters/aplayer.gd" type="Script" id=8]
+[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=9]
+[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=10]
+[ext_resource path="res://characters/awareness.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -24,19 +25,21 @@ height = 1.1
 
 radius = 0.1
 
-[node name="female_2018" instance=ExtResource( 1 )]
+[node name="female_2018" index="0" instance=ExtResource( 1 )]
 collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="female_2018" parent="." index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.999999, -1.86265e-09, -1.28057e-09, 0 )
+bones/21/bound_children = [ NodePath("head") ]
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="female_2018" index="0"]
 anims/complete_assault_anim = ExtResource( 4 )
-anims/kick_to_bed = ExtResource( 5 )
-anims/kicked_to_bed = ExtResource( 6 )
-script = ExtResource( 7 )
+anims/grabbed_from_back = ExtResource( 5 )
+anims/kick_to_bed = ExtResource( 6 )
+anims/kicked_to_bed = ExtResource( 7 )
+script = ExtResource( 8 )
 
 [node name="female_2018-toenail" parent="female_2018" index="10"]
 mesh = null
@@ -66,7 +69,7 @@ enabled = true
 cast_to = Vector3( 0, 0, -0.4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="3"]
-tree_root = ExtResource( 8 )
+tree_root = ExtResource( 9 )
 anim_player = NodePath("../female_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
@@ -81,7 +84,7 @@ parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
 
-[node name="AI" parent="." index="4" instance=ExtResource( 9 )]
+[node name="AI" parent="." index="4" instance=ExtResource( 10 )]
 
 [node name="ray_far" type="RayCast" parent="." index="5"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.12 )
@@ -91,5 +94,5 @@ cast_to = Vector3( 0, -1, -1.5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0952968, 0 )
 shape = SubResource( 3 )
 
-[node name="awareness" parent="." index="7" instance=ExtResource( 10 )]
+[node name="awareness" parent="." index="7" instance=ExtResource( 11 )]
 
