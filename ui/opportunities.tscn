@@ -1,0 +1,126 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/opportunities.gd" type="Script" id=1]
+
+[node name="opportunities" type="HBoxContainer"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -64.0
+rect_min_size = Vector2( 0, 64 )
+script = ExtResource( 1 )
+
+[node name="LeaveAction" type="ColorRect" parent="."]
+margin_right = 64.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+color = Color( 1, 1, 1, 0.466667 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="LeaveAction"]
+color = Color( 0.803922, 0.0862745, 0.0862745, 1 )
+antialiased = true
+polygon = PoolVector2Array( 4.11863, 27.5587, 11.2017, 18.9731, 11.631, 26.9148, 23.2215, 27.1295, 22.5776, 37.2175, 11.631, 35.5004, 11.2017, 43.2274 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="LeaveAction"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 32.6656, 43.6566, 40.3926, 33.3539, 46.1878, 43.2274, 50.4806, 40.0078, 41.8951, 30.1344, 42.1097, 24.5538, 49.1928, 30.7783, 51.3392, 27.5587, 41.6804, 18.9731, 41.4658, 15.9682, 46.1878, 14.0364, 46.8317, 8.88513, 42.7536, 5.23627, 36.0998, 5.23627, 34.3827, 8.24121, 34.5973, 11.8901, 33.7388, 13.8218, 37.8169, 14.4658, 37.8169, 17.9, 28.8021, 22.8367, 30.5192, 25.8416, 36.3144, 22.8367, 36.7437, 29.2758, 29.446, 40.0078 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Talk" type="ColorRect" parent="."]
+margin_left = 68.0
+margin_right = 132.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+color = Color( 1, 1, 1, 0.466667 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Talk"]
+position = Vector2( 21.0843, 16.6603 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 20.5273, -5.99506, 21.5279, 18.6606, 21.5301, 30.3548, 19.3992, 25.6544, 16.579, 22.6461, 13.508, 20.39, 10.6887, 18.8215, -6.29638, 19.0738, -5.92035, -6.24573 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="Talk"]
+position = Vector2( 21.0843, 16.6603 )
+polygon = PoolVector2Array( 19.9633, -5.61902, 20.966, 18.6978, 21.342, 29.7908, 19.7752, 25.4037, 16.955, 22.5208, 13.9467, 20.1392, 10.7504, 18.3844, -5.79501, 18.6978, -5.48165, -5.6817 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="GrabFromBack" type="ColorRect" parent="."]
+margin_left = 136.0
+margin_right = 200.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+color = Color( 1, 1, 1, 0.466667 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="GrabFromBack"]
+position = Vector2( 23.8781, 0.250671 )
+color = Color( 0.0745098, 0.211765, 0.831373, 1 )
+polygon = PoolVector2Array( 5.7624, 17.998, 8.26929, 15.4911, 12.9697, 14.6764, 15.6019, 16.8073, 16.542, 21.5076, 11.7163, 23.1371, 11.5282, 26.3334, 15.2886, 27.3989, 15.0379, 24.5159, 15.4766, 22.7611, 15.978, 24.2026, 16.9807, 22.1344, 17.1061, 24.0145, 19.1742, 22.6984, 17.8581, 24.7666, 16.9807, 25.9574, 17.1061, 30.5952, 13.4711, 28.5896, 18.2342, 36.8623, 29.2018, 51.4023, 22.5585, 52.7811, 13.8471, 41.5627, 8.33196, 53.9092, 1.68871, 52.8438, 8.64532, 39.4319, 9.46007, 34.1674, 8.70799, 27.5242, 8.95868, 23.1371, 6.26377, 20.4423 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="GrabFromBack"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 14.7245, 17.6846, 17.9208, 15.0524, 23.5613, 15.0524, 25.1908, 17.6219, 23.8747, 21.7583, 21.1171, 21.9464, 21.1171, 26.1454, 30.8313, 24.9546, 31.9594, 23.3878, 36.8478, 22.5104, 33.7769, 24.7666, 37.5372, 24.892, 34.3409, 26.4587, 37.8506, 27.2108, 23.812, 29.1536, 18.2342, 36.8623, 29.2018, 51.4023, 22.5585, 52.7811, 13.8471, 41.5627, 8.33196, 53.9092, 1.68871, 52.8438, 8.64532, 39.4319, 9.46007, 34.1674, 15.2886, 26.8348, 16.73, 22.2597, 14.9125, 19.0007 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="KickToBed" type="ColorRect" parent="."]
+margin_left = 204.0
+margin_right = 268.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+color = Color( 1, 1, 1, 0.466667 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="KickToBed"]
+color = Color( 0.384314, 0.121569, 0.560784, 1 )
+polygon = PoolVector2Array( 33.5529, 43.224, 33.6882, 48.7703, 59.5259, 48.9056, 59.2554, 42.0065 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="KickToBed"]
+position = Vector2( 1.89386, 2.43494 )
+color = Color( 0.447059, 0.12549, 0.592157, 1 )
+polygon = PoolVector2Array( 46.1336, 38.7599, 48.5686, 37.1366, 55.3324, 36.5955, 58.4437, 38.0836, 55.7382, 39.301, 49.1097, 40.1127 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D3" type="Polygon2D" parent="KickToBed"]
+position = Vector2( 0.18895, 1.32251 )
+color = Color( 0.196078, 0.258824, 0.670588, 1 )
+polygon = PoolVector2Array( 26.2192, 45.3156, 33.2824, 39.4363, 44.1044, 39.301, 45.1867, 36.4602, 48.9744, 36.1897, 50.0566, 38.3541, 48.4333, 41.6007, 45.863, 42.0065, 44.5103, 40.6538, 33.9588, 42.0065, 28.0066, 46.8765, 25.2262, 46.5016 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D4" type="Polygon2D" parent="KickToBed"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 19.8648, 47.0496, 23.3602, 40.5312, 32.5236, 40.4368, 32.2402, 35.4299, 30.1619, 38.1696, 23.738, 37.8861, 20.8095, 32.6904, 27.8002, 29.0061, 25.0606, 27.4946, 19.5814, 29.7618, 19.0146, 27.8725, 19.1091, 25.4163, 15.8972, 24.755, 12.6852, 25.8887, 13.0631, 27.778, 15.7082, 28.7227, 16.7474, 29.8563, 20.4316, 38.1696, 19.1091, 43.2708, 15.7082, 46.9551, 18.4478, 48.561 )
+__meta__ = {
+"_edit_lock_": true
+}
+

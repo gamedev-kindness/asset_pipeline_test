@@ -16,7 +16,7 @@ var active_items = []
 var character_nodes = []
 var item_nodes = []
 var active_angle = PI
-var max_active_distance = 1.4
+var max_active_distance = 1.0
 var raycasts = []
 
 func _ready():
@@ -29,7 +29,21 @@ func _ready():
 func distance(n1: Spatial, n2: Spatial) -> float:
 	return n1.global_transform.origin.distance_to(n2.global_transform.origin)
 
+func update_active():
+	var dir1 = get_parent().global_transform.basis[2]
+	var pos1 = get_parent().global_transform.origin
+	var p1 = -Vector2(dir1.x, dir1.z)
+	for c in range(active_items.size() - 1, -1, -1):
+		if distance(get_parent(), active_items[c]) > max_active_distance + 0.4:
+			active_items.remove(c)
+			continue
+		var pos2 = active_items[c].global_transform.origin - pos1
+		var p2 = Vector2(pos2.x, pos2.z)
+		if abs(p1.angle_to(p2)) > (active_angle + 0.1) / (2.0 + distance(get_parent(), active_items[c])):
+			active_items.remove(c)
+			continue
 func _physics_process(delta):
+	update_active()
 	if cooldown > 0.01:
 		cooldown -= delta
 		return
@@ -56,7 +70,7 @@ func _physics_process(delta):
 	elif state == STATE_CHECK_ACTIVE:
 		var dir1 = get_parent().global_transform.basis[2]
 		var pos1 = get_parent().global_transform.origin
-		var p1 = Vector2(dir1.x, dir1.z)
+		var p1 = -Vector2(dir1.x, dir1.z)
 		for c in characters + objects:
 			if ! c in active_items:
 				if distance(get_parent(), c) < max_active_distance:
@@ -64,11 +78,31 @@ func _physics_process(delta):
 					var p2 = Vector2(pos2.x, pos2.z)
 					if abs(p1.angle_to(p2)) < active_angle / (2.0 + distance(get_parent(), c)):
 						active_items.push_back(c)
-		if active_items.size() > 0:
-			print(active_items.size())
+#		for c in range(active_items.size() - 1, -1, -1):
+#			if distance(get_parent(), active_items[c]) > max_active_distance + 0.4:
+#				active_items.remove(c)
+#				continue
+#			var pos2 = active_items[c].global_transform.origin - pos1
+#			var p2 = Vector2(pos2.x, pos2.z)
+#			if abs(p1.angle_to(p2)) > (active_angle + 0.1) / (2.0 + distance(get_parent(), active_items[c])):
+#				active_items.remove(c)
+#				continue
+#		if active_items.size() > 0:
+#			print(active_items.size())
 		state = STATE_INIT
 		cooldown = 1.0
 	cooldown -= delta
+func get_other_direction(other):
+	var v1 = Vector2(get_parent().orientation.basis[2].x, get_parent().orientation.basis[2].z)
+	var v2 = Vector2(other.orientation.basis[2].x, other.orientation.basis[2].z)
+	var v_angle = abs(v1.angle_to(v2))
+	if v_angle < PI / 4.0:
+		return "BACK"
+	elif v_angle > PI / 2.0 + PI / 4.0:
+		return "FRONT"
+	else:
+		return "SIDE"
+
 func get_actuator_body(group):
 	var ret
 	var dst = -1

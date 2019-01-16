@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://rooms/modular_room_test.gd" type="Script" id=2]
+[ext_resource path="res://ui/opportunities.tscn" type="PackedScene" id=3]
 
 [node name="root" type="Spatial"]
 script = ExtResource( 1 )
@@ -12,35 +13,8 @@ transform = Transform( 1, 0, 0, 0, 0.108412, 0.994106, 0, -0.994106, 0.108412, 0
 [node name="SpotLight" type="SpotLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.616747, 0.787161, 0, -0.787161, 0.616747, 0, 2.87061, 0.55455 )
 
-[node name="Control" type="Control" parent="."]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -82.0
-
-[node name="anims1" type="VBoxContainer" parent="Control"]
-anchor_bottom = 1.0
-
-[node name="Label" type="Label" parent="Control/anims1"]
-margin_right = 85.0
-margin_bottom = 14.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-text = "Animations 1"
-
-[node name="anims2" type="VBoxContainer" parent="Control"]
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -81.0
-
-[node name="Label2" type="Label" parent="Control/anims2"]
-margin_right = 81.0
-margin_bottom = 14.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-text = "Animations2"
-
 [node name="modular_room" type="Spatial" parent="."]
 script = ExtResource( 2 )
+
+[node name="opportunities" parent="." instance=ExtResource( 3 )]
 

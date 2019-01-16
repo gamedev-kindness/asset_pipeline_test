@@ -2,6 +2,7 @@ extends KinematicBody
 signal active_action
 signal passive_action
 signal set_feet_ik
+signal ui_action
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -53,21 +54,28 @@ func do_action(other, name):
 	self.other = other
 	other.emit_signal("passive_action", self, passive, actions[name].ik)
 
-func get_action_direction(other):
-	var v1 = Vector2(orientation.basis[2].x, orientation.basis[2].z)
-	var v2 = Vector2(other.orientation.basis[2].x, other.orientation.basis[2].z)
-	var v_angle = abs(v1.angle_to(v2))
-	if v_angle < PI / 4.0:
-		return "BACK"
-	elif v_angle > PI / 2.0 + PI / 4.0:
-		return "FRONT"
+# Belongs to player controller
+func do_ui_action(act):
+	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+	var other = $awareness.get_actuator_body("characters")
+	print(act)
+	if act == "GrabFromBack":
+		do_action(other, "grab_from_back")
+	elif act == "KickToBed":
+			do_action(other, "kick_to_bed")
+	elif act == "LeaveAction":
+			set_action_mode(false)
+			other.set_action_mode(false)
+			remove_collision_exception_with(other)
+			if sm.is_playing():
+				sm.travel("Stand")
 	else:
-		return "SIDE"
-	
+		print("Unknown action: ", act)
+
 func do_active_action(other):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 #	print("active")
-	if get_action_direction(other) == "BACK":
+	if $awareness.get_other_direction(other) == "BACK":
 		if randf() > 0.5:
 			do_action(other, "kick_to_bed")
 		else:
@@ -105,6 +113,7 @@ func _ready():
 	add_to_group("characters")
 	connect("active_action", self, "do_active_action")
 	connect("passive_action", self, "do_passive_action")
+	connect("ui_action", self, "do_ui_action")
 	$AnimationTree.active = true
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 	sm.start("Sleep")
