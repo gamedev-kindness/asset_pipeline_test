@@ -67,6 +67,7 @@ func _process(delta):
 				print("posessed: ", ch.name)
 #				camera_target = ch
 				posessed = true
+				ch.add_child(load("res://camera/camera.tscn").instance())
 				break
 #	if cooldown > delta:
 #		cooldown -= delta
