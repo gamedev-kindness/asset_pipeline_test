@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://rooms/room_kit/floor_4.mesh" type="ArrayMesh" id=1]
+[ext_resource path="res://rooms/room_kit/wall_4_1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://rooms/room_kit/solid_wall_4.mesh" type="ArrayMesh" id=3]
+
+[sub_resource type="BoxShape" id=4]
+
+extents = Vector3( 2, 0.1, 0.995218 )
+
+[sub_resource type="BoxShape" id=8]
+
+extents = Vector3( 2, 0.054153, 0.995218 )
+
+[node name="corridoor_segment_4" type="MeshInstance"]
+mesh = ExtResource( 1 )
+material/0 = null
+material/1 = null
+material/2 = null
+
+[node name="StaticBody" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.102885, 0 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75062, 0 )
+shape = SubResource( 8 )
+
+[node name="wall_4_1" type="MeshInstance" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+mesh = ExtResource( 3 )
+material/0 = null
+material/1 = null
+material/2 = null
+
+[node name="wall_4_2" type="MeshInstance" parent="." instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -1 )
+mesh = ExtResource( 3 )
+material/0 = null
+material/1 = null
+material/2 = null
+

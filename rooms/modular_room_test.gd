@@ -7,37 +7,53 @@ onready var modules = [
 		load("res://rooms/bedroom_module.tscn"),
 		load("res://rooms/bedroom_module2.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
+		load("res://rooms/bedroom_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
+		load("res://rooms/bedroom_module2.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
 		load("res://rooms/bedroom_module2.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/bedroom_module2.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
-		load("res://rooms/bedroom_module2.tscn"),
+		load("res://rooms/bathroom_module.tscn"),
+		load("res://rooms/bathroom_module.tscn"),
+		load("res://rooms/bathroom_module.tscn"),
+		load("res://rooms/bathroom_module.tscn"),
 		load("res://rooms/bedroom_module.tscn"),
-		load("res://rooms/corridoor_module.tscn"),
-		load("res://rooms/corridoor_module.tscn"),
-		load("res://rooms/corridoor_module.tscn"),
-		load("res://rooms/bedroom_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
-		load("res://rooms/corridoor_cross_module.tscn"),
-		load("res://rooms/corridoor_cross_module.tscn"),
-		load("res://rooms/corridoor_cross_module.tscn"),
-		load("res://rooms/corridoor_cross_module.tscn"),
-		load("res://rooms/corridoor_module.tscn"),
-		load("res://rooms/corridoor_cross_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/corridoor_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
 		load("res://rooms/corridoor_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
+		load("res://rooms/corridoor_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
+		load("res://rooms/corridoor_cross_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
+		load("res://rooms/bedroom_passable_module.tscn"),
 		load("res://rooms/corridoor_cross_module.tscn")
 ]
 
@@ -67,9 +83,9 @@ func _ready():
 		module_attachments.push_back(attachments)
 	room_queue.push_back({"m": modules[0], "t": Transform(), "a": module_attachments[0], "p": "corridoor"})
 	scene_aabbs.push_back(module_aabbs[0])
-	print("module aabbs:")
-	print(module_aabbs)
-	print("module aabbs end")
+#	print("module aabbs:")
+#	print(module_aabbs)
+#	print("module aabbs end")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func calc_aabb(d):
@@ -116,7 +132,6 @@ func _process(delta):
 		var cid = int(inverse_lerp(-1, 1, idf) * modules.size())
 		room_count += 1
 		var module = modules[cid]
-		print(cid)
 		for a in attachments:
 			for ba in module_attachments[cid]:
 				var placed = false
@@ -135,8 +150,6 @@ func _process(delta):
 						scene_aabbs.push_back(aabb)
 						placed = true
 						break
-	print("sz: ", room_queue.size())
-	print("rc: ", room_count)
 	if room_count >= max_rooms || room_queue.size() == 0:
 		for k in get_tree().get_nodes_in_group("beds"):
 			k.emit_signal("spawn")

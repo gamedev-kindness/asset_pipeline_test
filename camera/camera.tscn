@@ -44,23 +44,3 @@ transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 8.9407e-08, 0, -8.9407e-08, 1, 0, 0.0863751, -0.245297 )
 shape = SubResource( 1 )
 
-[node name="CollisionShape5" type="CollisionShape" parent="Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 8.9407e-08, 0, -8.9407e-08, 1, 0, -0.390069, -0.793812 )
-shape = SubResource( 1 )
-
-[node name="CollisionShape6" type="CollisionShape" parent="Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 8.9407e-08, 0, -8.9407e-08, 1, 0, 0.498176, -0.743624 )
-shape = SubResource( 1 )
-
-[node name="CollisionShape2" type="CollisionShape" parent="Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 8.9407e-08, 0, -8.9407e-08, 1, 0, 0.0393266, -0.708256 )
-shape = SubResource( 1 )
-
-[node name="CollisionShape3" type="CollisionShape" parent="Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 8.9407e-08, 0, -8.9407e-08, 1, 0.4, 0.039, -0.708 )
-shape = SubResource( 1 )
-
-[node name="CollisionShape4" type="CollisionShape" parent="Camera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.039, -0.708 )
-shape = SubResource( 1 )
-
