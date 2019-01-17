@@ -78,17 +78,6 @@ func _physics_process(delta):
 					var p2 = Vector2(pos2.x, pos2.z)
 					if abs(p1.angle_to(p2)) < active_angle / (2.0 + distance(get_parent(), c)):
 						active_items.push_back(c)
-#		for c in range(active_items.size() - 1, -1, -1):
-#			if distance(get_parent(), active_items[c]) > max_active_distance + 0.4:
-#				active_items.remove(c)
-#				continue
-#			var pos2 = active_items[c].global_transform.origin - pos1
-#			var p2 = Vector2(pos2.x, pos2.z)
-#			if abs(p1.angle_to(p2)) > (active_angle + 0.1) / (2.0 + distance(get_parent(), active_items[c])):
-#				active_items.remove(c)
-#				continue
-#		if active_items.size() > 0:
-#			print(active_items.size())
 		state = STATE_INIT
 		cooldown = 1.0
 	cooldown -= delta
