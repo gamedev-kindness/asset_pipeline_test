@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://rooms/room_kit/wall_4_no_floor_no_ceil.tscn" type="PackedScene" id=1]
+[ext_resource path="res://rooms/room_kit/solid_wall_4_no_floor_no_ceil.mesh" type="ArrayMesh" id=2]
+[ext_resource path="res://rooms/room_kit/stair_internal.tscn" type="PackedScene" id=3]
+[ext_resource path="res://rooms/room_kit/stairs_inside_1.mesh" type="ArrayMesh" id=4]
+
+[node name="stair_lobby" type="Spatial"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -18, 0, 10 )
+
+[node name="wall_4_no_floor_no_ceil3" type="MeshInstance" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="wall_4_no_floor_no_ceil8" type="MeshInstance" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 3, -4.00001 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="wall_4_no_floor_no_ceil10" type="MeshInstance" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 3, -4 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="wall_4_no_floor_no_ceil4" type="MeshInstance" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="wall_4_no_floor_no_ceil5" type="MeshInstance" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2, 0, 4 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="wall_4_no_floor_no_ceil6" type="MeshInstance" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2, 0, 4 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="wall_4_no_floor_no_ceil7" type="MeshInstance" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 2, 3, 4 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="wall_4_no_floor_no_ceil9" type="MeshInstance" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -2, 3, 4 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="stair_internal" type="MeshInstance" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0, 0 )
+mesh = ExtResource( 4 )
+material/0 = null
+material/1 = null
+
+[node name="stair_internal2" type="MeshInstance" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0, -2 )
+mesh = ExtResource( 4 )
+material/0 = null
+material/1 = null
+
+[node name="stair_internal3" type="MeshInstance" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1, 0, 2 )
+mesh = ExtResource( 4 )
+material/0 = null
+material/1 = null
+
