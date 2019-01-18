@@ -26,6 +26,7 @@ func _process(delta):
 	$Talk.hide()
 	$GrabFromBack.hide()
 	$KickToBed.hide()
+	$FrontGrab.hide()
 	var awareness = current.get_node("awareness")
 	for i in awareness.active_items:
 		if i.is_in_group("characters") && !current.action:
@@ -33,6 +34,8 @@ func _process(delta):
 			if awareness.get_other_direction(i) == "BACK":
 				$GrabFromBack.show()
 				$KickToBed.show()
+			elif awareness.get_other_direction(i) == "FRONT":
+				$FrontGrab.show()
 		elif current.action:
 			$LeaveAction.show()
 	cooldown = 1.0

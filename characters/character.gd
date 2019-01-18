@@ -30,6 +30,12 @@ var actions = {
 			"passive": "GrabbedFromBack",
 			"ik": true,
 			"direction":"BACK"
+	},
+	"front_grab": {
+			"active": "FrontGrab",
+			"passive": "FrontGrabbed",
+			"ik": false,
+			"direction":"BACK"
 	}
 }
 func enable_fps_camera():
@@ -42,6 +48,12 @@ func set_action_mode(m):
 	get_children()[0].rotation.x = 0
 	if !m:
 		emit_signal("set_feet_ik", false)
+#	if m:
+#		$main_shape.disabled = true
+#		$horizontal.disabled = true
+#	else:
+#		$main_shape.disabled = true
+#		$horizontal.disabled = true
 func do_action(other, name):
 	var active = actions[name].active
 	var passive = actions[name].passive
@@ -63,6 +75,8 @@ func do_ui_action(act):
 		do_action(other, "grab_from_back")
 	elif act == "KickToBed":
 			do_action(other, "kick_to_bed")
+	elif act == "FrontGrab":
+			do_action(other, "front_grab")
 	elif act == "LeaveAction":
 			set_action_mode(false)
 			other.set_action_mode(false)
