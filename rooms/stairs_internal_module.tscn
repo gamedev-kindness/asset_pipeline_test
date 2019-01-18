@@ -38,16 +38,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.98, 0, -1 )
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.98, 3, -1 )
 
-[node name="s3" type="Spatial" parent="." groups=[
-"attachment",
-]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -1 )
-
-[node name="s4" type="Spatial" parent="." groups=[
-"attachment",
-]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
-
 [node name="corridoor_segment_2" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0 )
 

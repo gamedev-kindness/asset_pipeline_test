@@ -70,72 +70,275 @@ onready var rooms = {
 	},
 	"lobby_corridoors": {
 		"module": load("res://rooms/lobby_corridoors.tscn"),
-		"connections": ["lobby", "corridoor_segment2", "lobby_corridoors"],
+#		"connections": ["corridoor_segment1_stairs"],
+		"connections": ["corridoor_segment_stairs_1"],
 		"attachments": [],
-		"priority": 2,
+		"priority": 1,
 		"min_floor": 1,
 		"max_floor": 1
 	},
-	"corridoor_segment2": {
-		"module": load("res://rooms/corridoor_module.tscn"),
-		"connections": ["corridoor_segment2", "corridoor_segment2", "corridoor_segment2", "stairs_internal", "stairs_internal","stairs_internal","bedroom", "bedroom2", "bathroom","bedroom", "bedroom2", "bathroom"],
+	"corridoor_cross_1": {
+		"module": load("res://rooms/corridoor_cross_module.tscn"),
+		"connections": ["corridoor_segment_stairs_1"],
 		"attachments": [],
-		"priority": 3
-	},
-	"stairs_internal": {
-		"module": load("res://rooms/stairs_internal_module.tscn"),
-		"connections": ["stairs_internal", "stairs_internal", "corridoor_segment", "bedroom", "bedroom2", "bathroom"],
-		"attachments": [],
-		"max_floor": 4,
+		"max_floor": 1,
+		"min_floor": 1,
 		"priority": 4
 	},
-	"corridoor_segment": {
+	"corridoor_segment_stairs_1": {
 		"module": load("res://rooms/corridoor_module.tscn"),
-		"connections": ["corridoor_segment", "corridoor_segment","corridoor_segment","corridoor_segment","corridoor_segment","corridoor_segment","corridoor_cross", "passable_bedroom"],
+		"connections": ["corridoor_segment_stairs_1", "corridoor_segment_stairs_1", "stair", "bathroom", "corridoor_cross_1"],
 		"attachments": [],
-		"priority": 4
+		"priority": 1,
+		"max_floor": 1,
+		"min_floor": 1
 	},
 	"corridoor_cross": {
 		"module": load("res://rooms/corridoor_cross_module.tscn"),
-		"connections": ["corridoor_segment", "passable_bedroom", "bedroom"],
+		"connections": ["corridoor_segment_stairs_2", "corridoor_segment_stairs_3"],
 		"attachments": [],
+		"min_floor": 2,
 		"priority": 4
 	},
-	"passable_bedroom": {
-		"module": load("res://rooms/bedroom_passable_module.tscn"),
-		"connections": ["corridoor_segment", "corridoor_cross"],
+	"corridoor_segment_stairs_2": {
+		"module": load("res://rooms/corridoor_module.tscn"),
+		"connections": ["corridoor_segment_stairs_2", "corridoor_segment_stairs_2", "bedroom", "bedroom2", "bathroom", "corridoor_cross"],
 		"attachments": [],
+		"priority": 1,
 		"max_floor": 2,
-		"min_floor": 2,
-		"priority": 5
+		"min_floor": 2
+	},
+	"corridoor_segment_stairs_3": {
+		"module": load("res://rooms/corridoor_module.tscn"),
+		"connections": ["corridoor_segment_stairs_3", "corridoor_segment_stairs_3", "classroom", "bathroom", "corridoor_cross"],
+		"attachments": [],
+		"priority": 1,
+		"min_floor": 3
+	},
+	"corridoor_segment_stairs_0": {
+		"module": load("res://rooms/corridoor_module.tscn"),
+		"connections": ["corridoor_segment_stairs_0", "corridoor_segment_stairs_0", "bathroom", "corridoor_cross"],
+		"attachments": [],
+		"priority": 1,
+		"max_floor": 0
+	},
+	"stair": {
+		"module": load("res://rooms/stairs_internal_module.tscn"),
+		"connections": ["corridoor_segment_stairs_1", "corridoor_segment_stairs_2", "corridoor_segment_stairs_3"],
+		"attachments": [],
+		"priority": 2,
+		"special": ["stair"]
+	},
+	"bathroom": {
+		"module": load("res://rooms/bathroom_module.tscn"),
+		"connections": ["corridoor_segment_stairs_1", "corridoor_segment_stairs_2", "corridoor_segment_stairs_3"],
+		"attachments": [],
+		"priority": 3
+	},
+	"classroom": {
+		"module": load("res://rooms/classroom_module.tscn"),
+		"connections": ["corridoor_segment_stairs_3"],
+		"attachments": [],
+		"priority": 1,
+		"min_floor": 3
 	},
 	"bedroom": {
 		"module": load("res://rooms/bedroom_module.tscn"),
-		"connections": ["corridoor_segment", "corridoor_cross"],
+		"connections": ["corridoor_segment_stairs_2"],
 		"attachments": [],
-		"priority": 5,
+		"priority": 3,
 		"max_floor": 2,
 		"min_floor": 2
 	},
 	"bedroom2": {
 		"module": load("res://rooms/bedroom_module2.tscn"),
-		"connections": ["corridoor_segment", "corridoor_cross"],
+		"connections": ["corridoor_segment_stairs_2"],
 		"attachments": [],
-		"priority": 5,
+		"priority": 1,
 		"max_floor": 2,
 		"min_floor": 2
 	},
-	"bathroom": {
-		"module": load("res://rooms/bathroom_module.tscn"),
-		"connections": ["corridoor_segment", "corridoor_cross"],
-		"attachments": [],
-		"priority": 5
-	},
+#	"corridoor_segment_stairs_2": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_2", "bedroom", "bedroom2", "bathroom"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 2,
+#		"min_floor": 2
+#	},
+#	"stair3": {
+#		"module": load("res://rooms/stairs_internal_module.tscn"),
+#		"connections": ["stair2"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 3,
+#		"min_floor": 3
+#	},
+#	"corridoor_segment_stairs_3": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_3", "classroom_3", "bathroom"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 3,
+#		"min_floor": 3
+#	},
+#	"corridoor_cross_3": {
+#		"module": load("res://rooms/corridoor_cross_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_3"],
+#		"attachments": [],
+#		"max_floor": 3,
+#		"min_floor": 3,
+#		"priority": 1
+#	},
+#	"classroom_3": {
+#		"module": load("res://rooms/classroom_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_3"],
+#		"attachments": [],
+#		"priority": 1,
+#		"min_floor": 3
+#	},
+#
+#
+#
+#	"corridoor_segment_rooms": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment_rooms", "bedroom", "bathroom", "bedroom2"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 1,
+#		"min_floor": 1
+#	},
+#	"stairs_internal_1": {
+#		"module": load("res://rooms/stairs_internal_module.tscn"),
+#		"connections": ["corridoor_segment_2_rooms"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 1,
+#		"min_floor": 1
+#	},
+#	"corridoor_segment_2_rooms": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment_2_rooms", "bedroom", "bathroom", "bedroom2"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 2,
+#		"min_floor": 2
+#	},
+#	"corridoor_segment_2": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment_2", "bedroom", "bathroom", "bedroom2"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 1,
+#		"min_floor": 1
+#	},
+#	"corridoor_segment1_stairs": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment1_stairs", "stairs_internal1"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 1,
+#		"min_floor": 1
+#	},
+#	"stairs_internal1": {
+#		"module": load("res://rooms/stairs_internal_module.tscn"),
+#		"connections": ["corridoor_segment2"],
+#		"attachments": [],
+#		"priority": 2,
+#		"max_floor": 1,
+#		"min_floor": 1
+#	},
+#	"corridoor_segment1": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_cross1", "bathroom"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 1,
+#		"min_floor": 1
+#	},
+#	"corridoor_cross1": {
+#		"module": load("res://rooms/corridoor_cross_module.tscn"),
+#		"connections": ["corridoor_segment1", "corridoor_segment1_stairs"],
+#		"attachments": [],
+#		"max_floor": 1,
+#		"min_floor": 1,
+#		"priority": 4
+#	},
+#	"corridoor_segment2": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment2", "bedroom", "bathroom", "bedroom2"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 2,
+#		"min_floor": 2
+#	},
+#	"stairs_internal2": {
+#		"module": load("res://rooms/stairs_internal_module.tscn"),
+#		"connections": ["stairs_internal2", "stairs_internal2", "corridoor_segment"],
+#		"attachments": [],
+#		"min_floor": 1,
+#		"priority": 20
+#	},
+#	"corridoor_segment": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment", "corridoor_segment","corridoor_segment","corridoor_segment","corridoor_segment","corridoor_segment","corridoor_cross", "passable_bedroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom"],
+#		"attachments": [],
+#		"priority": 4
+#	},
+#	"corridoor_cross": {
+#		"module": load("res://rooms/corridoor_cross_module.tscn"),
+#		"connections": ["corridoor_segment", "passable_bedroom", "bedroom"],
+#		"attachments": [],
+#		"priority": 20
+#	},
+#	"passable_bedroom": {
+#		"module": load("res://rooms/bedroom_passable_module.tscn"),
+#		"connections": ["corridoor_segment", "corridoor_cross"],
+#		"attachments": [],
+#		"max_floor": 2,
+#		"min_floor": 2,
+#		"priority": 1
+#	},
+#	"bedroom": {
+#		"module": load("res://rooms/bedroom_module.tscn"),
+#		"connections": ["corridoor_segment", "corridoor_cross"],
+#		"attachments": [],
+#		"priority": 5,
+#		"max_floor": 2,
+#		"min_floor": 2
+#	},
+#	"bedroom2": {
+#		"module": load("res://rooms/bedroom_module2.tscn"),
+#		"connections": ["corridoor_segment", "corridoor_cross"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 2,
+#		"min_floor": 2
+#	},
+#	"bathroom": {
+#		"module": load("res://rooms/bathroom_module.tscn"),
+#		"connections": ["corridoor_segment", "corridoor_cross"],
+#		"attachments": [],
+#		"priority": 1
+#	},
+#	"classroom": {
+#		"module": load("res://rooms/classroom_module.tscn"),
+#		"connections": ["corridoor_segment", "corridoor_cross"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 3,
+#		"min_floor": 3
+#	},
 	"checks": {
-		"bedroom": 2,
-		"bathroom": 2,
-		"bedroom2": 1,
-		"stairs_internal": 1
+		"classroom": 5,
+		"bedroom": 10,
+		"bathroom": 5,
+#		"bedroom2": 0,
+#		"stairs_internal": 0
+	},
+	"config": {
+		"min_floor": -5,
+		"max_floor": 10
 	}
 }
 
@@ -148,6 +351,7 @@ var room_queue = []
 var scene_aabbs = []
 var instances = []
 var noise
+var rnd
 
 func prepare_stage(rooms):
 	room_queue.clear()
@@ -160,6 +364,8 @@ func prepare_stage(rooms):
 		if data == "axiom":
 			continue
 		if data == "checks":
+			continue
+		if data == "config":
 			continue
 		var mc = rooms[data].module
 		var i = mc.instance()
@@ -176,8 +382,10 @@ func prepare_stage(rooms):
 func _ready():
 	noise = OpenSimplexNoise.new()
 	noise.seed = OS.get_unix_time()
-	noise.octaves = 1
-	noise.period = 3.0
+	noise.octaves = 5
+	noise.period = 20.0
+	rnd = RandomNumberGenerator.new()
+	rnd.seed = OS.get_unix_time()
 #	print("modules: ", modules)
 	prepare_stage(rooms)
 #	for mc in modules:
@@ -216,7 +424,7 @@ func calc_aabb(d):
 		
 const max_per_frame = 120
 const max_rooms = 300
-var preferred_dims = Vector3(50, 120, 50)
+var preferred_dims = Vector3(100, 120, 100)
 var room_count = 0
 var complete = false
 var floor_height = 3.0
@@ -229,11 +437,15 @@ func check_constraints(item):
 	if abs(current.t.origin.z) > preferred_dims.z:
 		return false
 	var floor_num = floor(current.t.origin.y / floor_height) + 1
+	if floor_num > rooms.config.max_floor:
+		return false
+	if floor_num < rooms.config.min_floor:
+		return false
 	if rooms[current.m].has("min_floor"):
-		if floor_num < rooms[current.m].min_floor:
+		if floor_num < rooms[current.m].min_floor - 1:
 			return false
 	if rooms[current.m].has("max_floor"):
-		if floor_num > rooms[current.m].max_floor:
+		if floor_num > rooms[current.m].max_floor + 1:
 			return false
 	var current_aabb = current.aabb
 	var ok = true
@@ -245,12 +457,24 @@ func check_constraints(item):
 		return false
 	return true
 func select_module(rooms, item):
-	var idf = noise.get_noise_3dv((global_transform * item.t).origin)
+	var idf = (noise.get_noise_3dv((global_transform * item.t).origin) + (rnd.randf() * 2.0 - 1)) / 2.0
+	var floor_num = floor(item.t.origin.y / floor_height) + 1
 	var rs = rooms[item.m].connections
 	if rs.size() == 0:
 		return null
-	var cid = int(inverse_lerp(-1, 1, idf) * rs.size())
-	return rs[cid]
+	var possible_selections = []
+	for i in rs:
+		if rooms[i].has("min_floor"):
+			if rooms[i].min_floor > floor_num:
+				continue
+		if rooms[i].has("max_floor"):
+			if rooms[i].max_floor < floor_num:
+				continue
+		possible_selections.push_back(i)
+	if possible_selections.size() == 0:
+		return null
+	var cid = int(inverse_lerp(-1, 1, idf) * possible_selections.size())
+	return possible_selections[cid]
 	
 func _process(delta):
 	var count = 0
@@ -279,8 +503,19 @@ func _process(delta):
 		if cid == null:
 			continue
 		var module = rooms[cid].module
+		if rooms[cid].has("special"):
+			for s in rooms[cid].special:
+				match(s):
+					"stair":
+						var above = Transform()
+						above.origin.y = floor_height
+						var below = Transform()
+						below.origin.y = -floor_height
+						var aabb_above = (current.t * above).xform(rooms[cid].aabb)
+						var aabb_below = (current.t * below).xform(rooms[cid].aabb)
+						room_queue.push_back({"m": cid, "t": current.t * above, "a": rooms[cid].attachments, "aabb": aabb_above, "p": rooms[cid].priority + 2})
+						room_queue.push_back({"m": cid, "t": current.t * below, "a": rooms[cid].attachments, "aabb": aabb_below, "p": rooms[cid].priority + 2})
 		for a in attachments:
-			print("attachment")
 			for ba in rooms[cid].attachments:
 				var placed = false
 				for art in [0, PI / 2.0, - PI / 2.0, PI]:
@@ -294,7 +529,8 @@ func _process(delta):
 							ok = false
 							break
 					if ok:
-						room_queue.push_back({"m": cid, "t": current.t * a  * bat.inverse(), "a": rooms[cid].attachments, "aabb": aabb, "p": rooms[cid].priority})
+						var next_attachments = rooms[cid].attachments
+						room_queue.push_back({"m": cid, "t": current.t * a  * bat.inverse(), "a": next_attachments, "aabb": aabb, "p": rooms[cid].priority})
 						placed = true
 #						print("last aabb:", aabb, " scene_aabbs: ", scene_aabbs)
 						break
@@ -303,6 +539,7 @@ func _process(delta):
 		for h in rooms.checks.keys():
 			if get_tree().get_nodes_in_group(h).size() < rooms.checks[h]:
 				good = false
+				print("failed: ", h, " = ", rooms.checks[h], " :", get_tree().get_nodes_in_group(h).size())
 				break
 		if !good:
 			room_queue.clear()
