@@ -30,6 +30,14 @@ func load_animations():
 			"animation": load("res://characters/male/front_grab.anim")
 		},
 		{
+			"name": "front_grab_loop",
+			"animation": load("res://characters/male/front_grab_loop.anim")
+		},
+		{
+			"name": "front_grab_face_slap",
+			"animation": load("res://characters/male/front_grab_face_slap.anim")
+		},
+		{
 			"name": "grab_from_back",
 			"animation": load("res://characters/male/grab_from_back.anim")
 		},
@@ -40,6 +48,14 @@ func load_animations():
 		{
 			"name": "front_grabbed",
 			"animation": load("res://characters/female/front_grabbed.anim"),
+		},
+		{
+			"name": "front_grabbed_loop",
+			"animation": load("res://characters/female/front_grabbed_loop.anim"),
+		},
+		{
+			"name": "front_grabbed_face_slapped",
+			"animation": load("res://characters/female/front_grabbed_face_slapped.anim"),
 		},
 		{
 			"name": "grabbed_from_back",
@@ -59,19 +75,29 @@ var actions = {
 			"active": "KickToBed",
 			"passive": "KickedToBed",
 			"ik": true,
-			"direction":"BACK"
+			"direction":"BACK",
+			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), 0))
 	},
 	"grab_from_back": {
 			"active": "GrabFromBack",
 			"passive": "GrabbedFromBack",
 			"ik": true,
-			"direction":"BACK"
+			"direction":"BACK",
+			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), 0))
 	},
 	"front_grab": {
 			"active": "FrontGrabLoop",
 			"passive": "FrontGrabbedLoop",
 			"ik": false,
-			"direction":"FRONT"
+			"direction":"FRONT",
+			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
+	},
+	"front_grab_face_slap": {
+			"active": "FrontGrabFaceSlap",
+			"passive": "FrontGrabbedFaceSlapped",
+			"ik": false,
+			"direction":"FRONT",
+			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
 	}
 }
 var set_count = 0
@@ -129,7 +155,7 @@ func do_action(other, name):
 		emit_signal("set_feet_ik", true)
 		feet_ik_enabled = true
 	self.other = other
-	other.emit_signal("passive_action", self, passive, actions[name].ik)
+	other.emit_signal("passive_action", self, passive, actions[name].ik, actions[name].xform)
 
 # Belongs to player controller
 func do_ui_action(act):
@@ -148,6 +174,10 @@ func do_ui_action(act):
 		add_collision_exception_with(other)
 		other.add_collision_exception_with(self)
 		do_action(other, "front_grab")
+	elif act == "FrontGrabFaceSlap":
+		add_collision_exception_with(other)
+		other.add_collision_exception_with(self)
+		do_action(other, "front_grab_face_slap")
 	elif act == "LeaveAction":
 			set_action_mode(false)
 			other.set_action_mode(false)
@@ -182,7 +212,7 @@ func do_active_action(other):
 #	print(v_angle, " ", v1, " ", v2)
 #	print("kick ", sm.is_playing())
 #	print(sm.get_current_node())
-func do_passive_action(other, action, ik):
+func do_passive_action(other, action, ik, xform):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 #	print("passive")
 	sm.travel(action)
@@ -190,7 +220,7 @@ func do_passive_action(other, action, ik):
 		emit_signal("set_feet_ik", true)
 		feet_ik_enabled = true
 		
-	var move_fix = Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
+	var move_fix = xform
 	transform = (other.transform * move_fix).orthonormalized()
 	set_action_mode(true)
 	self.other = other

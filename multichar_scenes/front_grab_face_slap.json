@@ -1,0 +1,12 @@
+{
+"female_2018": {
+"anims": [ "res://characters/female/additive-wiggling-loop.anim", "res://characters/female/blink.anim", "res://characters/female/default.anim", "res://characters/female/eyes-close.anim", "res://characters/female/eyes-open.anim", "res://characters/female/front_grabbed_face_slapped.anim", "res://characters/female/rotate_180.anim", "res://characters/female/sleep.anim", "res://characters/female/sleep.001.anim", "res://characters/female/sleeping.anim", "res://characters/female/stand.anim", "res://characters/female/stand-to-walk.anim", "res://characters/female/turn-left.anim", "res://characters/female/turn-right.anim", "res://characters/female/wakeup.anim", "res://characters/female/walk-loop.anim" ],
+"transform": Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, -0.917271 ),
+"type": "female"
+},
+"male_g_2018": {
+"anims": [ "res://characters/male/additive-wiggling-loop.anim", "res://characters/male/blink.anim", "res://characters/male/default.anim", "res://characters/male/eyes-close.anim", "res://characters/male/eyes-open.anim", "res://characters/male/front_grab_face_slap.anim", "res://characters/male/rotate_180.anim", "res://characters/male/sleep.anim", "res://characters/male/stand.anim", "res://characters/male/stand-to-walk.anim", "res://characters/male/turn-left.anim", "res://characters/male/turn-right.anim", "res://characters/male/walk-loop.anim" ],
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),
+"type": "male"
+}
+}

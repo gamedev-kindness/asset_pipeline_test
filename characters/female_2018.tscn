@@ -1,30 +1,32 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://characters/female_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
 [ext_resource path="res://characters/skeleton_controls.gd" type="Script" id=3]
 [ext_resource path="res://characters/complete_assault_anim.tres" type="Animation" id=4]
 [ext_resource path="res://characters/male/front_grab.anim" type="Animation" id=5]
-[ext_resource path="res://characters/male/front_grab_loop.anim" type="Animation" id=6]
-[ext_resource path="res://characters/female/front_grabbed.anim" type="Animation" id=7]
-[ext_resource path="res://characters/female/front_grabbed_loop.anim" type="Animation" id=8]
-[ext_resource path="res://characters/female/grabbed_from_back.anim" type="Animation" id=9]
-[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=10]
-[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=11]
-[ext_resource path="res://characters/aplayer.gd" type="Script" id=12]
-[ext_resource path="res://textures/bob01_diffuse.png" type="Texture" id=13]
-[ext_resource path="res://textures/CrudeFemaleUnderwearDiffuse.png" type="Texture" id=14]
-[ext_resource path="res://textures/CrudeGown.png" type="Texture" id=15]
-[ext_resource path="res://textures/eyebrow001.png" type="Texture" id=16]
-[ext_resource path="res://textures/eyelashes04.png" type="Texture" id=17]
-[ext_resource path="res://textures/female_fingernails_diffuse.png" type="Texture" id=18]
-[ext_resource path="res://textures/female_fingernails_normal.png" type="Texture" id=19]
-[ext_resource path="res://textures/brown_eye.png" type="Texture" id=20]
-[ext_resource path="res://textures/teeth.png" type="Texture" id=21]
-[ext_resource path="res://textures/tongue01_diffuse.png" type="Texture" id=22]
-[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=23]
-[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=24]
-[ext_resource path="res://characters/awareness.tscn" type="PackedScene" id=25]
+[ext_resource path="res://characters/male/front_grab_face_slap.anim" type="Animation" id=6]
+[ext_resource path="res://characters/male/front_grab_loop.anim" type="Animation" id=7]
+[ext_resource path="res://characters/female/front_grabbed.anim" type="Animation" id=8]
+[ext_resource path="res://characters/female/front_grabbed_face_slapped.anim" type="Animation" id=9]
+[ext_resource path="res://characters/female/front_grabbed_loop.anim" type="Animation" id=10]
+[ext_resource path="res://characters/female/grabbed_from_back.anim" type="Animation" id=11]
+[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=12]
+[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=13]
+[ext_resource path="res://characters/aplayer.gd" type="Script" id=14]
+[ext_resource path="res://textures/bob01_diffuse.png" type="Texture" id=15]
+[ext_resource path="res://textures/CrudeFemaleUnderwearDiffuse.png" type="Texture" id=16]
+[ext_resource path="res://textures/CrudeGown.png" type="Texture" id=17]
+[ext_resource path="res://textures/eyebrow001.png" type="Texture" id=18]
+[ext_resource path="res://textures/eyelashes04.png" type="Texture" id=19]
+[ext_resource path="res://textures/female_fingernails_diffuse.png" type="Texture" id=20]
+[ext_resource path="res://textures/female_fingernails_normal.png" type="Texture" id=21]
+[ext_resource path="res://textures/brown_eye.png" type="Texture" id=22]
+[ext_resource path="res://textures/teeth.png" type="Texture" id=23]
+[ext_resource path="res://textures/tongue01_diffuse.png" type="Texture" id=24]
+[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=25]
+[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=26]
+[ext_resource path="res://characters/awareness.tscn" type="PackedScene" id=27]
 
 [sub_resource type="Animation" id=1]
 
@@ -43,58 +45,58 @@ tracks/0/keys = {
 
 [sub_resource type="SpatialMaterial" id=2]
 
-albedo_texture = ExtResource( 13 )
+albedo_texture = ExtResource( 15 )
 metallic = 0.5
 roughness = 0.6
 
+[sub_resource type="SpatialMaterial" id=3]
+
+albedo_texture = ExtResource( 16 )
+
+[sub_resource type="SpatialMaterial" id=4]
+
+albedo_texture = ExtResource( 17 )
+
+[sub_resource type="SpatialMaterial" id=5]
+
+flags_transparent = true
+albedo_texture = ExtResource( 18 )
+
 [sub_resource type="SpatialMaterial" id=6]
 
-albedo_texture = ExtResource( 14 )
+flags_transparent = true
+albedo_texture = ExtResource( 19 )
 
 [sub_resource type="SpatialMaterial" id=7]
 
-albedo_texture = ExtResource( 15 )
+albedo_texture = ExtResource( 20 )
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 21 )
 
 [sub_resource type="SpatialMaterial" id=8]
 
 flags_transparent = true
-albedo_texture = ExtResource( 16 )
+albedo_texture = ExtResource( 22 )
 
 [sub_resource type="SpatialMaterial" id=9]
 
-flags_transparent = true
-albedo_texture = ExtResource( 17 )
-
-[sub_resource type="SpatialMaterial" id=13]
-
-albedo_texture = ExtResource( 18 )
-normal_enabled = true
-normal_scale = 1.0
-normal_texture = ExtResource( 19 )
+albedo_texture = ExtResource( 23 )
 
 [sub_resource type="SpatialMaterial" id=10]
 
-flags_transparent = true
-albedo_texture = ExtResource( 20 )
+albedo_texture = ExtResource( 24 )
 
-[sub_resource type="SpatialMaterial" id=11]
-
-albedo_texture = ExtResource( 21 )
-
-[sub_resource type="SpatialMaterial" id=12]
-
-albedo_texture = ExtResource( 22 )
-
-[sub_resource type="CapsuleShape" id=3]
+[sub_resource type="CapsuleShape" id=11]
 
 margin = 0.02
 radius = 0.2
 height = 1.1
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=4]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
 
-[sub_resource type="SphereShape" id=5]
+[sub_resource type="SphereShape" id=13]
 
 radius = 0.1
 
@@ -111,43 +113,45 @@ script = ExtResource( 3 )
 anims/complete_assault_anim = ExtResource( 4 )
 anims/fix_position = SubResource( 1 )
 anims/front_grab = ExtResource( 5 )
-anims/front_grab_loop = ExtResource( 6 )
-anims/front_grabbed = ExtResource( 7 )
-anims/front_grabbed_loop = ExtResource( 8 )
-anims/grabbed_from_back = ExtResource( 9 )
-anims/kick_to_bed = ExtResource( 10 )
-anims/kicked_to_bed = ExtResource( 11 )
-script = ExtResource( 12 )
+anims/front_grab_face_slap = ExtResource( 6 )
+anims/front_grab_loop = ExtResource( 7 )
+anims/front_grabbed = ExtResource( 8 )
+anims/front_grabbed_face_slapped = ExtResource( 9 )
+anims/front_grabbed_loop = ExtResource( 10 )
+anims/grabbed_from_back = ExtResource( 11 )
+anims/kick_to_bed = ExtResource( 12 )
+anims/kicked_to_bed = ExtResource( 13 )
+script = ExtResource( 14 )
 
 [node name="female_2018-bob01" parent="female_2018" index="2"]
 material/0 = SubResource( 2 )
 
 [node name="female_2018-crudefemaleunderwear" parent="female_2018" index="3"]
-material/0 = SubResource( 6 )
+material/0 = SubResource( 3 )
 
 [node name="female_2018-crudegown" parent="female_2018" index="4"]
-material/0 = SubResource( 7 )
+material/0 = SubResource( 4 )
 
 [node name="female_2018-eyebrow001" parent="female_2018" index="5"]
-material/0 = SubResource( 8 )
+material/0 = SubResource( 5 )
 
 [node name="female_2018-eyelashes04" parent="female_2018" index="6"]
-material/0 = SubResource( 9 )
+material/0 = SubResource( 6 )
 
 [node name="female_2018-fingernails_elegant" parent="female_2018" index="7"]
-material/0 = SubResource( 13 )
+material/0 = SubResource( 7 )
 
 [node name="female_2018-highpolyeyes" parent="female_2018" index="8"]
-material/0 = SubResource( 10 )
+material/0 = SubResource( 8 )
 
 [node name="female_2018-teeth_shape01" parent="female_2018" index="9"]
-material/0 = SubResource( 11 )
+material/0 = SubResource( 9 )
 
 [node name="female_2018-toenail" parent="female_2018" index="10"]
 mesh = null
 
 [node name="female_2018-tongue01" parent="female_2018" index="11"]
-material/0 = SubResource( 12 )
+material/0 = SubResource( 10 )
 
 [node name="head" type="BoneAttachment" parent="female_2018" index="12" groups=[
 "tps_target",
@@ -166,7 +170,7 @@ transform = Transform( 1, 0, 0, 0, -0.866025, 0.500001, 0, -0.5, -0.866026, -0.0
 
 [node name="main_shape" type="CollisionShape" parent="." index="1"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.753, 0.038 )
-shape = SubResource( 3 )
+shape = SubResource( 11 )
 
 [node name="RayCast" type="RayCast" parent="." index="2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.11 )
@@ -174,11 +178,11 @@ enabled = true
 cast_to = Vector3( 0, 0, -0.4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="3"]
-tree_root = ExtResource( 23 )
+tree_root = ExtResource( 25 )
 anim_player = NodePath("../female_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
-parameters/playback = SubResource( 4 )
+parameters/playback = SubResource( 12 )
 parameters/FrontGrabLoop/TimeScale/scale = 0.3
 parameters/FrontGrabbedLoop/TimeScale/scale = 0.3
 "parameters/Navigate/OneShot 3/active" = false
@@ -191,7 +195,7 @@ parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
 
-[node name="AI" parent="." index="4" instance=ExtResource( 24 )]
+[node name="AI" parent="." index="4" instance=ExtResource( 26 )]
 
 [node name="ray_far" type="RayCast" parent="." index="5"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.12 )
@@ -199,7 +203,7 @@ cast_to = Vector3( 0, -1, -1.5 )
 
 [node name="minimal_shape" type="CollisionShape" parent="." index="6"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0952968, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 13 )
 
-[node name="awareness" parent="." index="7" instance=ExtResource( 25 )]
+[node name="awareness" parent="." index="7" instance=ExtResource( 27 )]
 
