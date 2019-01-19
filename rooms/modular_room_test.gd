@@ -102,7 +102,7 @@ onready var rooms = {
 	},
 	"corridoor_segment_stairs_2": {
 		"module": load("res://rooms/corridoor_module.tscn"),
-		"connections": ["corridoor_segment_stairs_2", "corridoor_segment_stairs_2", "bedroom", "bedroom2", "bathroom", "corridoor_cross"],
+		"connections": ["corridoor_segment_stairs_2", "corridoor_segment_stairs_2", "bedroom2", "bedroom2", "bathroom", "corridoor_cross"],
 		"attachments": [],
 		"priority": 1,
 		"max_floor": 2,
@@ -331,14 +331,14 @@ onready var rooms = {
 #	},
 	"checks": {
 		"classroom": 5,
-		"bedroom": 10,
-		"bathroom": 5,
+		"bathroom": 10,
+		"beds": 5,
 #		"bedroom2": 0,
 #		"stairs_internal": 0
 	},
 	"config": {
-		"min_floor": -5,
-		"max_floor": 10
+		"min_floor": -15,
+		"max_floor": 20
 	}
 }
 
@@ -424,7 +424,7 @@ func calc_aabb(d):
 		
 const max_per_frame = 120
 const max_rooms = 300
-var preferred_dims = Vector3(100, 120, 100)
+var preferred_dims = Vector3(500, 520, 500)
 var room_count = 0
 var complete = false
 var floor_height = 3.0
@@ -548,7 +548,11 @@ func _process(delta):
 			room_count = 0
 			count = 0
 		else:
+			var max_spawned = 20
 			for k in get_tree().get_nodes_in_group("beds"):
 				k.emit_signal("spawn")
+				max_spawned -= 1
+				if max_spawned < 0:
+					break
 			print("SPAWN complete")
 			complete = true

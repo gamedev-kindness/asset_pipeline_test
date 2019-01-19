@@ -1,17 +1,21 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://characters/male_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
 [ext_resource path="res://characters/skeleton_controls.gd" type="Script" id=3]
 [ext_resource path="res://characters/complete_assault_anim.tres" type="Animation" id=4]
-[ext_resource path="res://characters/male/grab_from_back.anim" type="Animation" id=5]
-[ext_resource path="res://characters/female/grabbed_from_back.anim" type="Animation" id=6]
-[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=7]
-[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=8]
-[ext_resource path="res://characters/aplayer.gd" type="Script" id=9]
-[ext_resource path="res://characters/animtree_male.tres" type="AnimationNodeStateMachine" id=10]
-[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=11]
-[ext_resource path="res://characters/awareness.tscn" type="PackedScene" id=12]
+[ext_resource path="res://characters/male/front_grab.anim" type="Animation" id=5]
+[ext_resource path="res://characters/male/front_grab_loop.anim" type="Animation" id=6]
+[ext_resource path="res://characters/female/front_grabbed.anim" type="Animation" id=7]
+[ext_resource path="res://characters/female/front_grabbed_loop.anim" type="Animation" id=8]
+[ext_resource path="res://characters/male/grab_from_back.anim" type="Animation" id=9]
+[ext_resource path="res://characters/female/grabbed_from_back.anim" type="Animation" id=10]
+[ext_resource path="res://characters/male/kick_to_bed.anim" type="Animation" id=11]
+[ext_resource path="res://characters/female/kicked_to_bed.anim" type="Animation" id=12]
+[ext_resource path="res://characters/aplayer.gd" type="Script" id=13]
+[ext_resource path="res://characters/animtree_male.tres" type="AnimationNodeStateMachine" id=14]
+[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=15]
+[ext_resource path="res://characters/awareness.tscn" type="PackedScene" id=16]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -29,23 +33,27 @@ radius = 0.1
 script = ExtResource( 2 )
 
 [node name="male_g_2018" parent="." index="0"]
-transform = Transform( 0.999972, -0.00373505, 0.00652152, 0.00433851, 0.995457, -0.0951166, -0.00613663, 0.0951422, 0.995445, 9.31323e-10, 2.98023e-08, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.31323e-10, 2.98023e-08, 0 )
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="male_g_2018" index="0"]
 anims/complete_assault = ExtResource( 4 )
-anims/grab_from_back = ExtResource( 5 )
-anims/grabbed_from_back = ExtResource( 6 )
-anims/kick_to_bed = ExtResource( 7 )
-anims/kicked_to_bed = ExtResource( 8 )
-script = ExtResource( 9 )
+anims/front_grab = ExtResource( 5 )
+anims/front_grab_loop = ExtResource( 6 )
+anims/front_grabbed = ExtResource( 7 )
+anims/front_grabbed_loop = ExtResource( 8 )
+anims/grab_from_back = ExtResource( 9 )
+anims/grabbed_from_back = ExtResource( 10 )
+anims/kick_to_bed = ExtResource( 11 )
+anims/kicked_to_bed = ExtResource( 12 )
+script = ExtResource( 13 )
 
 [node name="head" type="BoneAttachment" parent="male_g_2018" index="9"]
-transform = Transform( 1, -2.2406e-14, 1.65857e-13, -1.95309e-13, 0.447712, -0.894176, -2.21211e-16, 0.894177, 0.447711, 1.86244e-09, 0.14224, -1.59528 )
+transform = Transform( -1, -2.30423e-07, -2.29915e-07, 1.02422e-07, 0.447712, -0.894177, 3.08974e-07, -0.894177, -0.447713, 4.03414e-07, 0.142239, 1.59528 )
 bone_name = "head"
 
 [node name="Camera" type="Camera" parent="male_g_2018/head" index="0"]
-transform = Transform( -0.999998, -0.000775828, 0.00196414, -8.13083e-08, -0.93006, -0.367411, 0.00211181, -0.36741, 0.930058, 0.000493622, 0.0410988, -0.106319 )
+transform = Transform( -0.999998, -0.000775825, 0.00196414, -8.13743e-08, -0.930059, -0.367411, 0.00211181, -0.36741, 0.930058, 0.000493629, 0.0701791, -0.164399 )
 
 [node name="foot_ik_l" type="Spatial" parent="male_g_2018" index="10"]
 transform = Transform( 0.999972, 0.00433851, -0.00613662, -0.00373505, 0.995456, 0.0951422, 0.00652152, -0.0951165, 0.995445, 0.178314, -0.000666062, 0.00116292 )
@@ -63,13 +71,15 @@ enabled = true
 cast_to = Vector3( 0, 0, -0.4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="3"]
-tree_root = ExtResource( 10 )
+tree_root = ExtResource( 14 )
 anim_player = NodePath("../male_g_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
 parameters/playback = SubResource( 2 )
-"parameters/Navigate/OneShot 3/active" = false
+parameters/FrontGrabLoop/TimeScale/scale = 0.3
+parameters/FrontGrabbedLoop/TimeScale/scale = 0.3
 parameters/Navigate/TimeScale/scale = 1.0
+parameters/Navigate/blink/active = false
 parameters/Navigate/turn_left/active = false
 parameters/Navigate/turn_right/active = false
 parameters/Sleep/Blend2/blend_amount = 1.0
@@ -78,7 +88,7 @@ parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
 
-[node name="AI" parent="." index="4" instance=ExtResource( 11 )]
+[node name="AI" parent="." index="4" instance=ExtResource( 15 )]
 
 [node name="ray_far" type="RayCast" parent="." index="5"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.25 )
@@ -88,5 +98,5 @@ cast_to = Vector3( 0, -1, -1.5 )
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.101824, 0.05 )
 shape = SubResource( 3 )
 
-[node name="awareness" parent="." index="7" instance=ExtResource( 12 )]
+[node name="awareness" parent="." index="7" instance=ExtResource( 16 )]
 

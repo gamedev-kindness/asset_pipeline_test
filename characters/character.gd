@@ -18,6 +18,42 @@ var cooldown = 0.0
 var feet_ik_enabled = true
 var tps_target
 
+var fps_camera
+var tps_camera
+
+var track
+
+func load_animations():
+	var animations = [
+		{
+			"name": "front_grab",
+			"animation": load("res://characters/male/front_grab.anim")
+		},
+		{
+			"name": "grab_from_back",
+			"animation": load("res://characters/male/grab_from_back.anim")
+		},
+		{
+			"name": "kick_to_bed",
+			"animation": load("res://characters/male/kick_to_bed.anim"),
+		},
+		{
+			"name": "front_grabbed",
+			"animation": load("res://characters/female/front_grabbed.anim"),
+		},
+		{
+			"name": "grabbed_from_back",
+			"animation": load("res://characters/female/grabbed_from_back.anim"),
+		},
+		{
+			"name": "kicked_to_bed",
+			"animation": load("res://characters/female/kicked_to_bed.anim")
+		}
+	]
+	for anim in animations:
+		get_children()[0].get_node("AnimationPlayer").remove_animation(anim.name)
+		get_children()[0].get_node("AnimationPlayer").add_animation(anim.name, anim.animation)
+		
 var actions = {
 	"kick_to_bed": {
 			"active": "KickToBed",
@@ -32,10 +68,10 @@ var actions = {
 			"direction":"BACK"
 	},
 	"front_grab": {
-			"active": "FrontGrab",
-			"passive": "FrontGrabbed",
+			"active": "FrontGrabLoop",
+			"passive": "FrontGrabbedLoop",
 			"ik": false,
-			"direction":"BACK"
+			"direction":"FRONT"
 	}
 }
 func enable_fps_camera():
@@ -44,25 +80,36 @@ func disable_fps_camera():
 	get_children()[0].get_node("head/Camera").current = false
 func set_action_mode(m):
 	action = m
-	get_children()[0].rotation.y = PI
-	get_children()[0].rotation.x = 0
+#	get_children()[0].rotation.y = PI
+#	get_children()[0].rotation.x = 0
 	if !m:
 		emit_signal("set_feet_ik", false)
-#	if m:
-#		$main_shape.disabled = true
-#		$horizontal.disabled = true
-#	else:
-#		$main_shape.disabled = true
-#		$horizontal.disabled = true
+	if m:
+		$main_shape.disabled = false
+		$minimal_shape.disabled = false
+#		$AnimationTree.active = false
+#		track = $AnimationTree.root_motion_track
+#		$AnimationTree.root_motion_track = ""
+#		get_children()[0].rotation.x = 0
+#		get_children()[0].rotation.y = PI
+#		$AnimationTree.active = true
+	else:
+		$main_shape.disabled = false
+		$minimal_shape.disabled = false
+#		$AnimationTree.active = false
+#		$AnimationTree.root_motion_track = track
+#		get_children()[0].rotation.x = 0
+#		get_children()[0].rotation.y = PI
+#		$AnimationTree.active = true
 func do_action(other, name):
 	var active = actions[name].active
 	var passive = actions[name].passive
+	set_action_mode(true)
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 	sm.travel(active)
 	if actions[name].ik:
 		emit_signal("set_feet_ik", true)
 		feet_ik_enabled = true
-	set_action_mode(true)
 	self.other = other
 	other.emit_signal("passive_action", self, passive, actions[name].ik)
 
@@ -72,15 +119,22 @@ func do_ui_action(act):
 	var other = $awareness.get_actuator_body("characters")
 	print(act)
 	if act == "GrabFromBack":
+		add_collision_exception_with(other)
+		other.add_collision_exception_with(self)
 		do_action(other, "grab_from_back")
 	elif act == "KickToBed":
-			do_action(other, "kick_to_bed")
+		add_collision_exception_with(other)
+		other.add_collision_exception_with(self)
+		do_action(other, "kick_to_bed")
 	elif act == "FrontGrab":
-			do_action(other, "front_grab")
+		add_collision_exception_with(other)
+		other.add_collision_exception_with(self)
+		do_action(other, "front_grab")
 	elif act == "LeaveAction":
 			set_action_mode(false)
 			other.set_action_mode(false)
 			remove_collision_exception_with(other)
+			other.remove_collision_exception_with(self)
 			if sm.is_playing():
 				sm.travel("Stand")
 	else:
@@ -118,12 +172,16 @@ func do_passive_action(other, action, ik):
 		emit_signal("set_feet_ik", true)
 		feet_ik_enabled = true
 		
-	var move_fix = Transform(Basis(), Vector3(0, 0, -0.5))
-	transform = other.transform * move_fix
+	var move_fix = Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
+	transform = (other.transform * move_fix).orthonormalized()
 	set_action_mode(true)
 	self.other = other
 func _ready():
-	get_children()[0].rotation.y = PI
+	fps_camera = get_children()[0].get_node("head/Camera")
+	load_animations()
+	get_children()[0].rotation.y = 0
+	get_children()[0].rotation.x = 0
+	get_children()[0].rotation.z = 0
 	add_to_group("characters")
 	connect("active_action", self, "do_active_action")
 	connect("passive_action", self, "do_passive_action")
@@ -202,27 +260,30 @@ func _process(delta):
 	else:
 		if $AI.has_method("run") && !action:
 			$AI.run(delta, self, $AnimationTree)
-	var rm = $AnimationTree.get_root_motion_transform()
-	orientation *= rm
-	var tf_fix = Transform(Quat(Vector3(0, 1, 0), PI))
-	var h_velocity = tf_fix.xform(orientation.origin) / delta
-	velocity.x = h_velocity.x
-	velocity.z = h_velocity.z
-	if !action:
-		velocity += GRAVITY * delta
-	if !action:
-		velocity = move_and_slide(velocity, Vector3(0, 1, 0))
-	else:
-		if velocity.length() > 0.06:
-			velocity = move_and_slide(velocity, Vector3(0, 1, 0), true, 4, PI * 0.1, false)
+	if true:
+		var rm = $AnimationTree.get_root_motion_transform()
+		orientation *= rm
+#		var tf_fix = Transform(Quat(Vector3(0, 1, 0), PI))
+#		var h_velocity = tf_fix.xform(orientation.origin) / delta
+		var h_velocity = orientation.origin / delta
+		velocity.x = h_velocity.x
+		velocity.z = h_velocity.z
+		if !action:
+			velocity += GRAVITY * delta
+		if !action:
+			velocity = move_and_slide(velocity, Vector3(0, 1, 0))
+		else:
+			if velocity.length() > 0.06:
+				velocity = move_and_slide(velocity, Vector3(0, 1, 0), false, 4, PI * 0.1, false)
 #		print(velocity.length())
-	orientation.origin = Vector3()
-	orientation = orientation.orthonormalized()
-	global_transform.basis = orientation.basis
-	if cooldown > 0.0:
-		cooldown -= delta
-	get_children()[0].rotation.y = PI
+		orientation.origin = Vector3()
+		orientation = orientation.orthonormalized()
+		global_transform.basis = orientation.basis
+		if cooldown > 0.0:
+			cooldown -= delta
+	get_children()[0].rotation.y = 0
 	get_children()[0].rotation.x = 0
+	get_children()[0].rotation.z = 0
 #	else:
 #		sm.travel("Navigation")
 #		move_and_slide(-transform.basis[2] * 0.5, Vector3(0, 1, 0))

@@ -41,7 +41,8 @@ func post_import(scene):
 						var tt = ar.track_get_type(t)
 						var tp = String(ar.track_get_path(t))
 						print("ORIGINAL track: ", t, " path: ", tp)
-						if tp == ".":
+						if false:
+							var tdata = ar.track_get_key_count(t)
 							kill_list.push_back(t)
 							print("will REMOVE track: ", t, " path: ", tp)
 						else:

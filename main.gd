@@ -67,7 +67,27 @@ func _process(delta):
 				print("posessed: ", ch.name)
 #				camera_target = ch
 				posessed = true
-				ch.add_child(load("res://camera/camera.tscn").instance())
+				ch.tps_camera = load("res://camera/camera.tscn").instance()
+				ch.add_child(ch.tps_camera)
+				ch.tps_camera.get_node("base/cam_control/Camera").current = true
 				break
-#	if cooldown > delta:
-#		cooldown -= delta
+	if posessed:
+		if Input.is_action_pressed("change_view") && cooldown < 0.1:
+			if !fps_camera:
+				var chars = get_tree().get_nodes_in_group("characters")
+				for ch in chars:
+					if ch.posessed:
+						ch.tps_camera.get_node("base/cam_control/Camera").current = false
+						ch.fps_camera.current = true
+						cooldown = 0.5
+						fps_camera = true
+			elif fps_camera:
+				var chars = get_tree().get_nodes_in_group("characters")
+				for ch in chars:
+					if ch.posessed:
+						ch.fps_camera.current = false
+						ch.tps_camera.get_node("base/cam_control/Camera").current = true
+						cooldown = 0.5
+						fps_camera = false
+	if cooldown > delta:
+		cooldown -= delta
