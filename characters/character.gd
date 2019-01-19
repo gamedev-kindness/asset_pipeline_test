@@ -74,6 +74,24 @@ var actions = {
 			"direction":"FRONT"
 	}
 }
+var set_count = 0
+func update_aabbs():
+	var queue = [self]
+	
+	while queue.size() > 0:
+		var cur = queue[0]
+		queue.pop_front()
+		
+		if cur is MeshInstance:
+			var aabb = cur.get_aabb()
+			aabb = aabb.grow(1.3)
+			if cur.mesh:
+				cur.mesh.custom_aabb = aabb
+				set_count += 1
+		for c in cur.get_children():
+			queue.push_back(c)
+
+
 func enable_fps_camera():
 	get_children()[0].get_node("head/Camera").current = true
 func disable_fps_camera():
@@ -179,6 +197,7 @@ func do_passive_action(other, action, ik):
 func _ready():
 	fps_camera = get_children()[0].get_node("head/Camera")
 	load_animations()
+	update_aabbs()
 	get_children()[0].rotation.y = 0
 	get_children()[0].rotation.x = 0
 	get_children()[0].rotation.z = 0
