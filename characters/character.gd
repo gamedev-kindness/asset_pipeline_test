@@ -218,6 +218,7 @@ func _ready():
 				tps_target = m
 				break
 			queue.push_back(m)
+	$AnimationTree["parameters/Navigate/walk_speed/scale"] = 1.5
 #	sm.travel("Stand")
 
 
