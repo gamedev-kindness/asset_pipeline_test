@@ -14,7 +14,8 @@ func start_game():
 func load_game():
 	pass
 func display_options():
-	pass
+	var sc = load("res://ui/options.tscn")
+	get_tree().change_scene_to(sc)
 func quit_game():
 	get_tree().quit()
 func _ready():

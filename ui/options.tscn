@@ -1,0 +1,421 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/options.gd" type="Script" id=1]
+[ext_resource path="res://fonts/DroidSansFallback.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ui/press_a_key.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 32
+font_data = ExtResource( 2 )
+
+[node name="options" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="top" type="Control" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 300, 100 )
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/top"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 4.0
+margin_right = -724.0
+margin_bottom = 4.0
+rect_min_size = Vector2( 600, 100 )
+
+[node name="c" type="Polygon2D" parent="VBoxContainer/top/ColorRect"]
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 48, 26, 48, 46, 81, 46, 80, 58, 31, 55, 31, 12, 93, 11, 93, 24 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="o" type="Polygon2D" parent="VBoxContainer/top/ColorRect"]
+position = Vector2( 79, 1 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 48, 26, 48, 46, 69, 48, 86, 36, 89, 52, 31, 55, 31, 12, 74, 12, 89, 24, 96, 50, 70, 27 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="n" type="Polygon2D" parent="VBoxContainer/top/ColorRect"]
+position = Vector2( 155, 4 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 48, 26, 49.7711, 45.89, 47.3644, 57.1211, 29.3144, 59.9289, 31, 55, 31, 12, 55.7878, 12.9989, 77.4478, 46.2911, 77.0466, 12.5978, 88.2777, 14.2022, 86, 56, 74, 57 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="t" type="Polygon2D" parent="VBoxContainer/top/ColorRect"]
+position = Vector2( 227.831, 7.62111 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 48, 26, 48, 46, 81, 46, 80, 58, 31, 55, 32.2933, -5.46334, 45.53, -3.45779, 42.7062, 12.3382, 65.1844, 12.9878, 64.7833, 27.4278 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="r" type="Polygon2D" parent="VBoxContainer/top/ColorRect"]
+position = Vector2( 290.404, 9.62666 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 48, 26, 61.9756, 36.6533, 72.8056, 49.89, 74.0089, 58.7144, 66.7392, 58.0866, 41.1178, 35.0489, 37.9699, 55.6019, 31, 55, 30.2878, -1.85334, 66.3878, -3.05666, 65.1845, 12.9878, 59.1678, 15.3944, 57.5634, 4.56445, 40.3156, 5.36666, 41.1178, 11.3833, 55.9589, 11.7844, 64.7834, 13.3889, 65.5856, 23.0156 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="o2" type="Polygon2D" parent="VBoxContainer/top/ColorRect"]
+position = Vector2( 349.769, 10.4289 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 48, 26, 48, 46, 81, 46, 80, 58, 31, 55, 31, 12, 93, 11, 93, 24, 93.6633, 58.3133, 71.2011, 57.9122, 69.9977, 28.23 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="l" type="Polygon2D" parent="VBoxContainer/top/ColorRect"]
+position = Vector2( 438.815, 10.4289 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 48, 26, 48, 46, 81, 46, 80.8932, 57.1222, 80.8278, 63.9289, 31, 55, 30.6889, 41.8678, 30.6889, 10.9822, 31.09, 2.95998, 31.4911, -4.66113, 48.7389, 0.553322 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="l2" type="Polygon2D" parent="VBoxContainer/top/ColorRect"]
+position = Vector2( 504.598, 10.0278 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 56.7611, 9.77888, 50.3433, 16.1966, 50.7444, 23.0155, 84.4377, 24.62, 81, 46, 80.8932, 57.1222, 80.8278, 63.9289, 65.5856, 60.3189, 31, 55, 30.6889, 49.89, 66.7889, 51.0933, 64.7833, 42.2689, 35.5022, 36.6533, 31.7321, 28.1568, 33.4966, 4.96554, 52.3489, -5.86446, 78.8222, -5.86446, 86.4433, 4.56443 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/top"]
+margin_left = 644.269
+margin_top = 5.05969
+margin_right = 644.269
+margin_bottom = 5.05969
+mouse_filter = 1
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBoxContainer/top/TextureButton"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 80, 80 )
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/top/TextureButton/ReferenceRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/top/TextureButton/ReferenceRect/ColorRect"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 36.7859, 13.0859, 10.5504, 38.5718, 38.2851, 58.8107, 43.5322, 45.3181, 70.5173, 46.8173, 69.0181, 30.3264, 42.7826, 30.3264 )
+
+[node name="left_control" type="TextureButton" parent="VBoxContainer"]
+margin_top = 104.0
+margin_right = 1024.0
+margin_bottom = 184.0
+rect_min_size = Vector2( 100, 80 )
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/left_control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBoxContainer/left_control/HBoxContainer4"]
+margin_right = 250.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/left_control/HBoxContainer4/ReferenceRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/left_control/HBoxContainer4/ReferenceRect/ColorRect"]
+color = Color( 0.027451, 0.027451, 0.027451, 1 )
+polygon = PoolVector2Array( 80.573, 12.82, 29.6319, 38.4911, 78.9685, 70.9811 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="VBoxContainer/left_control/HBoxContainer4/ReferenceRect/ColorRect"]
+position = Vector2( 48.5344, 4.81332 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 80.1719, 23.2489, 31.2363, 22.8478, 29.6319, 48.1178, 79.7708, 47.7167 )
+
+[node name="left_control" type="Label" parent="VBoxContainer/left_control/HBoxContainer4" groups=[
+"controls",
+]]
+margin_left = 254.0
+margin_top = 19.0
+margin_right = 394.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Click here"
+
+[node name="right_control" type="TextureButton" parent="VBoxContainer"]
+margin_top = 188.0
+margin_right = 1024.0
+margin_bottom = 268.0
+rect_min_size = Vector2( 100, 80 )
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/right_control"]
+margin_right = 394.0
+margin_bottom = 80.0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBoxContainer/right_control/HBoxContainer3"]
+margin_right = 250.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/right_control/HBoxContainer3/ReferenceRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/right_control/HBoxContainer3/ReferenceRect/ColorRect"]
+position = Vector2( 156.834, 83.03 )
+rotation = 3.17741
+color = Color( 0.027451, 0.027451, 0.027451, 1 )
+polygon = PoolVector2Array( 80.573, 12.82, 29.6319, 38.4911, 78.9685, 70.9811 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="VBoxContainer/right_control/HBoxContainer3/ReferenceRect/ColorRect"]
+position = Vector2( 1.60445, 5.21443 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 80.1719, 23.2489, 31.2363, 22.8478, 29.6319, 48.1178, 79.7708, 47.7167 )
+
+[node name="right_control" type="Label" parent="VBoxContainer/right_control/HBoxContainer3" groups=[
+"controls",
+]]
+margin_left = 254.0
+margin_top = 19.0
+margin_right = 394.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Click here"
+
+[node name="up_control" type="TextureButton" parent="VBoxContainer"]
+margin_top = 272.0
+margin_right = 1024.0
+margin_bottom = 352.0
+rect_min_size = Vector2( 100, 80 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/up_control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -630.0
+margin_bottom = -520.0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBoxContainer/up_control/HBoxContainer2"]
+margin_right = 250.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/up_control/HBoxContainer2/ReferenceRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/up_control/HBoxContainer2/ReferenceRect/ColorRect"]
+position = Vector2( 111.108, -24.0667 )
+rotation = 1.54942
+color = Color( 0.027451, 0.027451, 0.027451, 1 )
+polygon = PoolVector2Array( 80.573, 12.82, 29.6319, 38.4911, 78.9685, 70.9811 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="VBoxContainer/up_control/HBoxContainer2/ReferenceRect/ColorRect"]
+position = Vector2( 38.5066, 110.707 )
+rotation = -1.6004
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 80.1719, 23.2489, 31.2363, 22.8478, 29.6319, 48.1178, 79.7708, 47.7167 )
+
+[node name="up_control" type="Label" parent="VBoxContainer/up_control/HBoxContainer2" groups=[
+"controls",
+]]
+margin_left = 254.0
+margin_top = 19.0
+margin_right = 394.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Click here"
+
+[node name="down_control" type="TextureButton" parent="VBoxContainer"]
+margin_top = 356.0
+margin_right = 1024.0
+margin_bottom = 436.0
+rect_min_size = Vector2( 100, 80 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/down_control"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBoxContainer/down_control/HBoxContainer"]
+margin_right = 250.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/down_control/HBoxContainer/ReferenceRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/down_control/HBoxContainer/ReferenceRect/ColorRect"]
+position = Vector2( 22.061, 108.3 )
+rotation = 4.65979
+color = Color( 0.027451, 0.027451, 0.027451, 1 )
+polygon = PoolVector2Array( 80.573, 12.82, 29.6319, 38.4911, 78.9685, 70.9811 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="VBoxContainer/down_control/HBoxContainer/ReferenceRect/ColorRect"]
+position = Vector2( 26.4733, 86.2389 )
+rotation = -1.6296
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 80.1719, 23.2489, 31.2363, 22.8478, 29.6319, 48.1178, 79.7708, 47.7167 )
+
+[node name="down_control" type="Label" parent="VBoxContainer/down_control/HBoxContainer" groups=[
+"controls",
+]]
+margin_left = 254.0
+margin_top = 19.0
+margin_right = 394.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Click here"
+
+[node name="jump_control" type="TextureButton" parent="VBoxContainer"]
+margin_top = 440.0
+margin_right = 1024.0
+margin_bottom = 520.0
+rect_min_size = Vector2( 100, 80 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/jump_control"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBoxContainer/jump_control/HBoxContainer"]
+margin_right = 250.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/jump_control/HBoxContainer/ReferenceRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Polygon2D2" type="Polygon2D" parent="VBoxContainer/jump_control/HBoxContainer/ReferenceRect/ColorRect"]
+position = Vector2( -35.2978, 9.62656 )
+rotation = -0.342917
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 80.1719, 23.2489, 71.8319, 23.4653, 65.0246, 29.8952, 59.3719, 23.5353, 37.3007, 43.5316, 38.8784, 50.857, 43.2823, 64.7777, 33.0593, 74.6228, 35.2258, 85.5991, 43.941, 80.8887, 55.742, 71.5383, 51.7212, 52.1385, 57.1329, 47.9137, 64.0093, 74.4359, 73.7608, 72.5992, 64.6941, 42.3317, 69.5926, 47.7981, 79.7708, 47.7167, 86.083, 31.9214 )
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/jump_control/HBoxContainer/ReferenceRect/ColorRect"]
+color = Color( 0.25098, 0.113725, 0.113725, 1 )
+polygon = PoolVector2Array( 68.1385, 45.6419, 83.7819, 32.0042, 115.069, 23.1797, 155.982, 22.7786, 186.466, 32.8064, 196.494, 42.0319, 204.917, 49.2519, 199.703, 52.8619, 180.45, 37.6197, 156.383, 30.3997, 126.701, 27.993, 95.8152, 34.4108, 77.3641, 44.8397, 72.9519, 52.4608 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="VBoxContainer/jump_control/HBoxContainer/ReferenceRect/ColorRect"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 107.849, 15.9597, 114.667, 39.6253, 129.107, 25.1853 )
+
+[node name="Polygon2D4" type="Polygon2D" parent="VBoxContainer/jump_control/HBoxContainer/ReferenceRect/ColorRect"]
+position = Vector2( 148.744, -59.0806 )
+rotation = 0.913027
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 107.849, 15.9597, 114.667, 39.6253, 129.107, 25.1853 )
+
+[node name="jump_control" type="Label" parent="VBoxContainer/jump_control/HBoxContainer" groups=[
+"controls",
+]]
+margin_left = 254.0
+margin_top = 19.0
+margin_right = 394.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Click here"
+
+[node name="sneak_control" type="TextureButton" parent="VBoxContainer"]
+margin_top = 524.0
+margin_right = 1024.0
+margin_bottom = 604.0
+rect_min_size = Vector2( 100, 80 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/sneak_control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ReferenceRect" type="ReferenceRect" parent="VBoxContainer/sneak_control/HBoxContainer"]
+margin_right = 250.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/sneak_control/HBoxContainer/ReferenceRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Polygon2D2" type="Polygon2D" parent="VBoxContainer/sneak_control/HBoxContainer/ReferenceRect/ColorRect"]
+position = Vector2( 42.1708, -38.5198 )
+rotation = 0.732379
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 83.8038, 8.06277, 74.6267, 11.9334, 69.2952, 20.6222, 65.7958, 23.7688, 59.3719, 23.5353, 37.3007, 43.5316, 38.8784, 50.857, 46.7798, 68.1309, 34.4518, 78.2427, 35.2258, 85.5991, 43.941, 80.8887, 55.742, 71.5383, 51.7212, 52.1385, 61.6703, 43.544, 65.0319, 47.8237, 74.2048, 53.6936, 91.4866, 37.1799, 87.6931, 36.2096, 74.1819, 44.4643, 67.5652, 38.7301, 69.8814, 33.7263, 76.2332, 29.962, 84.1437, 30.6382, 88.6926, 27.0346, 89.6651, 18.3708 )
+
+[node name="sneak_control" type="Label" parent="VBoxContainer/sneak_control/HBoxContainer" groups=[
+"controls",
+]]
+margin_left = 254.0
+margin_top = 19.0
+margin_right = 394.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Click here"
+
+[node name="press_a_key" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="indicator" type="Node2D" parent="press_a_key"]
+
+[node name="finger" type="Node2D" parent="press_a_key/indicator"]
+position = Vector2( -8.43286, -28.6716 )
+
+[node name="Polygon2D4" type="Polygon2D" parent="press_a_key/indicator/finger"]
+color = Color( 0.945098, 0.631373, 0.631373, 1 )
+polygon = PoolVector2Array( 867.03, 37.8509, 775.956, 98.5673, 755.717, 137.358, 779.329, 174.463, 824.866, 189.642, 917.627, 130.612, 983.403, 98.5673, 1015.45, 78.3285, 1093.03, 22.6718, 990.15, -73.4626, 914.254, 9.17923 )
+
+[node name="Polygon2D5" type="Polygon2D" parent="press_a_key/indicator/finger"]
+color = Color( 0.74902, 0.564706, 0.564706, 1 )
+polygon = PoolVector2Array( 818.12, 88.4479, 789.448, 108.687, 789.448, 150.851, 828.239, 166.03, 877.15, 137.358 )
+
+[node name="Polygon2D6" type="Polygon2D" parent="press_a_key/indicator/finger"]
+color = Color( 1, 0.776471, 0.776471, 1 )
+polygon = PoolVector2Array( 814.747, 95.1942, 797.881, 123.866, 794.508, 140.732, 824.866, 155.911, 863.657, 133.985 )
+
+[node name="button" type="Node2D" parent="press_a_key/indicator"]
+position = Vector2( 6.74622, 37.1045 )
+
+[node name="Polygon2D" type="Polygon2D" parent="press_a_key/indicator/button"]
+polygon = PoolVector2Array( 708.493, 166.03, 801.254, 105.314, 900.762, 169.403, 895.702, 226.746, 804.627, 280.717, 710.179, 225.06 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="press_a_key/indicator/button"]
+position = Vector2( -3.37317, -6.74631 )
+color = Color( 0.85098, 0.67451, 0.67451, 1 )
+polygon = PoolVector2Array( 708.493, 166.03, 801.254, 105.314, 900.762, 169.403, 811.374, 225.06 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="press_a_key/indicator/button"]
+color = Color( 0.192157, 0.160784, 0.160784, 1 )
+polygon = PoolVector2Array( 767.523, 66.5226, 808, 154.224, 855.224, 61.4628 )
+

@@ -105,7 +105,6 @@ collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="female_2018" parent="." index="0"]
-transform = Transform( 1, 0, 0, 0, 0.999948, 0, 0, 0, 1.00005, 0, 1.49012e-08, 1.19209e-07 )
 bones/21/bound_children = [ NodePath("head") ]
 script = ExtResource( 3 )
 
@@ -186,9 +185,9 @@ parameters/playback = SubResource( 12 )
 parameters/FrontGrabLoop/TimeScale/scale = 0.3
 parameters/FrontGrabbedLoop/TimeScale/scale = 0.3
 "parameters/Navigate/OneShot 3/active" = false
-parameters/Navigate/TimeScale/scale = 1.0
 parameters/Navigate/turn_left/active = false
 parameters/Navigate/turn_right/active = false
+parameters/Navigate/walk_speed/scale = 1.0
 parameters/Sleep/Blend2/blend_amount = 1.0
 parameters/Sleep/sleep_scale/scale = 1.0
 parameters/Stand/TimeScale/scale = 1.0
