@@ -14,11 +14,15 @@ func _process(delta):
 	if cooldown > 0.0:
 		cooldown -= delta
 		return
-	if Input.is_action_pressed("inventory"):
-		if !visible:
+	if Input.is_action_pressed("inventory") && !settings.console_enabled:
+		if !visible && settings.game_input_enabled:
+			$VBoxContainer/ViewportContainer/Viewport/inventory_scene.rebuild()
 			show()
 			settings.game_input_enabled = false
+			settings.inventory_enabled = true
 		else:
 			hide()
+			$VBoxContainer/ViewportContainer/Viewport/inventory_scene.cleanup()
 			settings.game_input_enabled = true
+			settings.inventory_enabled = false
 		cooldown += 0.2

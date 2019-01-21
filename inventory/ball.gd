@@ -1,4 +1,4 @@
-extends Node
+extends Pickable
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -11,7 +11,3 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-var max_characters_spawned = 20
-var game_input_enabled = false
-var console_enabled = false
-var inventory_enabled = false

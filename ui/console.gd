@@ -82,21 +82,21 @@ func _process(delta):
 	if cooldown > 0.0:
 		cooldown -= delta
 		return
-	if Input.is_action_pressed("console"):
+	if Input.is_action_just_released("console"):
 		if visible:
 			$VBoxContainer/LineEdit.text = ""
 			hide()
-			cooldown += 0.1
+			cooldown = 0.1
 		else:
 			show()
 			$VBoxContainer/LineEdit.text = ""
-			cooldown += 0.05
+			cooldown = 0.05
 			
 func visibility_changed():
 	if visible:
 		settings.game_input_enabled = false
 		$VBoxContainer/LineEdit.grab_focus()
-		cooldown = 0.1
+		settings.console_enabled = true
 	else:
 		settings.game_input_enabled = true
-		cooldown = 0.15
+		settings.console_enabled = false

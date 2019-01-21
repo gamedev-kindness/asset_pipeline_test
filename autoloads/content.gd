@@ -14,6 +14,18 @@ var items = {
 	"item": {
 		"name": "item",
 		"obj": load("res://inventory/pickable.tscn")
+	},
+	"pickable": {
+		"name": "pickable",
+		"obj": load("res://inventory/pickable.tscn")
+	},
+	"pickable_cube": {
+		"name": "pickable_cube",
+		"obj": load("res://inventory/pickable_cube.tscn")
+	},
+	"ball": {
+		"name": "ball",
+		"obj": load("res://inventory/ball.tscn")
 	}
 }
 # Declare member variables here. Examples:

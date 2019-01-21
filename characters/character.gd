@@ -194,7 +194,7 @@ func do_ui_action(act):
 	elif act == "PickUpItem":
 		var item = awareness.get_actuator_body(self, "pickup")
 		if item != null:
-			awareness.inventory[self].push_back(item.name)
+			awareness.inventory[self].push_back(item.item_type)
 			get_node("/root").remove_child(item)
 			item.queue_free()
 	else:

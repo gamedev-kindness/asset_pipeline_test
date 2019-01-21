@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "CharacterData",
 "language": "GDScript",
 "path": "res://characters/character_data.gd"
+}, {
+"base": "RigidBody",
+"class": "Pickable",
+"language": "GDScript",
+"path": "res://inventory/pickable.gd"
 } ]
 _global_script_class_icons={
-"CharacterData": ""
+"CharacterData": "",
+"Pickable": ""
 }
 
 [application]
