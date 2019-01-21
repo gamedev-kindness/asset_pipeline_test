@@ -29,6 +29,7 @@ var max_character_sight_distance = 12.0
 var max_distance_to_camera  = 20.0
 
 var sight_map = {}
+var inventory = {}
 func rebuild_map():
 	var camera = player_character.tps_camera
 	for k in characters:
@@ -77,8 +78,12 @@ func get_neighbors_by_group(p:Spatial, group: String):
 func remove_deleted(c):
 	if c in characters:
 		characters.erase(c)
+		inventory[c] = []
+		update_active()
+
 	if c in objects:
 		objects.erase(c)
+		update_active()
 	for fc in chunks.keys():
 		if c in chunks[fc]:
 			chunks[fc].erase(c)
@@ -116,12 +121,13 @@ func _process(delta):
 		if !k in characters:
 			characters.push_back(k)
 			k.connect("tree_exited", self, "remove_deleted", [k])
+			inventory[k] = []
 	for k in get_tree().get_nodes_in_group("character_holders"):
 		add_chunk(chunks1, k)
 		if !k in character_holders:
 			character_holders.push_back(k)
 			k.connect("tree_exited", self, "remove_deleted", [k])
-	for k in get_tree().get_nodes_in_group("pickups"):
+	for k in get_tree().get_nodes_in_group("pickup"):
 		add_chunk(chunks1, k)
 		if !k in objects:
 			objects.push_back(k)
@@ -139,7 +145,7 @@ static func distance(n1: Spatial, n2: Spatial) -> float:
 	return n1.global_transform.origin.distance_to(n2.global_transform.origin)
 
 var active_items = {}
-var max_active_distance = 1.0
+var max_active_distance = 1.2
 var active_angle = PI
 
 
@@ -155,7 +161,7 @@ func update_active():
 				if distance(a, c) < max_active_distance:
 					var pos2 = c.global_transform.origin - pos1
 					var p2 = Vector2(pos2.x, pos2.z)
-					if abs(p1.angle_to(p2)) < active_angle / (2.0 + distance(a, c)):
+					if abs(p1.angle_to(p2)) < active_angle / (1.7 + distance(a, c)):
 						if active_items.has(a):
 							active_items[a].push_back(c)
 						else:

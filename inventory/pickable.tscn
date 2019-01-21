@@ -19,7 +19,9 @@ flags_transparent = true
 albedo_color = Color( 0.956863, 0.835294, 0.227451, 0.423529 )
 
 [node name="pickable" type="RigidBody" groups=[
+"pickups",
 "pickable",
+"pickup",
 ]]
 physics_material_override = SubResource( 1 )
 

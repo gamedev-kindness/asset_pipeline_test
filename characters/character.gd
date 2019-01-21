@@ -191,6 +191,12 @@ func do_ui_action(act):
 		var which = classes[randi() % classes.size()]
 		var to = which.global_transform.origin
 		global_transform.origin = to
+	elif act == "PickUpItem":
+		var item = awareness.get_actuator_body(self, "pickup")
+		if item != null:
+			awareness.inventory[self].push_back(item.name)
+			get_node("/root").remove_child(item)
+			item.queue_free()
 	else:
 		print("Unknown action: ", act)
 

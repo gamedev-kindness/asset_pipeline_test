@@ -6,11 +6,65 @@ extends Panel
 
 # Called when the node enters the scene tree for the first time.
 
-func process_command(c):
-	print("command:", c)
-	$VBoxContainer/RichTextLabel.text += c
-	$VBoxContainer/LineEdit.text = ""
+var spawns = [
+	{
+		"name": "item",
+		"obj": load("res://inventory/pickable.tscn")
+	},
+	{
+		"name": "male",
+		"obj": load("res://characters/male_2018.tscn")
+	},
+	{
+		"name": "female",
+		"obj": load("res://characters/female_2018.tscn")
+	}
+]
 
+func do_spawn(obj):
+	for h in spawns:
+		if h.name == obj:
+			var i = h.obj.instance()
+			get_node("/root").add_child(i)
+			var offset = Vector3(0, 0, -1)
+			var offset_moved = awareness.player_character.global_transform.xform(offset)
+			i.global_transform.origin = offset_moved
+			i.global_transform.basis = awareness.player_character.global_transform.basis
+
+func process_command(c: String):
+	print("command:", c)
+	$VBoxContainer/RichTextLabel.text += c + "\n"
+	$VBoxContainer/LineEdit.text = ""
+	var cmdtmp = c.split(" ")
+	var command = cmdtmp[0]
+	var args = []
+	for k in range(1, cmdtmp.size()):
+		args.push_back(cmdtmp[k])
+	if args.size() == 0:
+		command = c
+	var d = $VBoxContainer/RichTextLabel
+	match(command):
+		"spawn":
+			do_spawn(args[0])
+		"items":
+			$VBoxContainer/RichTextLabel.append_bbcode("[b]Active items[/b]\n")
+			if awareness.active_items.has(awareness.player_character):
+				$VBoxContainer/RichTextLabel.text += ""
+				for i in awareness.active_items[awareness.player_character]:
+					$VBoxContainer/RichTextLabel.text += str(i) + " :  " + i.name + "\n"
+				$VBoxContainer/RichTextLabel.text += "\n"
+			$VBoxContainer/RichTextLabel.append_bbcode("[b]All items[/b]\n")
+			$VBoxContainer/RichTextLabel.text += "\n"
+			for i in awareness.objects:
+				$VBoxContainer/RichTextLabel.text += str(i) + " :  " + i.name + "\n"
+				$VBoxContainer/RichTextLabel.text += str(i.transform) + "\n"
+				$VBoxContainer/RichTextLabel.text += "distance: " + str(awareness.distance(awareness.player_character, i)) + "\n"
+			$VBoxContainer/RichTextLabel.text += "\n"
+		"inv":
+			d.append_bbcode("[b]Inventory[/b]\n")
+			var items = awareness.inventory[awareness.player_character]
+			for i in items:
+				d.text += i + "\n"
 
 func _ready():
 	$VBoxContainer/LineEdit.connect("text_entered", self, "process_command")
@@ -26,13 +80,17 @@ func _process(delta):
 		if visible:
 			$VBoxContainer/LineEdit.text = ""
 			hide()
+			cooldown += 0.1
 		else:
 			show()
-		cooldown += 0.1
+			$VBoxContainer/LineEdit.text = ""
+			cooldown += 0.05
+			
 func visibility_changed():
 	if visible:
 		settings.game_input_enabled = false
-		cooldown = 0.15
+		$VBoxContainer/LineEdit.grab_focus()
+		cooldown = 0.1
 	else:
 		settings.game_input_enabled = true
 		cooldown = 0.15
