@@ -34,15 +34,15 @@ func _process(delta):
 			return
 			
 		if male_count + female_count < settings.max_characters_spawned:
-			var characters = [load("res://characters/female_2018.tscn"), load("res://characters/male_2018.tscn")]
-			var selection = 0
+			var characters = content.characters
+			var selection = "female"
 			if male_count * 2.0 < female_count:
-				selection = 1
+				selection = "male"
 			elif male_count  > female_count * 2.0:
-				selection = 0
+				selection = "female"
 			else:
-				selection = randi() % characters.size()
-			var c = characters[selection].instance()
+				selection = characters.keys()[randi() % characters.keys().size()]
+			var c = characters[selection].obj.instance()
 			root.add_child(c)
 			c.global_transform = global_transform
 			print("SPAWN")

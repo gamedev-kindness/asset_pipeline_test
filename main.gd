@@ -36,7 +36,7 @@ func _ready():
 	$clock_control.hide()
 	$console.hide()
 	connect("selected_player", $opportunities, "selected_character")
-	Engine.target_fps = 30.0
+	Engine.target_fps = 60.0
 var fps_camera = false
 var cooldown = 0.0
 var posessed = false
@@ -45,7 +45,7 @@ func process_keyboard(delta):
 		cooldown -= delta
 		return
 	if posessed:
-		if Input.is_action_pressed("change_view") && cooldown < 0.1:
+		if Input.is_action_pressed("change_view"):
 			if !fps_camera:
 				awareness.player_character.tps_camera.get_node("base/cam_control/Camera").current = false
 				awareness.player_character.fps_camera.current = true
@@ -87,4 +87,3 @@ func _process(delta):
 	if settings.game_input_enabled:
 		process_keyboard(delta)
 	# Need to process console key seperately
-		cooldown += 0.5

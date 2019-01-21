@@ -22,14 +22,20 @@ var spawns = [
 ]
 
 func do_spawn(obj):
-	for h in spawns:
-		if h.name == obj:
-			var i = h.obj.instance()
-			get_node("/root").add_child(i)
-			var offset = Vector3(0, 0, -1)
-			var offset_moved = awareness.player_character.global_transform.xform(offset)
-			i.global_transform.origin = offset_moved
-			i.global_transform.basis = awareness.player_character.global_transform.basis
+	if obj in content.characters.keys():
+		var i = content.characters[obj].obj.instance()
+		get_node("/root").add_child(i)
+		var offset = Vector3(0, 0, -1)
+		var offset_moved = awareness.player_character.global_transform.xform(offset)
+		i.global_transform.origin = offset_moved
+		i.global_transform.basis = awareness.player_character.global_transform.basis
+	if obj in content.items.keys():
+		var i = content.items[obj].obj.instance()
+		get_node("/root").add_child(i)
+		var offset = Vector3(0, 0, -1)
+		var offset_moved = awareness.player_character.global_transform.xform(offset)
+		i.global_transform.origin = offset_moved
+		i.global_transform.basis = awareness.player_character.global_transform.basis
 
 func process_command(c: String):
 	print("command:", c)

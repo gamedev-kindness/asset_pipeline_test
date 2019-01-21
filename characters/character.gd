@@ -264,36 +264,6 @@ func _ready():
 
 var despawn_cooldown = 0.0
 var despawned = false
-func check_despawn(delta):
-	if despawned:
-		return
-	if posessed:
-		return
-	var cur
-	if despawn_cooldown > 0.1:
-		despawn_cooldown -= delta
-		return
-	for c in get_tree().get_nodes_in_group("characters"):
-		if c.posessed:
-			cur = c
-	if cur == null:
-		cooldown = 3.0
-		return
-	if cur.global_transform.origin.distance_to(global_transform.origin) > 10.0:
-		var root = get_node("/root")
-		var character_scene
-		if name.begins_with("male"):
-			character_scene = load("res://characters/male_2018.tscn")
-		elif name.begins_with("female"):
-			character_scene = load("res://characters/female_2018.tscn")
-		var placeholder_scene = load("res://characters/npc_holder.tscn")
-		var c = placeholder_scene.instance()
-		root.add_child(c)
-		c.global_transform = global_transform
-		despawned = true
-		for k in get_children():
-			k.queue_free()
-		queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func process_player_navigation(delta, sm):
@@ -380,7 +350,3 @@ func _process(delta):
 		if cooldown > 0.0:
 			cooldown -= delta
 	skel.rotation = Vector3()
-#	else:
-#		sm.travel("Navigation")
-#		move_and_slide(-transform.basis[2] * 0.5, Vector3(0, 1, 0))
-#	check_despawn(delta)
