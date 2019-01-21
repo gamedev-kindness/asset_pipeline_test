@@ -180,3 +180,72 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="PickUpItem" type="ColorRect" parent="."]
+margin_left = 408.0
+margin_right = 472.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+color = Color( 1, 1, 1, 0.466667 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="PickUpItem"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 10.5048, 29.8715, 19.6631, 29.176, 22.9023, 25.9973, 28.9074, 22.8979, 32.7816, 29.4841, 29.876, 31.2275, 27.5514, 32.5834, 23.6772, 31.4212, 21.8275, 31.0699, 28.1855, 36.2103, 26.6974, 37.4279, 20.3395, 33.5048, 14.9602, 32.5834, 15.5413, 38.5885, 16.7036, 48.0804, 13.7979, 48.0804, 12.4419, 38.976 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="PickUpItem"]
+color = Color( 0.886275, 0.564706, 0.768627, 1 )
+polygon = PoolVector2Array( 26.7766, 38.5885, 39.949, 38.976, 38.7867, 47.8867, 26.0017, 47.3055 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D3" type="Polygon2D" parent="PickUpItem"]
+color = Color( 1, 0, 0.580392, 1 )
+polygon = PoolVector2Array( 31.0382, 33.9395, 32.9753, 38.3948, 32.9753, 42.0753, 26.5829, 41.6879, 26.1954, 44.2062, 31.4257, 44.2062, 30.6508, 47.6929, 33.5565, 47.6929, 33.5565, 43.8187, 39.1741, 44.5936, 39.1741, 42.269, 35.1062, 41.4942, 35.881, 38.0074, 41.6924, 35.2954, 38.9804, 31.8086, 35.881, 37.2325, 36.4622, 30.2589, 34.1376, 31.2275, 34.1376, 36.4577 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D4" type="Polygon2D" parent="PickUpItem"]
+color = Color( 0.12549, 0, 0.780392, 1 )
+polygon = PoolVector2Array( 48.2786, 50.9861, 48.2786, 35.1017, 42.4672, 35.6829, 51.1842, 16.5054, 57.7704, 35.8766, 52.1528, 35.2954, 52.5402, 51.9546 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Class" type="ColorRect" parent="."]
+margin_left = 476.0
+margin_right = 540.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+color = Color( 1, 1, 1, 0.466667 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Class"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 19.602, 36.6514, 46.7216, 36.4577, 46.5279, 40.9131, 33.5492, 40.1382, 32.9681, 52.7294, 41.104, 52.5358, 40.9103, 58.1534, 21.7328, 58.5408, 21.7328, 52.342, 29.0939, 52.342, 29.2876, 39.7508, 19.0209, 39.7508 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="Class"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 6.42963, 47.1118, 14.9529, 47.6929, 15.1466, 60.2842, 6.04218, 59.8968 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="Class"]
+color = Color( 0.12549, 0.278431, 0.678431, 1 )
+polygon = PoolVector2Array( 16.5026, 59.1219, 15.9215, 45.5621, 7.78558, 45.5621, 6.42963, 31.2275, 9.72272, 27.9344, 9.91641, 24.2538, 6.42963, 22.123, 6.42963, 17.0865, 10.3038, 12.4374, 14.1781, 12.8249, 16.89, 16.5054, 16.89, 23.6727, 13.0158, 24.835, 13.0158, 27.1595, 14.9529, 30.0652, 29.4813, 30.2589, 29.4813, 33.7457, 15.7278, 33.552, 14.1781, 38.3948, 14.7592, 41.1068, 20.3768, 43.0439, 20.3768, 57.9597 )
+
+[node name="Polygon2D4" type="Polygon2D" parent="Class"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 29.8687, 7.59467, 30.0624, 22.7042, 42.46, 14.3746 )
+
+[node name="Polygon2D5" type="Polygon2D" parent="Class"]
+position = Vector2( 12.785, 0 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 29.8687, 7.59467, 30.0624, 22.7042, 42.46, 14.3746 )
+

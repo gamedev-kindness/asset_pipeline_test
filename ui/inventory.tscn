@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/polygon_button.tscn" type="PackedScene" id=1]
+[ext_resource path="res://inventory/inventory_scene.tscn" type="PackedScene" id=2]
+
+[node name="inventory" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="buttons" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 64.0
+
+[node name="exit" parent="VBoxContainer/buttons" instance=ExtResource( 1 )]
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/buttons/exit"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 10.8625, 9.37312, 57.6018, 8.13663, 56.8599, 13.3299, 58.3437, 52.8975, 53.1505, 51.9084, 22.9801, 52.1557, 25.2058, 46.9624, 53.3978, 46.2205, 49.9356, 14.5664, 19.518, 15.8029, 22.4855, 46.9624, 24.2166, 51.9084, 16.3031, 52.1557, 11.8517, 14.8137 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="VBoxContainer/buttons/exit"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 22.2382, 32.3718, 28.9153, 20.9961, 30.8937, 29.1569, 43.7532, 28.6624, 43.7532, 35.3394, 30.1518, 33.8556, 30.6464, 42.0164 )
+
+[node name="use" parent="VBoxContainer/buttons" instance=ExtResource( 1 )]
+margin_left = 68.0
+margin_right = 132.0
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/buttons/use"]
+position = Vector2( 0, 0.247299 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 10.8625, 9.37312, 37.083, 48.4462, 60.3291, 9.86771, 59.5871, 23.7164, 37.083, 60.0692, 10.6222, 23.7164 )
+
+[node name="consume" parent="VBoxContainer/buttons" instance=ExtResource( 1 )]
+margin_left = 136.0
+margin_right = 200.0
+
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/buttons/consume"]
+position = Vector2( -3.95676, 0.741898 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 16.3321, 2.69607, 55.8998, 2.94337, 58.8673, 11.1042, 57.6309, 25.4475, 50.9538, 32.8664, 44.2768, 39.7908, 44.0295, 50.6719, 53.4268, 59.08, 22.02, 57.8435, 30.6754, 50.1773, 31.17, 39.0489, 23.5037, 31.8772, 14.1064, 19.7596, 13.5399, 10.4116 )
+
+[node name="ViewportContainer" type="ViewportContainer" parent="VBoxContainer"]
+margin_top = 68.0
+margin_right = 300.0
+margin_bottom = 368.0
+rect_min_size = Vector2( 300, 300 )
+
+[node name="Viewport" type="Viewport" parent="VBoxContainer/ViewportContainer"]
+size = Vector2( 300, 300 )
+own_world = true
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="inventory_scene" parent="VBoxContainer/ViewportContainer/Viewport" instance=ExtResource( 2 )]
+

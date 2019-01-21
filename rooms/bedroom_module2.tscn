@@ -21,15 +21,15 @@ size = Vector3( 16, 2.7, 4 )
 
 [node name="n1" type="Spatial" parent="." groups=[
 "module_room",
-"bedroom",
 "attachment",
+"bedroom",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.02, 0, 0 )
 
 [node name="n2" type="Spatial" parent="." groups=[
 "module_room",
-"bedroom",
 "attachment",
+"bedroom",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.98 )
 
@@ -47,35 +47,8 @@ transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 0.26244
 [node name="bed8" parent="first_floor" instance=ExtResource( 1 )]
 transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 0.26244, 0, -0.91888 )
 
-[node name="bed10" parent="first_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 0.26244, 0, 1.08112 )
-
-[node name="bed13" parent="first_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 0.26244, 0, 3.08112 )
-
 [node name="bed5" parent="first_floor" instance=ExtResource( 1 )]
 transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 4.26244, 0, -2.91888 )
-
-[node name="bed6" parent="first_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 4.26244, 0, -0.91888 )
-
-[node name="bed9" parent="first_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 4.26244, 0, 1.08112 )
-
-[node name="bed14" parent="first_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 4.26244, 0, 3.08112 )
-
-[node name="bed4" parent="first_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, -3.31385, 0, -2.91888 )
-
-[node name="bed7" parent="first_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, -3.31385, 0, -0.91888 )
-
-[node name="bed11" parent="first_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, -3.31385, 0, 1.08112 )
-
-[node name="bed12" parent="first_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, -3.31385, 0, 3.08112 )
 
 [node name="window" parent="first_floor" instance=ExtResource( 2 )]
 
@@ -243,35 +216,8 @@ transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 0.26244
 [node name="bed8" parent="second_floor" instance=ExtResource( 1 )]
 transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 0.26244, 0, -0.91888 )
 
-[node name="bed10" parent="second_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 0.26244, 0, 1.08112 )
-
-[node name="bed13" parent="second_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 0.26244, 0, 3.08112 )
-
 [node name="bed5" parent="second_floor" instance=ExtResource( 1 )]
 transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 4.26244, 0, -2.91888 )
-
-[node name="bed6" parent="second_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 4.26244, 0, -0.91888 )
-
-[node name="bed9" parent="second_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 4.26244, 0, 1.08112 )
-
-[node name="bed14" parent="second_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, 4.26244, 0, 3.08112 )
-
-[node name="bed4" parent="second_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, -3.31385, 0, -2.91888 )
-
-[node name="bed7" parent="second_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, -3.31385, 0, -0.91888 )
-
-[node name="bed11" parent="second_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, -3.31385, 0, 1.08112 )
-
-[node name="bed12" parent="second_floor" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, 0.000663959, 0, 1, 0, -0.000663959, 0, -1, -3.31385, 0, 3.08112 )
 
 [node name="window" parent="second_floor" instance=ExtResource( 2 )]
 

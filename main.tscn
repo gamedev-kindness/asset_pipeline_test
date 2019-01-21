@@ -1,8 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://rooms/modular_room_test.gd" type="Script" id=2]
 [ext_resource path="res://ui/opportunities.tscn" type="PackedScene" id=3]
+[ext_resource path="res://fonts/DroidSansFallback.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://ui/console.tscn" type="PackedScene" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 32
+font_data = ExtResource( 4 )
 
 [node name="root" type="Spatial"]
 script = ExtResource( 1 )
@@ -17,4 +24,32 @@ transform = Transform( 1, 0, 0, 0, 0.616747, 0.787161, 0, -0.787161, 0.616747, 0
 script = ExtResource( 2 )
 
 [node name="opportunities" parent="." instance=ExtResource( 3 )]
+visible = false
+
+[node name="wtf_waiting" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="sign" type="Node2D" parent="wtf_waiting"]
+position = Vector2( 448, 291 )
+
+[node name="Polygon2D" type="Polygon2D" parent="wtf_waiting/sign"]
+position = Vector2( -448, -291 )
+polygon = PoolVector2Array( 454, 109, 351, 121, 270, 167, 245, 232, 241, 296, 259, 361, 301, 393, 335, 348, 284, 295, 292, 210, 544, 407, 489, 421, 418, 398, 387, 442, 463, 466, 539, 477, 602, 453, 622, 419, 643, 314, 625, 220, 585, 165, 549.638, 180.155, 567, 230, 570, 301, 557, 347, 343, 174, 407, 148, 454, 147, 507.784, 150.218, 509, 118 )
+
+[node name="clock_control" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -191.0
+margin_bottom = 604.0
+
+[node name="datetime" type="Label" parent="clock_control"]
+margin_right = 191.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 160, 80 )
+custom_fonts/font = SubResource( 1 )
+
+[node name="console" parent="." instance=ExtResource( 5 )]
+visible = false
 

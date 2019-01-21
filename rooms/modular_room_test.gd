@@ -337,8 +337,8 @@ onready var rooms = {
 #		"stairs_internal": 0
 	},
 	"config": {
-		"min_floor": -15,
-		"max_floor": 20
+		"min_floor": -2,
+		"max_floor": 4
 	}
 }
 
@@ -424,7 +424,7 @@ func calc_aabb(d):
 		
 const max_per_frame = 120
 const max_rooms = 300
-var preferred_dims = Vector3(500, 520, 500)
+var preferred_dims = Vector3(100, 120, 100)
 var room_count = 0
 var complete = false
 var floor_height = 3.0
@@ -548,7 +548,7 @@ func _process(delta):
 			room_count = 0
 			count = 0
 		else:
-			var max_spawned = 20
+			var max_spawned = 15
 			for k in get_tree().get_nodes_in_group("beds"):
 				k.emit_signal("spawn")
 				max_spawned -= 1

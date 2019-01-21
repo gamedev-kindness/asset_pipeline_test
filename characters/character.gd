@@ -22,6 +22,7 @@ var fps_camera
 var tps_camera
 
 var track
+var skel
 
 func load_animations():
 	var animations = [
@@ -160,7 +161,7 @@ func do_action(other, name):
 # Belongs to player controller
 func do_ui_action(act):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	var other = $awareness.get_actuator_body("characters")
+	var other = awareness.get_actuator_body(self, "characters")
 	print(act)
 	if act == "GrabFromBack":
 		add_collision_exception_with(other)
@@ -185,6 +186,11 @@ func do_ui_action(act):
 			other.remove_collision_exception_with(self)
 			if sm.is_playing():
 				sm.travel("Stand")
+	elif act == "Class":
+		var classes = get_tree().get_nodes_in_group("classroom")
+		var which = classes[randi() % classes.size()]
+		var to = which.global_transform.origin
+		global_transform.origin = to
 	else:
 		print("Unknown action: ", act)
 
@@ -225,12 +231,11 @@ func do_passive_action(other, action, ik, xform):
 	set_action_mode(true)
 	self.other = other
 func _ready():
+	skel = get_children()[0]
 	fps_camera = get_children()[0].get_node("head/Camera")
 	load_animations()
 	update_aabbs()
-	get_children()[0].rotation.y = 0
-	get_children()[0].rotation.x = 0
-	get_children()[0].rotation.z = 0
+	skel.rotation = Vector3()
 	add_to_group("characters")
 	connect("active_action", self, "do_active_action")
 	connect("passive_action", self, "do_passive_action")
@@ -251,35 +256,64 @@ func _ready():
 	$AnimationTree["parameters/Navigate/walk_speed/scale"] = 1.5
 #	sm.travel("Stand")
 
+var despawn_cooldown = 0.0
+var despawned = false
+func check_despawn(delta):
+	if despawned:
+		return
+	if posessed:
+		return
+	var cur
+	if despawn_cooldown > 0.1:
+		despawn_cooldown -= delta
+		return
+	for c in get_tree().get_nodes_in_group("characters"):
+		if c.posessed:
+			cur = c
+	if cur == null:
+		cooldown = 3.0
+		return
+	if cur.global_transform.origin.distance_to(global_transform.origin) > 10.0:
+		var root = get_node("/root")
+		var character_scene
+		if name.begins_with("male"):
+			character_scene = load("res://characters/male_2018.tscn")
+		elif name.begins_with("female"):
+			character_scene = load("res://characters/female_2018.tscn")
+		var placeholder_scene = load("res://characters/npc_holder.tscn")
+		var c = placeholder_scene.instance()
+		root.add_child(c)
+		c.global_transform = global_transform
+		despawned = true
+		for k in get_children():
+			k.queue_free()
+		queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	orientation = global_transform
-	orientation.origin = Vector3()
-	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	if posessed && !action && sm.get_current_node() != "Sleep":
+func process_player_navigation(delta, sm):
 		var next = "Stand"
-		if Input.is_action_pressed("ui_right"):
-			next = "Navigate"
-			var tf_turn = Transform(Quat(Vector3(0, 1, 0), -PI * 0.6 * delta))
-#			$AnimationTree["parameters/Navigate/turn_right/active"] = true
-#			rotate(Vector3(0, 1, 0), -PI * 0.4 * delta)
-			orientation *= tf_turn
-		elif Input.is_action_pressed("ui_left"):
-			next = "Navigate"
-			var tf_turn = Transform(Quat(Vector3(0, 1, 0), PI * 0.6 * delta))
-#			$AnimationTree["parameters/Navigate/turn_left/active"] = true
-#			rotate(Vector3(0, 1, 0), PI * 0.4 * delta)
-			orientation *= tf_turn
-		elif Input.is_action_pressed("ui_up"):
-			next = "Navigate"
-		elif Input.is_action_pressed("activate") && cooldown < 0.1:
-			var other = $awareness.get_actuator_body("characters")
-			if other != null:
-				if other.is_in_group("characters"):
-					emit_signal("active_action", other)
-					add_collision_exception_with(other)
-					cooldown = 1.5
+		if settings.game_input_enabled:
+			if Input.is_action_pressed("right_control"):
+				next = "Navigate"
+				var tf_turn = Transform(Quat(Vector3(0, 1, 0), -PI * 0.6 * delta))
+	#			$AnimationTree["parameters/Navigate/turn_right/active"] = true
+	#			rotate(Vector3(0, 1, 0), -PI * 0.4 * delta)
+				orientation *= tf_turn
+			elif Input.is_action_pressed("left_control"):
+				next = "Navigate"
+				var tf_turn = Transform(Quat(Vector3(0, 1, 0), PI * 0.6 * delta))
+	#			$AnimationTree["parameters/Navigate/turn_left/active"] = true
+	#			rotate(Vector3(0, 1, 0), PI * 0.4 * delta)
+				orientation *= tf_turn
+			elif Input.is_action_pressed("up_control"):
+				next = "Navigate"
+			elif Input.is_action_pressed("activate") && cooldown < 0.1:
+				var other = awareness.get_actuator_body(self, "characters")
+				if other != null:
+					if other.is_in_group("characters"):
+						emit_signal("active_action", other)
+						add_collision_exception_with(other)
+						cooldown = 1.5
 		else:
 			$AnimationTree["parameters/Navigate/turn_left/active"] = false
 			$AnimationTree["parameters/Navigate/turn_right/active"] = false
@@ -290,22 +324,30 @@ func _process(delta):
 				set_action_mode(false)
 				remove_collision_exception_with(other)
 #				print("action stopped")
+func _process(delta):
+	orientation = global_transform
+	orientation.origin = Vector3()
+	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+	if posessed && !action && sm.get_current_node() != "Sleep":
+		process_player_navigation(delta, sm)
 	elif posessed && !action && sm.get_current_node() == "Sleep":
-		if Input.is_action_just_pressed("activate") && cooldown < 0.1:
-			cooldown = 1.0
-			if sm.is_playing():
-				sm.travel("Stand")
-				$main_shape.disabled = false
+		if settings.game_input_enabled:
+			if Input.is_action_just_pressed("activate") && cooldown < 0.1:
+				cooldown = 1.0
+				if sm.is_playing():
+					sm.travel("Stand")
+					$main_shape.disabled = false
 
 	elif posessed && action:
-		if Input.is_action_just_pressed("activate") && cooldown < 0.1:
-			set_action_mode(false)
-			other.set_action_mode(false)
-			remove_collision_exception_with(other)
-			if sm.is_playing():
-				sm.travel("Stand")
-#			print("action stopped")
-			cooldown = 1.0
+		if settings.game_input_enabled:
+			if Input.is_action_just_pressed("activate") && cooldown < 0.1:
+				set_action_mode(false)
+				other.set_action_mode(false)
+				remove_collision_exception_with(other)
+				if sm.is_playing():
+					sm.travel("Stand")
+#				print("action stopped")
+				cooldown = 1.0
 		
 	else:
 		if $AI.has_method("run") && !action:
@@ -331,9 +373,8 @@ func _process(delta):
 		global_transform.basis = orientation.basis
 		if cooldown > 0.0:
 			cooldown -= delta
-	get_children()[0].rotation.y = 0
-	get_children()[0].rotation.x = 0
-	get_children()[0].rotation.z = 0
+	skel.rotation = Vector3()
 #	else:
 #		sm.travel("Navigation")
 #		move_and_slide(-transform.basis[2] * 0.5, Vector3(0, 1, 0))
+#	check_despawn(delta)

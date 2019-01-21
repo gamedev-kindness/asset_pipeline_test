@@ -13,13 +13,10 @@ var cooldown = 0.0
 var front_grab_mode = false
 func _process(delta):
 	var current
-	if cooldown > 0.1:
+	if cooldown > 0.5:
 		cooldown -=delta
 		return
-	for c in get_tree().get_nodes_in_group("characters"):
-		if c.posessed:
-			current = c
-			break
+	current = awareness.player_character
 	if !current:
 		cooldown = 0.5
 		return
@@ -29,19 +26,22 @@ func _process(delta):
 	$KickToBed.hide()
 	$FrontGrab.hide()
 	$FrontGrabFaceSlap.hide()
-	var awareness = current.get_node("awareness")
-	for i in awareness.active_items:
-		if i.is_in_group("characters") && !current.action:
-			$Talk.show()
-			if awareness.get_other_direction(i) == "BACK":
-				$GrabFromBack.show()
-				$KickToBed.show()
-			elif awareness.get_other_direction(i) == "FRONT":
-				$FrontGrab.show()
-		elif current.action:
-			$LeaveAction.show()
-			if front_grab_mode:
-				$FrontGrabFaceSlap.show()
+	$PickUpItem.hide()
+	if awareness.active_items.has(current):
+		for i in awareness.active_items[current]:
+			if i.is_in_group("characters") && !current.action:
+				$Talk.show()
+				if awareness.get_other_direction(current, i) == "BACK":
+					$GrabFromBack.show()
+					$KickToBed.show()
+				elif awareness.get_other_direction(current, i) == "FRONT":
+					$FrontGrab.show()
+			elif current.action:
+				$LeaveAction.show()
+				if front_grab_mode:
+					$FrontGrabFaceSlap.show()
+			if i.is_in_group("pickup") || i.is_in_group("pickables") || i.is_in_group("pickups"):
+				$PickUpItem.show()
 	cooldown = 1.0
 	update()
 func _input(event):
@@ -59,8 +59,5 @@ func _input(event):
 			front_grab_mode = true
 		elif action == "LeaveAction" && front_grab_mode == true:
 			front_grab_mode = false
-			
-		for c in get_tree().get_nodes_in_group("characters"):
-			if c.posessed:
-				c.emit_signal("ui_action", action)
-				break
+		if awareness.player_character:
+			awareness.player_character.emit_signal("ui_action", action)

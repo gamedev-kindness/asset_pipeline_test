@@ -1,4 +1,5 @@
 extends Spatial
+signal selected_player
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -9,85 +10,81 @@ extends Spatial
 #var anim2:AnimationPlayer
 var ps = []
 var camera_target
+func update_time(g):
+	$clock_control/datetime.text = "%02d" %(g[1]) + ":" + "%02d" %(g[0])
+	$clock_control/datetime.update()
 func _ready():
-	pass
-#	anim2 = $"female_2018/female_2018/AnimationPlayer"
-#	anim1 = $"male_2018/male_g_2018/AnimationPlayer"
-#	var anim_list_1 = anim1.get_animation_list()
-#	var anim_list_2 = anim2.get_animation_list()
-#	var animation1:Animation = anim1.get_animation(anim_list_1[3])
-#	var animation2:Animation = anim2.get_animation(anim_list_2[3])
-#	print(anim_list_1)
-#	print(anim_list_2)
-#	print(animation1.track_get_path(0))
-#	print(animation1.track_get_path(1))
-#	print(animation2.track_get_path(0))
-#	print(animation2.track_get_path(1))
-#	$male_2018.posessed = true
-#	var male = load("res://characters/male_2018.tscn")
-#	var female = load("res://characters/female_2018.tscn")
-#	ps = [male, female]
-#	for m in range(5):
-#		var c = ps[randi() % ps.size()].instance()
-#		add_child(c)
-#		c.translation = Vector3(float(m) * pow(-1, m), 0, randf() * 2.5)
-#		if m == 0:
-#			c.posessed = true
-#			camera_target = c
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	var keymap = ConfigFile.new()
+	var err = keymap.load("user://settings.cfg")
+	if err:
+		for act in InputMap.get_actions():
+			keymap.set_value("input", act, InputMap.get_action_list(act))
+		keymap.save("user://settings.cfg")
+	else:
+		print("loaded config")
+		for action in keymap.get_section_keys("input"):
+			if !action in InputMap.get_actions():
+				InputMap.add_action(action)
+			var events = InputMap.get_action_list(action)
+			for e in events:
+				InputMap.action_erase_event(action, e)
+			for evts in keymap.get_value("input", action):
+				InputMap.action_add_event(action, evts)
+	$wtf_waiting.show()
+	$opportunities.hide()
+	awareness.connect("daytime_update", self, "update_time")
+	$clock_control.hide()
+	$console.hide()
+	connect("selected_player", $opportunities, "selected_character")
+	Engine.target_fps = 30.0
 var fps_camera = false
 var cooldown = 0.0
 var posessed = false
+func process_keyboard(delta):
+	if cooldown > 0.1:
+		cooldown -= delta
+		return
+	if posessed:
+		if Input.is_action_pressed("change_view") && cooldown < 0.1:
+			if !fps_camera:
+				awareness.player_character.tps_camera.get_node("base/cam_control/Camera").current = false
+				awareness.player_character.fps_camera.current = true
+				fps_camera = true
+				cooldown += 0.5
+			elif fps_camera:
+				awareness.player_character.fps_camera.current = false
+				awareness.player_character.tps_camera.get_node("base/cam_control/Camera").current = true
+				cooldown += 0.5
+				fps_camera = false
+#	if Input.is_action_pressed("console"):
+#			$console.show()
+#			cooldown += 1.0
+var waiting_cooldown = 5.0
 func _process(delta):
-#	if camera_target != null:
-#		if !fps_camera:
-#			pass
-##			$Camera.look_at(camera_target.translation + Vector3(0, 1.4, 0), Vector3(0, 1, 0))
-##			if Input.is_action_pressed("change_view") && cooldown < 0.1:
-##				$Camera.current = false
-##				fps_camera = true
-##				camera_target.enable_fps_camera()
-##				cooldown = 1.5
-##				print("fps camera")
-#		else:
-#			if Input.is_action_pressed("change_view") && cooldown < 0.1:
-#				$Camera.current = true
-#				fps_camera = false
-#				camera_target.disable_fps_camera()
-#				cooldown = 1.0
-#				print("tps camera")
-#	else:
 	if !posessed:
+		$wtf_waiting/sign.transform *= Transform2D(delta * 3.0, Vector2())
 		var chars = get_tree().get_nodes_in_group("characters")
 		for ch in chars:
-			print(ch.name)
 			if ch.name.begins_with("male"):
 				ch.posessed = true
-				print("posessed: ", ch.name)
-#				camera_target = ch
 				posessed = true
 				ch.tps_camera = load("res://camera/camera.tscn").instance()
 				ch.add_child(ch.tps_camera)
 				ch.tps_camera.get_node("base/cam_control/Camera").current = true
+				awareness.player_character = ch
+				waiting_cooldown = 3.0
+				emit_signal("selected_player", ch)
+				settings.game_input_enabled = true
 				break
 	if posessed:
-		if Input.is_action_pressed("change_view") && cooldown < 0.1:
-			if !fps_camera:
-				var chars = get_tree().get_nodes_in_group("characters")
-				for ch in chars:
-					if ch.posessed:
-						ch.tps_camera.get_node("base/cam_control/Camera").current = false
-						ch.fps_camera.current = true
-						cooldown = 0.5
-						fps_camera = true
-			elif fps_camera:
-				var chars = get_tree().get_nodes_in_group("characters")
-				for ch in chars:
-					if ch.posessed:
-						ch.fps_camera.current = false
-						ch.tps_camera.get_node("base/cam_control/Camera").current = true
-						cooldown = 0.5
-						fps_camera = false
-	if cooldown > delta:
-		cooldown -= delta
+		if waiting_cooldown > 0.0:
+			waiting_cooldown -= delta
+		else:
+			if $wtf_waiting.visible:
+				$wtf_waiting.hide()
+				$opportunities.show()
+				$clock_control.show()
+	if settings.game_input_enabled:
+		process_keyboard(delta)
+	# Need to process console key seperately
+		cooldown += 0.5

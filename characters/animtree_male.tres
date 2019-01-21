@@ -233,7 +233,7 @@ nodes/blink/position = Vector2( 620, 20 )
 nodes/output/position = Vector2( 1560, 120 )
 nodes/wiggle/node = SubResource( 40 )
 nodes/wiggle/position = Vector2( 1160, 80 )
-node_connections = [ "output", 0, "wiggle", "TimeScale", 0, "Animation 2", "blink", 0, "Animation", "blink", 1, "Animation 3", "wiggle", 0, "blink", "wiggle", 1, "TimeScale" ]
+node_connections = [ "output", 0, "wiggle", "blink", 0, "Animation", "blink", 1, "Animation 3", "wiggle", 0, "blink", "wiggle", 1, "TimeScale", "TimeScale", 0, "Animation 2" ]
 
 [sub_resource type="AnimationNodeAnimation" id=42]
 
@@ -310,7 +310,6 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=65]
 
-switch_mode = 2
 auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=66]
@@ -318,7 +317,6 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=67]
 
-switch_mode = 2
 auto_advance = true
 
 [resource]
@@ -355,5 +353,5 @@ states/stand-to-walk/node = SubResource( 44 )
 states/stand-to-walk/position = Vector2( 300, 37 )
 transitions = [ "Navigate", "Stand", SubResource( 45 ), "Stand", "stand-to-walk", SubResource( 46 ), "stand-to-walk", "Navigate", SubResource( 47 ), "Stand", "KickToBed", SubResource( 48 ), "default", "Stand", SubResource( 49 ), "KickToBed", "complete_assault", SubResource( 50 ), "complete_assault", "default", SubResource( 51 ), "Sleep", "Stand", SubResource( 52 ), "KickToBed", "Sleep", SubResource( 53 ), "KickedToBed", "complete_assault", SubResource( 54 ), "Stand", "KickedToBed", SubResource( 55 ), "Stand", "GrabFromBack", SubResource( 56 ), "GrabFromBack", "complete_assault", SubResource( 57 ), "FrontGrab", "complete_assault", SubResource( 58 ), "Stand", "FrontGrabbed", SubResource( 59 ), "FrontGrabbed", "FrontGrabbedLoop", SubResource( 60 ), "FrontGrab", "FrontGrabLoop", SubResource( 61 ), "FrontGrabbedLoop", "complete_assault", SubResource( 62 ), "FrontGrabLoop", "Stand", SubResource( 63 ), "FrontGrabLoop", "FrontGrabFaceSlap", SubResource( 64 ), "FrontGrabFaceSlap", "FrontGrabLoop", SubResource( 65 ), "FrontGrabbedLoop", "FrontGrabbedFaceSlapped", SubResource( 66 ), "FrontGrabbedFaceSlapped", "FrontGrabbedLoop", SubResource( 67 ) ]
 start_node = "Sleep"
-graph_offset = Vector2( -516.611, -50.8 )
+graph_offset = Vector2( -516.611, 321.224 )
 
