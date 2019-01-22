@@ -14,12 +14,14 @@ anchor_bottom = 1.0
 script = ExtResource( 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -3.1579
-margin_top = 146.316
-margin_right = -3.1579
-margin_bottom = 146.316
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -125.5
+margin_right = 512.0
+margin_bottom = 125.5
 
 [node name="editor" type="Button" parent="VBoxContainer"]
 margin_right = 1024.0

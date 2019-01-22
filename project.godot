@@ -13,9 +13,22 @@ _global_script_classes=[ {
 "class": "Pickable",
 "language": "GDScript",
 "path": "res://inventory/pickable.gd"
+}, {
+"base": "Node",
+"class": "Stat",
+"language": "GDScript",
+"path": "res://stats/stat.gd"
+}, {
+"base": "Node",
+"class": "StatHealth",
+"language": "GDScript",
+"path": "res://stats/health.gd"
 } ]
 _global_script_class_icons={
-"Pickable": ""
+"CharacterData": "",
+"Pickable": "",
+"Stat": "",
+"StatHealth": ""
 }
 
 [application]

@@ -24,6 +24,8 @@ var tps_camera
 var track
 var skel
 
+var stats = {}
+
 func load_animations():
 	var animations = [
 		{
@@ -357,4 +359,7 @@ func _process(delta):
 		global_transform.basis = orientation.basis
 		if cooldown > 0.0:
 			cooldown -= delta
+	for c in get_children():
+		if c.is_in_group("stats"):
+			stats[c.name] = c.get_value()
 	skel.rotation = Vector3()

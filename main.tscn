@@ -32,10 +32,21 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="sign" type="Node2D" parent="wtf_waiting"]
-position = Vector2( 448, 291 )
+[node name="Control" type="Control" parent="wtf_waiting"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -200.0
+margin_right = 200.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 400, 400 )
 
-[node name="Polygon2D" type="Polygon2D" parent="wtf_waiting/sign"]
+[node name="sign" type="Node2D" parent="wtf_waiting/Control"]
+position = Vector2( 203, 193 )
+
+[node name="Polygon2D" type="Polygon2D" parent="wtf_waiting/Control/sign"]
 position = Vector2( -448, -291 )
 polygon = PoolVector2Array( 454, 109, 351, 121, 270, 167, 245, 232, 241, 296, 259, 361, 301, 393, 335, 348, 284, 295, 292, 210, 544, 407, 489, 421, 418, 398, 387, 442, 463, 466, 539, 477, 602, 453, 622, 419, 643, 314, 625, 220, 585, 165, 549.638, 180.155, 567, 230, 570, 301, 557, 347, 343, 174, 407, 148, 454, 147, 507.784, 150.218, 509, 118 )
 
@@ -50,6 +61,47 @@ margin_right = 191.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 160, 80 )
 custom_fonts/font = SubResource( 1 )
+
+[node name="inventory_button" type="TextureButton" parent="clock_control"]
+margin_top = 84.0
+margin_right = 191.0
+margin_bottom = 164.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Polygon2D" type="Polygon2D" parent="clock_control/inventory_button"]
+position = Vector2( 116.741, -1.38272 )
+color = Color( 0.321569, 0.0901961, 0.0901961, 1 )
+polygon = PoolVector2Array( 12.1667, 12.3333, 17.5, 4.33333, 41.5678, 22.9506, 63.5, 5.66666, 67.5, 15, 51.4444, 31.0494, 65.5, 49.6667, 56.8334, 57, 41.5, 39, 24.8334, 54.3333, 14.8334, 45, 33.074, 30.4568 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="clock_control/inventory_button"]
+position = Vector2( 116.741, -1.58025 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 15.2962, 12.2839, 17.6666, 7.74074, 41.3703, 26.5062, 62.5061, 9.71604, 64.679, 14.6543, 47.6913, 30.8518, 62.5061, 49.0247, 56.1851, 52.3827, 40.7777, 35.9876, 24.7777, 50.8025, 18.6542, 44.8765, 35.8394, 31.0494 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="clock_control/inventory_button"]
+position = Vector2( 116.741, -1.58025 )
+color = Color( 0.305882, 0.0784314, 0.0784314, 1 )
+polygon = PoolVector2Array( 28.7283, 15.8395, 54.2098, 16.2346, 54.4073, 37.5679, 51.2468, 45.4691, 47.0987, 51, 41.3703, 52.7778, 37.4197, 50.4074, 34.2592, 45.8642, 30.3086, 37.7654 )
+
+[node name="Polygon2D4" type="Polygon2D" parent="clock_control/inventory_button"]
+position = Vector2( 116.741, -1.58025 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 30.9012, 17.0247, 52.8271, 17.2222, 52.432, 37.7654, 49.6666, 44.0864, 46.7036, 48.4321, 41.9629, 51.3951, 39.395, 49.8148, 35.6419, 46.0617, 32.0864, 38.1605 )
+
+[node name="Polygon2D5" type="Polygon2D" parent="clock_control/inventory_button"]
+position = Vector2( 116.741, -1.58025 )
+color = Color( 0.290196, 0.231373, 0.231373, 1 )
+polygon = PoolVector2Array( 35.2468, 24.9259, 39.79, 19.1975, 43.5432, 24.9259 )
+
+[node name="Polygon2D6" type="Polygon2D" parent="clock_control/inventory_button"]
+position = Vector2( 116.741, 5.1358 )
+color = Color( 0.290196, 0.231373, 0.231373, 1 )
+polygon = PoolVector2Array( 35.2468, 24.9259, 39.79, 19.1975, 43.5432, 24.9259 )
+
+[node name="Polygon2D7" type="Polygon2D" parent="clock_control/inventory_button"]
+position = Vector2( 116.938, 12.642 )
+color = Color( 0.290196, 0.231373, 0.231373, 1 )
+polygon = PoolVector2Array( 35.2468, 24.9259, 39.79, 19.1975, 43.5432, 24.9259 )
 
 [node name="inventory" parent="." instance=ExtResource( 5 )]
 visible = false

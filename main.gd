@@ -62,7 +62,7 @@ func process_keyboard(delta):
 var waiting_cooldown = 5.0
 func _process(delta):
 	if !posessed:
-		$wtf_waiting/sign.transform *= Transform2D(delta * 3.0, Vector2())
+		$wtf_waiting/Control/sign.transform *= Transform2D(delta * 3.0, Vector2())
 		var chars = get_tree().get_nodes_in_group("characters")
 		for ch in chars:
 			if ch.name.begins_with("male"):
