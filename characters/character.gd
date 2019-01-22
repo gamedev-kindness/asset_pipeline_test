@@ -44,7 +44,7 @@ func load_animations():
 			"name": "front_grab_face_slap2",
 			"animation": load("res://characters/male/front_grab_face_slap2.anim")
 		},
-	{
+		{
 			"name": "grab_from_back",
 			"animation": load("res://characters/male/grab_from_back.anim")
 		},
@@ -75,6 +75,22 @@ func load_animations():
 		{
 			"name": "kicked_to_bed",
 			"animation": load("res://characters/female/kicked_to_bed.anim")
+		},
+		{
+			"name": "front_grab_face_insertion",
+			"animation": load("res://characters/male/front_grab_face_insertion.anim")
+		},
+		{
+			"name": "front_grabbed_face_insertion",
+			"animation": load("res://characters/female/front_grabbed_face_insertion.anim")
+		},
+		{
+			"name": "missionary1-second-loop",
+			"animation": load("res://characters/female/missionary1-second-loop.anim")
+		},
+		{
+			"name": "missionary1-first-loop",
+			"animation": load("res://characters/male/missionary1-first-loop.anim")
 		}
 	]
 	for anim in animations:
@@ -106,6 +122,13 @@ var actions = {
 	"front_grab_face_slap": {
 			"active": "FrontGrabFaceSlap",
 			"passive": "FrontGrabbedFaceSlapped",
+			"ik": false,
+			"direction":"FRONT",
+			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
+	},
+	"missionary1": {
+			"active": "Missionary1First",
+			"passive": "Missionary1Second",
 			"ik": false,
 			"direction":"FRONT",
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
@@ -189,6 +212,10 @@ func do_ui_action(act):
 		add_collision_exception_with(other)
 		other.add_collision_exception_with(self)
 		do_action(other, "front_grab_face_slap")
+	elif act == "Missionary1":
+		add_collision_exception_with(other)
+		other.add_collision_exception_with(self)
+		do_action(other, "missionary1")
 	elif act == "LeaveAction":
 			set_action_mode(false)
 			other.set_action_mode(false)

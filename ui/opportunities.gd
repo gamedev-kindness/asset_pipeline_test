@@ -27,6 +27,7 @@ func _process(delta):
 	$FrontGrab.hide()
 	$FrontGrabFaceSlap.hide()
 	$PickUpItem.hide()
+	$Missionary1.hide()
 	if awareness.active_items.has(current):
 		for i in awareness.active_items[current]:
 			if i.is_in_group("characters") && !current.action:
@@ -40,6 +41,7 @@ func _process(delta):
 				$LeaveAction.show()
 				if front_grab_mode:
 					$FrontGrabFaceSlap.show()
+					$Missionary1.show()
 			if i.is_in_group("pickup") || i.is_in_group("pickables") || i.is_in_group("pickups"):
 				$PickUpItem.show()
 	cooldown = 1.0
