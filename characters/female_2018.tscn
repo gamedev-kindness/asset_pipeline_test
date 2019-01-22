@@ -115,7 +115,7 @@ collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="female_2018" parent="." index="0"]
-transform = Transform( 0.99999, 0.00183815, -0.00409723, -0.00291765, 0.95952, -0.281625, 0.00341371, 0.281634, 0.959516, 2.32831e-10, 3.36477e-08, -5.95978e-08 )
+transform = Transform( 0.99999, 0.00182029, -0.00408144, -0.00289571, 0.95955, -0.281523, 0.00340389, 0.281532, 0.959546, 2.32831e-10, 3.14195e-08, -7.16089e-08 )
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="female_2018" index="0"]

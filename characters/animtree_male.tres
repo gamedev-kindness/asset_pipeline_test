@@ -1,7 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=87 format=2]
-
-[ext_resource path="res://characters/states/MissionaryPose1First.tres" type="AnimationNodeStateMachine" id=1]
-[ext_resource path="res://characters/states/MissionaryPose1Second.tres" type="AnimationNodeStateMachine" id=2]
+[gd_resource type="AnimationNodeStateMachine" load_steps=89 format=2]
 
 [sub_resource type="AnimationNodeAnimation" id=1]
 
@@ -132,6 +129,24 @@ nodes/Animation/node = SubResource( 23 )
 nodes/Animation/position = Vector2( 40, 100 )
 node_connections = [ "output", 0, "Animation" ]
 
+[sub_resource type="AnimationNodeAnimation" id=89]
+
+animation = "missionary1-first-loop"
+
+[sub_resource type="AnimationNodeStateMachine" id=90]
+
+states/missionary1-first-loop/node = SubResource( 89 )
+states/missionary1-first-loop/position = Vector2( 357, 101 )
+
+[sub_resource type="AnimationNodeAnimation" id=88]
+
+animation = "missionary1-second-loop"
+
+[sub_resource type="AnimationNodeStateMachine" id=85]
+
+states/missionary1-second-loop/node = SubResource( 88 )
+states/missionary1-second-loop/position = Vector2( 116, 41 )
+
 [sub_resource type="AnimationNodeAnimation" id=25]
 
 animation = "walk-loop"
@@ -185,7 +200,7 @@ nodes/turn_right/node = SubResource( 31 )
 nodes/turn_right/position = Vector2( 920, 60 )
 nodes/walk_speed/node = SubResource( 32 )
 nodes/walk_speed/position = Vector2( 1300, 100 )
-node_connections = [ "output", 0, "blink", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "blink", 0, "walk_speed", "blink", 1, "Animation 4", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "walk_speed", 0, "turn_right" ]
+node_connections = [ "output", 0, "blink", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "blink", 0, "walk_speed", "blink", 1, "Animation 4", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "walk_speed", 0, "turn_right" ]
 
 [sub_resource type="AnimationNodeAnimation" id=34]
 
@@ -258,7 +273,7 @@ nodes/blink/position = Vector2( 620, 20 )
 nodes/output/position = Vector2( 1560, 120 )
 nodes/wiggle/node = SubResource( 44 )
 nodes/wiggle/position = Vector2( 1160, 80 )
-node_connections = [ "output", 0, "wiggle", "wiggle", 0, "blink", "wiggle", 1, "TimeScale", "TimeScale", 0, "Animation 2", "blink", 0, "Animation", "blink", 1, "Animation 3" ]
+node_connections = [ "output", 0, "wiggle", "blink", 0, "Animation", "blink", 1, "Animation 3", "TimeScale", 0, "Animation 2", "wiggle", 0, "blink", "wiggle", 1, "TimeScale" ]
 
 [sub_resource type="AnimationNodeAnimation" id=46]
 
@@ -381,21 +396,21 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id=79]
 
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=80]
-
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=81]
-
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=82]
-
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=83]
-
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=84]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=86]
+
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=87]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=91]
+
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=92]
 
 
 [resource]
@@ -403,7 +418,7 @@ switch_mode = 2
 states/FrontGrab/node = SubResource( 2 )
 states/FrontGrab/position = Vector2( 87.389, 397.2 )
 states/FrontGrabFaceInsertion/node = SubResource( 4 )
-states/FrontGrabFaceInsertion/position = Vector2( 343.351, 577.014 )
+states/FrontGrabFaceInsertion/position = Vector2( 344.351, 577.014 )
 states/FrontGrabFaceSlap/node = SubResource( 6 )
 states/FrontGrabFaceSlap/position = Vector2( 835.389, 465.2 )
 states/FrontGrabLoop/node = SubResource( 9 )
@@ -415,23 +430,23 @@ states/FrontGrabbedFaceInsertion/position = Vector2( 1186.35, 110.014 )
 states/FrontGrabbedFaceSlapped/node = SubResource( 15 )
 states/FrontGrabbedFaceSlapped/position = Vector2( 1199.39, 13 )
 states/FrontGrabbedLoop/node = SubResource( 18 )
-states/FrontGrabbedLoop/position = Vector2( 867.389, 13 )
+states/FrontGrabbedLoop/position = Vector2( 889.389, 13 )
 states/GrabFromBack/node = SubResource( 20 )
 states/GrabFromBack/position = Vector2( 781.389, 329.216 )
 states/KickToBed/node = SubResource( 22 )
 states/KickToBed/position = Vector2( 246, 323 )
 states/KickedToBed/node = SubResource( 24 )
 states/KickedToBed/position = Vector2( 501.389, 313.624 )
-states/MissionaryPose1First/node = ExtResource( 1 )
-states/MissionaryPose1First/position = Vector2( 708.351, 577.014 )
-states/MissionaryPose1Second/node = ExtResource( 2 )
-states/MissionaryPose1Second/position = Vector2( 1019.35, 196.518 )
+states/MissionaryPose1First/node = SubResource( 90 )
+states/MissionaryPose1First/position = Vector2( 648.172, 558.39 )
+states/MissionaryPose1Second/node = SubResource( 85 )
+states/MissionaryPose1Second/position = Vector2( 1010.09, 202.888 )
 states/Navigate/node = SubResource( 33 )
-states/Navigate/position = Vector2( 481, 135 )
+states/Navigate/position = Vector2( 266, 80.014 )
 states/Sleep/node = SubResource( 38 )
 states/Sleep/position = Vector2( 407.389, -78.376 )
 states/Stand/node = SubResource( 45 )
-states/Stand/position = Vector2( 101, 37 )
+states/Stand/position = Vector2( -46, 37 )
 states/StandUp/node = SubResource( 47 )
 states/StandUp/position = Vector2( 660.389, 102.014 )
 states/Wakeup/node = SubResource( 49 )
@@ -439,10 +454,10 @@ states/Wakeup/position = Vector2( 175.389, -60.986 )
 states/complete_assault/node = SubResource( 50 )
 states/complete_assault/position = Vector2( -28.611, 246.624 )
 states/default/node = SubResource( 51 )
-states/default/position = Vector2( 75, 177 )
+states/default/position = Vector2( -125, 135 )
 states/stand-to-walk/node = SubResource( 52 )
-states/stand-to-walk/position = Vector2( 300, 37 )
-transitions = [ "Navigate", "Stand", SubResource( 53 ), "Stand", "stand-to-walk", SubResource( 54 ), "stand-to-walk", "Navigate", SubResource( 55 ), "Stand", "KickToBed", SubResource( 56 ), "default", "Stand", SubResource( 57 ), "KickToBed", "complete_assault", SubResource( 58 ), "complete_assault", "default", SubResource( 59 ), "KickToBed", "Sleep", SubResource( 60 ), "KickedToBed", "complete_assault", SubResource( 61 ), "Stand", "KickedToBed", SubResource( 62 ), "Stand", "GrabFromBack", SubResource( 63 ), "GrabFromBack", "complete_assault", SubResource( 64 ), "FrontGrab", "complete_assault", SubResource( 65 ), "Stand", "FrontGrabbed", SubResource( 66 ), "FrontGrabbed", "FrontGrabbedLoop", SubResource( 67 ), "FrontGrab", "FrontGrabLoop", SubResource( 68 ), "FrontGrabLoop", "Stand", SubResource( 69 ), "FrontGrabLoop", "FrontGrabFaceSlap", SubResource( 70 ), "FrontGrabFaceSlap", "FrontGrabLoop", SubResource( 71 ), "FrontGrabbedLoop", "FrontGrabbedFaceSlapped", SubResource( 72 ), "FrontGrabbedFaceSlapped", "FrontGrabbedLoop", SubResource( 73 ), "Sleep", "Wakeup", SubResource( 74 ), "Wakeup", "Stand", SubResource( 75 ), "FrontGrabbedLoop", "StandUp", SubResource( 76 ), "StandUp", "complete_assault", SubResource( 77 ), "FrontGrabbedLoop", "FrontGrabbedFaceInsertion", SubResource( 78 ), "FrontGrabLoop", "FrontGrabFaceInsertion", SubResource( 79 ), "FrontGrabbedFaceInsertion", "MissionaryPose1Second", SubResource( 80 ), "MissionaryPose1Second", "FrontGrabbedLoop", SubResource( 81 ), "FrontGrabFaceInsertion", "MissionaryPose1First", SubResource( 82 ), "MissionaryPose1First", "FrontGrabLoop", SubResource( 83 ), "Stand", "FrontGrab", SubResource( 84 ) ]
+states/stand-to-walk/position = Vector2( 496, 23 )
+transitions = [ "Navigate", "Stand", SubResource( 53 ), "Stand", "stand-to-walk", SubResource( 54 ), "stand-to-walk", "Navigate", SubResource( 55 ), "Stand", "KickToBed", SubResource( 56 ), "default", "Stand", SubResource( 57 ), "KickToBed", "complete_assault", SubResource( 58 ), "complete_assault", "default", SubResource( 59 ), "KickToBed", "Sleep", SubResource( 60 ), "KickedToBed", "complete_assault", SubResource( 61 ), "Stand", "KickedToBed", SubResource( 62 ), "Stand", "GrabFromBack", SubResource( 63 ), "GrabFromBack", "complete_assault", SubResource( 64 ), "FrontGrab", "complete_assault", SubResource( 65 ), "Stand", "FrontGrabbed", SubResource( 66 ), "FrontGrabbed", "FrontGrabbedLoop", SubResource( 67 ), "FrontGrab", "FrontGrabLoop", SubResource( 68 ), "FrontGrabLoop", "Stand", SubResource( 69 ), "FrontGrabLoop", "FrontGrabFaceSlap", SubResource( 70 ), "FrontGrabFaceSlap", "FrontGrabLoop", SubResource( 71 ), "FrontGrabbedLoop", "FrontGrabbedFaceSlapped", SubResource( 72 ), "FrontGrabbedFaceSlapped", "FrontGrabbedLoop", SubResource( 73 ), "Sleep", "Wakeup", SubResource( 74 ), "Wakeup", "Stand", SubResource( 75 ), "FrontGrabbedLoop", "StandUp", SubResource( 76 ), "StandUp", "complete_assault", SubResource( 77 ), "FrontGrabbedLoop", "FrontGrabbedFaceInsertion", SubResource( 78 ), "FrontGrabLoop", "FrontGrabFaceInsertion", SubResource( 79 ), "Stand", "FrontGrab", SubResource( 84 ), "FrontGrabbedFaceInsertion", "MissionaryPose1Second", SubResource( 86 ), "MissionaryPose1Second", "FrontGrabbedLoop", SubResource( 87 ), "FrontGrabFaceInsertion", "MissionaryPose1First", SubResource( 91 ), "MissionaryPose1First", "FrontGrabLoop", SubResource( 92 ) ]
 start_node = "Sleep"
-graph_offset = Vector2( -218.649, -179.788 )
+graph_offset = Vector2( -207.828, 221.39 )
 

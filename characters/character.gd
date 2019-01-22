@@ -183,6 +183,7 @@ func do_action(other, name):
 	var active = actions[name].active
 	var passive = actions[name].passive
 	set_action_mode(true)
+	print("Playing action: active: ", active, " passive: ", passive)
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 	sm.travel(active)
 	if actions[name].ik:
@@ -263,7 +264,6 @@ func do_active_action(other):
 #	print(sm.get_current_node())
 func do_passive_action(other, action, ik, xform):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-#	print("passive")
 	sm.travel(action)
 	if ik:
 		emit_signal("set_feet_ik", true)
