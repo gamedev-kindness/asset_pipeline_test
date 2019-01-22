@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://rooms/modular_room_test.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://fonts/DroidSansFallback.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://ui/inventory.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/console.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/stats.tscn" type="PackedScene" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -62,43 +63,43 @@ margin_bottom = 80.0
 rect_min_size = Vector2( 160, 80 )
 custom_fonts/font = SubResource( 1 )
 
-[node name="inventory_button" type="TextureButton" parent="clock_control"]
+[node name="stats_button" type="TextureButton" parent="clock_control"]
 margin_top = 84.0
 margin_right = 191.0
-margin_bottom = 164.0
+margin_bottom = 148.0
 rect_min_size = Vector2( 64, 64 )
 
-[node name="Polygon2D" type="Polygon2D" parent="clock_control/inventory_button"]
+[node name="Polygon2D" type="Polygon2D" parent="clock_control/stats_button"]
 position = Vector2( 116.741, -1.38272 )
 color = Color( 0.321569, 0.0901961, 0.0901961, 1 )
 polygon = PoolVector2Array( 12.1667, 12.3333, 17.5, 4.33333, 41.5678, 22.9506, 63.5, 5.66666, 67.5, 15, 51.4444, 31.0494, 65.5, 49.6667, 56.8334, 57, 41.5, 39, 24.8334, 54.3333, 14.8334, 45, 33.074, 30.4568 )
 
-[node name="Polygon2D2" type="Polygon2D" parent="clock_control/inventory_button"]
+[node name="Polygon2D2" type="Polygon2D" parent="clock_control/stats_button"]
 position = Vector2( 116.741, -1.58025 )
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 15.2962, 12.2839, 17.6666, 7.74074, 41.3703, 26.5062, 62.5061, 9.71604, 64.679, 14.6543, 47.6913, 30.8518, 62.5061, 49.0247, 56.1851, 52.3827, 40.7777, 35.9876, 24.7777, 50.8025, 18.6542, 44.8765, 35.8394, 31.0494 )
 
-[node name="Polygon2D3" type="Polygon2D" parent="clock_control/inventory_button"]
+[node name="Polygon2D3" type="Polygon2D" parent="clock_control/stats_button"]
 position = Vector2( 116.741, -1.58025 )
 color = Color( 0.305882, 0.0784314, 0.0784314, 1 )
 polygon = PoolVector2Array( 28.7283, 15.8395, 54.2098, 16.2346, 54.4073, 37.5679, 51.2468, 45.4691, 47.0987, 51, 41.3703, 52.7778, 37.4197, 50.4074, 34.2592, 45.8642, 30.3086, 37.7654 )
 
-[node name="Polygon2D4" type="Polygon2D" parent="clock_control/inventory_button"]
+[node name="Polygon2D4" type="Polygon2D" parent="clock_control/stats_button"]
 position = Vector2( 116.741, -1.58025 )
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 30.9012, 17.0247, 52.8271, 17.2222, 52.432, 37.7654, 49.6666, 44.0864, 46.7036, 48.4321, 41.9629, 51.3951, 39.395, 49.8148, 35.6419, 46.0617, 32.0864, 38.1605 )
 
-[node name="Polygon2D5" type="Polygon2D" parent="clock_control/inventory_button"]
+[node name="Polygon2D5" type="Polygon2D" parent="clock_control/stats_button"]
 position = Vector2( 116.741, -1.58025 )
 color = Color( 0.290196, 0.231373, 0.231373, 1 )
 polygon = PoolVector2Array( 35.2468, 24.9259, 39.79, 19.1975, 43.5432, 24.9259 )
 
-[node name="Polygon2D6" type="Polygon2D" parent="clock_control/inventory_button"]
+[node name="Polygon2D6" type="Polygon2D" parent="clock_control/stats_button"]
 position = Vector2( 116.741, 5.1358 )
 color = Color( 0.290196, 0.231373, 0.231373, 1 )
 polygon = PoolVector2Array( 35.2468, 24.9259, 39.79, 19.1975, 43.5432, 24.9259 )
 
-[node name="Polygon2D7" type="Polygon2D" parent="clock_control/inventory_button"]
+[node name="Polygon2D7" type="Polygon2D" parent="clock_control/stats_button"]
 position = Vector2( 116.938, 12.642 )
 color = Color( 0.290196, 0.231373, 0.231373, 1 )
 polygon = PoolVector2Array( 35.2468, 24.9259, 39.79, 19.1975, 43.5432, 24.9259 )
@@ -109,4 +110,6 @@ visible = false
 [node name="console" parent="." instance=ExtResource( 6 )]
 visible = false
 margin_bottom = 300.0
+
+[node name="stats" parent="." instance=ExtResource( 7 )]
 

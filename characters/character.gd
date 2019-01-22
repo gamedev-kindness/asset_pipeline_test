@@ -134,6 +134,7 @@ var actions = {
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
 	}
 }
+
 var set_count = 0
 func update_aabbs():
 	var queue = [self]
@@ -298,6 +299,7 @@ func _ready():
 			queue.push_back(m)
 	$AnimationTree["parameters/Navigate/walk_speed/scale"] = 1.5
 #	sm.travel("Stand")
+	$rpg.character = self
 
 var despawn_cooldown = 0.0
 var despawned = false

@@ -30,6 +30,12 @@ var max_distance_to_camera  = 20.0
 
 var sight_map = {}
 var inventory = {}
+
+# RPG data
+var stats = {}
+var needs = {}
+var skills = {}
+
 func rebuild_map():
 	var camera = player_character.tps_camera
 	for k in characters:

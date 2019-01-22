@@ -71,6 +71,16 @@ func process_command(c: String):
 			var items = awareness.inventory[awareness.player_character]
 			for i in items:
 				d.text += i + "\n"
+		"stats":
+			d.append_bbcode("[b]Stats[/b]\n")
+			for h in awareness.stats[awareness.player_character].keys():
+				d.text += h + " " + str(awareness.stats[awareness.player_character][h]) + "\n"
+			d.append_bbcode("[b]Skills[/b]\n")
+			for h in awareness.skills[awareness.player_character].keys():
+				d.text += h + " " + str(awareness.skills[awareness.player_character][h]) + "\n"
+			d.append_bbcode("[b]Needs[/b]\n")
+			for h in awareness.needs[awareness.player_character].keys():
+				d.text += h + " " + str(awareness.needs[awareness.player_character][h]) + "\n"
 
 func _ready():
 	$VBoxContainer/LineEdit.connect("text_entered", self, "process_command")

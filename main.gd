@@ -35,8 +35,16 @@ func _ready():
 	awareness.connect("daytime_update", self, "update_time")
 	$clock_control.hide()
 	$console.hide()
+	$stats.hide()
+	$stats.character = self
 	connect("selected_player", $opportunities, "selected_character")
+	$clock_control/stats_button.connect("pressed", self, "toggle_stats")
 	Engine.target_fps = 60.0
+func toggle_stats():
+	if $stats.visible == true:
+		$stats.visible = false
+	else:
+		$stats.visible = true
 var fps_camera = false
 var cooldown = 0.0
 var posessed = false
