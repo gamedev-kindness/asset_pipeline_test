@@ -36,9 +36,13 @@ func load_animations():
 		},
 		{
 			"name": "front_grab_face_slap",
-			"animation": load("res://characters/male/front_grab_face_slap.anim")
+			"animation": load("res://characters/male/front_grab_face_slap2.anim")
 		},
 		{
+			"name": "front_grab_face_slap2",
+			"animation": load("res://characters/male/front_grab_face_slap2.anim")
+		},
+	{
 			"name": "grab_from_back",
 			"animation": load("res://characters/male/grab_from_back.anim")
 		},
@@ -56,7 +60,11 @@ func load_animations():
 		},
 		{
 			"name": "front_grabbed_face_slapped",
-			"animation": load("res://characters/female/front_grabbed_face_slapped.anim"),
+			"animation": load("res://characters/female/front_grabbed_face_slapped2.anim"),
+		},
+		{
+			"name": "front_grabbed_face_slapped2",
+			"animation": load("res://characters/female/front_grabbed_face_slapped2.anim"),
 		},
 		{
 			"name": "grabbed_from_back",

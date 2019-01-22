@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=68 format=2]
+[gd_resource type="AnimationNodeStateMachine" load_steps=74 format=2]
 
 [sub_resource type="AnimationNodeAnimation" id=1]
 
@@ -14,7 +14,7 @@ node_connections = [ "output", 0, "Animation" ]
 
 [sub_resource type="AnimationNodeAnimation" id=3]
 
-animation = "front_grab_face_slap"
+animation = "front_grab_face_slap2"
 
 [sub_resource type="AnimationNodeBlendTree" id=4]
 
@@ -50,7 +50,7 @@ node_connections = [ "output", 0, "Animation" ]
 
 [sub_resource type="AnimationNodeAnimation" id=10]
 
-animation = "front_grabbed_face_slapped"
+animation = "front_grabbed_face_slapped2"
 
 [sub_resource type="AnimationNodeBlendTree" id=11]
 
@@ -160,7 +160,7 @@ nodes/turn_right/node = SubResource( 27 )
 nodes/turn_right/position = Vector2( 920, 60 )
 nodes/walk_speed/node = SubResource( 28 )
 nodes/walk_speed/position = Vector2( 1300, 100 )
-node_connections = [ "output", 0, "blink", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "blink", 0, "walk_speed", "blink", 1, "Animation 4", "walk_speed", 0, "turn_right" ]
+node_connections = [ "output", 0, "blink", "walk_speed", 0, "turn_right", "blink", 0, "walk_speed", "blink", 1, "Animation 4", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation" ]
 
 [sub_resource type="AnimationNodeAnimation" id=30]
 
@@ -233,32 +233,40 @@ nodes/blink/position = Vector2( 620, 20 )
 nodes/output/position = Vector2( 1560, 120 )
 nodes/wiggle/node = SubResource( 40 )
 nodes/wiggle/position = Vector2( 1160, 80 )
-node_connections = [ "output", 0, "wiggle", "blink", 0, "Animation", "blink", 1, "Animation 3", "wiggle", 0, "blink", "wiggle", 1, "TimeScale", "TimeScale", 0, "Animation 2" ]
+node_connections = [ "output", 0, "wiggle", "TimeScale", 0, "Animation 2", "blink", 0, "Animation", "blink", 1, "Animation 3", "wiggle", 0, "blink", "wiggle", 1, "TimeScale" ]
 
 [sub_resource type="AnimationNodeAnimation" id=42]
 
-animation = "complete_assault"
+animation = "back_to_sit"
 
-[sub_resource type="AnimationNodeAnimation" id=43]
+[sub_resource type="AnimationNodeBlendTree" id=43]
 
-animation = "default"
+nodes/Animation/node = SubResource( 42 )
+nodes/Animation/position = Vector2( 40, 100 )
+node_connections = [ "output", 0, "Animation" ]
 
 [sub_resource type="AnimationNodeAnimation" id=44]
 
+animation = "back_to_sit"
+
+[sub_resource type="AnimationNodeBlendTree" id=45]
+
+nodes/Animation/node = SubResource( 44 )
+nodes/Animation/position = Vector2( 100, 80 )
+nodes/output/position = Vector2( 380, 140 )
+node_connections = [ "output", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=46]
+
+animation = "complete_assault"
+
+[sub_resource type="AnimationNodeAnimation" id=47]
+
+animation = "default"
+
+[sub_resource type="AnimationNodeAnimation" id=48]
+
 animation = "stand-to-walk"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=45]
-
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=46]
-
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=47]
-
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=48]
-
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=49]
 
@@ -268,6 +276,7 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=51]
 
+switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=52]
 
@@ -310,14 +319,36 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=65]
 
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=66]
 
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=67]
 
+switch_mode = 2
 auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=68]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=69]
+
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=70]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=71]
+
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=72]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=73]
+
+switch_mode = 2
 
 [resource]
 
@@ -328,11 +359,11 @@ states/FrontGrabFaceSlap/position = Vector2( 530.389, 531.2 )
 states/FrontGrabLoop/node = SubResource( 7 )
 states/FrontGrabLoop/position = Vector2( 383.389, 465.2 )
 states/FrontGrabbed/node = SubResource( 9 )
-states/FrontGrabbed/position = Vector2( 718.389, 161.2 )
+states/FrontGrabbed/position = Vector2( 694.389, -46.8 )
 states/FrontGrabbedFaceSlapped/node = SubResource( 11 )
 states/FrontGrabbedFaceSlapped/position = Vector2( 873.389, 484.2 )
 states/FrontGrabbedLoop/node = SubResource( 14 )
-states/FrontGrabbedLoop/position = Vector2( 705.389, 37 )
+states/FrontGrabbedLoop/position = Vector2( 928.389, 13 )
 states/GrabFromBack/node = SubResource( 16 )
 states/GrabFromBack/position = Vector2( 781.389, 329.216 )
 states/KickToBed/node = SubResource( 18 )
@@ -345,13 +376,17 @@ states/Sleep/node = SubResource( 34 )
 states/Sleep/position = Vector2( 407.389, -78.376 )
 states/Stand/node = SubResource( 41 )
 states/Stand/position = Vector2( 101, 37 )
-states/complete_assault/node = SubResource( 42 )
+states/StandUp/node = SubResource( 43 )
+states/StandUp/position = Vector2( 660.389, 102.014 )
+states/Wakeup/node = SubResource( 45 )
+states/Wakeup/position = Vector2( 175.389, -60.986 )
+states/complete_assault/node = SubResource( 46 )
 states/complete_assault/position = Vector2( -28.611, 246.624 )
-states/default/node = SubResource( 43 )
+states/default/node = SubResource( 47 )
 states/default/position = Vector2( 75, 177 )
-states/stand-to-walk/node = SubResource( 44 )
+states/stand-to-walk/node = SubResource( 48 )
 states/stand-to-walk/position = Vector2( 300, 37 )
-transitions = [ "Navigate", "Stand", SubResource( 45 ), "Stand", "stand-to-walk", SubResource( 46 ), "stand-to-walk", "Navigate", SubResource( 47 ), "Stand", "KickToBed", SubResource( 48 ), "default", "Stand", SubResource( 49 ), "KickToBed", "complete_assault", SubResource( 50 ), "complete_assault", "default", SubResource( 51 ), "Sleep", "Stand", SubResource( 52 ), "KickToBed", "Sleep", SubResource( 53 ), "KickedToBed", "complete_assault", SubResource( 54 ), "Stand", "KickedToBed", SubResource( 55 ), "Stand", "GrabFromBack", SubResource( 56 ), "GrabFromBack", "complete_assault", SubResource( 57 ), "FrontGrab", "complete_assault", SubResource( 58 ), "Stand", "FrontGrabbed", SubResource( 59 ), "FrontGrabbed", "FrontGrabbedLoop", SubResource( 60 ), "FrontGrab", "FrontGrabLoop", SubResource( 61 ), "FrontGrabbedLoop", "complete_assault", SubResource( 62 ), "FrontGrabLoop", "Stand", SubResource( 63 ), "FrontGrabLoop", "FrontGrabFaceSlap", SubResource( 64 ), "FrontGrabFaceSlap", "FrontGrabLoop", SubResource( 65 ), "FrontGrabbedLoop", "FrontGrabbedFaceSlapped", SubResource( 66 ), "FrontGrabbedFaceSlapped", "FrontGrabbedLoop", SubResource( 67 ) ]
+transitions = [ "Navigate", "Stand", SubResource( 49 ), "Stand", "stand-to-walk", SubResource( 50 ), "stand-to-walk", "Navigate", SubResource( 51 ), "Stand", "KickToBed", SubResource( 52 ), "default", "Stand", SubResource( 53 ), "KickToBed", "complete_assault", SubResource( 54 ), "complete_assault", "default", SubResource( 55 ), "KickToBed", "Sleep", SubResource( 56 ), "KickedToBed", "complete_assault", SubResource( 57 ), "Stand", "KickedToBed", SubResource( 58 ), "Stand", "GrabFromBack", SubResource( 59 ), "GrabFromBack", "complete_assault", SubResource( 60 ), "FrontGrab", "complete_assault", SubResource( 61 ), "Stand", "FrontGrabbed", SubResource( 62 ), "FrontGrabbed", "FrontGrabbedLoop", SubResource( 63 ), "FrontGrab", "FrontGrabLoop", SubResource( 64 ), "FrontGrabLoop", "Stand", SubResource( 65 ), "FrontGrabLoop", "FrontGrabFaceSlap", SubResource( 66 ), "FrontGrabFaceSlap", "FrontGrabLoop", SubResource( 67 ), "FrontGrabbedLoop", "FrontGrabbedFaceSlapped", SubResource( 68 ), "FrontGrabbedFaceSlapped", "FrontGrabbedLoop", SubResource( 69 ), "Sleep", "Wakeup", SubResource( 70 ), "Wakeup", "Stand", SubResource( 71 ), "FrontGrabbedLoop", "StandUp", SubResource( 72 ), "StandUp", "complete_assault", SubResource( 73 ) ]
 start_node = "Sleep"
-graph_offset = Vector2( -516.611, 321.224 )
+graph_offset = Vector2( -516.611, -133.986 )
 
