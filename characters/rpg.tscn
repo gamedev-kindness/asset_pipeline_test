@@ -1,23 +1,60 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://characters/rpg.gd" type="Script" id=1]
 [ext_resource path="res://characters/stats/stat.gd" type="Script" id=2]
+[ext_resource path="res://characters/skills/skill.gd" type="Script" id=3]
+
+[sub_resource type="Curve" id=1]
+
+_data = [ Vector2( 0, 0.148 ), 0.0, 0.0, 0, 0, Vector2( 0.582526, 0.2624 ), 0.533164, 0.533164, 0, 0, Vector2( 0.860758, 0.6848 ), 2.04813, 2.04813, 0, 0, Vector2( 1, 1 ), 1.39955, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=2]
+
+_data = [ Vector2( 0, 0.104 ), 0.0, 2.34522, 0, 0, Vector2( 0.525937, 0.8168 ), 0.72235, 0.72235, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=3]
+
+_data = [ Vector2( 0, 0.0336 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 1.86114, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=4]
+
+_data = [ Vector2( 0, 0.1744 ), 0.0, 0.182959, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [node name="rpg" type="Node"]
 script = ExtResource( 1 )
+leveling = SubResource( 1 )
 
 [node name="stats" type="Node" parent="."]
 
 [node name="Health" type="Node" parent="stats"]
 script = ExtResource( 2 )
+value = 100.0
+curve = SubResource( 2 )
+base_value = 500.0
 
 [node name="Stamina" type="Node" parent="stats"]
+script = ExtResource( 2 )
+curve = SubResource( 3 )
+base_value = 500.0
 
 [node name="skills" type="Node" parent="."]
+
+[node name="Learning" type="Node" parent="skills"]
+script = ExtResource( 3 )
+curve = SubResource( 4 )
+max_level = 10
 
 [node name="needs" type="Node" parent="."]
 
 [node name="Hunger" type="Node" parent="needs"]
 
+[node name="Thirst" type="Node" parent="needs"]
+
+[node name="Toilet1" type="Node" parent="needs"]
+
+[node name="Toilet2" type="Node" parent="needs"]
+
 [node name="Safety" type="Node" parent="needs"]
+
+[node name="Shower" type="Node" parent="needs"]
 

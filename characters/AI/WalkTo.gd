@@ -11,6 +11,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-export var value: float = 0.0
-export var curve: Curve = Curve.new()
-export var base_value = 100.0
+func run(delta, obj, tree):
+	pass

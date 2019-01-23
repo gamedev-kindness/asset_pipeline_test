@@ -352,6 +352,41 @@ var scene_aabbs = []
 var instances = []
 var noise
 var rnd
+var added_paths = []
+
+func build_navigation():
+	var id = 0
+	var start_ids = []
+	var end_ids = []
+	print("building navigation")
+	for p in get_tree().get_nodes_in_group("nav"):
+		var curve = p.curve
+		start_ids.push_back(id)
+		for pt in range(curve.get_point_count()):
+			awareness.astar.add_point(id, p.global_transform.xform(curve.get_point_position(pt)))
+			if pt > 0:
+				awareness.astar.connect_points(id - 1, id)
+			id += 1
+		end_ids.push_back(id - 1)
+	for sid in start_ids:
+		var p1 = awareness.astar.get_point_position(sid)
+		for pt  in range(id):
+			if sid == pt:
+				continue
+			var p2 = awareness.astar.get_point_position(pt)
+			var d = p1.distance_squared_to(p2)
+			if d < 2.0:
+				awareness.astar.connect_points(sid, pt)
+	for eid in end_ids:
+		var p1 = awareness.astar.get_point_position(eid)
+		for pt  in range(id):
+			if eid == pt:
+				continue
+			var p2 = awareness.astar.get_point_position(pt)
+			var d = p1.distance_squared_to(p2)
+			if d < 2.0:
+				awareness.astar.connect_points(eid, pt)
+	print("building navigation done ", awareness.astar.get_available_point_id())
 
 func prepare_stage(rooms):
 	room_queue.clear()
@@ -548,11 +583,8 @@ func _process(delta):
 			room_count = 0
 			count = 0
 		else:
-			var max_spawned = 15
+			build_navigation()
 			for k in get_tree().get_nodes_in_group("beds"):
 				k.emit_signal("spawn")
-				max_spawned -= 1
-				if max_spawned < 0:
-					break
 			print("SPAWN complete")
 			complete = true

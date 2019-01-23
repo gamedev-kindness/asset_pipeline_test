@@ -31,3 +31,8 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.790048 )
 shape = SubResource( 1 )
 
+[node name="toilet_spot" type="Spatial" parent="." groups=[
+"toilet",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.776242 )
+

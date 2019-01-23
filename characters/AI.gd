@@ -16,27 +16,30 @@ var change_count = 0.0
 var dir = 0.0
 var navigating = false
 var sleeping = true
+
+var state = 0
+var init = false
 func run(delta, obj, tree):
-		var sm: AnimationNodeStateMachinePlayback = tree["parameters/playback"]
-		var next = "Stand"
-		if navigating:
-			next = "Navigate"
-		if sleeping:
-			next = "Sleep"
-#		print(next)
-		sm.travel(next)
-		if sm.get_current_node() == "Navigate":
-			var tf_turn = Transform(Quat(Vector3(0, 1, 0), PI * dir * delta))
-			obj.orientation *= tf_turn
-		change_count += delta
-		if change_count > change_frequency && !sleeping:
-			dir = randf() * 1.2 - 0.6
-			change_count = 0.0
-			if randf() > 0.7:
-				navigating = true
-			else:
-				navigating = false
-		if change_count > change_frequency * 2.0 + 2.0 * randf() && sleeping:
-			if randf() > 0.8:
-				sleeping = false
-				obj.get_node("main_shape").disabled = false
+	var sm: AnimationNodeStateMachinePlayback = tree["parameters/playback"]
+	awareness.at[obj] = sm
+#	var next = "Stand"
+#	if navigating:
+#		next = "Navigate"
+#	if sleeping:
+#		next = "Sleep"
+#	sm.travel(next)
+	# Forcing AI wakeup/sleeping - need tunables
+	var stateobj = $states.get_children()[state]
+	if !init:
+		stateobj.init(obj)
+		init = true
+	var next_state_s = stateobj.run(obj, delta)
+	var old_state = state
+	for n in range($states.get_child_count()):
+		if $states.get_children()[n].name == next_state_s:
+			state = n
+			break
+	if old_state != state:
+		$states.get_children()[old_state].exit(obj)
+		$states.get_children()[state].init(obj)
+	

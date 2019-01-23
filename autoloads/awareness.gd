@@ -1,8 +1,5 @@
 extends Node
 signal daytime_update
-func _ready():
-	pass # Replace with function body.
-
 var player_character
 var cooldown = 0.0
 var characters = []
@@ -35,6 +32,16 @@ var inventory = {}
 var stats = {}
 var needs = {}
 var skills = {}
+var skill_levels = {}
+var current_level = {}
+var till_next_level = {}
+var astar: AStar
+var current_path = {}
+var at = {}
+var action_cooldown = {}
+func _ready():
+	astar = AStar.new()
+
 
 func rebuild_map():
 	var camera = player_character.tps_camera
@@ -218,3 +225,12 @@ func get_other_direction(obj, other):
 		return "FRONT"
 	else:
 		return "SIDE"
+func build_path_to(obj: Spatial, to: Vector3) -> PoolVector3Array:
+	var from_id = astar.get_closest_point(obj.global_transform.origin)
+	var to_id = astar.get_closest_point(to)
+	var path: PoolVector3Array = astar.get_point_path(from_id, to_id)
+	return path
+
+func build_path_to_obj(obj: Spatial, to: Spatial) -> PoolVector3Array:
+	var path: PoolVector3Array = build_path_to(obj, to.global_transform.origin)
+	return path

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://furniture/bed.tscn" type="PackedScene" id=1]
 [ext_resource path="res://rooms/room_kit/window2_1.tscn" type="PackedScene" id=2]
@@ -17,19 +17,33 @@
 
 size = Vector3( 16, 2.7, 4 )
 
+[sub_resource type="Curve3D" id=2]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -7.02432, 0, -0.237123, 0, 0, 0, 0, 0, 0, -5.13233, 0, -0.269744, 0, 0, 0, 0, 0, 0, -3.60103, -0.00390625, 0.794249, 0, 0, 0, 0, 0, 0, -3.17624, -0.0136719, 3.56688, 0, 0, 0, 0, 0, 0, -3.01198, -0.0288086, 8.00322, 0, 0, 0, 0, 0, 0, 1.13083, -0.0268555, 7.97027 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=3]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 0.250289, -0.0405273, 9.50172, 0, 0, 0, 0, 0, 0, 0.576306, -0.034668, 8.13162, 0, 0, 0, 0, 0, 0, 3.38165, -0.0336914, 7.90289, 0, 0, 0, 0, 0, 0, 4.91484, -0.034668, 8.03315, 0, 0, 0, 0, 0, 0, 4.84929, -0.0244141, 5.78236, 0, 0, 0, 0, 0, 0, -1.87158, 3.29513, 6.05302, 0, 0, 0, 0, 0, 0, -0.826402, 3.59713, -5.80615, 0, 0, 0, 0, 0, 0, -2.75102, 3.50003, -5.604, 0, 0, 0, 0, 0, 0, -4.31681, 3.6452, -1.71338, 0, 0, 0, 0, 0, 0, -4.15371, 3.59645, 2.65869, 0, 0, 0, 0, 0, 0, -3.69702, 3.56582, -5.46094, 0, 0, 0, 0, 0, 0, -0.751465, 3.8124, -5.57019, 0, 0, 0, 0, 0, 0, -3.98315, 3.67514, -5.74701, 0, 0, 0, 0, 0, 0, 4.36914, 3.72531, -1.24251, 0, 0, 0, 0, 0, 0, 4.10156, 3.62692, 2.89921 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
 [node name="bedroom" type="Spatial"]
 
 [node name="n1" type="Spatial" parent="." groups=[
-"module_room",
 "attachment",
 "bedroom",
+"module_room",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.02, 0, 0 )
 
 [node name="n2" type="Spatial" parent="." groups=[
-"module_room",
 "attachment",
 "bedroom",
+"module_room",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.98 )
 
@@ -352,4 +366,14 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6.5878
 
 [node name="toilet4" parent="." instance=ExtResource( 12 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6.58789, 0, 4.53369 )
+
+[node name="Path" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 2 )
+
+[node name="Path2" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 3 )
 

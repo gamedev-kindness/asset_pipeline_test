@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://rooms/room_kit/floor_4_1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://rooms/room_kit/wall_4_1.tscn" type="PackedScene" id=2]
@@ -6,6 +6,27 @@
 [ext_resource path="res://rooms/room_kit/wall_2_1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://rooms/room_kit/window2_1.tscn" type="PackedScene" id=5]
 [ext_resource path="res://rooms/room_kit/angle.tscn" type="PackedScene" id=6]
+
+[sub_resource type="Curve3D" id=1]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -15.3146, 0, -5.21267, 0, 0, 0, 0, 0, 0, -6.67754, 0, -5.13657, 0, 0, 0, 0, 0, 0, 0.285364, 0, -5.06047, 0, 0, 0, 0, 0, 0, 5.59444, 0.0334473, -5.23163, 0, 0, 0, 0, 0, 0, 8.52379, 0.000732422, -5.35583 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=2]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -14.8773, 0.0185547, -5.65677, 0, 0, 0, 0, 0, 0, -11.1112, 0.019043, -5.8598, 0, 0, 0, 0, 0, 0, -5.63128, 0.0183105, -5.61208, 0, 0, 0, 0, 0, 0, 1.44625, 0.0178223, -5.48393, 0, 0, 0, 0, 0, 0, 1.57436, 0.00439453, -1.3751, 0, 0, 0, 0, 0, 0, 1.89697, -0.0129395, 3.98867, 0, 0, 0, 0, 0, 0, 4.56437, -0.0166016, 5.15912, 0, 0, 0, 0, 0, 0, 8.2926, -0.0163574, 4.99426, 0, 0, 0, 0, 0, 0, 8.99136, 0.0163574, 5.06201 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=3]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 8.76763, 0, -5.20185, 0, 0, 0, 0, 0, 0, 6.44637, 0, -5.08998, 0, 0, 0, 0, 0, 0, 5.1599, 0, -3.3001, 0, 0, 0, 0, 0, 0, 5.04803, 0, 2.04158, 0, 0, 0, 0, 0, 0, 5.9989, 0, 4.30691, 0, 0, 0, 0, 0, 0, 6.92181, 0, 5.08998, 0, 0, 0, 0, 0, 0, 8.8795, 0, 4.92218 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0 )
+}
 
 [node name="classroom" type="Spatial"]
 
@@ -278,4 +299,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.98, 0, -7 )
 "attachment",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.98, 0, 5 )
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 1 )
+
+[node name="Path2" type="Path" parent="."]
+curve = SubResource( 2 )
+
+[node name="Path3" type="Path" parent="."]
+curve = SubResource( 3 )
 

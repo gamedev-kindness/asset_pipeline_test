@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://rooms/room_kit/main_door.tscn" type="PackedScene" id=1]
 [ext_resource path="res://rooms/room_kit/wall_4_no_ceil.tscn" type="PackedScene" id=2]
@@ -10,6 +10,62 @@
 [sub_resource type="CubeMesh" id=1]
 
 size = Vector3( 100, 16, 16 )
+
+[sub_resource type="Curve3D" id=2]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 0.836775, 1.26177, 0.0805664, 0, 0, 0, 0, 0, 0, -2.83848, 3.07422, 0.0727539, 0, 0, 0, 0, 0, 0, -4.08035, 3.07422, -0.146729, 0, 0, 0, 0, 0, 0, -9.16529, 1.61419, 0.196289, 0, 0, 0, 0, 0, 0, -13.6249, 0.00146484, -0.215801, 0, 0, 0, 0, 0, 0, -17.9924, 0.000976562, -0.26169 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=3]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -18.1912, 0, 7.6151, 0, 0, 0, 0, 0, 0, -18.1912, 0, 5.9317, 0, 0, 0, 0, 0, 0, -18.1716, 0, 3.48488, 0, 0, 0, 0, 0, 0, -18.2499, 0, 1.39041, 0, 0, 0, 0, 0, 0, -18.2695, 0, 0.0789216 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=4]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -18.015, 0, -7.9662, 0, 0, 0, 0, 0, 0, -18.0541, 0, -6.10662, 0, 0, 0, 0, 0, 0, -18.2303, 0, -4.22747, 0, 0, 0, 0, 0, 0, -18.015, 0, -2.46576, 0, 0, 0, 0, 0, 0, -18.0346, 0, -1.1347, 0, 0, 0, 0, 0, 0, -18.1129, 0, -0.195121 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=5]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -25.9427, 0, -0.0385252, 0, 0, 0, 0, 0, 0, -24.4354, 0, -0.0580996, 0, 0, 0, 0, 0, 0, -22.478, 0, -0.0189509, 0, 0, 0, 0, 0, 0, -20.7554, 0, -0.155972, 0, 0, 0, 0, 0, 0, -19.3069, 0, -0.0385252, 0, 0, 0, 0, 0, 0, -18.3869, 0, -0.0385252 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=6]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -25.8644, 0, -0.0580996, 0, 0, 0, 0, 0, 0, -24.3571, 0, -0.0189509, 0, 0, 0, 0, 0, 0, -22.3801, 0, 0.176795, 0, 0, 0, 0, 0, 0, -21.1078, 0, 0.9402, 0, 0, 0, 0, 0, 0, -19.7571, 0, 2.48658, 0, 0, 0, 0, 0, 0, -18.5827, 0, 3.97425, 0, 0, 0, 0, 0, 0, -18.3673, 0, 5.99042, 0, 0, 0, 0, 0, 0, -18.3086, 0, 7.51723 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=7]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -25.9231, 0, -0.155972, 0, 0, 0, 0, 0, 0, -24.6508, 0, -0.273419, 0, 0, 0, 0, 0, 0, -22.5759, 0, -0.23427, 0, 0, 0, 0, 0, 0, -20.5597, 0, -0.958526, 0, 0, 0, 0, 0, 0, -19.0524, 0, -2.64193, 0, 0, 0, 0, 0, 0, -18.4065, 0, -4.16874, 0, 0, 0, 0, 0, 0, -18.3673, 0, -6.53726, 0, 0, 0, 0, 0, 0, -18.152, 0, -7.82917 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=8]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -18.152, 0, -7.90747, 0, 0, 0, 0, 0, 0, -17.9367, 0, -5.71513, 0, 0, 0, 0, 0, 0, -17.6039, 0, -3.64023, 0, 0, 0, 0, 0, 0, -16.8014, 0, -1.83938, 0, 0, 0, 0, 0, 0, -15.6856, 0, -0.958526, 0, 0, 0, 0, 0, 0, -13.1018, 0, -0.704058, 0, 0, 0, 0, 0, 0, -11.3537, 0.866556, -0.390869, 0, 0, 0, 0, 0, 0, -9.33944, 1.48523, -0.390869, 0, 0, 0, 0, 0, 0, -7.35392, 2.16146, 0.3125, 0, 0, 0, 0, 0, 0, -4.74972, 2.90963, -0.335938, 0, 0, 0, 0, 0, 0, -3.32532, 2.93841, 0.335938, 0, 0, 0, 0, 0, 0, -0.965712, 2.1183, -0.282471 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Curve3D" id=9]
+
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -18.1224, 0, 7.44862, 0, 0, 0, 0, 0, 0, -17.9854, 0, 5.8504, 0, 0, 0, 0, 0, 0, -17.7342, 0, 3.56723, 0, 0, 0, 0, 0, 0, -16.9579, 0, 2.08317, 0, 0, 0, 0, 0, 0, -15.0401, 0, 0.827423, 0, 0, 0, 0, 0, 0, -12.7113, 0, 0.165304, 0, 0, 0, 0, 0, 0, -10.7071, 0.908521, -0.0627441, 0, 0, 0, 0, 0, 0, -7.88667, 2.02427, 0.387939, 0, 0, 0, 0, 0, 0, -6.14541, 2.33746, 0.154541, 0, 0, 0, 0, 0, 0, -4.213, 3.06172, 0.2229, 0, 0, 0, 0, 0, 0, -2.51767, 2.99468, 0.131592, 0, 0, 0, 0, 0, 0, -0.56092, 1.91559, 0.0629883, 0, 0, 0, 0, 0, 0, 0.892253, 1.23936, -0.154297 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
 
 [node name="lobby" type="Spatial"]
 
@@ -80,6 +136,7 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14, 0,
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -22, 0, 6 )
 
 [node name="lobby_center" type="Spatial" parent="."]
+editor/display_folded = true
 
 [node name="floor_4_floor_only14" parent="lobby_center" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -1 )
@@ -128,4 +185,44 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 53.0061, 0, 0 )
 visible = false
 mesh = SubResource( 1 )
 material/0 = null
+
+[node name="Path" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 2 )
+
+[node name="Path2" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 3 )
+
+[node name="Path3" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 4 )
+
+[node name="Path4" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 5 )
+
+[node name="Path5" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 6 )
+
+[node name="Path6" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 7 )
+
+[node name="Path7" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 8 )
+
+[node name="Path8" type="Path" parent="." groups=[
+"nav",
+]]
+curve = SubResource( 9 )
 

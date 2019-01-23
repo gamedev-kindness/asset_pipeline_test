@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://characters/AI.gd" type="Script" id=1]
+[ext_resource path="res://characters/AI/WalkTo.gd" type="Script" id=2]
+[ext_resource path="res://characters/AI/states/Sleeping.gd" type="Script" id=3]
+[ext_resource path="res://characters/AI/states/SelectTarget.gd" type="Script" id=4]
+[ext_resource path="res://characters/AI/states/GoToTarget.gd" type="Script" id=5]
+[ext_resource path="res://characters/AI/states/ActivateTarget.gd" type="Script" id=6]
+[ext_resource path="res://characters/AI/states/RandomWalk.gd" type="Script" id=7]
 
 [node name="AI" type="Node"]
 script = ExtResource( 1 )
@@ -8,4 +14,24 @@ script = ExtResource( 1 )
 [node name="speed" type="Node" parent="."]
 
 [node name="health" type="Node" parent="."]
+
+[node name="WalkTo" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="states" type="Node" parent="."]
+
+[node name="Sleeping" type="Node" parent="states"]
+script = ExtResource( 3 )
+
+[node name="SelectTarget" type="Node" parent="states"]
+script = ExtResource( 4 )
+
+[node name="GoToTarget" type="Node" parent="states"]
+script = ExtResource( 5 )
+
+[node name="ActivateTarget" type="Node" parent="states"]
+script = ExtResource( 6 )
+
+[node name="RandomWalk" type="Node" parent="states"]
+script = ExtResource( 7 )
 

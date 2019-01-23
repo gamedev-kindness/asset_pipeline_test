@@ -1,4 +1,4 @@
-extends Node
+extends AIState
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -8,9 +8,15 @@ extends Node
 func _ready():
 	pass # Replace with function body.
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-export var value: float = 0.0
-export var curve: Curve = Curve.new()
-export var base_value = 100.0
+func init(obj):
+	pass
+
+func run(obj, delta):
+	pass
+
+func exit(obj):
+	pass
