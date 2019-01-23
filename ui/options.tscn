@@ -112,20 +112,16 @@ margin_left = 644.269
 margin_top = 5.05969
 margin_right = 644.269
 margin_bottom = 5.05969
+rect_min_size = Vector2( 80, 80 )
 mouse_filter = 1
 
-[node name="ReferenceRect" type="ReferenceRect" parent="VBoxContainer/top/TextureButton"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/top/TextureButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 rect_min_size = Vector2( 80, 80 )
 mouse_filter = 2
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/top/TextureButton/ReferenceRect"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-
-[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/top/TextureButton/ReferenceRect/ColorRect"]
+[node name="Polygon2D" type="Polygon2D" parent="VBoxContainer/top/TextureButton/ColorRect"]
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 36.7859, 13.0859, 10.5504, 38.5718, 38.2851, 58.8107, 43.5322, 45.3181, 70.5173, 46.8173, 69.0181, 30.3264, 42.7826, 30.3264 )
 

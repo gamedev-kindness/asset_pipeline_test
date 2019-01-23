@@ -48,7 +48,7 @@ func go_back():
 	get_tree().change_scene_to(sc)
 
 func _ready():
-	$"VBoxContainer/top/TextureButton/ReferenceRect".connect("pressed", self, "go_back")
+	$"VBoxContainer/top/TextureButton".connect("pressed", self, "go_back")
 	print(OS.get_user_data_dir())
 	keymap = ConfigFile.new()
 	var err = keymap.load("user://settings.cfg")
