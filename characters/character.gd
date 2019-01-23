@@ -26,76 +26,77 @@ var skel
 
 var stats = {}
 
-func load_animations():
-	var animations = [
-		{
-			"name": "front_grab",
-			"animation": load("res://characters/male/front_grab.anim")
-		},
-		{
-			"name": "front_grab_loop",
-			"animation": load("res://characters/male/front_grab_loop.anim")
-		},
-		{
-			"name": "front_grab_face_slap",
-			"animation": load("res://characters/male/front_grab_face_slap2.anim")
-		},
-		{
-			"name": "front_grab_face_slap2",
-			"animation": load("res://characters/male/front_grab_face_slap2.anim")
-		},
-		{
-			"name": "grab_from_back",
-			"animation": load("res://characters/male/grab_from_back.anim")
-		},
-		{
-			"name": "kick_to_bed",
-			"animation": load("res://characters/male/kick_to_bed.anim"),
-		},
-		{
-			"name": "front_grabbed",
-			"animation": load("res://characters/female/front_grabbed.anim"),
-		},
-		{
-			"name": "front_grabbed_loop",
-			"animation": load("res://characters/female/front_grabbed_loop.anim"),
-		},
-		{
-			"name": "front_grabbed_face_slapped",
-			"animation": load("res://characters/female/front_grabbed_face_slapped2.anim"),
-		},
-		{
-			"name": "front_grabbed_face_slapped2",
-			"animation": load("res://characters/female/front_grabbed_face_slapped2.anim"),
-		},
-		{
-			"name": "grabbed_from_back",
-			"animation": load("res://characters/female/grabbed_from_back.anim"),
-		},
-		{
-			"name": "kicked_to_bed",
-			"animation": load("res://characters/female/kicked_to_bed.anim")
-		},
-		{
-			"name": "front_grab_face_insertion",
-			"animation": load("res://characters/male/front_grab_face_insertion.anim")
-		},
-		{
-			"name": "front_grabbed_face_insertion",
-			"animation": load("res://characters/female/front_grabbed_face_insertion.anim")
-		},
-		{
-			"name": "missionary1-second-loop",
-			"animation": load("res://characters/female/missionary1-second-loop.anim")
-		},
-		{
-			"name": "missionary1-first-loop",
-			"animation": load("res://characters/male/missionary1-first-loop.anim")
-		}
-	]
-	for anim in animations:
-		get_children()[0].get_node("AnimationPlayer").remove_animation(anim.name)
-		get_children()[0].get_node("AnimationPlayer").add_animation(anim.name, anim.animation)
+#func load_animations(skel):
+#	var animations = [
+#		{
+#			"name": "front_grab",
+#			"animation": load("res://characters/male/front_grab.anim")
+#		},
+#		{
+#			"name": "front_grab_loop",
+#			"animation": load("res://characters/male/front_grab_loop.anim")
+#		},
+#		{
+#			"name": "front_grab_face_slap",
+#			"animation": load("res://characters/male/front_grab_face_slap2.anim")
+#		},
+#		{
+#			"name": "front_grab_face_slap2",
+#			"animation": load("res://characters/male/front_grab_face_slap2.anim")
+#		},
+#		{
+#			"name": "grab_from_back",
+#			"animation": load("res://characters/male/grab_from_back.anim")
+#		},
+#		{
+#			"name": "kick_to_bed",
+#			"animation": load("res://characters/male/kick_to_bed.anim"),
+#		},
+#		{
+#			"name": "front_grabbed",
+#			"animation": load("res://characters/female/front_grabbed.anim"),
+#		},
+#		{
+#			"name": "front_grabbed_loop",
+#			"animation": load("res://characters/female/front_grabbed_loop.anim"),
+#		},
+#		{
+#			"name": "front_grabbed_face_slapped",
+#			"animation": load("res://characters/female/front_grabbed_face_slapped2.anim"),
+#		},
+#		{
+#			"name": "front_grabbed_face_slapped2",
+#			"animation": load("res://characters/female/front_grabbed_face_slapped2.anim"),
+#		},
+#		{
+#			"name": "grabbed_from_back",
+#			"animation": load("res://characters/female/grabbed_from_back.anim"),
+#		},
+#		{
+#			"name": "kicked_to_bed",
+#			"animation": load("res://characters/female/kicked_to_bed.anim")
+#		},
+#		{
+#			"name": "front_grab_face_insertion",
+#			"animation": load("res://characters/male/front_grab_face_insertion.anim")
+#		},
+#		{
+#			"name": "front_grabbed_face_insertion",
+#			"animation": load("res://characters/female/front_grabbed_face_insertion.anim")
+#		},
+#		{
+#			"name": "missionary1-second-loop",
+#			"animation": load("res://characters/female/missionary1-second-loop.anim")
+#		},
+#		{
+#			"name": "missionary1-first-loop",
+#			"animation": load("res://characters/male/missionary1-first-loop.anim")
+#		}
+#	]
+#	for anim in animations:
+#		skel.get_node("AnimationPlayer").remove_animation(anim.name)
+#		skel.get_node("AnimationPlayer").add_animation(anim.name, anim.animation)
+
 		
 var actions = {
 	"kick_to_bed": {
@@ -277,7 +278,7 @@ func do_passive_action(other, action, ik, xform):
 func _ready():
 	skel = get_children()[0]
 	fps_camera = get_children()[0].get_node("head/Camera")
-	load_animations()
+#	load_animations(skel)
 	update_aabbs()
 	skel.rotation = Vector3()
 	add_to_group("characters")

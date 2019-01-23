@@ -1,0 +1,118 @@
+{
+	"back-grabbing": {
+		"female": [
+			{
+				"name": "default",
+				"path": "res://characters/female/default.anim"
+			},
+			{
+				"name": "grabbed_from_back",
+				"path": "res://characters/female/grabbed_from_back.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "grab_from_back",
+				"path": "res://characters/male/grab_from_back.anim"
+			}
+		]
+	},
+	"front_grab": {
+		"female": [
+			{
+				"name": "front_grabbed",
+				"path": "res://characters/female/front_grabbed.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "front_grab",
+				"path": "res://characters/male/front_grab.anim"
+			}
+		]
+	},
+	"front_grab_face_inserion": {
+		"female": [
+			{
+				"name": "front_grabbed_face_insertion",
+				"path": "res://characters/female/front_grabbed_face_insertion.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "front_grab_face_insertion",
+				"path": "res://characters/male/front_grab_face_insertion.anim"
+			}
+		]
+	},
+	"front_grab_face_slap": {
+		"female": [
+			{
+				"name": "front_grabbed_face_slapped2",
+				"path": "res://characters/female/front_grabbed_face_slapped2.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "front_grab_face_slap2",
+				"path": "res://characters/male/front_grab_face_slap2.anim"
+			}
+		]
+	},
+	"front_grab_loop": {
+		"female": [
+			{
+				"name": "front_grabbed_loop",
+				"path": "res://characters/female/front_grabbed_loop.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "front_grab_loop",
+				"path": "res://characters/male/front_grab_loop.anim"
+			}
+		]
+	},
+	"grab_from_back": {
+		"female": [
+			{
+				"name": "grabbed_from_back",
+				"path": "res://characters/female/grabbed_from_back.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "grab_from_back",
+				"path": "res://characters/male/grab_from_back.anim"
+			}
+		]
+	},
+	"kick_to_bed": {
+		"female": [
+			{
+				"name": "kicked_to_bed",
+				"path": "res://characters/female/kicked_to_bed.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "kick_to_bed",
+				"path": "res://characters/male/kick_to_bed.anim"
+			}
+		]
+	},
+	"missionary_pose1_loop": {
+		"female": [
+			{
+				"name": "missionary1-second-loop",
+				"path": "res://characters/female/missionary1-second-loop.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "missionary1-first-loop",
+				"path": "res://characters/male/missionary1-first-loop.anim"
+			}
+		]
+	}
+}
