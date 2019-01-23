@@ -99,14 +99,13 @@ height = 1.1
 
 radius = 0.1
 
-[node name="female_2018" index="0" instance=ExtResource( 1 )]
+[node name="female_2018" instance=ExtResource( 1 )]
 collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="female_2018" parent="." index="0"]
 editor/display_folded = true
-transform = Transform( 0.99999, 0.00182029, -0.00408144, -0.00289571, 0.95955, -0.281523, 0.00340389, 0.281532, 0.959546, 2.32831e-10, 3.14195e-08, -7.16089e-08 )
-bones/21/bound_children = [ NodePath("head") ]
+transform = Transform( 0.99999, 0.00177285, -0.00403949, -0.00283742, 0.95963, -0.281252, 0.0033778, 0.281261, 0.959625, 2.32831e-10, 2.55e-08, -1.03519e-07 )
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="female_2018" index="0"]
@@ -179,8 +178,8 @@ parameters/FrontGrabLoop/face_slapped/active = false
 parameters/FrontGrabLoop/front_grab_speed/scale = 0.3
 parameters/FrontGrabbedLoop/face_slapped/active = false
 parameters/FrontGrabbedLoop/front_grabbed_speed/scale = 0.3
-parameters/MissionaryPose1First/playback = SubResource( 13 )
-parameters/MissionaryPose1Second/playback = SubResource( 14 )
+parameters/Missionary1_1/playback = SubResource( 13 )
+parameters/Missionary1_2/playback = SubResource( 14 )
 "parameters/Navigate/OneShot 3/active" = false
 parameters/Navigate/turn_left/active = false
 parameters/Navigate/turn_right/active = false

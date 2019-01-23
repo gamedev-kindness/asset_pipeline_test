@@ -128,8 +128,8 @@ var actions = {
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
 	},
 	"missionary1": {
-			"active": "Missionary1First",
-			"passive": "Missionary1Second",
+			"active": "Missionary1_1",
+			"passive": "Missionary1_2",
 			"ik": false,
 			"direction":"FRONT",
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))

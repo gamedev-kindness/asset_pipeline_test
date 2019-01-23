@@ -73,7 +73,7 @@ radius = 0.1
 script = ExtResource( 2 )
 
 [node name="male_g_2018" parent="." index="0"]
-transform = Transform( 0.999974, -0.00349455, 0.00635393, 0.00409667, 0.99524, -0.097364, -0.00598344, 0.0973874, 0.995229, 9.31323e-10, 2.98023e-08, -4.36092e-09 )
+transform = Transform( 0.999973, -0.00353742, 0.00638403, 0.00413985, 0.995279, -0.096964, -0.00601089, 0.0969878, 0.995267, 9.31323e-10, 2.98023e-08, 0 )
 bones/14/bound_children = [ NodePath("head") ]
 script = ExtResource( 3 )
 
@@ -132,8 +132,8 @@ root_motion_track = NodePath(".:root")
 parameters/playback = SubResource( 9 )
 parameters/FrontGrabLoop/TimeScale/scale = 0.3
 parameters/FrontGrabbedLoop/TimeScale/scale = 0.3
-parameters/MissionaryPose1First/playback = SubResource( 10 )
-parameters/MissionaryPose1Second/playback = SubResource( 11 )
+parameters/Missionary1_1/playback = SubResource( 10 )
+parameters/Missionary1_2/playback = SubResource( 11 )
 parameters/Navigate/blink/active = false
 parameters/Navigate/turn_left/active = false
 parameters/Navigate/turn_right/active = false

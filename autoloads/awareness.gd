@@ -192,6 +192,8 @@ func get_actuator_body(obj, group):
 	var ret
 	var dst = -1
 	print("awareness: active_items:")
+	if !active_items.has(obj):
+		return null
 	for i in active_items[obj]:
 		print(i.name)
 #	if (active_items.size() == 0):
