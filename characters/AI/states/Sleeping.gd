@@ -22,7 +22,7 @@ func run(obj, delta):
 			awareness.action_cooldown[obj] -= delta
 			return ""
 	if awareness.at[obj].get_current_node() == "Sleep":
-		if awareness.day_hour > 7.0 && awareness.day_hour < 22:
+		if awareness.day_hour > 0.0 && awareness.day_hour < 22:
 			if randf() > 0.95:
 				obj.get_node("main_shape").disabled = false
 				return "SelectTarget"

@@ -22,9 +22,38 @@ func run(obj, delta):
 			return ""
 	var dir = 0.0
 	if awareness.at[obj].get_current_node() == "Navigate":
-		var tf_turn = Transform(Quat(Vector3(0, 1, 0), PI * dir * delta))
+		if awareness.current_path[obj].size() == 0:
+			return "SelectTarget"
+		var point = awareness.current_path[obj][0]
+#		var mesh = SphereMesh.new()
+#		mesh.radius = 0.5
+#		var mi = MeshInstance.new()
+#		mi.mesh = mesh
+#		get_node("/root").add_child(mi)
+#		mi.global_transform.origin = point
+#		print("dist: ", obj.global_transform.origin.distance_squared_to(point))
+		if obj.global_transform.origin.distance_squared_to(point) < 1.0:
+			awareness.current_path[obj].remove(0)
+		var local_point = obj.global_transform.xform_inv(point)
+#		if local_point.z < 0:
+#			awareness.current_path[obj].remove(0)
+#			if awareness.current_path[obj].size() == 0:
+#				return "SelectTarget"
+#			return ""
+		var angle = 0.0
+		var td = local_point.normalized()
+		angle = deg2rad(180) * td.x * delta
+		var tf_turn = Transform(Quat(Vector3(0, 1, 0), -angle))
+			
+#		var curv = obj.global_transform.basis[2]
+#		var desiredv = (point - obj.global_transform.origin).normalized()
+#		var angle = Vector2(curv.x, curv.z).angle_to(Vector2(desiredv.x, desiredv.z))
+#		var tf_turn = Transform().looking_at(point, Vector3(0, 1, 0)).orthonormalized()
+#		obj.orientation.interpolate_with(tf_turn, delta)
 		obj.orientation *= tf_turn
 		dir = randf() * 1.2 - 0.6
+		if awareness.current_path[obj].size() == 0:
+			return "SelectTarget"
 		return ""
 
 

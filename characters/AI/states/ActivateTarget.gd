@@ -13,7 +13,7 @@ func _ready():
 #func _process(delta):
 #	pass
 func init(obj):
-	pass
+	awareness.at[obj].travel("Stand")
 
 func run(obj, delta):
 	pass

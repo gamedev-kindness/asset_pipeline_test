@@ -53,7 +53,15 @@ func init(obj):
 		if ndist < dist:
 			dist = ndist
 			target_node = n
-	var path = awareness.build_path_to_obj(obj, target_node)
+	var path_t = awareness.build_path_to_obj(obj, target_node)
+	if path_t.size() == 0:
+		var tnodes = tree().get_nodes_in_group(target)
+		target_node = tnodes[randi() % tnodes.size()]
+		path_t = awareness.build_path_to_obj(obj, target_node)
+	var path = []
+	for k in path_t:
+		path.push_back(k)
+	path.push_back(target_node.global_transform.origin)
 	awareness.current_path[obj] = path
 	print("path: ", path)
 	awareness.action_cooldown[obj] = 1.0 + randf() * 10.0
@@ -65,6 +73,21 @@ func run(obj, delta):
 		if awareness.action_cooldown[obj] > 0.0:
 			awareness.action_cooldown[obj] -= delta
 			return ""
+	if awareness.current_path[obj].size() == 0:
+		var target
+		for k in utilities.keys():
+			var sc = -1001.0
+			if get_utility(obj, k) > sc:
+				sc = get_utility(obj, k)
+				target = utilities[k].tag
+		var tnodes = tree().get_nodes_in_group(target)
+		var target_node = tnodes[randi() % tnodes.size()]
+		var path_t = awareness.build_path_to_obj(obj, target_node)
+		var path = []
+		for k in path_t:
+			path.push_back(k)
+		path.push_back(target_node.global_transform.origin)
+		awareness.current_path[obj] = path
 	if awareness.at[obj].get_current_node() == "Stand":
 		if awareness.day_hour > 23.0 && awareness.day_hour < 5:
 			if randf() > 0.95:
