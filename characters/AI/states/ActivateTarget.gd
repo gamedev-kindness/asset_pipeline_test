@@ -12,11 +12,20 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+var min_times = {
+	"toilet": 4.0,
+	"shower": 10.0,
+}
 func init(obj):
 	awareness.at[obj].travel("Stand")
+	if awareness.targets[obj].is_in_group("toilet"):
+		awareness.targets[obj].get_parent().busy = true
 
 func run(obj, delta):
-	pass
+	if awareness.at[obj].get_current_node() == "Stand":
+		if awareness.distance(obj, awareness.targets[obj]) > 0:
+			obj.global_transform.interpolate_with(awareness.targets[obj].global_transform, delta)
+	return ""
 
 func exit(obj):
 	pass

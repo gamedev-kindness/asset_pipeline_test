@@ -99,13 +99,14 @@ height = 1.1
 
 radius = 0.1
 
-[node name="female_2018" instance=ExtResource( 1 )]
+[node name="female_2018" index="0" instance=ExtResource( 1 )]
 collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="female_2018" parent="." index="0"]
 editor/display_folded = true
 transform = Transform( 0.99999, 0.00177285, -0.00403949, -0.00283742, 0.95963, -0.281252, 0.0033778, 0.281261, 0.959625, 2.32831e-10, 2.55e-08, -1.03519e-07 )
+bones/21/bound_children = [ NodePath("head") ]
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="female_2018" index="0"]
@@ -194,7 +195,8 @@ parameters/Stand/wiggle/add_amount = 0
 
 [node name="ray_far" type="RayCast" parent="." index="5"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.12 )
-cast_to = Vector3( 0, -1, -1.5 )
+enabled = true
+cast_to = Vector3( 0, -1, -2.5 )
 
 [node name="minimal_shape" type="CollisionShape" parent="." index="6"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0952968, 0 )

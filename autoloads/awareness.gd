@@ -39,6 +39,10 @@ var astar: AStar
 var current_path = {}
 var at = {}
 var action_cooldown = {}
+var targets = {}
+var target_activation_time = {}
+var raycasts = {}
+
 func _ready():
 	astar = AStar.new()
 

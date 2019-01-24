@@ -301,6 +301,11 @@ func _ready():
 	$AnimationTree["parameters/Navigate/walk_speed/scale"] = 1.5
 #	sm.travel("Stand")
 	$rpg.character = self
+	var raycasts = {
+		"front": $RayCast,
+		"far": $ray_far
+	}
+	awareness.raycasts[self] = raycasts
 
 var despawn_cooldown = 0.0
 var despawned = false

@@ -62,18 +62,26 @@ func init(obj):
 	for k in path_t:
 		path.push_back(k)
 	path.push_back(target_node.global_transform.origin)
+	awareness.targets[obj] = target_node
 	awareness.current_path[obj] = path
 	print("path: ", path)
 	awareness.action_cooldown[obj] = 1.0 + randf() * 10.0
 	awareness.at[obj].travel("Stand")
 			
 
+func check_target_valid(obj):
+	if !awareness.targets.has(obj):
+		return false
+	var tgt = awareness.targets[obj]
+	if tgt.is_in_group("toilet") && tgt.get_parent().busy:
+		return false
+	return true
 func run(obj, delta):
 	if awareness.action_cooldown.has(obj):
 		if awareness.action_cooldown[obj] > 0.0:
 			awareness.action_cooldown[obj] -= delta
 			return ""
-	if awareness.current_path[obj].size() == 0:
+	if awareness.current_path[obj].size() == 0 || !check_target_valid(obj):
 		var target
 		for k in utilities.keys():
 			var sc = -1001.0
@@ -88,12 +96,15 @@ func run(obj, delta):
 			path.push_back(k)
 		path.push_back(target_node.global_transform.origin)
 		awareness.current_path[obj] = path
+		awareness.targets[obj] = target_node
 	if awareness.at[obj].get_current_node() == "Stand":
 		if awareness.day_hour > 23.0 && awareness.day_hour < 5:
 			if randf() > 0.95:
 				obj.get_node("main_shape").disabled = true
 				return "Sleeping"
-		return "GoToTarget"
+		if check_target_valid(obj):
+			return "GoToTarget"
+		return ""
 	return ""
 
 func exit(obj):

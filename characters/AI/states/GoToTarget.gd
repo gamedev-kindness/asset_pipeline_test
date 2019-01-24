@@ -14,6 +14,11 @@ func _ready():
 func init(obj):
 	print("Entering ", name)
 	awareness.at[obj].travel("Navigate")
+func check_target_valid(obj):
+	var tgt = awareness.targets[obj]
+	if tgt.is_in_group("toilet") && tgt.get_parent().busy:
+		return false
+	return true
 
 func run(obj, delta):
 	if awareness.action_cooldown.has(obj):
@@ -22,7 +27,7 @@ func run(obj, delta):
 			return ""
 	var dir = 0.0
 	if awareness.at[obj].get_current_node() == "Navigate":
-		if awareness.current_path[obj].size() == 0:
+		if awareness.current_path[obj].size() == 0 || !check_target_valid(obj):
 			return "SelectTarget"
 		var point = awareness.current_path[obj][0]
 #		var mesh = SphereMesh.new()
@@ -34,6 +39,8 @@ func run(obj, delta):
 #		print("dist: ", obj.global_transform.origin.distance_squared_to(point))
 		if obj.global_transform.origin.distance_squared_to(point) < 1.0:
 			awareness.current_path[obj].remove(0)
+			if awareness.current_path[obj].size() == 0 || awareness.distance(obj, awareness.targets[obj]) < 2.0:
+				return "ActivateTarget"
 		var local_point = obj.global_transform.xform_inv(point)
 #		if local_point.z < 0:
 #			awareness.current_path[obj].remove(0)
@@ -43,6 +50,16 @@ func run(obj, delta):
 		var angle = 0.0
 		var td = local_point.normalized()
 		angle = deg2rad(180) * td.x * delta
+		if awareness.raycasts[obj].far.is_colliding():
+			var n = awareness.raycasts[obj].far.get_collision_normal()
+			var p = awareness.raycasts[obj].far.get_collision_point()
+			if obj.global_transform.origin.distance_to(p) < 1.0:
+				var lt = obj.global_transform
+				lt.origin = Vector3()
+				var ln = lt.xform_inv(n)
+				print("raycast collision: ", ln)
+				angle = 0.5 * deg2rad(90) * sign(ln.x) * delta + 0.5 * angle
+		
 		var tf_turn = Transform(Quat(Vector3(0, 1, 0), -angle))
 			
 #		var curv = obj.global_transform.basis[2]
