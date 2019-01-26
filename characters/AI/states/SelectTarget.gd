@@ -47,12 +47,7 @@ func init(obj):
 			sc = get_utility(obj, k)
 			target = utilities[k].tag
 	var dist = 1000000.0
-	var target_node
-	for n in tree().get_nodes_in_group(target):
-		var ndist = awareness.distance(obj, n)
-		if ndist < dist:
-			dist = ndist
-			target_node = n
+	var target_node = get_closest_target(obj, target)
 	var path_t = awareness.build_path_to_obj(obj, target_node)
 	if path_t.size() == 0:
 		var tnodes = tree().get_nodes_in_group(target)
@@ -76,6 +71,17 @@ func check_target_valid(obj):
 	if tgt.is_in_group("toilet") && tgt.get_parent().busy:
 		return false
 	return true
+func get_closest_target(obj, target):
+	var dist = 1000000.0
+	var target_node
+	for n in tree().get_nodes_in_group(target):
+		var ndist = awareness.distance(obj, n)
+		if n.is_in_group("toilet") && n.get_parent().busy:
+			continue
+		if ndist < dist:
+			dist = ndist
+			target_node = n
+	return target_node
 func run(obj, delta):
 	if awareness.action_cooldown.has(obj):
 		if awareness.action_cooldown[obj] > 0.0:
@@ -88,8 +94,7 @@ func run(obj, delta):
 			if get_utility(obj, k) > sc:
 				sc = get_utility(obj, k)
 				target = utilities[k].tag
-		var tnodes = tree().get_nodes_in_group(target)
-		var target_node = tnodes[randi() % tnodes.size()]
+		var target_node = get_closest_target(obj, target)
 		var path_t = awareness.build_path_to_obj(obj, target_node)
 		var path = []
 		for k in path_t:

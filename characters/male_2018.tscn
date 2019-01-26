@@ -107,7 +107,8 @@ transform = Transform( -1, -2.30423e-07, -2.29915e-07, 1.02422e-07, 0.447712, -0
 bone_name = "head"
 
 [node name="Camera" type="Camera" parent="male_g_2018/head" index="0"]
-transform = Transform( -0.999998, -0.000775825, 0.00196414, -8.13743e-08, -0.930059, -0.367411, 0.00211181, -0.36741, 0.930058, 0.000493629, 0.0701791, -0.164399 )
+transform = Transform( -0.999998, -0.000775822, 0.00196413, -8.47504e-08, -0.930059, -0.367411, 0.00211181, -0.36741, 0.930058, 0.000932821, 0.0116093, -0.124821 )
+fov = 50.0
 
 [node name="foot_ik_l" type="Spatial" parent="male_g_2018" index="10"]
 transform = Transform( 0.999972, 0.00433851, -0.00613662, -0.00373505, 0.995456, 0.0951422, 0.00652152, -0.0951165, 0.995445, 0.178314, -0.000666062, 0.00116292 )
@@ -124,7 +125,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.245 )
 enabled = true
 cast_to = Vector3( 0, 0, -0.4 )
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="3"]
+[node name="raycast_left" type="RayCast" parent="." index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24, 1.2, -0.15 )
+enabled = true
+cast_to = Vector3( 0, 0, -0.5 )
+
+[node name="raycast_right" type="RayCast" parent="." index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24, 1.2, -0.15 )
+enabled = true
+cast_to = Vector3( 0, 0, -0.5 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="5"]
 tree_root = ExtResource( 14 )
 anim_player = NodePath("../male_g_2018/AnimationPlayer")
 active = true
@@ -144,15 +155,15 @@ parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
 
-[node name="AI" parent="." index="4" instance=ExtResource( 15 )]
+[node name="AI" parent="." index="6" instance=ExtResource( 15 )]
 
-[node name="ray_far" type="RayCast" parent="." index="5"]
+[node name="ray_far" type="RayCast" parent="." index="7"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.25 )
 cast_to = Vector3( 0, -1, -1.5 )
 
-[node name="minimal_shape" type="CollisionShape" parent="." index="6"]
+[node name="minimal_shape" type="CollisionShape" parent="." index="8"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.101824, 0.05 )
 shape = SubResource( 12 )
 
-[node name="rpg" parent="." index="7" instance=ExtResource( 16 )]
+[node name="rpg" parent="." index="9" instance=ExtResource( 16 )]
 

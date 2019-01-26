@@ -303,7 +303,9 @@ func _ready():
 	$rpg.character = self
 	var raycasts = {
 		"front": $RayCast,
-		"far": $ray_far
+		"far": $ray_far,
+		"left": $raycast_left,
+		"right": $raycast_right
 	}
 	awareness.raycasts[self] = raycasts
 

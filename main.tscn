@@ -1,12 +1,13 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
-[ext_resource path="res://rooms/modular_room_test.gd" type="Script" id=2]
+[ext_resource path="res://rooms/common/modular_room_test.gd" type="Script" id=2]
 [ext_resource path="res://ui/opportunities.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/DroidSansFallback.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://ui/inventory.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/console.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ui/stats.tscn" type="PackedScene" id=7]
+
 
 [sub_resource type="DynamicFont" id=1]
 

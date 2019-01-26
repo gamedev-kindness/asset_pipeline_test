@@ -101,6 +101,20 @@
 			}
 		]
 	},
+	"missionary_pose1_friction_loop": {
+		"female": [
+			{
+				"name": "missionary1-friction-second-loop",
+				"path": "res://characters/female/missionary1-friction-second-loop.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "missionary1-friction--first-loop",
+				"path": "res://characters/male/missionary1-friction--first-loop.anim"
+			}
+		]
+	},
 	"missionary_pose1_loop": {
 		"female": [
 			{

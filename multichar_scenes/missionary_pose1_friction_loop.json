@@ -1,0 +1,12 @@
+{
+"female_2018": {
+"anims": [ "res://characters/female/missionary1-friction-second-loop.anim" ],
+"transform": Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, -1 ),
+"type": "female"
+},
+"male_g_2018": {
+"anims": [ "res://characters/male/missionary1-friction--first-loop.anim" ],
+"transform": Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),
+"type": "male"
+}
+}

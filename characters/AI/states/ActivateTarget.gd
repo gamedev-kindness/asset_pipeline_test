@@ -23,8 +23,10 @@ func init(obj):
 
 func run(obj, delta):
 	if awareness.at[obj].get_current_node() == "Stand":
-		if awareness.distance(obj, awareness.targets[obj]) > 0:
-			obj.global_transform.interpolate_with(awareness.targets[obj].global_transform, delta)
+		if awareness.distance(obj, awareness.targets[obj]) > 0.5:
+			obj.global_transform = obj.global_transform.interpolate_with(awareness.targets[obj].global_transform, delta)
+		else:
+			obj.global_transform = awareness.targets[obj].global_transform
 	return ""
 
 func exit(obj):

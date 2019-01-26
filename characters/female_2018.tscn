@@ -169,7 +169,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.11 )
 enabled = true
 cast_to = Vector3( 0, 0, -0.4 )
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="3"]
+[node name="raycast_left" type="RayCast" parent="." index="3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2, 1.2, -0.1 )
+enabled = true
+cast_to = Vector3( 0, 0, -0.4 )
+
+[node name="raycast_right" type="RayCast" parent="." index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 1.2, -0.1 )
+enabled = true
+cast_to = Vector3( 0, 0, -0.4 )
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="5"]
 tree_root = ExtResource( 17 )
 anim_player = NodePath("../female_2018/AnimationPlayer")
 active = true
@@ -191,19 +201,19 @@ parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
 
-[node name="AI" parent="." index="4" instance=ExtResource( 18 )]
+[node name="AI" parent="." index="6" instance=ExtResource( 18 )]
 
-[node name="ray_far" type="RayCast" parent="." index="5"]
+[node name="ray_far" type="RayCast" parent="." index="7"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.12 )
 enabled = true
 cast_to = Vector3( 0, -1, -2.5 )
 
-[node name="minimal_shape" type="CollisionShape" parent="." index="6"]
+[node name="minimal_shape" type="CollisionShape" parent="." index="8"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0952968, 0 )
 shape = SubResource( 15 )
 
-[node name="rpg" parent="." index="7" instance=ExtResource( 19 )]
+[node name="rpg" parent="." index="9" instance=ExtResource( 19 )]
 
-[node name="animation" type="Node" parent="." index="8"]
+[node name="animation" type="Node" parent="." index="10"]
 script = ExtResource( 20 )
 
