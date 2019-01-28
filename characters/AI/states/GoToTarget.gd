@@ -19,7 +19,23 @@ func check_target_valid(obj):
 	if tgt.is_in_group("toilet") && tgt.get_parent().busy:
 		return false
 	return true
-
+func update_path(obj):
+	var target_node = awareness.targets[obj]
+	if target_node != null:
+		var current_path = awareness.current_path[obj]
+		if current_path.size() == 0:
+			return false
+		var tgt_pos = current_path[current_path.size() - 1]
+		if tgt_pos.distance_to(target_node.global_transform.origin) < 1.0:
+			return true
+		var path_t = awareness.build_path_to_obj(obj, target_node)
+		if path_t.size() > 0:
+			var path = []
+			for k in path_t:
+				path.push_back(k)
+			awareness.current_path[obj] = path
+			return true
+	return false
 func run(obj, delta):
 	if awareness.action_cooldown.has(obj):
 		if awareness.action_cooldown[obj] > 0.0:
@@ -47,7 +63,7 @@ func run(obj, delta):
 #		get_node("/root").add_child(mi)
 #		mi.global_transform.origin = point
 #		print("dist: ", obj.global_transform.origin.distance_squared_to(point))
-		if obj.global_transform.origin.distance_squared_to(point) < 2.0:
+		if obj.global_transform.origin.distance_squared_to(point) < 1.0:
 			awareness.current_path[obj].remove(0)
 			if awareness.current_path[obj].size() == 0 || awareness.distance(obj, awareness.targets[obj]) < 1.5:
 				return "ActivateTarget"
@@ -88,6 +104,8 @@ func run(obj, delta):
 #		dir = randf() * 1.2 - 0.6
 		if awareness.current_path[obj].size() == 0:
 			return "SelectTarget"
+		if awareness.targets[obj] != null && awareness.targets[obj].is_in_group("characters"):
+			update_path(obj)
 		return ""
 
 

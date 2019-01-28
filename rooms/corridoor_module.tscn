@@ -19,14 +19,14 @@ _data = {
 [node name="corridoor_segment_4" parent="." instance=ExtResource( 1 )]
 
 [node name="n1" type="Spatial" parent="." groups=[
-"attachment",
 "module_corridoor",
+"attachment",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98, 0, 0 )
 
 [node name="n2" type="Spatial" parent="." groups=[
-"attachment",
 "module_corridoor",
+"attachment",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.98, 0, 0 )
 

@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=92 format=2]
+[gd_resource type="AnimationNodeStateMachine" load_steps=112 format=2]
 
 [sub_resource type="AnimationNodeAnimation" id=1]
 
@@ -122,17 +122,31 @@ nodes/face_slapped/position = Vector2( 640, 20 )
 nodes/front_grabbed_speed/node = SubResource( 21 )
 nodes/front_grabbed_speed/position = Vector2( 1240, -60 )
 nodes/output/position = Vector2( 1520, -60 )
-node_connections = [ "output", 0, "front_grabbed_speed", "face_slapped", 0, "Animation", "face_slapped", 1, "Animation 2", "front_grabbed_speed", 0, "face_slapped" ]
+node_connections = [ "output", 0, "front_grabbed_speed", "front_grabbed_speed", 0, "face_slapped", "face_slapped", 0, "Animation", "face_slapped", 1, "Animation 2" ]
+
+[sub_resource type="AnimationNodeAnimation" id=110]
+
+animation = "walk-loop"
 
 [sub_resource type="AnimationNodeAnimation" id=23]
 
 animation = "grabbed_from_back"
 
+[sub_resource type="AnimationNodeBlend2" id=111]
+
+filter_enabled = true
+filters = [ ".:foot_L", ".:foot_R", ".:lowerleg01_L", ".:lowerleg01_R", ".:pelvis", ".:pelvis_L", ".:pelvis_R", ".:root", ".:toe1-1_L", ".:toe1-1_R", ".:upperleg01_L", ".:upperleg01_R", ".:upperleg02_L", ".:upperleg02_R" ]
+
 [sub_resource type="AnimationNodeBlendTree" id=24]
 
 nodes/Animation/node = SubResource( 23 )
 nodes/Animation/position = Vector2( 60, 100 )
-node_connections = [ "output", 0, "Animation" ]
+"nodes/Animation 2/node" = SubResource( 110 )
+"nodes/Animation 2/position" = Vector2( 100, 340 )
+nodes/output/position = Vector2( 780, 100 )
+nodes/walk/node = SubResource( 111 )
+nodes/walk/position = Vector2( 340, 180 )
+node_connections = [ "output", 0, "walk", "walk", 0, "Animation", "walk", 1, "Animation 2" ]
 
 [sub_resource type="AnimationNodeAnimation" id=25]
 
@@ -224,7 +238,7 @@ nodes/turn_right/node = SubResource( 39 )
 nodes/turn_right/position = Vector2( 920, 60 )
 nodes/walk_speed/node = SubResource( 40 )
 nodes/walk_speed/position = Vector2( 1300, 100 )
-node_connections = [ "output", 0, "OneShot 3", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "OneShot 3", 0, "walk_speed", "OneShot 3", 1, "Animation 4", "walk_speed", 0, "turn_right" ]
+node_connections = [ "output", 0, "OneShot 3", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "walk_speed", 0, "turn_right", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "OneShot 3", 0, "walk_speed", "OneShot 3", 1, "Animation 4" ]
 
 [sub_resource type="AnimationNodeAnimation" id=42]
 
@@ -298,90 +312,118 @@ nodes/blink/position = Vector2( 620, 20 )
 nodes/output/position = Vector2( 1560, 120 )
 nodes/wiggle/node = SubResource( 52 )
 nodes/wiggle/position = Vector2( 1160, 80 )
-node_connections = [ "output", 0, "wiggle", "TimeScale", 0, "Animation 2", "blink", 0, "Animation", "blink", 1, "Animation 3", "wiggle", 0, "blink", "wiggle", 1, "TimeScale" ]
+node_connections = [ "output", 0, "wiggle", "blink", 0, "Animation", "blink", 1, "Animation 3", "TimeScale", 0, "Animation 2", "wiggle", 0, "blink", "wiggle", 1, "TimeScale" ]
 
 [sub_resource type="AnimationNodeAnimation" id=54]
 
-animation = "back_to_sit"
+animation = "disable_pee_particles"
 
-[sub_resource type="AnimationNodeBlendTree" id=55]
+[sub_resource type="AnimationNodeAnimation" id=55]
 
-nodes/Animation/node = SubResource( 54 )
-nodes/Animation/position = Vector2( 20, 80 )
-node_connections = [ "output", 0, "Animation" ]
+animation = "disable_pee_particles"
 
 [sub_resource type="AnimationNodeAnimation" id=56]
 
-animation = "back_to_sit"
+animation = "enable_pee_particles"
 
-[sub_resource type="AnimationNodeBlendTree" id=57]
+[sub_resource type="AnimationNodeAnimation" id=57]
 
-graph_offset = Vector2( 0, -216 )
-nodes/Animation/node = SubResource( 56 )
-nodes/Animation/position = Vector2( 60, 140 )
-node_connections = [ "output", 0, "Animation" ]
+animation = "rotate_onspace_180"
 
 [sub_resource type="AnimationNodeAnimation" id=58]
 
-animation = "complete_assault_anim"
+animation = "sit-chair"
 
-[sub_resource type="AnimationNodeAnimation" id=59]
+[sub_resource type="AnimationNodeStateMachineTransition" id=59]
 
-animation = "default"
+switch_mode = 2
+auto_advance = true
 
-[sub_resource type="AnimationNodeAnimation" id=60]
+[sub_resource type="AnimationNodeStateMachineTransition" id=60]
 
-animation = "stand-to-walk"
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=61]
 
+switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=62]
 
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=63]
-
 switch_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=64]
+[sub_resource type="AnimationNodeStateMachine" id=63]
 
+states/disable_pee_particles/node = SubResource( 55 )
+states/disable_pee_particles/position = Vector2( 661, 126 )
+"states/disable_pee_particles 2/node" = SubResource( 54 )
+"states/disable_pee_particles 2/position" = Vector2( 936, 174 )
+states/enable_pee_particles/node = SubResource( 56 )
+states/enable_pee_particles/position = Vector2( 408, 186 )
+states/rotate_onspace_180/node = SubResource( 57 )
+states/rotate_onspace_180/position = Vector2( 187, 57 )
+states/sit-chair/node = SubResource( 58 )
+states/sit-chair/position = Vector2( 407, 57 )
+transitions = [ "rotate_onspace_180", "sit-chair", SubResource( 59 ), "sit-chair", "enable_pee_particles", SubResource( 60 ), "enable_pee_particles", "disable_pee_particles", SubResource( 61 ), "disable_pee_particles", "disable_pee_particles 2", SubResource( 62 ) ]
+start_node = "rotate_onspace_180"
+end_node = "disable_pee_particles 2"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=65]
+[sub_resource type="AnimationNodeAnimation" id=64]
 
+animation = "rotate_onspace_180"
+
+[sub_resource type="AnimationNodeAnimation" id=65]
+
+animation = "sit-chair"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=66]
 
+switch_mode = 2
+auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=67]
+[sub_resource type="AnimationNodeStateMachine" id=67]
 
+states/rotate_onspace_180/node = SubResource( 64 )
+states/rotate_onspace_180/position = Vector2( 169, 98 )
+states/sit-chair/node = SubResource( 65 )
+states/sit-chair/position = Vector2( 389, 98 )
+transitions = [ "rotate_onspace_180", "sit-chair", SubResource( 66 ) ]
+start_node = "rotate_onspace_180"
+end_node = "sit-chair"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=68]
+[sub_resource type="AnimationNodeAnimation" id=68]
 
+animation = "back_to_sit"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=69]
+[sub_resource type="AnimationNodeAnimation" id=69]
 
+animation = "complete_assault_anim"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=70]
+[sub_resource type="AnimationNodeAnimation" id=70]
 
+animation = "default"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=71]
+[sub_resource type="AnimationNodeAnimation" id=71]
 
+animation = "disable_pee_particles"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=72]
+[sub_resource type="AnimationNodeAnimation" id=72]
 
+animation = "sit_to_stand"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=73]
+[sub_resource type="AnimationNodeAnimation" id=73]
 
+animation = "stand-to-walk"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=74]
 
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=75]
 
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=76]
 
+switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=77]
 
@@ -391,37 +433,30 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=79]
 
-switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=80]
 
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=81]
 
-switch_mode = 2
-auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=82]
 
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=83]
 
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=84]
 
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=85]
 
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=86]
 
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=87]
 
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=88]
 
@@ -435,6 +470,70 @@ switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=91]
 
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=92]
+
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=93]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=94]
+
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=95]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=96]
+
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=97]
+
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=98]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=99]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=100]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=101]
+
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=102]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=103]
+
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=104]
+
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=105]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=106]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=107]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=108]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=109]
+
+switch_mode = 2
 
 [resource]
 
@@ -453,11 +552,11 @@ states/FrontGrabbedFaceInsertion/position = Vector2( 1739.59, 209.549 )
 states/FrontGrabbedFaceSlapped/node = SubResource( 17 )
 states/FrontGrabbedFaceSlapped/position = Vector2( 1798, -9 )
 states/FrontGrabbedLoop/node = SubResource( 22 )
-states/FrontGrabbedLoop/position = Vector2( 1493, 137 )
+states/FrontGrabbedLoop/position = Vector2( 1360, 183 )
 states/GrabbedFromBack/node = SubResource( 24 )
-states/GrabbedFromBack/position = Vector2( 575, 369 )
+states/GrabbedFromBack/position = Vector2( 481, 563 )
 states/KickToBed/node = SubResource( 26 )
-states/KickToBed/position = Vector2( 464, 534 )
+states/KickToBed/position = Vector2( -102, 563 )
 states/KickedToBed/node = SubResource( 28 )
 states/KickedToBed/position = Vector2( 681, 307 )
 states/Missionary1_1/node = SubResource( 30 )
@@ -469,18 +568,24 @@ states/Navigate/position = Vector2( 356, 137 )
 states/Sleep/node = SubResource( 46 )
 states/Sleep/position = Vector2( 897, -9 )
 states/Stand/node = SubResource( 53 )
-states/Stand/position = Vector2( 101, 37 )
-states/StandUp/node = SubResource( 55 )
-states/StandUp/position = Vector2( 1159.43, 127.549 )
-states/Wakeup/node = SubResource( 57 )
-states/Wakeup/position = Vector2( 619.081, -14.4512 )
-states/complete_assault_anim/node = SubResource( 58 )
-states/complete_assault_anim/position = Vector2( 214, 369 )
-states/default/node = SubResource( 59 )
+states/Stand/position = Vector2( 102, 37 )
+states/UseToilet1/node = SubResource( 63 )
+states/UseToilet1/position = Vector2( -387.868, -35.339 )
+states/UseToilet2/node = SubResource( 67 )
+states/UseToilet2/position = Vector2( -135.868, 277 )
+states/back_to_sit/node = SubResource( 68 )
+states/back_to_sit/position = Vector2( 692.723, -72.339 )
+states/complete_assault_anim/node = SubResource( 69 )
+states/complete_assault_anim/position = Vector2( 116, 364 )
+states/default/node = SubResource( 70 )
 states/default/position = Vector2( 127, 277 )
-states/stand-to-walk/node = SubResource( 60 )
+states/disable_pee_particles/node = SubResource( 71 )
+states/disable_pee_particles/position = Vector2( -11.868, -50.339 )
+states/sit_to_stand/node = SubResource( 72 )
+states/sit_to_stand/position = Vector2( 388.723, -86.339 )
+states/stand-to-walk/node = SubResource( 73 )
 states/stand-to-walk/position = Vector2( 300, 37 )
-transitions = [ "Navigate", "Stand", SubResource( 61 ), "Stand", "stand-to-walk", SubResource( 62 ), "stand-to-walk", "Navigate", SubResource( 63 ), "Stand", "KickedToBed", SubResource( 64 ), "default", "Stand", SubResource( 65 ), "complete_assault_anim", "default", SubResource( 66 ), "KickedToBed", "default", SubResource( 67 ), "KickedToBed", "Sleep", SubResource( 68 ), "Stand", "KickToBed", SubResource( 69 ), "KickToBed", "complete_assault_anim", SubResource( 70 ), "Stand", "GrabbedFromBack", SubResource( 71 ), "GrabbedFromBack", "default", SubResource( 72 ), "Stand", "FrontGrab", SubResource( 73 ), "Stand", "FrontGrabbed", SubResource( 74 ), "FrontGrab", "FrontGrabLoop", SubResource( 75 ), "FrontGrabLoop", "complete_assault_anim", SubResource( 76 ), "FrontGrabbed", "FrontGrabbedLoop", SubResource( 77 ), "FrontGrabbedLoop", "FrontGrabbedFaceSlapped", SubResource( 78 ), "FrontGrabbedFaceSlapped", "FrontGrabbedLoop", SubResource( 79 ), "FrontGrabLoop", "FrontGrabFaceSlap", SubResource( 80 ), "FrontGrabFaceSlap", "FrontGrabLoop", SubResource( 81 ), "Sleep", "Wakeup", SubResource( 82 ), "Wakeup", "Stand", SubResource( 83 ), "FrontGrabbedLoop", "StandUp", SubResource( 84 ), "StandUp", "default", SubResource( 85 ), "FrontGrabbedLoop", "FrontGrabbedFaceInsertion", SubResource( 86 ), "FrontGrabLoop", "FrontGrabFaceInsertion", SubResource( 87 ), "FrontGrabbedFaceInsertion", "Missionary1_2", SubResource( 88 ), "Missionary1_2", "FrontGrabbedLoop", SubResource( 89 ), "FrontGrabFaceInsertion", "Missionary1_1", SubResource( 90 ), "Missionary1_1", "FrontGrabLoop", SubResource( 91 ) ]
+transitions = [ "Navigate", "Stand", SubResource( 74 ), "Stand", "stand-to-walk", SubResource( 75 ), "stand-to-walk", "Navigate", SubResource( 76 ), "Stand", "KickedToBed", SubResource( 77 ), "default", "Stand", SubResource( 78 ), "complete_assault_anim", "default", SubResource( 79 ), "KickedToBed", "default", SubResource( 80 ), "KickedToBed", "Sleep", SubResource( 81 ), "Stand", "KickToBed", SubResource( 82 ), "KickToBed", "complete_assault_anim", SubResource( 83 ), "Stand", "GrabbedFromBack", SubResource( 84 ), "GrabbedFromBack", "default", SubResource( 85 ), "Stand", "FrontGrab", SubResource( 86 ), "Stand", "FrontGrabbed", SubResource( 87 ), "FrontGrab", "FrontGrabLoop", SubResource( 88 ), "FrontGrabLoop", "complete_assault_anim", SubResource( 89 ), "FrontGrabbed", "FrontGrabbedLoop", SubResource( 90 ), "FrontGrabbedLoop", "FrontGrabbedFaceSlapped", SubResource( 91 ), "FrontGrabbedFaceSlapped", "FrontGrabbedLoop", SubResource( 92 ), "FrontGrabLoop", "FrontGrabFaceSlap", SubResource( 93 ), "FrontGrabFaceSlap", "FrontGrabLoop", SubResource( 94 ), "FrontGrabbedLoop", "FrontGrabbedFaceInsertion", SubResource( 95 ), "FrontGrabLoop", "FrontGrabFaceInsertion", SubResource( 96 ), "FrontGrabbedFaceInsertion", "Missionary1_2", SubResource( 97 ), "Missionary1_2", "FrontGrabbedLoop", SubResource( 98 ), "FrontGrabFaceInsertion", "Missionary1_1", SubResource( 99 ), "Missionary1_1", "FrontGrabLoop", SubResource( 100 ), "Sleep", "back_to_sit", SubResource( 101 ), "FrontGrabbedLoop", "back_to_sit", SubResource( 102 ), "back_to_sit", "sit_to_stand", SubResource( 103 ), "sit_to_stand", "Stand", SubResource( 104 ), "Stand", "UseToilet1", SubResource( 105 ), "Stand", "UseToilet2", SubResource( 106 ), "UseToilet2", "Stand", SubResource( 107 ), "UseToilet1", "disable_pee_particles", SubResource( 108 ), "disable_pee_particles", "Stand", SubResource( 109 ) ]
 start_node = "Sleep"
-graph_offset = Vector2( 592.723, 238.661 )
+graph_offset = Vector2( -473.873, 117.094 )
 

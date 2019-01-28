@@ -26,77 +26,6 @@ var skel
 
 var stats = {}
 
-#func load_animations(skel):
-#	var animations = [
-#		{
-#			"name": "front_grab",
-#			"animation": load("res://characters/male/front_grab.anim")
-#		},
-#		{
-#			"name": "front_grab_loop",
-#			"animation": load("res://characters/male/front_grab_loop.anim")
-#		},
-#		{
-#			"name": "front_grab_face_slap",
-#			"animation": load("res://characters/male/front_grab_face_slap2.anim")
-#		},
-#		{
-#			"name": "front_grab_face_slap2",
-#			"animation": load("res://characters/male/front_grab_face_slap2.anim")
-#		},
-#		{
-#			"name": "grab_from_back",
-#			"animation": load("res://characters/male/grab_from_back.anim")
-#		},
-#		{
-#			"name": "kick_to_bed",
-#			"animation": load("res://characters/male/kick_to_bed.anim"),
-#		},
-#		{
-#			"name": "front_grabbed",
-#			"animation": load("res://characters/female/front_grabbed.anim"),
-#		},
-#		{
-#			"name": "front_grabbed_loop",
-#			"animation": load("res://characters/female/front_grabbed_loop.anim"),
-#		},
-#		{
-#			"name": "front_grabbed_face_slapped",
-#			"animation": load("res://characters/female/front_grabbed_face_slapped2.anim"),
-#		},
-#		{
-#			"name": "front_grabbed_face_slapped2",
-#			"animation": load("res://characters/female/front_grabbed_face_slapped2.anim"),
-#		},
-#		{
-#			"name": "grabbed_from_back",
-#			"animation": load("res://characters/female/grabbed_from_back.anim"),
-#		},
-#		{
-#			"name": "kicked_to_bed",
-#			"animation": load("res://characters/female/kicked_to_bed.anim")
-#		},
-#		{
-#			"name": "front_grab_face_insertion",
-#			"animation": load("res://characters/male/front_grab_face_insertion.anim")
-#		},
-#		{
-#			"name": "front_grabbed_face_insertion",
-#			"animation": load("res://characters/female/front_grabbed_face_insertion.anim")
-#		},
-#		{
-#			"name": "missionary1-second-loop",
-#			"animation": load("res://characters/female/missionary1-second-loop.anim")
-#		},
-#		{
-#			"name": "missionary1-first-loop",
-#			"animation": load("res://characters/male/missionary1-first-loop.anim")
-#		}
-#	]
-#	for anim in animations:
-#		skel.get_node("AnimationPlayer").remove_animation(anim.name)
-#		skel.get_node("AnimationPlayer").add_animation(anim.name, anim.animation)
-
 		
 var actions = {
 	"kick_to_bed": {
@@ -104,21 +33,22 @@ var actions = {
 			"passive": "KickedToBed",
 			"ik": true,
 			"direction":"BACK",
-			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), 0))
+			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), 0)),
 	},
 	"grab_from_back": {
 			"active": "GrabFromBack",
 			"passive": "GrabbedFromBack",
 			"ik": true,
 			"direction":"BACK",
-			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), 0))
+			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), 0)),
+			"valid_actions": ["Navigate", "Stand"]
 	},
 	"front_grab": {
 			"active": "FrontGrabLoop",
 			"passive": "FrontGrabbedLoop",
 			"ik": false,
 			"direction":"FRONT",
-			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
+			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI)),
 	},
 	"front_grab_face_slap": {
 			"active": "FrontGrabFaceSlap",
@@ -153,11 +83,31 @@ func update_aabbs():
 		for c in cur.get_children():
 			queue.push_back(c)
 
-
+func enable_tears():
+	var skel = get_children()[0]
+	if skel.has_node("tears"):
+		skel.get_node("tears").show()
+func disable_tears():
+	var skel = get_children()[0]
+	if skel.has_node("tears"):
+		skel.get_node("tears").hide()
 func enable_fps_camera():
 	get_children()[0].get_node("head/Camera").current = true
 func disable_fps_camera():
 	get_children()[0].get_node("head/Camera").current = false
+func enable_pee_particle():
+	var skel = get_children()[0]
+	if skel.has_node("penis"):
+		skel.get_node("penis/pee_particles").emitting = true
+	elif skel.has_node("pelvis"):
+		skel.get_node("pelvis/pee_particles").emitting = true
+func disable_pee_particle():
+	var skel = get_children()[0]
+	if skel.has_node("penis"):
+		skel.get_node("penis/pee_particles").emitting = false
+	elif skel.has_node("pelvis"):
+		skel.get_node("pelvis/pee_particles").emitting = false
+	print("disable pee")
 func set_action_mode(m):
 	action = m
 #	get_children()[0].rotation.y = PI
@@ -195,42 +145,55 @@ func do_action(other, name):
 	other.emit_signal("passive_action", self, passive, actions[name].ik, actions[name].xform)
 
 # Belongs to player controller
+var allowed_states_for_action = ["Navigate", "Stand"]
+func check_state_valid(other):
+	if !awareness.at.has(other):
+		return false
+	return 	awareness.at[other].get_current_node() in allowed_states_for_action
 func do_ui_action(act):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	var other = awareness.get_actuator_body(self, "characters")
+	var other = self.other
+	if other == null:
+		other = awareness.get_actuator_body(self, "characters")
 	print(act)
-	if act == "GrabFromBack":
-		add_collision_exception_with(other)
-		other.add_collision_exception_with(self)
-		do_action(other, "grab_from_back")
-	elif act == "KickToBed":
-		add_collision_exception_with(other)
-		other.add_collision_exception_with(self)
-		do_action(other, "kick_to_bed")
-	elif act == "FrontGrab":
-		add_collision_exception_with(other)
-		other.add_collision_exception_with(self)
-		do_action(other, "front_grab")
-	elif act == "FrontGrabFaceSlap":
-		add_collision_exception_with(other)
-		other.add_collision_exception_with(self)
-		do_action(other, "front_grab_face_slap")
-	elif act == "Missionary1":
-		add_collision_exception_with(other)
-		other.add_collision_exception_with(self)
-		do_action(other, "missionary1")
-	elif act == "LeaveAction":
+	if other == null:
+		print("other is null")
+	if other != null && check_state_valid(other):
+		if act == "GrabFromBack":
+			add_collision_exception_with(other)
+			other.add_collision_exception_with(self)
+			do_action(other, "grab_from_back")
+		elif act == "KickToBed":
+			add_collision_exception_with(other)
+			other.add_collision_exception_with(self)
+			do_action(other, "kick_to_bed")
+		elif act == "FrontGrab":
+			add_collision_exception_with(other)
+			other.add_collision_exception_with(self)
+			do_action(other, "front_grab")
+		elif act == "FrontGrabFaceSlap":
+			add_collision_exception_with(other)
+			other.add_collision_exception_with(self)
+			do_action(other, "front_grab_face_slap")
+		elif act == "Missionary1":
+			add_collision_exception_with(other)
+			other.add_collision_exception_with(self)
+			do_action(other, "missionary1")
+	if act == "LeaveAction":
 			set_action_mode(false)
-			other.set_action_mode(false)
-			remove_collision_exception_with(other)
-			other.remove_collision_exception_with(self)
+			if other != null:
+				other.set_action_mode(false)
+				remove_collision_exception_with(other)
+				other.remove_collision_exception_with(self)
 			if sm.is_playing():
 				sm.travel("Stand")
+			self.other = null
 	elif act == "Class":
 		var classes = get_tree().get_nodes_in_group("classroom")
-		var which = classes[randi() % classes.size()]
-		var to = which.global_transform.origin
-		global_transform.origin = to
+		if classes.size() > 0:
+			var which = classes[randi() % classes.size()]
+			var to = which.global_transform.origin
+			global_transform.origin = to
 	elif act == "PickUpItem":
 		var item = awareness.get_actuator_body(self, "pickup")
 		if item != null:
@@ -241,29 +204,14 @@ func do_ui_action(act):
 		print("Unknown action: ", act)
 
 func do_active_action(other):
-	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+	pass
+#	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 #	print("active")
-	if $awareness.get_other_direction(other) == "BACK":
-		if randf() > 0.5:
-			do_action(other, "kick_to_bed")
-		else:
-			do_action(other, "grab_from_back")
-#	var v1 = Vector2(orientation.basis[2].x, orientation.basis[2].z)
-#	var v2 = Vector2(other.orientation.basis[2].x, other.orientation.basis[2].z)
-#	var v_angle = abs(v1.angle_to(v2))
-#	if v_angle < PI / 4.0:
-#		print("BACK")
-#		sm.travel("KickToBed")
-#		set_action_mode(true)
-#		self.other = other
-#		other.emit_signal("passive_action", self)
-#	elif v_angle > PI / 2.0 + PI / 4.0:
-#		print("FRONT")
-#	else:
-#		print("SIDE")
-#	print(v_angle, " ", v1, " ", v2)
-#	print("kick ", sm.is_playing())
-#	print(sm.get_current_node())
+#	if awareness.get_other_direction(self, other) == "BACK":
+#		if randf() > 0.5:
+#			do_action(other, "kick_to_bed")
+#		else:
+#			do_action(other, "grab_from_back")
 func do_passive_action(other, action, ik, xform):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 	sm.travel(action)
@@ -274,6 +222,7 @@ func do_passive_action(other, action, ik, xform):
 	var move_fix = xform
 	transform = (other.transform * move_fix).orthonormalized()
 	set_action_mode(true)
+	enable_tears()
 	self.other = other
 func _ready():
 	skel = get_children()[0]
@@ -285,6 +234,7 @@ func _ready():
 	connect("active_action", self, "do_active_action")
 	connect("passive_action", self, "do_passive_action")
 	connect("ui_action", self, "do_ui_action")
+	disable_tears()
 	$AnimationTree.active = true
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 	sm.start("Sleep")
@@ -308,6 +258,10 @@ func _ready():
 		"right": $raycast_right
 	}
 	awareness.raycasts[self] = raycasts
+	if name.begins_with("male"):
+		awareness.gender[self] = "male"
+	elif name.begins_with("female"):
+		awareness.gender[self] = "female"
 
 var despawn_cooldown = 0.0
 var despawned = false

@@ -65,282 +65,326 @@ onready var rooms = {
 		"connections": ["lobby_corridoors"],
 		"attachments": [],
 		"priority": 1,
-		"min_floor": 1,
-		"max_floor": 1
 	},
 	"lobby_corridoors": {
 		"module": load("res://rooms/lobby_corridoors.tscn"),
-#		"connections": ["corridoor_segment1_stairs"],
-		"connections": ["corridoor_segment_stairs_1"],
+		"connections": ["corridoor_segment"],
 		"attachments": [],
 		"priority": 1,
-		"min_floor": 1,
-		"max_floor": 1
 	},
-	"corridoor_cross_1": {
-		"module": load("res://rooms/corridoor_cross_module.tscn"),
-		"connections": ["corridoor_segment_stairs_1"],
-		"attachments": [],
-		"max_floor": 1,
-		"min_floor": 1,
-		"priority": 4
-	},
-	"corridoor_segment_stairs_1": {
+	"corridoor_segment": {
 		"module": load("res://rooms/corridoor_module.tscn"),
-		"connections": ["corridoor_segment_stairs_1", "corridoor_segment_stairs_1", "stair", "bathroom", "corridoor_cross_1"],
-		"attachments": [],
-		"priority": 1,
-		"max_floor": 1,
-		"min_floor": 1
-	},
-	"corridoor_cross": {
-		"module": load("res://rooms/corridoor_cross_module.tscn"),
-		"connections": ["corridoor_segment_stairs_2", "corridoor_segment_stairs_3"],
-		"attachments": [],
-		"min_floor": 2,
-		"priority": 4
-	},
-	"corridoor_segment_stairs_2": {
-		"module": load("res://rooms/corridoor_module.tscn"),
-		"connections": ["corridoor_segment_stairs_2", "corridoor_segment_stairs_2", "bedroom2", "bedroom2", "bathroom", "corridoor_cross"],
-		"attachments": [],
-		"priority": 1,
-		"max_floor": 2,
-		"min_floor": 2
-	},
-	"corridoor_segment_stairs_3": {
-		"module": load("res://rooms/corridoor_module.tscn"),
-		"connections": ["corridoor_segment_stairs_3", "corridoor_segment_stairs_3", "classroom", "bathroom", "corridoor_cross"],
-		"attachments": [],
-		"priority": 1,
-		"min_floor": 3
-	},
-	"corridoor_segment_stairs_0": {
-		"module": load("res://rooms/corridoor_module.tscn"),
-		"connections": ["corridoor_segment_stairs_0", "corridoor_segment_stairs_0", "bathroom", "corridoor_cross"],
-		"attachments": [],
-		"priority": 1,
-		"max_floor": 0
-	},
-	"stair": {
-		"module": load("res://rooms/stairs_internal_module.tscn"),
-		"connections": ["corridoor_segment_stairs_1", "corridoor_segment_stairs_2", "corridoor_segment_stairs_3"],
+		"connections": ["corridoor_segment", "bedroom2"],
 		"attachments": [],
 		"priority": 2,
-		"special": ["stair"]
-	},
-	"bathroom": {
-		"module": load("res://rooms/bathroom_module.tscn"),
-		"connections": ["corridoor_segment_stairs_1", "corridoor_segment_stairs_2", "corridoor_segment_stairs_3"],
-		"attachments": [],
-		"priority": 3
-	},
-	"classroom": {
-		"module": load("res://rooms/classroom_module.tscn"),
-		"connections": ["corridoor_segment_stairs_3"],
-		"attachments": [],
-		"priority": 1,
-		"min_floor": 3
-	},
-	"bedroom": {
-		"module": load("res://rooms/bedroom_module.tscn"),
-		"connections": ["corridoor_segment_stairs_2"],
-		"attachments": [],
-		"priority": 3,
-		"max_floor": 2,
-		"min_floor": 2
 	},
 	"bedroom2": {
 		"module": load("res://rooms/bedroom_module2.tscn"),
-		"connections": ["corridoor_segment_stairs_2"],
+		"connections": ["corridoor_segment"],
 		"attachments": [],
-		"priority": 1,
-		"max_floor": 2,
-		"min_floor": 2
+		"priority": 2,
 	},
-#	"corridoor_segment_stairs_2": {
-#		"module": load("res://rooms/corridoor_module.tscn"),
-#		"connections": ["corridoor_segment_stairs_2", "bedroom", "bedroom2", "bathroom"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 2,
-#		"min_floor": 2
-#	},
-#	"stair3": {
-#		"module": load("res://rooms/stairs_internal_module.tscn"),
-#		"connections": ["stair2"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 3,
-#		"min_floor": 3
-#	},
-#	"corridoor_segment_stairs_3": {
-#		"module": load("res://rooms/corridoor_module.tscn"),
-#		"connections": ["corridoor_segment_stairs_3", "classroom_3", "bathroom"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 3,
-#		"min_floor": 3
-#	},
-#	"corridoor_cross_3": {
-#		"module": load("res://rooms/corridoor_cross_module.tscn"),
-#		"connections": ["corridoor_segment_stairs_3"],
-#		"attachments": [],
-#		"max_floor": 3,
-#		"min_floor": 3,
-#		"priority": 1
-#	},
-#	"classroom_3": {
-#		"module": load("res://rooms/classroom_module.tscn"),
-#		"connections": ["corridoor_segment_stairs_3"],
-#		"attachments": [],
-#		"priority": 1,
-#		"min_floor": 3
-#	},
-#
-#
-#
-#	"corridoor_segment_rooms": {
-#		"module": load("res://rooms/corridoor_module.tscn"),
-#		"connections": ["corridoor_segment_rooms", "bedroom", "bathroom", "bedroom2"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 1,
-#		"min_floor": 1
-#	},
-#	"stairs_internal_1": {
-#		"module": load("res://rooms/stairs_internal_module.tscn"),
-#		"connections": ["corridoor_segment_2_rooms"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 1,
-#		"min_floor": 1
-#	},
-#	"corridoor_segment_2_rooms": {
-#		"module": load("res://rooms/corridoor_module.tscn"),
-#		"connections": ["corridoor_segment_2_rooms", "bedroom", "bathroom", "bedroom2"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 2,
-#		"min_floor": 2
-#	},
-#	"corridoor_segment_2": {
-#		"module": load("res://rooms/corridoor_module.tscn"),
-#		"connections": ["corridoor_segment_2", "bedroom", "bathroom", "bedroom2"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 1,
-#		"min_floor": 1
-#	},
-#	"corridoor_segment1_stairs": {
-#		"module": load("res://rooms/corridoor_module.tscn"),
-#		"connections": ["corridoor_segment1_stairs", "stairs_internal1"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 1,
-#		"min_floor": 1
-#	},
-#	"stairs_internal1": {
-#		"module": load("res://rooms/stairs_internal_module.tscn"),
-#		"connections": ["corridoor_segment2"],
-#		"attachments": [],
-#		"priority": 2,
-#		"max_floor": 1,
-#		"min_floor": 1
-#	},
-#	"corridoor_segment1": {
-#		"module": load("res://rooms/corridoor_module.tscn"),
-#		"connections": ["corridoor_cross1", "bathroom"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 1,
-#		"min_floor": 1
-#	},
-#	"corridoor_cross1": {
-#		"module": load("res://rooms/corridoor_cross_module.tscn"),
-#		"connections": ["corridoor_segment1", "corridoor_segment1_stairs"],
-#		"attachments": [],
-#		"max_floor": 1,
-#		"min_floor": 1,
-#		"priority": 4
-#	},
-#	"corridoor_segment2": {
-#		"module": load("res://rooms/corridoor_module.tscn"),
-#		"connections": ["corridoor_segment2", "bedroom", "bathroom", "bedroom2"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 2,
-#		"min_floor": 2
-#	},
-#	"stairs_internal2": {
-#		"module": load("res://rooms/stairs_internal_module.tscn"),
-#		"connections": ["stairs_internal2", "stairs_internal2", "corridoor_segment"],
-#		"attachments": [],
-#		"min_floor": 1,
-#		"priority": 20
-#	},
-#	"corridoor_segment": {
-#		"module": load("res://rooms/corridoor_module.tscn"),
-#		"connections": ["corridoor_segment", "corridoor_segment","corridoor_segment","corridoor_segment","corridoor_segment","corridoor_segment","corridoor_cross", "passable_bedroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom"],
-#		"attachments": [],
-#		"priority": 4
-#	},
-#	"corridoor_cross": {
-#		"module": load("res://rooms/corridoor_cross_module.tscn"),
-#		"connections": ["corridoor_segment", "passable_bedroom", "bedroom"],
-#		"attachments": [],
-#		"priority": 20
-#	},
-#	"passable_bedroom": {
-#		"module": load("res://rooms/bedroom_passable_module.tscn"),
-#		"connections": ["corridoor_segment", "corridoor_cross"],
-#		"attachments": [],
-#		"max_floor": 2,
-#		"min_floor": 2,
-#		"priority": 1
-#	},
-#	"bedroom": {
-#		"module": load("res://rooms/bedroom_module.tscn"),
-#		"connections": ["corridoor_segment", "corridoor_cross"],
-#		"attachments": [],
-#		"priority": 5,
-#		"max_floor": 2,
-#		"min_floor": 2
-#	},
-#	"bedroom2": {
-#		"module": load("res://rooms/bedroom_module2.tscn"),
-#		"connections": ["corridoor_segment", "corridoor_cross"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 2,
-#		"min_floor": 2
-#	},
-#	"bathroom": {
-#		"module": load("res://rooms/bathroom_module.tscn"),
-#		"connections": ["corridoor_segment", "corridoor_cross"],
-#		"attachments": [],
-#		"priority": 1
-#	},
-#	"classroom": {
-#		"module": load("res://rooms/classroom_module.tscn"),
-#		"connections": ["corridoor_segment", "corridoor_cross"],
-#		"attachments": [],
-#		"priority": 1,
-#		"max_floor": 3,
-#		"min_floor": 3
-#	},
+	"classroom": {
+		"module": load("res://rooms/classroom_module.tscn"),
+		"connections": ["corridoor_segment"],
+		"attachments": [],
+		"priority": 4,
+	},
 	"checks": {
-		"classroom": 5,
-		"bathroom": 10,
+#		"classroom": 5,
+#		"bathroom": 10,
 		"beds": 5,
-#		"bedroom2": 0,
-#		"stairs_internal": 0
+##		"bedroom2": 0,
+##		"stairs_internal": 0
 	},
 	"config": {
 		"min_floor": -2,
 		"max_floor": 4
 	}
 }
+#onready var rooms = {
+#	"axiom": "lobby",
+#	"lobby": {
+#		"module": load("res://rooms/lobby.tscn"),
+#		"connections": ["lobby_corridoors"],
+#		"attachments": [],
+#		"priority": 1,
+#		"min_floor": 1,
+#		"max_floor": 1
+#	},
+#	"lobby_corridoors": {
+#		"module": load("res://rooms/lobby_corridoors.tscn"),
+##		"connections": ["corridoor_segment1_stairs"],
+#		"connections": ["corridoor_segment_stairs_1"],
+#		"attachments": [],
+#		"priority": 1,
+#		"min_floor": 1,
+#		"max_floor": 1
+#	},
+#	"corridoor_cross_1": {
+#		"module": load("res://rooms/corridoor_cross_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_1"],
+#		"attachments": [],
+#		"max_floor": 1,
+#		"min_floor": 1,
+#		"priority": 4
+#	},
+#	"corridoor_segment_stairs_1": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_1", "corridoor_segment_stairs_1", "stair"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 1,
+#		"min_floor": 1
+#	},
+#	"corridoor_cross": {
+#		"module": load("res://rooms/corridoor_cross_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_2", "corridoor_segment_stairs_3"],
+#		"attachments": [],
+#		"min_floor": 2,
+#		"priority": 4
+#	},
+#	"corridoor_segment_stairs_2": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_2", "corridoor_segment_stairs_2", "bedroom2"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 2,
+#		"min_floor": 2
+#	},
+#	"corridoor_segment_stairs_3": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_3", "corridoor_segment_stairs_3", "classroom", "corridoor_cross"],
+#		"attachments": [],
+#		"priority": 1,
+#		"min_floor": 3
+#	},
+#	"corridoor_segment_stairs_0": {
+#		"module": load("res://rooms/corridoor_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_0", "corridoor_segment_stairs_0", "bathroom", "corridoor_cross"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 0
+#	},
+#	"stair": {
+#		"module": load("res://rooms/stairs_internal_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_1", "corridoor_segment_stairs_2", "corridoor_segment_stairs_3"],
+#		"attachments": [],
+#		"priority": 2,
+#		"special": ["stair"]
+#	},
+#	"bathroom": {
+#		"module": load("res://rooms/bathroom_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_1", "corridoor_segment_stairs_2", "corridoor_segment_stairs_3"],
+#		"attachments": [],
+#		"priority": 3
+#	},
+#	"classroom": {
+#		"module": load("res://rooms/classroom_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_3"],
+#		"attachments": [],
+#		"priority": 1,
+#		"min_floor": 3
+#	},
+#	"bedroom": {
+#		"module": load("res://rooms/bedroom_module.tscn"),
+#		"connections": ["corridoor_segment_stairs_2"],
+#		"attachments": [],
+#		"priority": 3,
+#		"max_floor": 2,
+#		"min_floor": 2
+#	},
+#	"bedroom2": {
+#		"module": load("res://rooms/bedroom_module2.tscn"),
+#		"connections": ["corridoor_segment_stairs_2"],
+#		"attachments": [],
+#		"priority": 1,
+#		"max_floor": 2,
+#		"min_floor": 2
+#	},
+##	"corridoor_segment_stairs_2": {
+##		"module": load("res://rooms/corridoor_module.tscn"),
+##		"connections": ["corridoor_segment_stairs_2", "bedroom", "bedroom2", "bathroom"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 2,
+##		"min_floor": 2
+##	},
+##	"stair3": {
+##		"module": load("res://rooms/stairs_internal_module.tscn"),
+##		"connections": ["stair2"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 3,
+##		"min_floor": 3
+##	},
+##	"corridoor_segment_stairs_3": {
+##		"module": load("res://rooms/corridoor_module.tscn"),
+##		"connections": ["corridoor_segment_stairs_3", "classroom_3", "bathroom"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 3,
+##		"min_floor": 3
+##	},
+##	"corridoor_cross_3": {
+##		"module": load("res://rooms/corridoor_cross_module.tscn"),
+##		"connections": ["corridoor_segment_stairs_3"],
+##		"attachments": [],
+##		"max_floor": 3,
+##		"min_floor": 3,
+##		"priority": 1
+##	},
+##	"classroom_3": {
+##		"module": load("res://rooms/classroom_module.tscn"),
+##		"connections": ["corridoor_segment_stairs_3"],
+##		"attachments": [],
+##		"priority": 1,
+##		"min_floor": 3
+##	},
+##
+##
+##
+##	"corridoor_segment_rooms": {
+##		"module": load("res://rooms/corridoor_module.tscn"),
+##		"connections": ["corridoor_segment_rooms", "bedroom", "bathroom", "bedroom2"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 1,
+##		"min_floor": 1
+##	},
+##	"stairs_internal_1": {
+##		"module": load("res://rooms/stairs_internal_module.tscn"),
+##		"connections": ["corridoor_segment_2_rooms"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 1,
+##		"min_floor": 1
+##	},
+##	"corridoor_segment_2_rooms": {
+##		"module": load("res://rooms/corridoor_module.tscn"),
+##		"connections": ["corridoor_segment_2_rooms", "bedroom", "bathroom", "bedroom2"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 2,
+##		"min_floor": 2
+##	},
+##	"corridoor_segment_2": {
+##		"module": load("res://rooms/corridoor_module.tscn"),
+##		"connections": ["corridoor_segment_2", "bedroom", "bathroom", "bedroom2"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 1,
+##		"min_floor": 1
+##	},
+##	"corridoor_segment1_stairs": {
+##		"module": load("res://rooms/corridoor_module.tscn"),
+##		"connections": ["corridoor_segment1_stairs", "stairs_internal1"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 1,
+##		"min_floor": 1
+##	},
+##	"stairs_internal1": {
+##		"module": load("res://rooms/stairs_internal_module.tscn"),
+##		"connections": ["corridoor_segment2"],
+##		"attachments": [],
+##		"priority": 2,
+##		"max_floor": 1,
+##		"min_floor": 1
+##	},
+##	"corridoor_segment1": {
+##		"module": load("res://rooms/corridoor_module.tscn"),
+##		"connections": ["corridoor_cross1", "bathroom"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 1,
+##		"min_floor": 1
+##	},
+##	"corridoor_cross1": {
+##		"module": load("res://rooms/corridoor_cross_module.tscn"),
+##		"connections": ["corridoor_segment1", "corridoor_segment1_stairs"],
+##		"attachments": [],
+##		"max_floor": 1,
+##		"min_floor": 1,
+##		"priority": 4
+##	},
+##	"corridoor_segment2": {
+##		"module": load("res://rooms/corridoor_module.tscn"),
+##		"connections": ["corridoor_segment2", "bedroom", "bathroom", "bedroom2"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 2,
+##		"min_floor": 2
+##	},
+##	"stairs_internal2": {
+##		"module": load("res://rooms/stairs_internal_module.tscn"),
+##		"connections": ["stairs_internal2", "stairs_internal2", "corridoor_segment"],
+##		"attachments": [],
+##		"min_floor": 1,
+##		"priority": 20
+##	},
+##	"corridoor_segment": {
+##		"module": load("res://rooms/corridoor_module.tscn"),
+##		"connections": ["corridoor_segment", "corridoor_segment","corridoor_segment","corridoor_segment","corridoor_segment","corridoor_segment","corridoor_cross", "passable_bedroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom", "classroom"],
+##		"attachments": [],
+##		"priority": 4
+##	},
+##	"corridoor_cross": {
+##		"module": load("res://rooms/corridoor_cross_module.tscn"),
+##		"connections": ["corridoor_segment", "passable_bedroom", "bedroom"],
+##		"attachments": [],
+##		"priority": 20
+##	},
+##	"passable_bedroom": {
+##		"module": load("res://rooms/bedroom_passable_module.tscn"),
+##		"connections": ["corridoor_segment", "corridoor_cross"],
+##		"attachments": [],
+##		"max_floor": 2,
+##		"min_floor": 2,
+##		"priority": 1
+##	},
+##	"bedroom": {
+##		"module": load("res://rooms/bedroom_module.tscn"),
+##		"connections": ["corridoor_segment", "corridoor_cross"],
+##		"attachments": [],
+##		"priority": 5,
+##		"max_floor": 2,
+##		"min_floor": 2
+##	},
+##	"bedroom2": {
+##		"module": load("res://rooms/bedroom_module2.tscn"),
+##		"connections": ["corridoor_segment", "corridoor_cross"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 2,
+##		"min_floor": 2
+##	},
+##	"bathroom": {
+##		"module": load("res://rooms/bathroom_module.tscn"),
+##		"connections": ["corridoor_segment", "corridoor_cross"],
+##		"attachments": [],
+##		"priority": 1
+##	},
+##	"classroom": {
+##		"module": load("res://rooms/classroom_module.tscn"),
+##		"connections": ["corridoor_segment", "corridoor_cross"],
+##		"attachments": [],
+##		"priority": 1,
+##		"max_floor": 3,
+##		"min_floor": 3
+##	},
+#	"checks": {
+#		"classroom": 5,
+#		"bathroom": 10,
+#		"beds": 5,
+##		"bedroom2": 0,
+##		"stairs_internal": 0
+#	},
+#	"config": {
+#		"min_floor": -2,
+#		"max_floor": 4
+#	}
+#}
 
 # Declare member variables here. Examples:
 # var a = 2

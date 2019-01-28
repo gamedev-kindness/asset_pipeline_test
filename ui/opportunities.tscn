@@ -271,3 +271,28 @@ position = Vector2( 12.785, 0 )
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 29.8687, 7.59467, 30.0624, 22.7042, 42.46, 14.3746 )
 
+[node name="WakeUp" type="ColorRect" parent="."]
+margin_left = 612.0
+margin_right = 676.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 64, 64 )
+color = Color( 1, 1, 1, 0.466667 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="WakeUp"]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 5.4516, 35.329, 5.23694, 57.2222, 12.5347, 56.1489, 11.0322, 47.3488, 53.3159, 47.5634, 53.7452, 57.0075, 60.6136, 55.9343, 59.9697, 33.1826, 51.5988, 33.8265, 50.9549, 40.4803, 11.0322, 39.6218, 11.4614, 32.968 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="WakeUp"]
+color = Color( 0.254902, 0.52549, 0.905882, 1 )
+polygon = PoolVector2Array( 19.1884, 32.7534, 19.1884, 29.5338, 12.1053, 31.6802, 13.1786, 37.9047, 17.4713, 36.8315, 19.4031, 37.2607, 22.408, 38.9779, 48.8085, 38.9779, 49.0232, 33.3973, 30.5643, 31.2509, 26.9154, 31.0363, 23.9105, 33.8265 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="WakeUp"]
+color = Color( 0.741176, 0.0901961, 0.0901961, 1 )
+polygon = PoolVector2Array( 23.0519, 24.8118, 25.1983, 16.4409, 33.1399, 12.1481, 43.2279, 11.5042, 43.2279, 5.27966, 52.0281, 16.4409, 44.5157, 23.7385, 43.4426, 18.5872, 35.9302, 18.5872, 29.7057, 20.519, 28.6325, 24.3824 )
+
