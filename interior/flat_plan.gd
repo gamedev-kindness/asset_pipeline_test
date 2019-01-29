@@ -108,6 +108,25 @@ func create_room(t, parent):
 var correction = 0.2
 var queue = []
 var rnd_seed = 3984753987
+func create_initial_points(item):
+	var rect = Rect2()
+	for p in item.polygon:
+		rect = rect.expand(p)
+	var size = rect.size
+	var center = rect.position + rect.size / 2.0
+	var dir = Vector2()
+	if size.x > size.y:
+		dir.x = size.x
+	else:
+		dir.y = size.y
+	var divider = float(item.class.contains.size())
+	var pt = dir / divider
+	var ret = []
+	for k in item.class.contains:
+		ret.push_back(pt)
+		pt += dir / divider
+	return ret
+	
 func polygon_check_fits(poly, k):
 	if k.parent == null:
 		return true
@@ -161,7 +180,7 @@ func polygon_check_overlaps(poly, item):
 			return false
 	return true
 
-var growth_ratio = 0.5
+var growth_ratio = 0.1
 
 func grow_square(polygon):
 	var ret = []
@@ -246,12 +265,14 @@ func get_random_point(item):
 	while !point_in_polygon(ret.origin, item.polygon):
 		ret.origin = Vector2(rect.size.x * rnd.randf(), rect.size.y * rnd.randf()) + rect.position
 	return ret
-func apply_distance_constraint(k):
+func apply_distance_constraints(k):
 	var ret = true
 	for other_room in rooms:
 		if k == other_room:
 			continue
 		if k.parent != other_room.parent:
+			continue
+		if other_room.room in k.class.adjacent:
 			continue
 		var vec = k.transform.origin - other_room.transform.origin
 		var dst = vec.length()
@@ -259,30 +280,46 @@ func apply_distance_constraint(k):
 			k.transform.origin += vec.normalized() * correction
 			ret = false
 	return ret
-#func apply_size_constraints(item):
-#	if check_room(item):
-#		return true
-#	if polygon_check_fits(item.polygon, item) && item.class.min_area <= item.area:
-#		return false
-#	var ret = []
-#	var center = Vector2()
-#	for k in item.polygon:
-#		center += k
-#	center *= 1.0 / float(item.polygon.size())
-#	for k in item.polygon:
-#		var vec = k - center
-#		var move = vec.normalized() * correction * item.area / item.parent.area * 0.5
-#		ret.push_back(k - move)
-#	item.polygon = ret
-#	item.area = calculate_polygon_area(item.polygon)
-#	return check_room(item)
+func apply_size_constraints(item):
+	if check_room(item):
+		return true
+	if polygon_check_fits(item.polygon, item) && item.class.min_area <= item.area:
+		return true
+	var ret = []
+	var center = Vector2()
+	for k in item.polygon:
+		center += k
+	center *= 1.0 / float(item.polygon.size())
+	for k in item.polygon:
+		var vec = k - center
+		var move = vec.normalized() * correction * item.area / item.parent.area * 0.5
+		ret.push_back(k - move)
+	item.polygon = ret
+	item.area = calculate_polygon_area(item.polygon)
+	return check_room(item)
 func apply_fit_constraints(item):
 	if polygon_check_fits(item.polygon, item):
 		return true
 	var vec = item.parent.transform.origin - item.transform.origin
-	var move = vec.normalized() * correction
+	var move = vec.normalized() * correction * 3.0
 	item.transform.origin += move
 	return false
+func apply_wall_distance_constraints(item):
+	var ret = true
+	var poly_cur = get_translated_polygon(item.polygon, item.transform)
+	var parent_cur = get_translated_polygon(item.parent.polygon, item.parent.transform)
+	var dst = poly_cur[0].distance_to(parent_cur[0])
+	for p1 in poly_cur:
+		for p2 in parent_cur:
+			var ndst = p1.distance_to(p2)
+			if dst > ndst:
+				dst = ndst
+	if dst < sqrt(item.area) * 8.0:
+		var vec = item.parent.transform.origin - item.transform.origin
+		item.transform.origin += vec.normalized() * correction * 4.0
+		ret = false
+	return ret
+
 func apply_adjacency_constraints(item):
 	var vec = Vector2()
 	var ret = true
@@ -297,9 +334,31 @@ func apply_adjacency_constraints(item):
 						dst = item.transform.xform(p1).distance_to(k.transform.xform(p2))
 			if dst > sqrt(item.area) * 2.0:
 				var offt = k.transform.origin - item.transform.origin
-				vec += offt.normalized() / (1.0 + offt.length())
+				vec += offt.normalized() / (1.0 + offt.length()) * correction
 				ret = false
 	item.transform.origin += vec
+	return ret
+func apply_overlapping_constraints(item):
+	var ret = true
+	var poly_cur = get_translated_polygon(item.polygon, item.transform)
+	for k in rooms:
+		if k == item:
+			continue
+		var intersects = false
+		var poly_other = get_translated_polygon(k.polygon, k.transform)
+		for p1 in poly_cur:
+			if point_in_polygon(p1, poly_other):
+				intersects = true
+				break
+		if !intersects:
+			for p2 in poly_other:
+				if point_in_polygon(p2, poly_cur):
+					intersects = true
+					break
+		if intersects:
+			var vec = item.transform.origin - k.transform.origin
+			item.transform.origin += vec.normalized() * correction * 3.0
+			ret = false
 	return ret
 func apply_constraints(k):
 	var ret = true
@@ -307,7 +366,7 @@ func apply_constraints(k):
 #		print("fit failed")
 		ret = false
 		return ret
-	if !apply_distance_constraint(k):
+	if !apply_distance_constraints(k):
 		print("distance failed")
 		ret = false
 #	if !apply_size_constraints(k):
@@ -354,10 +413,8 @@ func _process(delta):
 				if k.can_grow:
 					could_grow = true
 					if rnd.randf() <= k.class.probability_grow:
-						k.can_grow = grow_room_square(k)
+						grow_room_square(k)
 						k.area = calculate_polygon_area(k.polygon)
-					else:
-						print("room problems")
 			if could_grow:
 				state = STATE_CONSTRAINTS_FIT
 			else:
@@ -373,27 +430,26 @@ func _process(delta):
 					if rnd.randf() <= k.class.probability_grow:
 						k.can_grow = grow_room_rect(k)
 						k.area = calculate_polygon_area(k.polygon)
-					else:
-						print("room problems")
 			if could_grow:
 				state = STATE_CONSTRAINTS
 			else:
 				state = STATE_PUSH_BACK
 		
 		STATE_CONSTRAINTS:
-#			print("constraints")
-			var success = true
-			for k in rooms:
-				if !check_room(k):
-					success = false
-					continue
-				if k.class.constraints:
-#					if 	!apply_fit_constraints(k):
-#						success = true
-#						print("fit failure")
-					if !apply_adjacency_constraints(k):
-						success = true
-						print("adjacensy failure")
+			print("constraints")
+			var success = false
+			for le in range(500):
+				success = true
+				for k in rooms:
+					if k.class.constraints:
+						apply_distance_constraints(k)
+						apply_adjacency_constraints(k)
+						apply_wall_distance_constraints(k)
+						apply_overlapping_constraints(k)
+						if !apply_fit_constraints(k):
+							success = false
+				if success:
+					break
 			if success:
 				print("constraints ok")
 				var can_grow = false
@@ -410,24 +466,24 @@ func _process(delta):
 				state = STATE_CONSTRAINTS
 		STATE_CONSTRAINTS_FIT:
 			print("constraints_fit")
-			var success = true
-			for k in rooms:
-				if k.class.constraints:
-					if !apply_adjacency_constraints(k):
-						print("adjacensy failure")
-						success = false
-					if 	!apply_fit_constraints(k):
-						print("fit failure")
-						success = false
-			if success:
-				print("constraints_fit ok")
-				if grow_square:
-					print("go to grow_square")
-					state = STATE_GROW_SQUARE
-				else:
-					state = STATE_GROW_RECT
+			var success = false
+			for le in range(500):
+				success = true
+				for k in rooms:
+					if k.class.constraints:
+						apply_distance_constraints(k)
+						apply_adjacency_constraints(k)
+						apply_wall_distance_constraints(k)
+						apply_overlapping_constraints(k)
+						if !apply_fit_constraints(k):
+							success = false
+				if success:
+					break
+			if grow_square:
+				print("go to grow_square")
+				state = STATE_GROW_SQUARE
 			else:
-				print("constraints_fit fail")
+				state = STATE_GROW_RECT
 		STATE_PUSH_BACK:
 			print("push")
 			for k in rooms:
@@ -445,3 +501,4 @@ func _process(delta):
 		STATE_COMPLETE:
 			print("complete")
 			complete = true
+	print(state)
