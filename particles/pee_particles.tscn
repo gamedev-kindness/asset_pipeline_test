@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=2]
+
+[sub_resource type="Curve" id=1]
+
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.3416 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+
+curve = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+
+trail_size_modifier = SubResource( 2 )
+spread = 15.0
+flatness = 1.0
+initial_velocity = 4.0
+angular_velocity = 1.0
+linear_accel_random = 0.41
+damping = 8.42
+damping_random = 0.3
+
+[sub_resource type="SpatialMaterial" id=4]
+
+flags_transparent = true
+albedo_color = Color( 0.811765, 0.929412, 0.121569, 0.521569 )
+
+[sub_resource type="SphereMesh" id=5]
+
+material = SubResource( 4 )
+radius = 0.01
+height = 0.02
+
+[node name="pee_particles" type="Particles"]
+transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0 )
+emitting = false
+amount = 128
+lifetime = 0.4
+explosiveness = 0.3
+local_coords = false
+process_material = SubResource( 3 )
+draw_pass_1 = SubResource( 5 )
+

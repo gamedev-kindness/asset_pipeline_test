@@ -12,6 +12,10 @@ var spawns = [
 		"obj": load("res://inventory/pickable.tscn")
 	},
 	{
+		"name": "clock",
+		"obj": load("res://inventory/clock.tscn")
+	},
+	{
 		"name": "male",
 		"obj": load("res://characters/male_2018.tscn")
 	},
@@ -81,6 +85,15 @@ func process_command(c: String):
 			d.append_bbcode("[b]Needs[/b]\n")
 			for h in awareness.needs[awareness.player_character].keys():
 				d.text += h + " " + str(awareness.needs[awareness.player_character][h]) + "\n"
+		"chars":
+			for k in get_tree().get_nodes_in_group("characters"):
+				d.text += "\n" + k.name + "\n===\n"
+				if awareness.at.has(k):
+					var sm = awareness.at[k]
+					d.text += "state: " +  sm.get_current_node() + "\n"
+				if awareness.targets.has(k):
+					d.text += "target: " + str(awareness.targets[k]) + "\n"
+					d.text += "target groups: " + str(awareness.targets[k].get_groups()) + "\n"
 
 func _ready():
 	$VBoxContainer/LineEdit.connect("text_entered", self, "process_command")

@@ -58,3 +58,9 @@ max_level = 10
 
 [node name="Shower" type="Node" parent="needs"]
 
+[node name="Socialization" type="Node" parent="needs"]
+
+[node name="Horniness" type="Node" parent="needs"]
+
+[node name="Study" type="Node" parent="needs"]
+

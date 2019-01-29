@@ -34,6 +34,7 @@ var needs = {}
 var skills = {}
 var skill_levels = {}
 var current_level = {}
+var traits = {}
 var till_next_level = {}
 var astar: AStar
 var current_path = {}
@@ -42,6 +43,8 @@ var action_cooldown = {}
 var targets = {}
 var target_activation_time = {}
 var raycasts = {}
+var need_changes = {}
+var gender = {}
 
 func _ready():
 	astar = AStar.new()
@@ -238,3 +241,43 @@ func build_path_to(obj: Spatial, to: Vector3) -> PoolVector3Array:
 func build_path_to_obj(obj: Spatial, to: Spatial) -> PoolVector3Array:
 	var path: PoolVector3Array = build_path_to(obj, to.global_transform.origin)
 	return path
+
+var utilities = {
+	"socialize": {
+		"score": 290.0,
+		"need": "Socialization",
+		"tag": "characters",
+	},
+	"class": {
+		"score": 300.0,
+		"need": "Study",
+		"tag": "classes",
+	},
+	"hunger": {
+		"score": 450.0,
+		"need": "Hunger",
+		"tag": "food",
+	},
+	"toilet1": {
+		"score": 500.0,
+		"need": "Toilet1",
+		"tag": "toilet",
+	},
+	"toilet2": {
+		"score": 600.0,
+		"need": "Toilet2",
+		"tag": "toilet",
+	},
+	"shower": {
+		"score": 400.0,
+		"need": "Shower",
+		"tag": "shower",
+	}
+}
+
+func get_utility(obj, un):
+	if needs.has(obj):
+		return utilities[un].score * needs[obj][utilities[un].need]
+	else:
+		return 0.0
+

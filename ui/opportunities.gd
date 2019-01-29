@@ -28,10 +28,13 @@ func _process(delta):
 	$FrontGrabFaceSlap.hide()
 	$PickUpItem.hide()
 	$Missionary1.hide()
+	$WakeUp.hide()
 	if awareness.active_items.has(current):
 		for i in awareness.active_items[current]:
 			if i.is_in_group("characters") && !current.action:
 				$Talk.show()
+				if awareness.at[i].get_current_node() == "Sleeping":
+					$WakeUp.show()
 				if awareness.get_other_direction(current, i) == "BACK":
 					$GrabFromBack.show()
 					$KickToBed.show()

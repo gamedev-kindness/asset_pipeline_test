@@ -11,41 +11,16 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-var toilet_score = 1000.0
-var shower_score = 10.0
-
-var utilities = {
-	"toilet1": {
-		"score": 1000.0,
-		"need": "Toilet1",
-		"tag": "toilet"
-	},
-	"toilet2": {
-		"score": 1000.0,
-		"need": "Toilet2",
-		"tag": "toilet"
-	},
-	"shower": {
-		"score": 10.0,
-		"need": "Shower",
-		"tag": "shower"
-	}
-}
-
-func get_utility(obj, un):
-	if awareness.needs.has(obj):
-		return utilities[un].score * awareness.needs[obj][utilities[un].need]
-	else:
-		return 0.0
-
 func init(obj):
 	print("Entering " + name)
 	var sc = -1001.0
 	var target
-	for k in utilities.keys():
-		if get_utility(obj, k) > sc:
-			sc = get_utility(obj, k)
-			target = utilities[k].tag
+	for k in awareness.utilities.keys():
+		print(k, ": ", sc)
+		if awareness.get_utility(obj, k) > sc && get_closest_target(obj, awareness.utilities[k].tag) != null:
+			sc = awareness.get_utility(obj, k)
+			target = awareness.utilities[k].tag
+			print(k, ": ", sc)
 	var dist = 1000000.0
 	var target_node = get_closest_target(obj, target)
 	var path_t = awareness.build_path_to_obj(obj, target_node)
@@ -76,8 +51,18 @@ func get_closest_target(obj, target):
 	var target_node
 	for n in tree().get_nodes_in_group(target):
 		var ndist = awareness.distance(obj, n)
+		# Add logic if we want to forcefully free the target
 		if n.is_in_group("toilet") && n.get_parent().busy:
 			continue
+		if n.is_in_group("characters"):
+			# Check traits here
+			if n == obj:
+				continue
+			if awareness.gender.has(n) && awareness.gender.has(obj):
+				if awareness.gender[n] == awareness.gender[obj]:
+					continue
+#		if n.is_in_group("shower") && n.get_parent().busy:
+#			continue
 		if ndist < dist:
 			dist = ndist
 			target_node = n
@@ -89,19 +74,27 @@ func run(obj, delta):
 			return ""
 	if awareness.current_path[obj].size() == 0 || !check_target_valid(obj):
 		var target
-		for k in utilities.keys():
-			var sc = -1001.0
-			if get_utility(obj, k) > sc:
-				sc = get_utility(obj, k)
-				target = utilities[k].tag
-		var target_node = get_closest_target(obj, target)
-		var path_t = awareness.build_path_to_obj(obj, target_node)
-		var path = []
-		for k in path_t:
-			path.push_back(k)
-		path.push_back(target_node.global_transform.origin)
-		awareness.current_path[obj] = path
-		awareness.targets[obj] = target_node
+		var target_node
+		var sc = 100
+		awareness.targets[obj] = null
+		awareness.current_path[obj] = []
+		for k in awareness.utilities.keys():
+			print(k, ": ", sc)
+			if awareness.get_utility(obj, k) > sc && get_closest_target(obj, awareness.utilities[k].tag) != null:
+				sc = awareness.get_utility(obj, k)
+				target = awareness.utilities[k].tag
+				target_node = get_closest_target(obj, target)
+				print(k, ": ", sc)
+		if target_node != null:
+			var path_t = awareness.build_path_to_obj(obj, target_node)
+			var path = []
+			for k in path_t:
+				path.push_back(k)
+			path.push_back(target_node.global_transform.origin)
+			awareness.current_path[obj] = path
+			awareness.targets[obj] = target_node
+		else:
+			return ""
 	if awareness.at[obj].get_current_node() == "Stand":
 		if awareness.day_hour > 23.0 && awareness.day_hour < 5:
 			if randf() > 0.95:
