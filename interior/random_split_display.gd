@@ -7,7 +7,7 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$random_split.outline = $outline.polygon
-	$random_split.doors = [$door1, $door2, $door3]
+	$random_split.doors = [$door1.transform.origin, $door2.transform.origin, $door3.transform.origin]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var cooldown = 0.0
@@ -31,12 +31,11 @@ func _draw():
 		draw_rect(k, Color(0, 0, 1, 1), false)
 	for k in $random_split.grow_rects:
 		draw_rect(k.rect, Color(1, 1, 0, 1), false)
-	for k in $random_split.corridoor_queue:
-		draw_line(k[0], k[1], Color(1, 0.6, 0.6, 1), 1.5, true)
-		draw_line(k[1], k[2], Color(1, 0.6, 0.6, 1), 1.5, true)
+#	for k in $random_split.corridoor_queue:
+#		draw_line(k[0], k[1], Color(1, 0.6, 0.6, 1), 1.5, true)
+#		draw_line(k[1], k[2], Color(1, 0.6, 0.6, 1), 1.5, true)
 	for k in $random_split.corridoors:
-		draw_line(k[0], k[1], Color(0, 0.6, 0.6, 1), 1.2, true)
-		draw_line(k[1], k[2], Color(0, 0.6, 0.6, 1), 1.2, true)
-	for k in $random_split.rooms:
-		for h in k.doors:
-			draw_circle(k.rect.position + k.rect.size / 2.0 + Vector2(h.x * k.rect.size.x / 2.0, h.y * k.rect.size.y / 2.0), 0.1, Color(0, 1, 1, 1))
+		draw_line(k[0], k[1], Color(0, 0.6, 0.6, 1), 1.1, true)
+		draw_line(k[1], k[2], Color(0, 0.6, 0.6, 1), 1.1, true)
+	for h in $random_split.door_positions:
+		draw_circle(h, 0.1, Color(0, 1, 1, 1))

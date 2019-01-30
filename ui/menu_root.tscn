@@ -25,7 +25,7 @@ margin_bottom = 125.5
 
 [node name="editor" type="Button" parent="VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 49.0
+margin_bottom = 47.0
 custom_fonts/font = SubResource( 1 )
 text = "Character Edit"
 __meta__ = {
@@ -33,9 +33,9 @@ __meta__ = {
 }
 
 [node name="start" type="Button" parent="VBoxContainer"]
-margin_top = 53.0
+margin_top = 51.0
 margin_right = 1024.0
-margin_bottom = 102.0
+margin_bottom = 98.0
 custom_fonts/font = SubResource( 1 )
 text = "Start"
 __meta__ = {
@@ -43,9 +43,9 @@ __meta__ = {
 }
 
 [node name="load" type="Button" parent="VBoxContainer"]
-margin_top = 106.0
+margin_top = 102.0
 margin_right = 1024.0
-margin_bottom = 155.0
+margin_bottom = 149.0
 custom_fonts/font = SubResource( 1 )
 text = "Load"
 __meta__ = {
@@ -53,9 +53,9 @@ __meta__ = {
 }
 
 [node name="options" type="Button" parent="VBoxContainer"]
-margin_top = 159.0
+margin_top = 153.0
 margin_right = 1024.0
-margin_bottom = 208.0
+margin_bottom = 200.0
 custom_fonts/font = SubResource( 1 )
 text = "Options"
 __meta__ = {
@@ -63,9 +63,9 @@ __meta__ = {
 }
 
 [node name="exit" type="Button" parent="VBoxContainer"]
-margin_top = 212.0
+margin_top = 204.0
 margin_right = 1024.0
-margin_bottom = 261.0
+margin_bottom = 251.0
 custom_fonts/font = SubResource( 1 )
 text = "Exit"
 __meta__ = {

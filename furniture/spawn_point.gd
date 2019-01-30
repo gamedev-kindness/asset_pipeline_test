@@ -21,6 +21,7 @@ func _process(delta):
 		delay -=delta
 		return
 	if spawn_enabled:
+		print("spawn...")
 		var root = get_node("/root")
 		var female_count = 0
 		var male_count = 0

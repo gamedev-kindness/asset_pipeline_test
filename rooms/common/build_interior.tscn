@@ -1,0 +1,29 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://interior/build_interior.gd" type="Script" id=1]
+[ext_resource path="res://interior/test_wall.tres" type="CubeMesh" id=2]
+[ext_resource path="res://rooms/room_kit/test_wall1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://rooms/room_kit/wall_4_1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://rooms/room_kit/test_floor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://rooms/room_kit/test_angle.tscn" type="PackedScene" id=6]
+[ext_resource path="res://rooms/room_kit/door_2_2.tscn" type="PackedScene" id=7]
+[ext_resource path="res://rooms/room_kit/toilet.tscn" type="PackedScene" id=8]
+[ext_resource path="res://rooms/room_kit/shower.tscn" type="PackedScene" id=9]
+[ext_resource path="res://furniture/bed.tscn" type="PackedScene" id=10]
+[ext_resource path="res://interior/random_split.gd" type="Script" id=11]
+
+[node name="build_interior" type="Spatial"]
+script = ExtResource( 1 )
+outside_wall_mesh = ExtResource( 2 )
+internal_wall1 = ExtResource( 3 )
+internal_wall4 = ExtResource( 4 )
+internal_floor = ExtResource( 5 )
+internal_angle = ExtResource( 6 )
+internal_door = ExtResource( 7 )
+toilet = ExtResource( 8 )
+shower = ExtResource( 9 )
+bed = ExtResource( 10 )
+
+[node name="random_split" type="Node" parent="."]
+script = ExtResource( 11 )
+

@@ -1,17 +1,17 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
-[ext_resource path="res://rooms/common/modular_room_test.gd" type="Script" id=2]
-[ext_resource path="res://ui/opportunities.tscn" type="PackedScene" id=3]
-[ext_resource path="res://fonts/DroidSansFallback.ttf" type="DynamicFontData" id=4]
-[ext_resource path="res://ui/inventory.tscn" type="PackedScene" id=5]
-[ext_resource path="res://ui/console.tscn" type="PackedScene" id=6]
-[ext_resource path="res://ui/stats.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/opportunities.tscn" type="PackedScene" id=2]
+[ext_resource path="res://fonts/DroidSansFallback.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://ui/inventory.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/console.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ui/stats.tscn" type="PackedScene" id=6]
+[ext_resource path="res://rooms/common/build_interior.tscn" type="PackedScene" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 
 size = 32
-font_data = ExtResource( 4 )
+font_data = ExtResource( 3 )
 
 [node name="root" type="Spatial"]
 script = ExtResource( 1 )
@@ -22,10 +22,7 @@ transform = Transform( 1, 0, 0, 0, 0.108412, 0.994106, 0, -0.994106, 0.108412, 0
 [node name="SpotLight" type="SpotLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.616747, 0.787161, 0, -0.787161, 0.616747, 0, 2.87061, 0.55455 )
 
-[node name="modular_room" type="Spatial" parent="."]
-script = ExtResource( 2 )
-
-[node name="opportunities" parent="." instance=ExtResource( 3 )]
+[node name="opportunities" parent="." instance=ExtResource( 2 )]
 visible = false
 
 [node name="wtf_waiting" type="Panel" parent="."]
@@ -104,13 +101,15 @@ position = Vector2( 116.938, 12.642 )
 color = Color( 0.290196, 0.231373, 0.231373, 1 )
 polygon = PoolVector2Array( 35.2468, 24.9259, 39.79, 19.1975, 43.5432, 24.9259 )
 
-[node name="inventory" parent="." instance=ExtResource( 5 )]
+[node name="inventory" parent="." instance=ExtResource( 4 )]
 visible = false
 
-[node name="console" parent="." instance=ExtResource( 6 )]
+[node name="console" parent="." instance=ExtResource( 5 )]
 visible = false
 margin_bottom = 300.0
 
-[node name="stats" parent="." instance=ExtResource( 7 )]
+[node name="stats" parent="." instance=ExtResource( 6 )]
 visible = false
+
+[node name="modular_room" parent="." instance=ExtResource( 7 )]
 

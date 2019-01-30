@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://rooms/room_kit/test_wall1_material.tres" type="Material" id=1]
+[ext_resource path="res://rooms/room_kit/test_floor_material.tres" type="Material" id=2]
+
+[sub_resource type="QuadMesh" id=2]
+
+material = ExtResource( 1 )
+size = Vector2( 1, 3 )
+
+[sub_resource type="BoxShape" id=4]
+
+extents = Vector3( 0.5, 1.5, 0.1 )
+
+[sub_resource type="CubeMesh" id=3]
+
+material = ExtResource( 2 )
+size = Vector3( 1, 0.2, 0.4 )
+
+[sub_resource type="ConvexPolygonShape" id=5]
+
+points = PoolVector3Array( -0.5, 0.1, 0.2, 0.5, 0.1, -0.2, 0.5, 0.1, 0.2, -0.5, 0.1, -0.2, -0.5, -0.1, 0.2, 0.5, -0.1, -0.2, 0.5, -0.1, 0.2, -0.5, -0.1, -0.2, 0.5, 0.1, 0.2, -0.5, 0.1, -0.2, 0.5, 0.1, -0.2, -0.5, 0.1, 0.2, 0.5, -0.1, 0.2, -0.5, -0.1, -0.2, 0.5, -0.1, -0.2, -0.5, -0.1, 0.2, 0.5, 0.1, 0.2, -0.5, -0.1, 0.2, -0.5, 0.1, 0.2, 0.5, -0.1, 0.2, 0.5, 0.1, -0.2, -0.5, -0.1, -0.2, -0.5, 0.1, -0.2, 0.5, -0.1, -0.2 )
+
+[node name="test_wall1" type="Spatial"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.3, -0.1 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance/StaticBody"]
+shape = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -0.3 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="MeshInstance2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="MeshInstance2/StaticBody"]
+shape = SubResource( 5 )
+
