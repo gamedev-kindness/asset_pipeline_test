@@ -15,6 +15,41 @@ var doors = [Vector2(-10, 0)]
 
 var wall_width = 2.0
 
+var rnd
+
+func build_navigation():
+	var id = 0
+	var start_ids = []
+	var end_ids = []
+	print("building navigation")
+	for p in get_tree().get_nodes_in_group("nav"):
+		var curve = p.curve
+		start_ids.push_back(id)
+		for pt in range(curve.get_point_count()):
+			awareness.astar.add_point(id, p.global_transform.xform(curve.get_point_position(pt)))
+			if pt > 0:
+				awareness.astar.connect_points(id - 1, id)
+			id += 1
+		end_ids.push_back(id - 1)
+	for sid in start_ids:
+		var p1 = awareness.astar.get_point_position(sid)
+		for pt  in range(id):
+			if sid == pt:
+				continue
+			var p2 = awareness.astar.get_point_position(pt)
+			var d = p1.distance_squared_to(p2)
+			if d < 2.0:
+				awareness.astar.connect_points(sid, pt)
+	for eid in end_ids:
+		var p1 = awareness.astar.get_point_position(eid)
+		for pt  in range(id):
+			if eid == pt:
+				continue
+			var p2 = awareness.astar.get_point_position(pt)
+			var d = p1.distance_squared_to(p2)
+			if d < 2.0:
+				awareness.astar.connect_points(eid, pt)
+	print("building navigation done ", awareness.astar.get_available_point_id())
 
 func build_outline():
 	for m in range(outline.size()):
@@ -81,14 +116,14 @@ func build_rooms():
 					add_child(wall_model)
 					wall_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
 					wall_model.rotation.y = angle
-					if randf() > 0.98:
+					if rnd.randf() > 0.98:
 						var toilet_model = toilet.instance()
 						add_child(toilet_model)
 						var offset = Vector3(0.0, 0, -0.1)
 						var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
 						toilet_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h) + tf
 						toilet_model.rotation.y = PI + angle
-					elif randf() > 0.995:
+					elif rnd.randf() > 0.995:
 						var shower_model = shower.instance()
 						add_child(shower_model)
 						var offset = Vector3(0.0, 0, -0.1)
@@ -151,10 +186,14 @@ func plan_complete():
 	print("complete: ", $random_split.rects.size(), " ", $random_split.door_data.size())
 	build_outline()
 	build_rooms()
+	build_navigation()
 	for k in get_tree().get_nodes_in_group("beds"):
 		k.emit_signal("spawn")
 
 func _ready():
+	rnd = RandomNumberGenerator.new()
+	rnd.seed = OS.get_unix_time()
+	$random_split.rnd = rnd
 	$random_split.outline = outline
 	$random_split.doors = doors
 	$random_split.connect("complete", self, "plan_complete")

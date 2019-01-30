@@ -9,6 +9,7 @@ var min_area = 20.0
 var max_area = 200.0
 
 var tree = {}
+var rnd
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -49,8 +50,8 @@ func process_queue():
 
 	var r1
 	var r2
-	if data.get_area() > max_area || ((data.get_area() > min_area * 2.0) && randf() > 0.65):
-		if randf() > 0.5:
+	if data.get_area() > max_area || ((data.get_area() > min_area * 2.0) && rnd.randf() > 0.65):
+		if rnd.randf() > 0.5:
 			r1 = Rect2(data.position, Vector2(data.size.x, data.size.y / 2.0))
 			r2 = Rect2(data.position + Vector2(0, data.size.y / 2.0), Vector2(data.size.x, data.size.y / 2.0))
 		else:
