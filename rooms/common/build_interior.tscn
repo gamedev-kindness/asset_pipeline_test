@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://interior/build_interior.gd" type="Script" id=1]
+[ext_resource path="res://rooms/common/build_interior.gd" type="Script" id=1]
 [ext_resource path="res://interior/test_wall.tres" type="CubeMesh" id=2]
 [ext_resource path="res://rooms/room_kit/test_wall1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://rooms/room_kit/wall_4_1.tscn" type="PackedScene" id=4]
@@ -10,7 +10,7 @@
 [ext_resource path="res://rooms/room_kit/toilet.tscn" type="PackedScene" id=8]
 [ext_resource path="res://rooms/room_kit/shower.tscn" type="PackedScene" id=9]
 [ext_resource path="res://furniture/bed.tscn" type="PackedScene" id=10]
-[ext_resource path="res://interior/random_split.gd" type="Script" id=11]
+[ext_resource path="res://rooms/common/random_split.gd" type="Script" id=11]
 
 [node name="build_interior" type="Spatial"]
 script = ExtResource( 1 )
