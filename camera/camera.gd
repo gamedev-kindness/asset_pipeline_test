@@ -34,7 +34,7 @@ func _process(delta):
 	if mode_cooldown >= delta:
 		mode_cooldown -= delta
 	else:
-		mode_cooldown - 0.0
+		mode_cooldown = 0.0
 	# Camera look
 	var mtf = $base/cam_control/Camera.global_transform
 	mtf = mtf.looking_at(target.tps_target.global_transform.origin,Vector3(0, 1, 0))

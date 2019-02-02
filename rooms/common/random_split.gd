@@ -5,8 +5,8 @@ var outline = []
 var rects = []
 var queue = []
 var min_size = 4.0
-var min_area = 6.0
-var max_area = 400.0
+var min_area = 10.0
+var max_area = 160.0
 
 var tree = {}
 var rnd
@@ -19,6 +19,7 @@ var doors = []
 var corridoors = []
 var door_positions = []
 var door_data = []
+var split_probability = 0.3
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -59,8 +60,8 @@ func process_queue():
 
 	var r1
 	var r2
-	if data.get_area() > max_area || ((data.get_area() > min_area * 2.0) && rnd.randf() > 0.65):
-		var split = 0.5 + (rnd.randf() - 0.5) * 0.1
+	if data.get_area() > max_area || ((data.get_area() > min_area * 1.5) && rnd.randf() < split_probability):
+		var split = 0.5 + (rnd.randf() - 0.5) * 0.4
 		if rnd.randf() > 0.5:
 			r1 = Rect2(data.position, Vector2(data.size.x, data.size.y * split))
 			r2 = Rect2(data.position + Vector2(0, data.size.y * split), Vector2(data.size.x, data.size.y * split))
@@ -89,6 +90,7 @@ func process_queue():
 			tree[r1] = {"rect": r1, "children": [], "parent": data}
 			tree[r2] = {"rect": r2, "children": [], "parent": data}
 		else:
+			print("can't split ", data)
 			queue.push_back(data)
 	else:
 		rects.push_back(data)
@@ -262,7 +264,6 @@ func path_needed(r1, r2):
 	var id1 = astar.get_closest_point(sp1)
 	var id2 = astar.get_closest_point(sp2)
 	var path = astar.get_id_path(id1, id2)
-	print("path: ", path)
 	return path.size() == 0
 func path_add(r1, r2):
 	var sp1 = Vector3(r1.position.x + r1.size.x / 2.0, 0.0, r1.position.y + r1.size.y / 2.0)
@@ -383,6 +384,14 @@ func adjacent(r1, r2):
 func _process(delta):
 	match(state):
 		0:
+			print("init")
+			border_rects.clear()
+			rooms.clear()
+			grow_rects.clear()
+			doors.clear()
+			corridoors.clear()
+			door_positions.clear()
+			door_data.clear()
 			var first_rect = Rect2()
 			for k in outline:
 				first_rect = first_rect.expand(k)
@@ -391,9 +400,11 @@ func _process(delta):
 		1:
 			if queue.size() > 0:
 				process_queue()
+				print("queue size: ", queue.size())
 			else:
 				state = 2
 		2:
+			print("discard rects")
 			discard_rects()
 			state = 3
 		3:
@@ -405,25 +416,37 @@ func _process(delta):
 			else:
 				state = 5
 		5:
-			build_door_astar()
-			build_doors()
-			state = 6
+			var good = false
+			for r in rects:
+				if r.get_area() > max_area * 0.5:
+					good = true
+					break
+			if !good:
+				print("discarded max")
+				split_probability *= 0.8
+				max_area *= 1.02
+				min_area *= 0.98
+				state = 0
+			good = false
+			for r in rects:
+				if r.get_area() < min_area * 1.5:
+					good = true
+					break
+			if !good:
+				print("discarded min")
+				split_probability *= 1.5
+				max_area *= 0.98
+				min_area *= 1.02
+				state = 0
+			if good:
+				print("building astar data")
+				build_door_astar()
+				print("building doors")
+				build_doors()
+				state = 6
 		6:
-			var astar = AStar.new()
-			var id = 0
-			for r1 in rects:
-				var p1 = r1.position + r1.size / 2.0
-				astar.add_point(id, Vector3(p1.x, 0.0, p1.y))
-				id = id + 1
-			for h in range(id):
-				for i in range(id):
-					if h == i:
-						continue
-					astar.connect_points(h, i, true)
 			state = 7
 		7:
-			for t in rooms:
-				if t.doors.size() > 0:
-					print(t)
+			print("completed room set")
 			emit_signal("complete")
 			state = 8

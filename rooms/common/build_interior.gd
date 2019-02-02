@@ -12,12 +12,14 @@ export var bed: PackedScene
 export var door_to_door_material: Material
 export var kitchen_cabinet: PackedScene
 
-var outline = [Vector2(-25, -25), Vector2(0, -26), Vector2(25, -25), Vector2(25, 25), Vector2(-25, 25)]
+var outline = [Vector2(-25, -15), Vector2(0, -17), Vector2(25, -15), Vector2(25, 15), Vector2(-25, 15)]
 var doors = [Vector2(-10, 0)]
 
 var wall_width = 2.0
 
 var rnd
+var rooms = {}
+var door_pairing = {}
 
 var room_classes = {
 	"bathroom": {
@@ -32,7 +34,7 @@ var room_classes = {
 		"name": "bedroom",
 		"private": true,
 		"min_area": 8,
-		"max_area": 60,
+		"max_area": 80,
 		"wall_item_probability": 0.0,
 		"wall_items": [],
 		"main_area_items": ["bed"]
@@ -117,6 +119,20 @@ func classify_room(room):
 	var ret =  matching_rooms[rnd.randi() % matching_rooms.size()]
 	print(ret, " ", public, " ", room.exits)
 	return ret
+func check_room_classes():
+	var mandatory_rooms = ["bedroom", "bathroom", "kitchen", "classroom"]
+	var m_classes = []
+	for k in mandatory_rooms:
+		m_classes.push_back(room_classes[k])
+	for c in m_classes:
+		var ok = false
+		for k in rooms.keys():
+			if rooms[k].class == c:
+				ok = true
+				break
+		if !ok:
+			return false
+	return true	
 
 func build_navigation():
 	var id = 0
@@ -169,7 +185,6 @@ func build_outline():
 			sp.translation = actual_pos
 			sp.rotation.y = -(p2 - p1).angle()
 			p += dir * wall_width
-var rooms = {}
 func get_rect_segments(r: Rect2) -> Array:
 		var width_x = r.size.x
 		var width_y = r.size.y
@@ -266,7 +281,6 @@ func build_room_data():
 				}
 				print("angle: ", angle, " seg_angle: ", room.walls[wall_id].seg_angle, "element: ", element, "wall_id: ", wall_id)
 		rooms[r] = room
-var door_pairing = {}
 func build_door_data():
 	for d in $random_split.door_data:
 		if !rooms.has(d.a):
@@ -303,8 +317,9 @@ func get_exit_positions(r, t):
 func classify_rooms():
 	for k in rooms.keys():
 		rooms[k].class = classify_room(rooms[k])
-
+var room_connections = []
 func build_room_connection_pairs():
+	print("door data size:", $random_split.door_data.size())
 	for d in $random_split.door_data:
 		if d.a == d.b:
 			continue
@@ -325,6 +340,14 @@ func build_room_connection_pairs():
 			var colmesh = mesh.create_trimesh_shape()
 			col.shape = colmesh
 			sb.add_child(col)
+			room_connections.push_back(mi)
+			room_connections.push_back(sb)
+
+func clear_connections():
+	for m in room_connections:
+		m.queue_free()
+	room_connections.clear()
+
 func add_exit(r: Rect2, t: Rect2) -> void:
 	var room = rooms[r]
 	var door_data = get_room_door(rooms[r], rooms[t])
@@ -356,11 +379,26 @@ func build_door_grid_data():
 			continue
 		add_exit(r, t)
 
+func build_room_floors():
+	print("rect count: ", $random_split.rects.size())
+	var floor_mesh = $geometry_gen.create_floor($random_split.rects, load("res://rooms/room_kit/test_floor_material.tres"))
+	var floor_mi = MeshInstance.new()
+	floor_mi.mesh = floor_mesh
+	add_child(floor_mi)
+	var sb = StaticBody.new()
+	add_child(sb)
+	var col = CollisionShape.new()
+	var colmesh = floor_mesh.create_trimesh_shape()
+	col.shape = colmesh
+	sb.add_child(col)
 func build_rooms():
+	var id = 0
 	for r in $random_split.rects:
+		print("room: ", id)
 		var room = rooms[r]
 		var width_x = room.x
 		var width_y = room.y
+		print("room: ", id, "size: ", width_x, " ", width_y)
 		
 		for h in range(width_y):
 			for i in range(width_x):
@@ -371,40 +409,38 @@ func build_rooms():
 				match(room.grid[h * width_x + i].element):
 					ELEMENT_ANGLE:
 						wall_angle = true
+						var angle_model = internal_angle.instance()
+						add_child(angle_model)
+						angle_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
+						angle_model.rotation.y = angle
 					ELEMENT_WALL:
 						wall = true
+						var wall_model = internal_wall1.instance()
+						add_child(wall_model)
+						wall_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
+						wall_model.rotation.y = angle
+						if room.class:
+							if rnd.randf() < room.class.wall_item_probability:
+								var item = room.class.wall_items[rnd.randi() % room.class.wall_items.size()]
+								var model = items[item].model.instance()
+								add_child(model)
+								var offset = Vector3(0.0, 0, -0.1)
+								var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
+								model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h) + tf
+								model.rotation.y = PI + angle
 					ELEMENT_DOOR:
 						door = true
-				if wall:
-					var wall_model = internal_wall1.instance()
-					add_child(wall_model)
-					wall_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
-					wall_model.rotation.y = angle
-					if room.class:
-						if rnd.randf() < room.class.wall_item_probability:
-							var item = room.class.wall_items[rnd.randi() % room.class.wall_items.size()]
-							var model = items[item].model.instance()
-							add_child(model)
-							var offset = Vector3(0.0, 0, -0.1)
-							var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
-							model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h) + tf
-							model.rotation.y = PI + angle
-				elif door:
-					var door_model = internal_door.instance()
-					add_child(door_model)
-					door_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
-					door_model.rotation.y = angle
-				elif wall_angle:
-					var angle_model = internal_angle.instance()
-					add_child(angle_model)
-					angle_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
-					angle_model.rotation.y = angle
-					print(angle)
-				else:
-					var floor_model = internal_floor.instance()
-					add_child(floor_model)
-					floor_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
-					floor_model.rotation.y = angle
+						var door_model = internal_door.instance()
+						add_child(door_model)
+						door_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
+						door_model.rotation.y = angle
+#					_:
+#						var floor_model = internal_floor.instance()
+#						add_child(floor_model)
+#						floor_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
+#						floor_model.rotation.y = angle
+#						print("p6")
+		print("room infill: ", id, "size: ", width_x, " ", width_y)
 		if room.class && room.class == room_classes.bedroom:
 			var dim_x = int(r.size.x / 2.0 / 1.8)
 			var dim_y = int(r.size.y / 2.0 / 1.8)
@@ -414,25 +450,36 @@ func build_rooms():
 					var bed_model = bed.instance()
 					add_child(bed_model)
 					bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
+		print("room complete: ", id, "size: ", width_x, " ", width_y)
+		id += 1
 
 # Called when the node enters the scene tree for the first time.
 func plan_complete():
 	state = 1
 	print("complete: ", $random_split.rects.size(), " ", $random_split.door_data.size())
 
-var state = 0
+var state = -1
 func _ready():
 	rnd = RandomNumberGenerator.new()
-	rnd.seed = OS.get_unix_time()
+	$random_split.connect("complete", self, "plan_complete")
 	$random_split.rnd = rnd
 	$random_split.outline = outline
 	$random_split.doors = doors
-	$random_split.connect("complete", self, "plan_complete")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	match(state):
+		0:
+			print("reset values")
+			rnd.seed = OS.get_unix_time()
+			$random_split.state = 0
+			rooms.clear()
+			door_pairing.clear()
+			clear_connections()
+			print("waiting for signal")
+			state = -1
+
 		1:
 			build_outline()
 			state = 2
@@ -440,22 +487,39 @@ func _process(delta):
 			build_room_data()
 			state = 3
 		3:
+			print("door data")
 			build_door_data()
 			state = 4
 		4:
 			state = 5
 		5:
+			print("door grid data")
 			build_door_grid_data()
+			print("room connections")
 			build_room_connection_pairs()
 			state = 6
 		6:
 			classify_rooms()
-			build_rooms()
-			state = 7
+			if !check_room_classes():
+				print("discarded classify")
+				state = 0
+			else:
+				state = 7
 		7:
-			build_navigation()
+			print("building room floors")
+			build_room_floors()
 			state = 8
 		8:
+			print("building rooms")
+			build_rooms()
+			state = 9
+		9:
+			if get_tree().get_nodes_in_group("beds").size() < 2:
+				print("discarded character count")
+				state = 0
+			build_navigation()
+			state = 10
+		10:
 			for k in get_tree().get_nodes_in_group("beds"):
 				k.emit_signal("spawn")
-			state = 9
+			state = 11
