@@ -29,8 +29,8 @@ func _process(delta):
 	var diff = new_rotation - old_rotation
 	rotation.y -= diff / ((1.0 + delta) * 1.1)
 	old_rotation = new_rotation
-	if Input.is_action_pressed("ui_up"):
-		rotation.y *= (1.0 - delta * 0.3)
+	if Input.is_action_pressed("up_control"):
+		rotation.y *= (1.0 - delta * 0.5)
 	else:
 		rotation.y *= (1.0 - delta * 0.1)
 
