@@ -10,8 +10,9 @@ export var toilet: PackedScene
 export var shower: PackedScene
 export var bed: PackedScene
 export var door_to_door_material: Material
+export var kitchen_cabinet: PackedScene
 
-var outline = [Vector2(-20, -25), Vector2(0, -26), Vector2(20, -25), Vector2(20, 25), Vector2(-20, 25)]
+var outline = [Vector2(-25, -25), Vector2(0, -26), Vector2(25, -25), Vector2(25, 25), Vector2(-25, 25)]
 var doors = [Vector2(-10, 0)]
 
 var wall_width = 2.0
@@ -40,9 +41,9 @@ var room_classes = {
 		"name": "kitchen",
 		"private": false,
 		"min_area": 6,
-		"max_area": 25,
-		"wall_item_probability": 0.0,
-		"wall_items": [],
+		"max_area": 35,
+		"wall_item_probability": 0.3,
+		"wall_items": ["kitchen_cabinet"],
 		"main_area_items": []
 		
 	},
@@ -78,23 +79,41 @@ onready var items = {
 	"shower": {
 		"area": 2.5,
 		"model": shower
+	},
+	"kitchen_cabinet": {
+		"area": 0.5,
+		"model": kitchen_cabinet
 	}
 }
 
 func classify_room(room):
 	var matching_rooms = []
+	var mandatory_rooms = ["bedroom", "bathroom", "kitchen", "classroom"]
 	var public = false
 	if room.exits.size() > 1:
 		public = true
 	for k in room_classes.keys():
 		if room.rect.get_area() >= room_classes[k].min_area && room.rect.get_area() <= room_classes[k].max_area:
-#			if public && (!room_classes[k].private):
-#				matching_rooms.push_back(room_classes[k])
-#			elif (!public) && room_classes[k].private:
-#				matching_rooms.push_back(room_classes[k])
+			if public && (!room_classes[k].private):
+				matching_rooms.push_back(room_classes[k])
+			elif (!public) && room_classes[k].private:
+				matching_rooms.push_back(room_classes[k])
 			matching_rooms.push_back(room_classes[k])
 	if matching_rooms.size() == 0:
 		return null
+	for m in mandatory_rooms:
+		var ok = false
+		for h in rooms.keys():
+			var r = rooms[h]
+			if !r.has("class") || r.class == null:
+				continue
+			if r.class == room_classes[m]:
+				ok = true
+				break
+		if !ok && room_classes[m] in matching_rooms:
+			return room_classes[m]
+				
+		
 	var ret =  matching_rooms[rnd.randi() % matching_rooms.size()]
 	print(ret, " ", public, " ", room.exits)
 	return ret
@@ -278,6 +297,8 @@ func get_exit_positions(r, t):
 		if k.other == r:
 			exit2 = k
 			break
+	if exit1 == null || exit2 == null:
+		return []
 	return [exit1, exit2]
 func classify_rooms():
 	for k in rooms.keys():
@@ -290,38 +311,26 @@ func build_room_connection_pairs():
 		var r = d.a
 		var t = d.b
 		var exits = get_exit_positions(r, t)
-		var p1 = r.position + Vector2(exits[0].door_x, exits[0].door_y)
-		var p2 = t.position + Vector2(exits[1].door_x, exits[1].door_y)
-		print("build pair: ", p1, " ", p2, p1.distance_to(p2))
-		var mesh = $geometry_gen.create_room_connection(p1, p2, 1.0, 2.0, null, null, null)
-		var mi = MeshInstance.new()
-		mi.mesh = mesh
-		add_child(mi)
-		var sb = StaticBody.new()
-		add_child(sb)
-		var col = CollisionShape.new()
-		var colmesh = mesh.create_trimesh_shape()
-		col.shape = colmesh
-		sb.add_child(col)
-#func build_room_connection_meshes():
-#	var used = []
-#	for k in door_pairing.keys():
-#		if k in used:
-#			continue
-#		var p1 = door_pairing[k][0].position
-#		var p2 = door_pairing[k][1].position
-#		var width = 1.0
-#		var height = 2.0
-#		var depth = (p2 - p1).length()
-#		var mesh = ArrayMesh.new()
-#		var mdt = MeshDataTool.new()
-#		for k in range(int(depth / 0.1)):
-#			var p1 = Vector3(
-#		used.push_back(p1, p2)
+		if exits.size() > 0:
+			var p1 = r.position + Vector2(exits[0].door_x, exits[0].door_y)
+			var p2 = t.position + Vector2(exits[1].door_x, exits[1].door_y)
+			print("build pair: ", p1, " ", p2, p1.distance_to(p2))
+			var mesh = $geometry_gen.create_room_connection(p1, p2, 1.0, 2.0, null, null, null)
+			var mi = MeshInstance.new()
+			mi.mesh = mesh
+			add_child(mi)
+			var sb = StaticBody.new()
+			add_child(sb)
+			var col = CollisionShape.new()
+			var colmesh = mesh.create_trimesh_shape()
+			col.shape = colmesh
+			sb.add_child(col)
 func add_exit(r: Rect2, t: Rect2) -> void:
 	var room = rooms[r]
 	var door_data = get_room_door(rooms[r], rooms[t])
 	if !door_data:
+		return
+	if room.x == 0 || room.y == 0:
 		return
 	var exit_data = {}
 	var p = door_data.position
@@ -343,35 +352,9 @@ func build_door_grid_data():
 #		var exit_data = {}
 		var r = d.a
 		var t = d.b
+		if r == null || t == null:
+			continue
 		add_exit(r, t)
-#		var p1 = r.position + r.size / 2.0
-#		var p2 = t.position + t.size / 2.0
-#		var room = rooms[r]
-#		var door_data = get_room_door(rooms[r], rooms[t])
-#		if !door_data:
-#			continue
-#		var p = door_data.position
-#		exit_data.wall_id = door_data.wall
-#		exit_data.position = p
-#		exit_data.rel_pos = p - r.position
-#		exit_data.other = t
-#		exit_data.current = r
-#		var door_x = int(clamp(exit_data.rel_pos.x, 0.0, room.x - 1))
-#		var door_y = int(clamp(exit_data.rel_pos.y, 0.0, room.y - 1))
-#		exit_data.door_x = door_x
-#		exit_data.door_y = door_y
-#		room.grid[door_y * room.x + door_x].element = ELEMENT_DOOR
-#		rooms[r].exits.push_back(exit_data)
-#	for room_key in rooms.keys():
-#		var room = rooms[room_key]
-#		for x in room.exits:
-#			var tx = clamp(x.rel_pos.x, 0.0, room.x - 1.0)
-#			var ty = clamp(x.rel_pos.y, 0.0, room.y - 1.0)
-#			var door_x = int(tx)
-#			var door_y = int(ty)
-#			x.door_x = int(tx)
-#			x.door_y = int(ty)
-#			room.grid[door_y * room.x + door_x].element = ELEMENT_DOOR
 
 func build_rooms():
 	for r in $random_split.rects:
@@ -406,20 +389,6 @@ func build_rooms():
 							var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
 							model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h) + tf
 							model.rotation.y = PI + angle
-#					if rnd.randf() > 0.98:
-#						var toilet_model = toilet.instance()
-#						add_child(toilet_model)
-#						var offset = Vector3(0.0, 0, -0.1)
-#						var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
-#						toilet_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h) + tf
-#						toilet_model.rotation.y = PI + angle
-#					elif rnd.randf() > 0.995:
-#						var shower_model = shower.instance()
-#						add_child(shower_model)
-#						var offset = Vector3(0.0, 0, -0.1)
-#						var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
-#						shower_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h) + tf
-#						shower_model.rotation.y = PI + angle
 				elif door:
 					var door_model = internal_door.instance()
 					add_child(door_model)
@@ -434,8 +403,6 @@ func build_rooms():
 				else:
 					var floor_model = internal_floor.instance()
 					add_child(floor_model)
-#					var offset = Vector3(-0.5, 0, -0.5)
-#					var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
 					floor_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
 					floor_model.rotation.y = angle
 		if room.class && room.class == room_classes.bedroom:

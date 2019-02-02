@@ -4,12 +4,21 @@ signal complete
 var outline = []
 var rects = []
 var queue = []
-var min_size = 9.0
-var min_area = 20.0
-var max_area = 200.0
+var min_size = 4.0
+var min_area = 6.0
+var max_area = 400.0
 
 var tree = {}
 var rnd
+
+var border_rects = []
+var rooms = []
+var grow_rects = []
+
+var doors = []
+var corridoors = []
+var door_positions = []
+var door_data = []
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -51,14 +60,29 @@ func process_queue():
 	var r1
 	var r2
 	if data.get_area() > max_area || ((data.get_area() > min_area * 2.0) && rnd.randf() > 0.65):
+		var split = 0.5 + (rnd.randf() - 0.5) * 0.1
 		if rnd.randf() > 0.5:
-			r1 = Rect2(data.position, Vector2(data.size.x, data.size.y / 2.0))
-			r2 = Rect2(data.position + Vector2(0, data.size.y / 2.0), Vector2(data.size.x, data.size.y / 2.0))
+			r1 = Rect2(data.position, Vector2(data.size.x, data.size.y * split))
+			r2 = Rect2(data.position + Vector2(0, data.size.y * split), Vector2(data.size.x, data.size.y * split))
 		else:
-			r1 = Rect2(data.position, Vector2(data.size.x / 2.0, data.size.y))
-			r2 = Rect2(data.position + Vector2(data.size.x / 2.0, 0), Vector2(data.size.x / 2.0, data.size.y))
+			r1 = Rect2(data.position, Vector2(data.size.x * split, data.size.y))
+			r2 = Rect2(data.position + Vector2(data.size.x * split, 0), Vector2(data.size.x * split, data.size.y))
 		var d1 = r1.size.x / r1.size.y
-		if d1 > 1.0 / 3.0 && d1 < 3.0:
+		var d2 = r2.size.x / r2.size.y
+		var passed = true
+		if d1 < 1.0 / 3.0 || d1 > 3.0:
+			passed = false
+		if d2 < 1.0 / 3.0 || d2 > 3.0:
+			passed = false
+		if r1.get_area() < min_area:
+			passed = false
+		if r2.get_area() < min_area:
+			passed = false
+		if r1.size.x < min_size || r1.size.y < min_size:
+			passed = false
+		if r2.size.x < min_size || r2.size.y < min_size:
+			passed = false
+		if passed:
 			queue.push_back(r1)
 			queue.push_back(r2)
 			tree[data].children = [r1, r2]
@@ -68,8 +92,6 @@ func process_queue():
 			queue.push_back(data)
 	else:
 		rects.push_back(data)
-
-var border_rects = []
 
 func discard_rects():
 	var discard_rects = []
@@ -95,7 +117,6 @@ func discard_rects():
 		rects.erase(discard_rects[0])
 		discard_rects.pop_front()
 
-var grow_rects = []
 func init_grown_rects():
 	var max_area = 0
 	var grow_data = []
@@ -131,8 +152,9 @@ func shrink_rects():
 		var point3 = data.rect.position + Vector2(0, data.rect.size.y)
 		var point4 = data.rect.position + data.rect.size
 		var change = 0.04
-		if data.rect.get_area() < min_area * 0.4:
-			return
+		if data.rect.get_area() < min_area:
+			rects.push_back(data.rect)
+			update_rect(data.orig, data.rect)
 		if !point_in_polygon(point1, outline):
 			if !point_in_polygon(point2, outline) && !point_in_polygon(point3, outline):
 				data.rect.position += Vector2(change, change)
@@ -224,120 +246,71 @@ func shrink_rects():
 		else:
 			rects.push_back(data.rect)
 			update_rect(data.orig, data.rect)
-var doors = []
-#var corridoor_queue = []
-#func build_corridoor(p1, p2):
-#	var mp1 = Vector2(p1.x, p2.y)
-#	var mp2 = Vector2(p2.x, p1.y)
-#	if point_in_polygon(mp1, outline):
-#		corridoor_queue.push_back([p1, mp1, p2])
-#	if point_in_polygon(mp2, outline):
-#		corridoor_queue.push_back([p1, mp2, p2])
-
-#func build_corridoors():
-#	for k in doors:
-#		var dst = -1.0
-#		var entry
-#		for r in rects:
-#			var ndst = k.transform.origin.distance_to(r.position + r.size / 2.0)
-#			if dst < 0 || ndst < dst:
-#				dst = ndst
-#				entry = r
-#		dst = -1
-#		var corridoor
-#		for mr in rects:
-#			if mr == entry:
-#				continue
-#			var ndst = (mr.position + mr.size / 2.0).distance_to(entry.position + entry.size / 2.0)
-#			if ndst > dst:
-#				dst = ndst
-#				corridoor =  [mr.position + mr.size / 2.0, entry.position + entry.size / 2.0]
-#			build_corridoor(corridoor[0], corridoor[1])
-
-var corridoors = []
-#func process_corridoors():
-#	while corridoor_queue.size() > 0:
-#		var data = corridoor_queue[0]
-#		corridoor_queue.pop_front()
-#		var discard = false
-#		for seg in range(outline.size()):
-#			var s1 = outline[seg]
-#			var s2 = outline[(seg + 1) % outline.size()]
-#			if Geometry.segment_intersects_segment_2d(data[0], data[1], s1, s2):
-#				discard = true
-#				break
-#			elif Geometry.segment_intersects_segment_2d(data[1], data[2], s1, s2):
-#				discard = true
-#				break
-#		if !discard:
-#			corridoors.push_back(data)
-
-var door_positions = []
-var door_data = []
 func is_leaf(r):
 	return tree[r].children.size() == 0
-func create_corridoor(pt1, pt2):
-	return
-	var p1 = pt1.position + pt1.size / 2.0
-	var p2 = pt2.position + pt2.size / 2.0
-	var vertical = false
-	var horizontal = false
-	var extra1 = false
-	var extra2 = false
-	if abs(p1.x - p2.x) < 0.1:
-		vertical = true
-	elif abs(p1.y - p2.y) < 0.1:
-		horizontal = true
+var astar: AStar
+func build_door_astar():
+	astar = AStar.new()
+	var id = 0
+	for pt1 in tree.keys():
+		astar.add_point(id, Vector3(pt1.position.x + pt1.size.x / 2.0, 0.0, pt1.position.y + pt1.size.y / 2.0))
+		id += 1
+
+func path_needed(r1, r2):
+	var sp1 = Vector3(r1.position.x + r1.size.x / 2.0, 0.0, r1.position.y + r1.size.y / 2.0)
+	var sp2 = Vector3(r2.position.x + r2.size.x / 2.0, 0.0, r2.position.y + r2.size.y / 2.0)
+	var id1 = astar.get_closest_point(sp1)
+	var id2 = astar.get_closest_point(sp2)
+	var path = astar.get_id_path(id1, id2)
+	print("path: ", path)
+	return path.size() == 0
+func path_add(r1, r2):
+	var sp1 = Vector3(r1.position.x + r1.size.x / 2.0, 0.0, r1.position.y + r1.size.y / 2.0)
+	var sp2 = Vector3(r2.position.x + r2.size.x / 2.0, 0.0, r2.position.y + r2.size.y / 2.0)
+	var id1 = astar.get_closest_point(sp1)
+	var id2 = astar.get_closest_point(sp2)
+	astar.connect_points(id1, id2)
+func good_path(r1, r2):
+	var min_x1 = r1.position.x
+	var max_x1 = r1.position.x + r1.size.x
+	var min_x2 = r2.position.x
+	var max_x2 = r2.position.x + r2.size.x
+	var min_y1 = r1.position.y
+	var max_y1 = r1.position.y + r1.size.y
+	var min_y2 = r2.position.y
+	var max_y2 = r2.position.y + r2.size.y
+	var min_x = max(min_x1, min_x2)
+	var max_x = min(max_x1, max_x2)
+	var min_y = max(min_y1, min_y2)
+	var max_y = min(max_y1, max_y2)
+	if min_x > max_x && min_y > max_y:
+		return false
+	if max_x - min_x < 3 && max_y - min_y < 3:
+		return false
+	return true
+		
+func get_path_count(r):
+	var data = {}
+	for d in door_data:
+		if d.a == null || d.b == null:
+			continue
+		if d.a == d.b:
+			continue
+		if data.has(d.a):
+			if !d.b in data[d.a]:
+				data[d.a].push_back(d.b)
+		else:
+			data[d.a] = [d.b]
+		if data.has(d.b):
+			if !d.a in data[d.b]:
+				data[d.b].push_back(d.a)
+		else:
+			data[d.b] = [d.a]
+	if data.has(r):
+		return data[r].size()
 	else:
-		extra1 = true
-	var rect = Rect2()
-	var checked = []
-	if vertical:
-		rect = rect.expand(p1 - Vector2(1.0, 0.0))
-		rect = rect.expand(p2 + Vector2(1.0, 0.0))
-#		rects.push_back(rect)
-		tree[rect] = {"rect": rect, "children": [], "parent":pt1}
-		checked.push_back(rect)
-	elif horizontal:
-		rect = rect.expand(p1 - Vector2(0.0, 1.0))
-		rect = rect.expand(p2 + Vector2(0.0, 1.0))
-#		rects.push_back(rect)
-		tree[rect] = {"rect": rect, "children": [], "parent":pt1}
-		checked.push_back(rect)
-	else:
-		var p3 = Vector2(p1.x, p2.y)
-		var rect1 = Rect2()
-		var rect2 = Rect2()
-		rect1 = rect1.expand(p1 - Vector2(1.0, 0.0))
-		rect1 = rect1.expand(p3 + Vector2(1.0, -1.0))
-		rect2 = rect2.expand(p2 - Vector2(0.0, 1.0))
-		rect2 = rect2.expand(p3 + Vector2(1.0, 1.0))
-#		rects.push_back(rect1)
-#		rects.push_back(rect2)
-		tree[rect1] = {"rect": rect, "children": [], "parent":pt1}
-		tree[rect2] = {"rect": rect, "children": [], "parent":pt2}
-		checked.push_back(rect1)
-		checked.push_back(rect2)
-		var fixup_list = []
-		for h in checked:
-			for g in rects:
-				if h == g:
-					continue
-				if h.encloses(g) || h.intersects(g):
-					fixup_list.push_back(g)
-				elif adjacent(h, g):
-					var np1 = h.position + h.size / 2.0
-					var np2 = g.position + g.size / 2.0
-					var npos = p1.linear_interpolate(p2, 0.5)
-					var d = {
-						"a": h,
-						"b": g,
-						"pos": npos
-					}
-					door_positions.push_back(npos)
-					door_data.push_back(d)
-#		for h in fixup_list:
-#			rects.erase(h)
+		return 0
+	
 func build_doors():
 	for pt1 in tree.keys():
 		for pt2 in tree.keys():
@@ -347,14 +320,16 @@ func build_doors():
 				var p1 = pt1.position + pt1.size / 2.0
 				var p2 = pt2.position + pt2.size / 2.0
 				var pos = p1.linear_interpolate(p2, 0.5)
-				if is_leaf(pt1) && is_leaf(pt2) && pt1 in rects && pt2 in rects:
-					var d = {
-						"a": pt1,
-						"b": pt2,
-						"pos": pos
-					}
-					door_positions.push_back(pos)
-					door_data.push_back(d)
+				if get_path_count(pt1) == 0 || get_path_count(pt2) == 0 || path_needed(pt1, pt2):
+					if is_leaf(pt1) && is_leaf(pt2) && pt1 in rects && pt2 in rects && good_path(pt1, pt2):
+						var d = {
+							"a": pt1,
+							"b": pt2,
+							"pos": pos
+						}
+						door_positions.push_back(pos)
+						door_data.push_back(d)
+						path_add(pt1, pt2)
 	for pt1 in tree.keys():
 		for pt2 in tree.keys():
 			if pt1 == pt2:
@@ -363,57 +338,16 @@ func build_doors():
 				var p1 = pt1.position + pt1.size / 2.0
 				var p2 = pt2.position + pt2.size / 2.0
 				var pos = p1.linear_interpolate(p2, 0.5)
-				if is_leaf(pt1) && is_leaf(pt2) && pt1 in rects && pt2 in rects && adjacent(pt1, pt2):
-					var d = {
-						"a": pt1,
-						"b": pt2,
-						"pos": pos
-					}
-					door_positions.push_back(pos)
-					door_data.push_back(d)
-#				else:
-#					var need_corridoor = true
-#					for r1 in tree[pt1].children:
-#						for r2 in tree[pt2].children:
-#							if adjacent(r1, r2) && is_leaf(r1) && is_leaf(r2) && r1 in rects && r2 in rects:
-#								var sp1 = r1.position + r1.size / 2.0
-#								var sp2 = r2.position + r2.size / 2.0
-#								var spos = sp1.linear_interpolate(sp2, 0.5)
-#								var d = {
-#									"a": r1,
-#									"b": r2,
-#									"pos": pos
-#								}
-#								door_positions.push_back(pos)
-#								door_data.push_back(d)
-#								need_corridoor = false
-#					if need_corridoor:
-#						corridoors.push_back([p1, Vector2(p1.x, p2.y), p2])
-#						create_corridoor(pt1, pt2)
-					
-#		if tree[pt].parent == null:
-#			continue
-#		var parent = tree[tree[pt].parent]
-#		for h in parent.children:
-#			if h == pt:
-#				continue
-#			var p1 = pt.position + pt.size / 2.0
-#			var p3 = tree[h].rect.position + tree[h].rect.size / 2.0
-#			if !point_in_polygon(p1, outline):
-#				continue
-#			if !point_in_polygon(p3, outline):
-#				continue
-#			var p2 = Vector2(p1.x, p3.y)
-#			if pt in rects && h in rects:
-#				door_positions.push_back(p3.linear_interpolate(p1, 0.5))
-#				var d = {
-#					"a": pt,
-#					"b": h,
-#					"pos": p3.linear_interpolate(p1, 0.5)
-#				}
-#				door_data.push_back(d)
-#			else:
-#				corridoors.push_back([p1, p2, p3])
+				if get_path_count(pt1) == 0 || get_path_count(pt2) == 0 || path_needed(pt1, pt2):
+					if is_leaf(pt1) && is_leaf(pt2) && pt1 in rects && pt2 in rects && adjacent(pt1, pt2) && good_path(pt1, pt2):
+						var d = {
+							"a": pt1,
+							"b": pt2,
+							"pos": pos
+						}
+						door_positions.push_back(pos)
+						door_data.push_back(d)
+						path_add(pt1, pt2)
 
 func update_rect(orig, new):
 	var parent = tree[orig].parent
@@ -430,20 +364,22 @@ func update_rect(orig, new):
 		tree[k].parent = new
 
 func adjacent(r1, r2):
-	var margin = 2.5
+	var margin = 1.5
+	var margin_x = min(r1.size.x / 2.0, margin)
+	var margin_y = min(r1.size.y / 2.0, margin)
 	# right
-	var nrect1 = Rect2(r1.position, r1.size + Vector2(margin, 0.0))
+	var nrect1 = Rect2(r1.position + Vector2(0.0, margin_y), r1.size + Vector2(margin, -margin_y))
 	# left
-	var nrect2 = Rect2(r1.position - Vector2(margin, 0.0), r1.size + Vector2(margin, 0.0))
+	var nrect2 = Rect2(r1.position - Vector2(margin_x, margin_y), r1.size + Vector2(margin, -margin_y))
 	# up
-	var nrect3 = Rect2(r1.position - Vector2(0.0, margin), r1.size + Vector2(0.0, margin))
+	var nrect3 = Rect2(r1.position - Vector2(margin_x, margin), r1.size + Vector2(-margin_x, margin))
 	# down
-	var nrect4 = Rect2(r1.position - Vector2(0.0, margin), r1.size + Vector2(0.0, margin))
+	var nrect4 = Rect2(r1.position - Vector2(margin_x, margin), r1.size + Vector2(-margin_x, margin))
+	var ret = false
 	for h in [nrect1, nrect2, nrect3, nrect4]:
 		if h.encloses(r2) || h.intersects(r2) || r2.encloses(h) || r2.intersects(h):
 			return true
-	return false
-var rooms = []
+	return ret
 func _process(delta):
 	match(state):
 		0:
@@ -469,11 +405,10 @@ func _process(delta):
 			else:
 				state = 5
 		5:
+			build_door_astar()
 			build_doors()
 			state = 6
 		6:
-#			build_corridoors()
-#			process_corridoors()
 			var astar = AStar.new()
 			var id = 0
 			for r1 in rects:

@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="CubeMesh" id=1]
+
+size = Vector3( 0.6, 0.75, 0.45 )
+
+[sub_resource type="SpatialMaterial" id=4]
+
+albedo_color = Color( 0.819608, 0.745098, 0.643137, 1 )
+metallic = 0.1
+roughness = 0.9
+
+[sub_resource type="CubeMesh" id=2]
+
+size = Vector3( 0.6, 0.1, 0.6 )
+
+[sub_resource type="SpatialMaterial" id=3]
+
+albedo_color = Color( 0.333333, 0.333333, 0.333333, 1 )
+metallic = 0.3
+roughness = 0.5
+
+[node name="kitchen_cabinet" type="Spatial"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.375, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+

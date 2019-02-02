@@ -16,7 +16,25 @@ func _ready():
 var mode = MODE_TPS
 var active = false
 var old_rotation = 0.0
+var rotx = 0.0
+var roty = 0.0
+var mouse_look = true
+var mode_cooldown = 0.0
+func _unhandled_input(event):
+	if event is InputEventMouseMotion && mouse_look:
+		rotx += event.relative.x * 0.5
+		roty -= event.relative.y * 0.5
+		roty = clamp(roty, -3.0, 3.0)
+	elif event is InputEventMouseButton:
+		if event.button_index == BUTTON_RIGHT && event.pressed:
+			if mode_cooldown < 0.01:
+				mouse_look = !mouse_look
+				mode_cooldown = 0.2
 func _process(delta):
+	if mode_cooldown >= delta:
+		mode_cooldown -= delta
+	else:
+		mode_cooldown - 0.0
 	# Camera look
 	var mtf = $base/cam_control/Camera.global_transform
 	mtf = mtf.looking_at(target.tps_target.global_transform.origin,Vector3(0, 1, 0))
@@ -29,25 +47,32 @@ func _process(delta):
 	var diff = new_rotation - old_rotation
 	rotation.y -= diff / ((1.0 + delta) * 1.1)
 	old_rotation = new_rotation
+	rotation.y += rotx * delta
+	$base/cam_control.rotation.x = clamp($base/cam_control.rotation.x + roty * delta, -PI / 2.5, PI / 2.5)
+	$base/cam_control.global_transform = $base/cam_control.global_transform.orthonormalized()
+	rotx = 0.0
+	roty = 0.0
 	if Input.is_action_pressed("up_control"):
 		rotation.y *= (1.0 - delta * 0.5)
 	else:
 		rotation.y *= (1.0 - delta * 0.1)
+	if mode_cooldown >= delta:
+		mode_cooldown -= delta
 
-	return
-	if !active:
-		for ch in get_tree().get_nodes_in_group("characters"):
-			if ch.posessed:
-				target = ch
-				break
-	if target != null:
-			active = true
-			print("active")
-	if active:
-		if mode == MODE_TPS:
-			$tps_camera.run(delta, self, $Camera)
-		elif mode == MODE_TPS:
-			$fps_camera.run(delta, self, $Camera)
+#	return
+#	if !active:
+#		for ch in get_tree().get_nodes_in_group("characters"):
+#			if ch.posessed:
+#				target = ch
+#				break
+#	if target != null:
+#			active = true
+#			print("active")
+#	if active:
+#		if mode == MODE_TPS:
+#			$tps_camera.run(delta, self, $Camera)
+#		elif mode == MODE_TPS:
+#			$fps_camera.run(delta, self, $Camera)
 func _physics_process(delta):
 	if target:
 		var space = get_world().direct_space_state

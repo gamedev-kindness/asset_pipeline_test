@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://rooms/common/build_interior.gd" type="Script" id=1]
 [ext_resource path="res://interior/test_wall.tres" type="CubeMesh" id=2]
@@ -10,8 +10,9 @@
 [ext_resource path="res://rooms/room_kit/toilet.tscn" type="PackedScene" id=8]
 [ext_resource path="res://rooms/room_kit/shower.tscn" type="PackedScene" id=9]
 [ext_resource path="res://furniture/bed.tscn" type="PackedScene" id=10]
-[ext_resource path="res://rooms/common/random_split.gd" type="Script" id=11]
-[ext_resource path="res://rooms/common/geometry_gen.gd" type="Script" id=12]
+[ext_resource path="res://furniture/test_kitchen_cabinet.tscn" type="PackedScene" id=11]
+[ext_resource path="res://rooms/common/random_split.gd" type="Script" id=12]
+[ext_resource path="res://rooms/common/geometry_gen.gd" type="Script" id=13]
 
 [node name="build_interior" type="Spatial"]
 script = ExtResource( 1 )
@@ -24,10 +25,11 @@ internal_door = ExtResource( 7 )
 toilet = ExtResource( 8 )
 shower = ExtResource( 9 )
 bed = ExtResource( 10 )
+kitchen_cabinet = ExtResource( 11 )
 
 [node name="random_split" type="Node" parent="."]
-script = ExtResource( 11 )
+script = ExtResource( 12 )
 
 [node name="geometry_gen" type="Spatial" parent="."]
-script = ExtResource( 12 )
+script = ExtResource( 13 )
 
