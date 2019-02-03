@@ -8,6 +8,8 @@ extends Node2D
 func _ready():
 	$random_split.outline = $outline.polygon
 	$random_split.doors = [$door1.transform.origin, $door2.transform.origin, $door3.transform.origin]
+	$random_split.rnd = RandomNumberGenerator.new()
+	$random_split.rnd.seed = OS.get_unix_time()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var cooldown = 0.0
@@ -34,8 +36,8 @@ func _draw():
 #	for k in $random_split.corridoor_queue:
 #		draw_line(k[0], k[1], Color(1, 0.6, 0.6, 1), 1.5, true)
 #		draw_line(k[1], k[2], Color(1, 0.6, 0.6, 1), 1.5, true)
-	for k in $random_split.corridoors:
-		draw_line(k[0], k[1], Color(0, 0.6, 0.6, 1), 1.1, true)
-		draw_line(k[1], k[2], Color(0, 0.6, 0.6, 1), 1.1, true)
+#	for k in $random_split.corridoors:
+#		draw_line(k[0], k[1], Color(0, 0.6, 0.6, 1), 1.1, true)
+#		draw_line(k[1], k[2], Color(0, 0.6, 0.6, 1), 1.1, true)
 	for h in $random_split.door_positions:
 		draw_circle(h, 0.1, Color(0, 1, 1, 1))

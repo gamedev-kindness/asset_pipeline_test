@@ -11,6 +11,58 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+func create_walls(rects: Array, rooms: Dictionary, height: float, walls_mat: Material) -> ArrayMesh:
+	var walls_surf = SurfaceTool.new()
+	var mdt_walls = MeshDataTool.new()
+	var mesh = ArrayMesh.new()
+	walls_surf.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for xr in rects:
+		var r = Rect2(xr.position + Vector2(0.1, 0.1), xr.size - Vector2(0.2, 0.2))
+		var p0 = r.position
+		var p1 = r.position + Vector2(r.size.x, 0)
+		var p2 = r.position + r.size
+		var p3 = r.position + Vector2(0, r.size.y)
+		var poly = [p0, p1, p2, p3]
+		for seg in range(poly.size()):
+			var sp1 = poly[seg]
+			var sp2 = poly[(seg + 1) % poly.size()]
+			var xes = []
+			var dir = (sp2 - sp1).normalized()
+			var side = dir.tangent()
+			var p = sp1
+			while p.distance_to(sp2) > 0.1:
+				xes.push_back(p)
+				p += dir * 0.1
+			if xes.size() == 0:
+				xes.push_back(sp1)
+			xes.push_back(sp2)
+			for t in range(xes.size() - 1):
+				var room = rooms[xr]
+				var door = false
+				for k in room.exits:
+					if xes[t].distance_to(k.position) <= 0.5:
+						door = true
+						break
+				var tp0 = Vector3(xes[t].x, 0.0, xes[t].y)
+				var tp1 = Vector3(xes[t].x, height, xes[t].y)
+				var tp2 = Vector3(xes[t + 1].x, height, xes[t + 1].y)
+				var tp3 = Vector3(xes[t + 1].x, 0.0, xes[t + 1].y)
+				if door:
+					tp0.y = 2.0
+					tp3.y = 2.0
+				var n = Vector3(side.x, 0.0, side.y)
+				var tri1 = [tp0, tp1, tp2]
+				var tri2 = [tp0, tp2, tp3]
+				for sp in tri1 + tri2:
+					walls_surf.add_normal(n)
+					walls_surf.add_uv(Vector2(sp.x / 3.0, sp.y / 3.0))
+					walls_surf.add_vertex(sp)
+	walls_surf.generate_normals()
+	walls_surf.index()
+	mdt_walls.create_from_surface(walls_surf.commit(), 0)
+	mdt_walls.set_material(walls_mat)
+	mdt_walls.commit_to_surface(mesh)
+	return mesh
 
 func create_floor(rects: Array, floor_mat: Material) -> ArrayMesh:
 	var floor_surf = SurfaceTool.new()

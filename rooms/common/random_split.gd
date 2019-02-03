@@ -4,8 +4,8 @@ signal complete
 var outline = []
 var rects = []
 var queue = []
-var min_size = 4.0
-var min_area = 10.0
+var min_size = 2.0
+var min_area = 6.0
 var max_area = 160.0
 
 var tree = {}
@@ -41,6 +41,16 @@ func point_in_polygon(point, poly):
 	return false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+func check_rect(data):
+	if data.get_area() < min_area:
+		return false
+	if data.size.x < min_size:
+		return false
+	if data.size.y < min_size:
+		return false
+	if (data.size.x < min_size * 2.0) && (data.size.y < 2.0 * min_size):
+		return false
+	return true
 func process_queue():
 	if queue.size() == 0:
 		return
@@ -60,14 +70,24 @@ func process_queue():
 
 	var r1
 	var r2
-	if data.get_area() > max_area || ((data.get_area() > min_area * 1.5) && rnd.randf() < split_probability):
-		var split = 0.5 + (rnd.randf() - 0.5) * 0.4
-		if rnd.randf() > 0.5:
+	if check_rect(data) && (data.get_area() > max_area || ((data.get_area() > min_area * 2.0) && rnd.randf() < split_probability)):
+		var split = 0.5 + (rnd.randf() - 0.5) * 0.15
+#		print(split)
+#		split = 0.6
+		var asp = (1.0 + data.size.y) / (1.0 * data.size.x)
+		if asp > (3.0 / 2.0):
 			r1 = Rect2(data.position, Vector2(data.size.x, data.size.y * split))
-			r2 = Rect2(data.position + Vector2(0, data.size.y * split), Vector2(data.size.x, data.size.y * split))
-		else:
+			r2 = Rect2(data.position + Vector2(0, data.size.y * split), Vector2(data.size.x, data.size.y * (1.0 - split)))
+		elif asp > (2.0 / 3.0):
 			r1 = Rect2(data.position, Vector2(data.size.x * split, data.size.y))
-			r2 = Rect2(data.position + Vector2(data.size.x * split, 0), Vector2(data.size.x * split, data.size.y))
+			r2 = Rect2(data.position + Vector2(data.size.x * split, 0), Vector2(data.size.x * (1.0 - split), data.size.y))
+		else:
+			if rnd.randf() * asp > 0.5:
+				r1 = Rect2(data.position, Vector2(data.size.x, data.size.y * split))
+				r2 = Rect2(data.position + Vector2(0, data.size.y * split), Vector2(data.size.x, data.size.y * (1.0 - split)))
+			else:
+				r1 = Rect2(data.position, Vector2(data.size.x * split, data.size.y))
+				r2 = Rect2(data.position + Vector2(data.size.x * split, 0), Vector2(data.size.x * (1.0 - split), data.size.y))
 		var d1 = r1.size.x / r1.size.y
 		var d2 = r2.size.x / r2.size.y
 		var passed = true
@@ -75,9 +95,7 @@ func process_queue():
 			passed = false
 		if d2 < 1.0 / 3.0 || d2 > 3.0:
 			passed = false
-		if r1.get_area() < min_area:
-			passed = false
-		if r2.get_area() < min_area:
+		if r1.get_area() < min_area && r2.get_area() < min_area:
 			passed = false
 		if r1.size.x < min_size || r1.size.y < min_size:
 			passed = false
@@ -90,7 +108,6 @@ func process_queue():
 			tree[r1] = {"rect": r1, "children": [], "parent": data}
 			tree[r2] = {"rect": r2, "children": [], "parent": data}
 		else:
-			print("can't split ", data)
 			queue.push_back(data)
 	else:
 		rects.push_back(data)
@@ -400,21 +417,21 @@ func _process(delta):
 		1:
 			if queue.size() > 0:
 				process_queue()
-				print("queue size: ", queue.size())
 			else:
 				state = 2
 		2:
-			print("discard rects")
-			discard_rects()
+#			print("discard rects")
+#			discard_rects()
 			state = 3
 		3:
-			init_grown_rects()
+#			init_grown_rects()
 			state = 4
 		4:
-			if grow_rects.size() > 0:
-				shrink_rects()
-			else:
-				state = 5
+#			if grow_rects.size() > 0:
+#				shrink_rects()
+#			else:
+#				state = 5
+			state = 5
 		5:
 			var good = false
 			for r in rects:
@@ -429,7 +446,7 @@ func _process(delta):
 				state = 0
 			good = false
 			for r in rects:
-				if r.get_area() < min_area * 1.5:
+				if r.get_area() < min_area * 2.0:
 					good = true
 					break
 			if !good:
@@ -441,7 +458,7 @@ func _process(delta):
 			if good:
 				print("building astar data")
 				build_door_astar()
-				print("building doors")
+				print("building doors ", rects.size())
 				build_doors()
 				state = 6
 		6:

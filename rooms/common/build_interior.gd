@@ -12,7 +12,7 @@ export var bed: PackedScene
 export var door_to_door_material: Material
 export var kitchen_cabinet: PackedScene
 
-var outline = [Vector2(-25, -15), Vector2(0, -17), Vector2(25, -15), Vector2(25, 15), Vector2(-25, 15)]
+var outline = [Vector2(-50, -15), Vector2(0, -17), Vector2(50, -15), Vector2(50, 15), Vector2(-50, 15)]
 var doors = [Vector2(-10, 0)]
 
 var wall_width = 2.0
@@ -33,7 +33,7 @@ var room_classes = {
 	"bedroom": {
 		"name": "bedroom",
 		"private": true,
-		"min_area": 8,
+		"min_area": 40,
 		"max_area": 80,
 		"wall_item_probability": 0.0,
 		"wall_items": [],
@@ -327,8 +327,10 @@ func build_room_connection_pairs():
 		var t = d.b
 		var exits = get_exit_positions(r, t)
 		if exits.size() > 0:
-			var p1 = r.position + Vector2(exits[0].door_x, exits[0].door_y)
-			var p2 = t.position + Vector2(exits[1].door_x, exits[1].door_y)
+#			var p1 = r.position + Vector2(exits[0].door_x, exits[0].door_y)
+#			var p2 = t.position + Vector2(exits[1].door_x, exits[1].door_y)
+			var p1 = r.position + exits[0].rel_pos
+			var p2 = t.position + exits[1].rel_pos
 			print("build pair: ", p1, " ", p2, p1.distance_to(p2))
 			var mesh = $geometry_gen.create_room_connection(p1, p2, 1.0, 2.0, null, null, null)
 			var mi = MeshInstance.new()
@@ -391,6 +393,17 @@ func build_room_floors():
 	var colmesh = floor_mesh.create_trimesh_shape()
 	col.shape = colmesh
 	sb.add_child(col)
+func build_room_walls():
+	var walls_mesh = $geometry_gen.create_walls($random_split.rects, rooms, 2.8, load("res://rooms/room_kit/test_wall1_material.tres"))
+	var walls_mi = MeshInstance.new()
+	walls_mi.mesh = walls_mesh
+	add_child(walls_mi)
+	var sb = StaticBody.new()
+	add_child(sb)
+	var col = CollisionShape.new()
+	var colmesh = walls_mesh.create_trimesh_shape()
+	col.shape = colmesh
+	sb.add_child(col)
 func build_rooms():
 	var id = 0
 	for r in $random_split.rects:
@@ -407,18 +420,18 @@ func build_rooms():
 				var wall_angle = false
 				var door = false
 				match(room.grid[h * width_x + i].element):
-					ELEMENT_ANGLE:
-						wall_angle = true
-						var angle_model = internal_angle.instance()
-						add_child(angle_model)
-						angle_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
-						angle_model.rotation.y = angle
+#					ELEMENT_ANGLE:
+#						wall_angle = true
+#						var angle_model = internal_angle.instance()
+#						add_child(angle_model)
+#						angle_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
+#						angle_model.rotation.y = angle
 					ELEMENT_WALL:
-						wall = true
-						var wall_model = internal_wall1.instance()
-						add_child(wall_model)
-						wall_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
-						wall_model.rotation.y = angle
+#						wall = true
+#						var wall_model = internal_wall1.instance()
+#						add_child(wall_model)
+#						wall_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
+#						wall_model.rotation.y = angle
 						if room.class:
 							if rnd.randf() < room.class.wall_item_probability:
 								var item = room.class.wall_items[rnd.randi() % room.class.wall_items.size()]
@@ -428,12 +441,12 @@ func build_rooms():
 								var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
 								model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h) + tf
 								model.rotation.y = PI + angle
-					ELEMENT_DOOR:
-						door = true
-						var door_model = internal_door.instance()
-						add_child(door_model)
-						door_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
-						door_model.rotation.y = angle
+#					ELEMENT_DOOR:
+#						door = true
+#						var door_model = internal_door.instance()
+#						add_child(door_model)
+#						door_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
+#						door_model.rotation.y = angle
 #					_:
 #						var floor_model = internal_floor.instance()
 #						add_child(floor_model)
@@ -442,15 +455,21 @@ func build_rooms():
 #						print("p6")
 		print("room infill: ", id, "size: ", width_x, " ", width_y)
 		if room.class && room.class == room_classes.bedroom:
-			var dim_x = int(r.size.x / 2.0 / 1.8)
-			var dim_y = int(r.size.y / 2.0 / 1.8)
-			for th in range(dim_x):
-				for tg in range(dim_y):
-					var pos = Vector3(th - float(dim_x) / 2.0 + (rnd.randf() - 0.5) * 0.25, 0.0, tg - float(dim_y) / 2.0 + (rnd.randf() - 0.5) * 0.25) * 2.5
-					var bed_model = bed.instance()
-					add_child(bed_model)
-					bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
-		print("room complete: ", id, "size: ", width_x, " ", width_y)
+#			var dim_x = int(r.size.x)
+#			var dim_y = int(r.size.y)
+#			for th in range(0, dim_x, 2):
+#				for tg in range(0, dim_y, 2):
+#					var pos = Vector3(th - float(dim_x) / 2.0, 0.0, tg - float(dim_y) / 2.0)* 2.0
+#					var bed_model = bed.instance()
+#					add_child(bed_model)
+#					bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
+			var pos = Vector3()
+			var bed_model = bed.instance()
+			add_child(bed_model)
+			bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
+			if r.size.y > r.size.x:
+				bed_model.rotation.y = -PI / 2.0
+			print("room complete: ", id, "size: ", width_x, " ", width_y)
 		id += 1
 
 # Called when the node enters the scene tree for the first time.
@@ -508,6 +527,8 @@ func _process(delta):
 		7:
 			print("building room floors")
 			build_room_floors()
+			print("building room walls")
+			build_room_walls()
 			state = 8
 		8:
 			print("building rooms")

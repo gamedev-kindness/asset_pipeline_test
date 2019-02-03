@@ -6,7 +6,7 @@
 
 [sub_resource type="CubeMesh" id=1]
 
-size = Vector3( 20, 0.1, 20 )
+size = Vector3( 60, 0.1, 60 )
 
 [sub_resource type="SpatialMaterial" id=2]
 
