@@ -1,0 +1,6 @@
+[gd_resource type="AnimationNodeStateMachineTransition" format=2]
+
+[resource]
+
+switch_mode = 2
+

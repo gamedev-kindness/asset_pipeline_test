@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://characters/male_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
@@ -97,13 +97,19 @@ height = 1.23
 [sub_resource type="AnimationNodeStateMachinePlayback" id=16]
 
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=21]
+
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
 
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=18]
 
 
-[sub_resource type="SphereShape" id=19]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
+
+
+[sub_resource type="SphereShape" id=20]
 
 radius = 0.1
 
@@ -111,7 +117,7 @@ radius = 0.1
 script = ExtResource( 2 )
 
 [node name="male_g_2018" parent="." index="0"]
-transform = Transform( 0.995763, -0.0405916, -0.0824663, -0.0405705, 0.61097, -0.790626, 0.0824753, 0.790625, 0.606737, 2.98023e-08, -5.96046e-08, -2.98023e-08 )
+transform = Transform( 0.999972, -0.00373728, 0.00652307, 0.00434075, 0.995459, -0.0950957, -0.00613805, 0.0951213, 0.995447, 9.31323e-10, 2.98023e-08, 0 )
 bones/14/bound_children = [ NodePath("head") ]
 bones/81/bound_children = [ NodePath("penis") ]
 script = ExtResource( 3 )
@@ -196,11 +202,15 @@ anim_player = NodePath("../male_g_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
 parameters/playback = SubResource( 14 )
-parameters/FrontGrabLoop/TimeScale/scale = 0.3
-parameters/FrontGrabbedLoop/TimeScale/scale = 0.3
+parameters/FrontGrab/playback = SubResource( 15 )
+parameters/FrontGrab/FrontGrabLoop/face_slapped/active = false
+parameters/FrontGrab/FrontGrabLoop/front_grab_speed/scale = 1.0
+parameters/FrontGrab/Missionary_1_1/playback = SubResource( 16 )
+parameters/FrontGrabbed/playback = SubResource( 21 )
+parameters/FrontGrabbed/FrontGrabbedLoop/face_slapped/active = false
+parameters/FrontGrabbed/FrontGrabbedLoop/front_grabbed_speed/scale = 1.0
+parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 22 )
 parameters/GrabFromBack/walk/blend_amount = 1.0
-parameters/Missionary1_1/playback = SubResource( 15 )
-parameters/Missionary1_2/playback = SubResource( 16 )
 parameters/Navigate/blink/active = false
 parameters/Navigate/turn_left/active = false
 parameters/Navigate/turn_right/active = false
@@ -210,8 +220,8 @@ parameters/Sleep/sleep_scale/scale = 1.0
 parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
-parameters/UseToilet1/playback = SubResource( 17 )
-parameters/UseToilet2/playback = SubResource( 18 )
+parameters/UseToilet1/playback = SubResource( 18 )
+parameters/UseToilet2/playback = SubResource( 19 )
 
 [node name="AI" parent="." index="6" instance=ExtResource( 17 )]
 
@@ -221,7 +231,7 @@ cast_to = Vector3( 0, -1, -1.5 )
 
 [node name="minimal_shape" type="CollisionShape" parent="." index="8"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.101824, 0.05 )
-shape = SubResource( 19 )
+shape = SubResource( 20 )
 
 [node name="rpg" parent="." index="9" instance=ExtResource( 18 )]
 

@@ -44,14 +44,15 @@ var actions = {
 			"valid_actions": ["Navigate", "Stand"]
 	},
 	"front_grab": {
-			"active": "FrontGrabLoop",
-			"passive": "FrontGrabbedLoop",
+			"active": "FrontGrab",
+			"passive": "FrontGrabbed",
 			"ik": false,
 			"direction":"FRONT",
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI)),
 	},
 	"front_grab_face_slap": {
 			"active": "FrontGrabFaceSlap",
+			"active_parent": "FrontGrab",
 			"passive": "FrontGrabbedFaceSlapped",
 			"ik": false,
 			"direction":"FRONT",
@@ -59,6 +60,7 @@ var actions = {
 	},
 	"missionary1": {
 			"active": "Missionary1_1",
+			"active_parent": "FrontGrab",
 			"passive": "Missionary1_2",
 			"ik": false,
 			"direction":"FRONT",
@@ -134,10 +136,17 @@ func set_action_mode(m):
 func do_action(other, name):
 	var active = actions[name].active
 	var passive = actions[name].passive
+	var active_parent
 	set_action_mode(true)
 	print("Playing action: active: ", active, " passive: ", passive)
-	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	sm.travel(active)
+	if active in ["FrontGrabFaceSlap", "Missionary1_1"]:
+		var parent_sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+		parent_sm.travel("FrontGrab")
+		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/FrontGrab/playback"]
+		sm.travel(active)
+	else:
+		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+		sm.travel(active)
 	if actions[name].ik:
 		emit_signal("set_feet_ik", true)
 		feet_ik_enabled = true
@@ -171,11 +180,11 @@ func do_ui_action(act):
 			add_collision_exception_with(other)
 			other.add_collision_exception_with(self)
 			do_action(other, "front_grab")
-		elif act == "FrontGrabFaceSlap":
+	elif act == "FrontGrabFaceSlap":
 			add_collision_exception_with(other)
 			other.add_collision_exception_with(self)
 			do_action(other, "front_grab_face_slap")
-		elif act == "Missionary1":
+	elif act == "Missionary1":
 			add_collision_exception_with(other)
 			other.add_collision_exception_with(self)
 			do_action(other, "missionary1")
@@ -201,7 +210,7 @@ func do_ui_action(act):
 			get_node("/root").remove_child(item)
 			item.queue_free()
 	else:
-		print("Unknown action: ", act)
+		print("Unknown action: ", act, " other: ", other)
 
 func do_active_action(other):
 	pass
@@ -213,8 +222,14 @@ func do_active_action(other):
 #		else:
 #			do_action(other, "grab_from_back")
 func do_passive_action(other, action, ik, xform):
-	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	sm.travel(action)
+	if action in ["FrontGrabbedFaceSlapped", "Missionary1_2"]:
+		var sm_parent: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+		sm_parent.travel("FrontGrabbed")
+		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+		sm.travel(action)
+	else:
+		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+		sm.travel(action)
 	if ik:
 		emit_signal("set_feet_ik", true)
 		feet_ik_enabled = true
@@ -301,6 +316,7 @@ func process_player_navigation(delta, sm):
 				set_action_mode(false)
 				remove_collision_exception_with(other)
 #				print("action stopped")
+	
 func _process(delta):
 	orientation = global_transform
 	orientation.origin = Vector3()

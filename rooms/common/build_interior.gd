@@ -33,7 +33,7 @@ var room_classes = {
 	"bedroom": {
 		"name": "bedroom",
 		"private": true,
-		"min_area": 40,
+		"min_area": 60,
 		"max_area": 80,
 		"wall_item_probability": 0.0,
 		"wall_items": [],
@@ -454,21 +454,24 @@ func build_rooms():
 #						floor_model.rotation.y = angle
 #						print("p6")
 		print("room infill: ", id, "size: ", width_x, " ", width_y)
-		if room.class && room.class == room_classes.bedroom:
-#			var dim_x = int(r.size.x)
-#			var dim_y = int(r.size.y)
-#			for th in range(0, dim_x, 2):
-#				for tg in range(0, dim_y, 2):
-#					var pos = Vector3(th - float(dim_x) / 2.0, 0.0, tg - float(dim_y) / 2.0)* 2.0
-#					var bed_model = bed.instance()
-#					add_child(bed_model)
-#					bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
-			var pos = Vector3()
-			var bed_model = bed.instance()
-			add_child(bed_model)
-			bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
-			if r.size.y > r.size.x:
-				bed_model.rotation.y = -PI / 2.0
+		if room.class && room.class == room_classes.bedroom && r.size.x >= 3.0 && r.size.y >= 3.0:
+			var dim_x = int((r.size.x - 1.0)/ 3.0)
+			var dim_y = int((r.size.y - 1.0)/ 3.0)
+			for th in range(dim_x):
+				for tg in range(dim_y):
+					var pos = Vector3(th - float(dim_x) / 2.0, 0.0, tg - float(dim_y) / 2.0)* 3.0
+					var bed_model = bed.instance()
+					add_child(bed_model)
+					bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
+					if r.size.y > r.size.x:
+						bed_model.rotation.y = -PI / 2.0
+#		elif room.class && room.class == room_classes.bedroom:
+#			var pos = Vector3()
+#			var bed_model = bed.instance()
+#			add_child(bed_model)
+#			bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
+#			if r.size.y > r.size.x:
+#				bed_model.rotation.y = -PI / 2.0
 			print("room complete: ", id, "size: ", width_x, " ", width_y)
 		id += 1
 

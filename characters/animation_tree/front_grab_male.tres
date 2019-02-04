@@ -1,0 +1,108 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=20 format=2]
+
+[ext_resource path="res://characters/animation_tree/front_grab_state_female.tres" type="AnimationNodeStateMachineTransition" id=1]
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+
+animation = "front_grab"
+
+[sub_resource type="AnimationNodeBlendTree" id=2]
+
+nodes/Animation/node = SubResource( 1 )
+nodes/Animation/position = Vector2( 400, 20 )
+nodes/output/position = Vector2( 1060, 80 )
+node_connections = [ "output", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+
+animation = "front_grab_face_insertion"
+
+[sub_resource type="AnimationNodeBlendTree" id=4]
+
+nodes/Animation/node = SubResource( 3 )
+nodes/Animation/position = Vector2( 440, 120 )
+nodes/output/position = Vector2( 1000, 160 )
+node_connections = [ "output", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+
+animation = "front_grab_face_slap"
+
+[sub_resource type="AnimationNodeBlendTree" id=6]
+
+nodes/Animation/node = SubResource( 5 )
+nodes/Animation/position = Vector2( 120, 100 )
+nodes/output/position = Vector2( 540, 160 )
+node_connections = [ "output", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+
+animation = "front_grab_face_slap"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+
+animation = "front_grab_loop"
+
+[sub_resource type="AnimationNodeOneShot" id=9]
+
+autorestart_random_delay = -39.0
+
+[sub_resource type="AnimationNodeTimeScale" id=10]
+
+
+[sub_resource type="AnimationNodeBlendTree" id=11]
+
+nodes/Animation/node = SubResource( 8 )
+nodes/Animation/position = Vector2( 40, 100 )
+"nodes/Animation 2/node" = SubResource( 7 )
+"nodes/Animation 2/position" = Vector2( 400, 240 )
+nodes/face_slapped/node = SubResource( 9 )
+nodes/face_slapped/position = Vector2( 900, 100 )
+nodes/front_grab_speed/node = SubResource( 10 )
+nodes/front_grab_speed/position = Vector2( 1320, 80 )
+nodes/output/position = Vector2( 1580, 100 )
+node_connections = [ "output", 0, "front_grab_speed", "face_slapped", 0, "Animation", "face_slapped", 1, "Animation 2", "front_grab_speed", 0, "face_slapped" ]
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+
+animation = "missionary1-first-loop"
+
+[sub_resource type="AnimationNodeStateMachine" id=13]
+
+states/missionary1-first-loop/node = SubResource( 12 )
+states/missionary1-first-loop/position = Vector2( 82, 37 )
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+
+[resource]
+
+states/FrontGrab/node = SubResource( 2 )
+states/FrontGrab/position = Vector2( 196, 112 )
+states/FrontGrabFaceInsertion/node = SubResource( 4 )
+states/FrontGrabFaceInsertion/position = Vector2( 221, 205 )
+states/FrontGrabFaceSlap/node = SubResource( 6 )
+states/FrontGrabFaceSlap/position = Vector2( 445, 398 )
+states/FrontGrabLoop/node = SubResource( 11 )
+states/FrontGrabLoop/position = Vector2( 475, 118 )
+states/Missionary_1_1/node = SubResource( 13 )
+states/Missionary_1_1/position = Vector2( 607, 217 )
+transitions = [ "FrontGrab", "FrontGrabLoop", SubResource( 14 ), "FrontGrabLoop", "FrontGrabFaceSlap", SubResource( 15 ), "FrontGrabFaceSlap", "FrontGrabLoop", SubResource( 16 ), "FrontGrabLoop", "FrontGrabFaceInsertion", SubResource( 17 ), "FrontGrabFaceInsertion", "Missionary_1_1", ExtResource( 1 ), "Missionary_1_1", "FrontGrabLoop", SubResource( 18 ) ]
+start_node = "FrontGrab"
+

@@ -1,0 +1,11 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=2 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=26]
+
+animation = "missionary1-first-loop"
+
+[resource]
+
+states/missionary1-first-loop/node = SubResource( 26 )
+states/missionary1-first-loop/position = Vector2( 82, 37 )
+

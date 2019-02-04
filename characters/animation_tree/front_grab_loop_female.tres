@@ -1,0 +1,30 @@
+[gd_resource type="AnimationNodeBlendTree" load_steps=5 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+
+animation = "front_grab_face_slap"
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+
+animation = "front_grab_loop"
+
+[sub_resource type="AnimationNodeOneShot" id=3]
+
+autorestart_random_delay = -39.0
+
+[sub_resource type="AnimationNodeTimeScale" id=4]
+
+
+[resource]
+
+nodes/Animation/node = SubResource( 2 )
+nodes/Animation/position = Vector2( 40, 100 )
+"nodes/Animation 2/node" = SubResource( 1 )
+"nodes/Animation 2/position" = Vector2( 400, 240 )
+nodes/face_slapped/node = SubResource( 3 )
+nodes/face_slapped/position = Vector2( 900, 100 )
+nodes/front_grab_speed/node = SubResource( 4 )
+nodes/front_grab_speed/position = Vector2( 1320, 80 )
+nodes/output/position = Vector2( 1580, 100 )
+node_connections = [ "output", 0, "front_grab_speed", "front_grab_speed", 0, "face_slapped", "face_slapped", 0, "Animation", "face_slapped", 1, "Animation 2" ]
+

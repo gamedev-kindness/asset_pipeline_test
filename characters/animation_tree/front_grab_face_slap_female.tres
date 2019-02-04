@@ -1,0 +1,13 @@
+[gd_resource type="AnimationNodeBlendTree" load_steps=2 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+
+animation = "front_grab_face_slap"
+
+[resource]
+
+nodes/Animation/node = SubResource( 5 )
+nodes/Animation/position = Vector2( 120, 100 )
+nodes/output/position = Vector2( 540, 160 )
+node_connections = [ "output", 0, "Animation" ]
+
