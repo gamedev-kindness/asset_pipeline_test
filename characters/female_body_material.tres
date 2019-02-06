@@ -1,0 +1,35 @@
+[gd_resource type="ShaderMaterial" load_steps=7 format=2]
+
+[ext_resource path="res://characters/body_shader.tres" type="Shader" id=1]
+[ext_resource path="res://textures/female_base.png" type="Texture" id=2]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+seed = 300
+period = 1.0
+
+[sub_resource type="NoiseTexture" id=2]
+
+seamless = true
+noise = SubResource( 1 )
+
+[sub_resource type="OpenSimplexNoise" id=3]
+
+seed = 900
+octaves = 5
+period = 0.2
+persistence = 0.632
+lacunarity = 1.84
+
+[sub_resource type="NoiseTexture" id=4]
+
+seamless = true
+noise = SubResource( 3 )
+
+[resource]
+
+shader = ExtResource( 1 )
+shader_param/noise1 = SubResource( 2 )
+shader_param/diffuse = ExtResource( 2 )
+shader_param/noise2 = SubResource( 4 )
+

@@ -82,7 +82,8 @@ func _process(delta):
 		awareness.need_changes[character] = {}
 		for k in need_changes.keys():
 			awareness.need_changes[character][k] = randf() * 0.5 * need_changes[k] + need_changes[k] * 0.5
-		awareness.traits[character] = []
+		if !awareness.traits.has(character):
+			awareness.traits[character] = []
 		for k in traits:
 			if randf() <= k.probability:
 				awareness.traits[character].push_back(k.name)

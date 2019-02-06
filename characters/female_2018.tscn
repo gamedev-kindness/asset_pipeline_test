@@ -8,7 +8,7 @@
 [ext_resource path="res://characters/enable_pee_particles.tres" type="Animation" id=6]
 [ext_resource path="res://characters/male/front_grab_face_slap.anim" type="Animation" id=7]
 [ext_resource path="res://characters/aplayer.gd" type="Script" id=8]
-[ext_resource path="res://characters/body_material.tres" type="Material" id=9]
+[ext_resource path="res://characters/female_body_material.tres" type="Material" id=9]
 [ext_resource path="res://characters/female_bob01_material.tres" type="Material" id=10]
 [ext_resource path="res://textures/CrudeFemaleUnderwearDiffuse.png" type="Texture" id=11]
 [ext_resource path="res://characters/crudegown_material.tres" type="Material" id=12]
@@ -83,10 +83,10 @@ height = 1.1
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=16]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=11]
 
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=13]
@@ -99,12 +99,14 @@ height = 1.1
 
 radius = 0.1
 
-[node name="female_2018" instance=ExtResource( 1 )]
+[node name="female_2018" index="0" instance=ExtResource( 1 )]
 collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="female_2018" parent="." index="0"]
 transform = Transform( 0.99999, 0.00185586, -0.0041129, -0.00293942, 0.95949, -0.281726, 0.00342344, 0.281735, 0.959486, 2.32831e-10, 3.58579e-08, -4.76836e-08 )
+bones/6/bound_children = [ NodePath("pelvis") ]
+bones/21/bound_children = [ NodePath("head") ]
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="female_2018" index="0"]
@@ -203,12 +205,12 @@ root_motion_track = NodePath(".:root")
 parameters/playback = SubResource( 8 )
 parameters/FrontGrab/playback = SubResource( 9 )
 parameters/FrontGrab/FrontGrabLoop/face_slapped/active = false
-parameters/FrontGrab/FrontGrabLoop/front_grab_speed/scale = 1.0
+parameters/FrontGrab/FrontGrabLoop/front_grab_speed/scale = 0.3
 parameters/FrontGrab/Missionary_1_1/playback = SubResource( 10 )
-parameters/FrontGrabbed/playback = SubResource( 16 )
+parameters/FrontGrabbed/playback = SubResource( 11 )
 parameters/FrontGrabbed/FrontGrabbedLoop/face_slapped/active = false
-parameters/FrontGrabbed/FrontGrabbedLoop/front_grabbed_speed/scale = 1.0
-parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 17 )
+parameters/FrontGrabbed/FrontGrabbedLoop/front_grabbed_speed/scale = 0.3
+parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 12 )
 parameters/GrabbedFromBack/walk/blend_amount = 1.0
 "parameters/Navigate/OneShot 3/active" = false
 parameters/Navigate/turn_left/active = false

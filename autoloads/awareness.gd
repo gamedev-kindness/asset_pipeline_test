@@ -45,6 +45,7 @@ var target_activation_time = {}
 var raycasts = {}
 var need_changes = {}
 var gender = {}
+var disposition = {}
 
 func _ready():
 	astar = AStar.new()
@@ -272,12 +273,36 @@ var utilities = {
 		"score": 400.0,
 		"need": "Shower",
 		"tag": "shower",
+	},
+	"broken": {
+		"score": 1490,
+		"trait": "broken",
+		"behavior": "kneel"
+	},
+	"slave": {
+		"score": 495,
+		"trait": "slave",
+		"behavior": "slave"
 	}
 }
 
 func get_utility(obj, un):
-	if needs.has(obj):
+	if needs.has(obj) && utilities.has(un) && utilities[un].has("need"):
 		return utilities[un].score * needs[obj][utilities[un].need]
+	elif traits.has(obj) && utilities.has(un) && utilities[un].has("trait"):
+		if traits[obj].has(un):
+			return utilities[un].score
+		else:
+			return 0.0
 	else:
 		return 0.0
 
+func get_traits(obj):
+	return traits[obj]
+func has_trait(obj, trait):
+	return trait in traits[obj]
+func add_trait(obj, trait):
+	if !traits.has(obj):
+		traits[obj] = []
+	if ! trait in traits[obj]:
+		traits[obj].push_back(trait)

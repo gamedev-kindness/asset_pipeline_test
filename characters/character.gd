@@ -52,7 +52,6 @@ var actions = {
 	},
 	"front_grab_face_slap": {
 			"active": "FrontGrabFaceSlap",
-			"active_parent": "FrontGrab",
 			"passive": "FrontGrabbedFaceSlapped",
 			"ik": false,
 			"direction":"FRONT",
@@ -60,7 +59,6 @@ var actions = {
 	},
 	"missionary1": {
 			"active": "Missionary1_1",
-			"active_parent": "FrontGrab",
 			"passive": "Missionary1_2",
 			"ik": false,
 			"direction":"FRONT",
@@ -136,22 +134,27 @@ func set_action_mode(m):
 func do_action(other, name):
 	var active = actions[name].active
 	var passive = actions[name].passive
-	var active_parent
 	set_action_mode(true)
 	print("Playing action: active: ", active, " passive: ", passive)
 	if active in ["FrontGrabFaceSlap", "Missionary1_1"]:
+		self.other = other
+		print("setting main to FrontGrab")
 		var parent_sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-		parent_sm.travel("FrontGrab")
+		other.emit_signal("passive_action", self, passive, actions[name].ik, actions[name].xform)
+		while parent_sm.get_current_node() != "FrontGrab":
+			parent_sm.travel("FrontGrab")
+			yield(get_tree().create_timer(0.2), "timeout")
 		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/FrontGrab/playback"]
+		print("setting FrontGrab to ", active)
 		sm.travel(active)
 	else:
 		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 		sm.travel(active)
+		self.other = other
+		other.emit_signal("passive_action", self, passive, actions[name].ik, actions[name].xform)
 	if actions[name].ik:
 		emit_signal("set_feet_ik", true)
 		feet_ik_enabled = true
-	self.other = other
-	other.emit_signal("passive_action", self, passive, actions[name].ik, actions[name].xform)
 
 # Belongs to player controller
 var allowed_states_for_action = ["Navigate", "Stand"]
@@ -167,28 +170,33 @@ func do_ui_action(act):
 	print(act)
 	if other == null:
 		print("other is null")
-	if other != null && check_state_valid(other):
-		if act == "GrabFromBack":
+	var pair_act = {
+		"GrabFromBack": {"name": "grab_from_back", "check": "check_state_valid"},
+		"KickToBed": {"name": "kick_to_bed", "check": "check_state_valid"},
+		"FrontGrab": {"name": "front_grab", "check": "check_state_valid"},
+		"FrontGrabFaceSlap": {"name": "front_grab_face_slap"},
+		"Missionary1": {"name": "missionary1"}
+	}
+	if act in pair_act.keys():
+		if pair_act[act].has("check") && pair_act[act].check == "check_state_valid":
+			print("checking state:")
+			if check_state_valid(other):
+				print("valid state")
+				add_collision_exception_with(other)
+				other.add_collision_exception_with(self)
+				do_action(other, pair_act[act].name)
+			else:
+				print("invalid state")
+		elif pair_act[act].has("check") && pair_act[act].check != "check_state_valid":
+			if call(pair_act[act].check, act, other):
+				add_collision_exception_with(other)
+				other.add_collision_exception_with(self)
+				do_action(other, pair_act[act].name)
+		elif !pair_act[act].has("check"):
 			add_collision_exception_with(other)
 			other.add_collision_exception_with(self)
-			do_action(other, "grab_from_back")
-		elif act == "KickToBed":
-			add_collision_exception_with(other)
-			other.add_collision_exception_with(self)
-			do_action(other, "kick_to_bed")
-		elif act == "FrontGrab":
-			add_collision_exception_with(other)
-			other.add_collision_exception_with(self)
-			do_action(other, "front_grab")
-	elif act == "FrontGrabFaceSlap":
-			add_collision_exception_with(other)
-			other.add_collision_exception_with(self)
-			do_action(other, "front_grab_face_slap")
-	elif act == "Missionary1":
-			add_collision_exception_with(other)
-			other.add_collision_exception_with(self)
-			do_action(other, "missionary1")
-	if act == "LeaveAction":
+			do_action(other, pair_act[act].name)
+	elif act == "LeaveAction":
 			set_action_mode(false)
 			if other != null:
 				other.set_action_mode(false)
@@ -225,7 +233,10 @@ func do_passive_action(other, action, ik, xform):
 	if action in ["FrontGrabbedFaceSlapped", "Missionary1_2"]:
 		var sm_parent: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 		sm_parent.travel("FrontGrabbed")
-		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+		while sm_parent.get_current_node() != "FrontGrabbed":
+			sm_parent.travel("FrontGrabbed")
+			yield(get_tree().create_timer(0.2), "timeout")
+		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/FrontGrabbed/playback"]
 		sm.travel(action)
 	else:
 		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]

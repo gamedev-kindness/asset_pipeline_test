@@ -15,26 +15,34 @@ func init(obj):
 	print("Entering " + name)
 	var sc = -1001.0
 	var target
+	var behavior
 	for k in awareness.utilities.keys():
 		print(k, ": ", sc)
-		if awareness.get_utility(obj, k) > sc && get_closest_target(obj, awareness.utilities[k].tag) != null:
-			sc = awareness.get_utility(obj, k)
-			target = awareness.utilities[k].tag
-			print(k, ": ", sc)
+		if awareness.utilities[k].has("tag"):
+			if awareness.get_utility(obj, k) > sc && get_closest_target(obj, awareness.utilities[k].tag) != null:
+				sc = awareness.get_utility(obj, k)
+				target = awareness.utilities[k].tag
+				behavior = null
+				print(k, ": ", sc)
+		elif awareness.utilities[k].has("behavior"):
+			if awareness.get_utility(obj, k) > sc:
+				behavior = awareness.utilities[k].behavior
+				target = null
 	var dist = 1000000.0
-	var target_node = get_closest_target(obj, target)
-	var path_t = awareness.build_path_to_obj(obj, target_node)
-	if path_t.size() == 0:
-		var tnodes = tree().get_nodes_in_group(target)
-		target_node = tnodes[randi() % tnodes.size()]
-		path_t = awareness.build_path_to_obj(obj, target_node)
-	var path = []
-	for k in path_t:
-		path.push_back(k)
-	path.push_back(target_node.global_transform.origin)
-	awareness.targets[obj] = target_node
-	awareness.current_path[obj] = path
-	print("path: ", path)
+	if target != null:
+		var target_node = get_closest_target(obj, target)
+		var path_t = awareness.build_path_to_obj(obj, target_node)
+		if path_t.size() == 0:
+			var tnodes = tree().get_nodes_in_group(target)
+			target_node = tnodes[randi() % tnodes.size()]
+			path_t = awareness.build_path_to_obj(obj, target_node)
+		var path = []
+		for k in path_t:
+			path.push_back(k)
+		path.push_back(target_node.global_transform.origin)
+		awareness.targets[obj] = target_node
+		awareness.current_path[obj] = path
+		print("path: ", path)
 	awareness.action_cooldown[obj] = 1.0 + randf() * 10.0
 	awareness.at[obj].travel("Stand")
 			
@@ -72,19 +80,26 @@ func run(obj, delta):
 		if awareness.action_cooldown[obj] > 0.0:
 			awareness.action_cooldown[obj] -= delta
 			return ""
-	if awareness.current_path[obj].size() == 0 || !check_target_valid(obj):
+	if !awareness.current_path.has(obj) || awareness.current_path[obj].size() == 0 || !check_target_valid(obj):
 		var target
 		var target_node
+		var behavior
 		var sc = 100
 		awareness.targets[obj] = null
 		awareness.current_path[obj] = []
 		for k in awareness.utilities.keys():
 			print(k, ": ", sc)
-			if awareness.get_utility(obj, k) > sc && get_closest_target(obj, awareness.utilities[k].tag) != null:
-				sc = awareness.get_utility(obj, k)
-				target = awareness.utilities[k].tag
-				target_node = get_closest_target(obj, target)
-				print(k, ": ", sc)
+			if awareness.utilities[k].has("tag"):
+				if awareness.get_utility(obj, k) > sc && get_closest_target(obj, awareness.utilities[k].tag) != null:
+					sc = awareness.get_utility(obj, k)
+					target = awareness.utilities[k].tag
+					target_node = get_closest_target(obj, target)
+					behavior = null
+					print(k, ": ", sc)
+			elif awareness.utilities[k].has("behavior"):
+				if awareness.get_utility(obj, k) > sc:
+					behavior = awareness.utilities[k].behavior
+					target = null
 		if target_node != null:
 			var path_t = awareness.build_path_to_obj(obj, target_node)
 			var path = []
@@ -93,8 +108,8 @@ func run(obj, delta):
 			path.push_back(target_node.global_transform.origin)
 			awareness.current_path[obj] = path
 			awareness.targets[obj] = target_node
-		else:
-			return ""
+		elif behavior != null:
+			return behavior
 	if awareness.at[obj].get_current_node() == "Stand":
 		if awareness.day_hour > 23.0 && awareness.day_hour < 5:
 			if randf() > 0.95:

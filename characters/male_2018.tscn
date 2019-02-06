@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://characters/male_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
@@ -7,51 +7,14 @@
 [ext_resource path="res://characters/disable_pee_particles.tres" type="Animation" id=5]
 [ext_resource path="res://characters/enable_pee_particles.tres" type="Animation" id=6]
 [ext_resource path="res://characters/aplayer.gd" type="Script" id=7]
-[ext_resource path="res://textures/eyebrow001.png" type="Texture" id=8]
-[ext_resource path="res://textures/eyelashes01.png" type="Texture" id=9]
-[ext_resource path="res://textures/brown_eye.png" type="Texture" id=10]
-[ext_resource path="res://textures/male_worksuit01_diffuse.png" type="Texture" id=11]
-[ext_resource path="res://textures/male_worksuit01_normal.png" type="Texture" id=12]
-[ext_resource path="res://textures/short02_diffuse.png" type="Texture" id=13]
-[ext_resource path="res://textures/teeth.png" type="Texture" id=14]
-[ext_resource path="res://textures/tongue01_diffuse.png" type="Texture" id=15]
-[ext_resource path="res://characters/animtree_male.tres" type="AnimationNodeStateMachine" id=16]
-[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=17]
-[ext_resource path="res://characters/rpg.tscn" type="PackedScene" id=18]
-
-[sub_resource type="SpatialMaterial" id=1]
-
-flags_transparent = true
-albedo_texture = ExtResource( 8 )
-
-[sub_resource type="SpatialMaterial" id=2]
-
-flags_transparent = true
-albedo_texture = ExtResource( 9 )
-
-[sub_resource type="SpatialMaterial" id=3]
-
-flags_transparent = true
-albedo_texture = ExtResource( 10 )
-
-[sub_resource type="SpatialMaterial" id=4]
-
-albedo_texture = ExtResource( 11 )
-normal_enabled = true
-normal_scale = 1.0
-normal_texture = ExtResource( 12 )
-
-[sub_resource type="SpatialMaterial" id=5]
-
-albedo_texture = ExtResource( 13 )
-
-[sub_resource type="SpatialMaterial" id=6]
-
-albedo_texture = ExtResource( 14 )
+[ext_resource path="res://textures/tongue01_diffuse.png" type="Texture" id=8]
+[ext_resource path="res://characters/animtree_male.tres" type="AnimationNodeStateMachine" id=9]
+[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=10]
+[ext_resource path="res://characters/rpg.tscn" type="PackedScene" id=11]
 
 [sub_resource type="SpatialMaterial" id=7]
 
-albedo_texture = ExtResource( 15 )
+albedo_texture = ExtResource( 8 )
 
 [sub_resource type="Curve" id=8]
 
@@ -97,10 +60,7 @@ height = 1.23
 [sub_resource type="AnimationNodeStateMachinePlayback" id=16]
 
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=21]
-
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=18]
@@ -109,7 +69,19 @@ height = 1.23
 [sub_resource type="AnimationNodeStateMachinePlayback" id=19]
 
 
-[sub_resource type="SphereShape" id=20]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=20]
+
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=21]
+
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
+
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=23]
+
+
+[sub_resource type="SphereShape" id=24]
 
 radius = 0.1
 
@@ -117,7 +89,7 @@ radius = 0.1
 script = ExtResource( 2 )
 
 [node name="male_g_2018" parent="." index="0"]
-transform = Transform( 0.999972, -0.00373728, 0.00652307, 0.00434075, 0.995459, -0.0950957, -0.00613805, 0.0951213, 0.995447, 9.31323e-10, 2.98023e-08, 0 )
+transform = Transform( 0.999972, -0.00372589, 0.00651516, 0.00432931, 0.995449, -0.0952021, -0.00613079, 0.0952277, 0.995437, 9.31323e-10, 2.98023e-08, 0 )
 bones/14/bound_children = [ NodePath("head") ]
 bones/81/bound_children = [ NodePath("penis") ]
 script = ExtResource( 3 )
@@ -128,29 +100,11 @@ anims/disable_pee_particles = ExtResource( 5 )
 anims/enable_pee_particles = ExtResource( 6 )
 script = ExtResource( 7 )
 
-[node name="male_g_2018-eyebrow001" parent="male_g_2018" index="2"]
-material/0 = SubResource( 1 )
-
-[node name="male_g_2018-eyelashes01" parent="male_g_2018" index="3"]
-material/0 = SubResource( 2 )
-
-[node name="male_g_2018-low_poly" parent="male_g_2018" index="4"]
-material/0 = SubResource( 3 )
-
-[node name="male_g_2018-male_worksuit01" parent="male_g_2018" index="5"]
-material/0 = SubResource( 4 )
-
-[node name="male_g_2018-short02" parent="male_g_2018" index="6"]
-material/0 = SubResource( 5 )
-
-[node name="male_g_2018-teeth_base" parent="male_g_2018" index="7"]
-material/0 = SubResource( 6 )
-
 [node name="male_g_2018-tongue01" parent="male_g_2018" index="8"]
 material/0 = SubResource( 7 )
 
 [node name="head" type="BoneAttachment" parent="male_g_2018" index="9"]
-transform = Transform( -1, -2.30423e-07, -2.29915e-07, 1.02422e-07, 0.447712, -0.894177, 3.08974e-07, -0.894177, -0.447713, 4.03414e-07, 0.142239, 1.59528 )
+transform = Transform( -1, -2.19862e-07, 2.91359e-07, 8.92412e-08, -0.921277, -0.388907, 3.53928e-07, -0.388906, 0.921276, -1.42745e-08, 1.54957, -0.149754 )
 bone_name = "head"
 
 [node name="Camera" type="Camera" parent="male_g_2018/head" index="0"]
@@ -164,7 +118,7 @@ transform = Transform( 0.999972, 0.00433851, -0.00613662, -0.00373505, 0.995456,
 transform = Transform( 0.999972, 0.00433851, -0.00613662, -0.00373505, 0.995456, 0.0951422, 0.00652152, -0.0951165, 0.995445, -0.191234, 0.00071426, -0.00124717 )
 
 [node name="penis" type="BoneAttachment" parent="male_g_2018" index="12"]
-transform = Transform( 1, -6.70305e-08, 1.52528e-07, 1.30009e-07, 0.886469, -0.462789, -1.04189e-07, 0.462789, 0.886469, 2.32449e-07, 0.217705, 0.849086 )
+transform = Transform( 1, -5.8841e-07, 1.50795e-07, 4.78567e-07, 0.916085, 0.400986, -3.74085e-07, -0.400986, 0.916085, -3.88638e-08, 0.855228, -0.13257 )
 bone_name = "penis02"
 
 [node name="pee_particles" type="Particles" parent="male_g_2018/penis" index="0"]
@@ -197,20 +151,27 @@ enabled = true
 cast_to = Vector3( 0, 0, -0.5 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="5"]
-tree_root = ExtResource( 16 )
+tree_root = ExtResource( 9 )
 anim_player = NodePath("../male_g_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
 parameters/playback = SubResource( 14 )
 parameters/FrontGrab/playback = SubResource( 15 )
 parameters/FrontGrab/FrontGrabLoop/face_slapped/active = false
-parameters/FrontGrab/FrontGrabLoop/front_grab_speed/scale = 1.0
+parameters/FrontGrab/FrontGrabLoop/front_grab_speed/scale = 0.3
 parameters/FrontGrab/Missionary_1_1/playback = SubResource( 16 )
-parameters/FrontGrabbed/playback = SubResource( 21 )
+parameters/FrontGrabbed/playback = SubResource( 17 )
 parameters/FrontGrabbed/FrontGrabbedLoop/face_slapped/active = false
-parameters/FrontGrabbed/FrontGrabbedLoop/front_grabbed_speed/scale = 1.0
-parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 22 )
+parameters/FrontGrabbed/FrontGrabbedLoop/front_grabbed_speed/scale = 0.3
+parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 18 )
+parameters/GrabCarry/playback = SubResource( 19 )
 parameters/GrabFromBack/walk/blend_amount = 1.0
+parameters/GrabbedCarried/playback = SubResource( 20 )
+parameters/Idle/playback = SubResource( 21 )
+parameters/Idle/conditions/broken_state = false
+parameters/Idle/Stand/TimeScale/scale = 1.0
+parameters/Idle/Stand/blink/active = false
+parameters/Idle/Stand/wiggle/add_amount = 0
 parameters/Navigate/blink/active = false
 parameters/Navigate/turn_left/active = false
 parameters/Navigate/turn_right/active = false
@@ -220,10 +181,10 @@ parameters/Sleep/sleep_scale/scale = 1.0
 parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
-parameters/UseToilet1/playback = SubResource( 18 )
-parameters/UseToilet2/playback = SubResource( 19 )
+parameters/UseToilet1/playback = SubResource( 22 )
+parameters/UseToilet2/playback = SubResource( 23 )
 
-[node name="AI" parent="." index="6" instance=ExtResource( 17 )]
+[node name="AI" parent="." index="6" instance=ExtResource( 10 )]
 
 [node name="ray_far" type="RayCast" parent="." index="7"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.25 )
@@ -231,7 +192,7 @@ cast_to = Vector3( 0, -1, -1.5 )
 
 [node name="minimal_shape" type="CollisionShape" parent="." index="8"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.101824, 0.05 )
-shape = SubResource( 20 )
+shape = SubResource( 24 )
 
-[node name="rpg" parent="." index="9" instance=ExtResource( 18 )]
+[node name="rpg" parent="." index="9" instance=ExtResource( 11 )]
 
