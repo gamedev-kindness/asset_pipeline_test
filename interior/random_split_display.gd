@@ -39,5 +39,6 @@ func _draw():
 #	for k in $random_split.corridoors:
 #		draw_line(k[0], k[1], Color(0, 0.6, 0.6, 1), 1.1, true)
 #		draw_line(k[1], k[2], Color(0, 0.6, 0.6, 1), 1.1, true)
-	for h in $random_split.door_positions:
-		draw_circle(h, 0.1, Color(0, 1, 1, 1))
+	for h in $random_split.rooms.keys():
+		for e in $random_split.rooms[h].exits:
+			draw_circle(e.position, 0.02, Color(0, 1, 1, 1))

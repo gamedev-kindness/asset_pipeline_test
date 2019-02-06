@@ -12,14 +12,13 @@ var tree = {}
 var rnd
 
 var border_rects = []
-var rooms = []
 var grow_rects = []
 
 var doors = []
 var corridoors = []
 var door_positions = []
-var door_data = []
 var split_probability = 0.3
+var door_data = []
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -29,7 +28,7 @@ var split_probability = 0.3
 var state = 0
 func _ready():
 	pass
-
+var rooms = {}
 func point_in_polygon(point, poly):
 	var tris = Geometry.triangulate_polygon(poly)
 	for p in range(0, tris.size(), 3):
@@ -112,6 +111,122 @@ func process_queue():
 	else:
 		rects.push_back(data)
 
+func get_exit_positions(r, t):
+	var room1 = rooms[r]
+	var room2 = rooms[t]
+	var exit1
+	var exit2
+	for k in room1.exits:
+		if k.other == t:
+			exit1 = k
+			break
+	for k in room2.exits:
+		if k.other == r:
+			exit2 = k
+			break
+	if exit1 == null || exit2 == null:
+		return []
+	return [exit1, exit2]
+
+func get_rect_segments(r: Rect2) -> Array:
+		var width_x = r.size.x
+		var width_y = r.size.y
+		var p1 = r.position
+		var p2 = r.position + Vector2(width_x, 0.0)
+		var p3 = r.position + Vector2(width_x, width_y)
+		var p4 = r.position + Vector2(0, width_y)
+		var wall_segment1 = [p1, p2]
+		var wall_segment2 = [p2, p3]
+		var wall_segment3 = [p3, p4]
+		var wall_segment4 = [p4, p1]
+		return [wall_segment1, wall_segment2, wall_segment3, wall_segment4]
+
+func build_room_data():
+	for r in rects:
+		var width_x = int(r.size.x + 0.5)
+		var width_y = int(r.size.y + 0.5)
+		var room = {
+			"rect": r,
+			"x": width_x,
+			"y": width_y,
+			"exits": [],
+			"walls": [],
+#			"grid": []
+		}
+		var segments = get_rect_segments(r)
+		for s in segments:
+			var wall_data = {}
+			wall_data.segment = s
+			room.walls.push_back(wall_data)
+			var seg_angle = (s[1] -s[0]).angle()
+			wall_data.seg_angle = seg_angle
+#		room.grid.resize(width_x * width_y)
+#		var wall_id = 0
+#		for h in range(width_y):
+#			for i in range(width_x):
+#				var element = ELEMENT_WALL
+#				var angle = 0.0
+#				if h in [0, width_y - 1] && i in [0, width_x - 1]:
+#					element = ELEMENT_ANGLE
+#					if h == 0 && i == 0:
+#						angle = PI
+#						wall_id = 2
+#					elif h == width_y - 1 && i == width_x - 1:
+#						angle = 0
+#						wall_id = 3
+#					if i == 0 && h == width_y - 1:
+#						angle = -PI / 2.0
+#						wall_id = 1
+#					elif i == width_x - 1 && h == 0:
+#						angle = PI / 2.0
+#						wall_id = 0
+#				elif h in [0, width_y - 1] && i in range(width_x):
+#					element = ELEMENT_WALL
+#					if h == 0:
+#						angle = PI
+#						wall_id = 0
+#					elif h == width_y - 1:
+#						angle = 0
+#						wall_id = 3
+#				elif i in [0, width_x - 1] && h in range(width_y):
+#					element = ELEMENT_WALL
+#					if i == 0:
+#						angle = -PI / 2.0
+#						wall_id = 1
+#					elif i == width_x - 1:
+#						angle = PI / 2.0
+#						wall_id = 2
+#				else:
+#					element = ELEMENT_FLOOR
+#					angle = 0.0
+#					wall_id = 0
+#				room.grid[h * width_x + i] = {
+#					"element": element,
+#					"angle": angle,
+#					"wall_id": wall_id,
+#					"seg_angle": room.walls[wall_id].seg_angle
+#				}
+#				print("angle: ", angle, " seg_angle: ", room.walls[wall_id].seg_angle, "element: ", element, "wall_id: ", wall_id)
+		rooms[r] = room
+
+
+func build_door_data():
+	for d in door_data:
+		if !rooms.has(d.a):
+			print("bad rect ", d.a)
+		if !rooms.has(d.b):
+			print("bad rect ", d.b)
+		var back_route_exists = false
+		for nd in door_data:
+			if d.a == nd.b && d.b == nd.a:
+				back_route_exists = true
+		if back_route_exists:
+			continue
+		var new_data = d.duplicate()
+		new_data.a = d.b
+		new_data.b = d.a
+		door_data.push_back(new_data)
+
 func discard_rects():
 	var discard_rects = []
 	for k in rects:
@@ -135,6 +250,72 @@ func discard_rects():
 	while discard_rects.size() > 0:
 		rects.erase(discard_rects[0])
 		discard_rects.pop_front()
+
+func get_room_door(room1, room2):
+	var p
+	var pn
+	var wall_no = -1
+	var p1 = room1.rect.position + room1.rect.size / 2.0
+	var p2 = room2.rect.position + room2.rect.size / 2.0
+	for wall_id in range(room1.walls.size()):
+		var s1 = room1.walls[wall_id].segment[0]
+		var s2 = room1.walls[wall_id].segment[1]
+		p = Geometry.segment_intersects_segment_2d(p1, p2, s1, s2)
+		if p:
+			wall_no = wall_id
+			break
+	if !p:
+		return null
+	for r in room2.exits:
+		if p.distance_to(r.position) < 1.0:
+			p = r.position
+#	for wall_id in range(room2.walls.size()):
+#		var s1 = room2.walls[wall_id].segment[0]
+#		var s2 = room2.walls[wall_id].segment[1]
+#		pn = Geometry.segment_intersects_segment_2d(p1, p2, s1, s2)
+#		if pn:
+#			wall_no = wall_id
+#			break
+#	if pn:
+#		p = p.linear_interpolate(pn, 0.5)
+#		var hp = p1 - p
+#		if abs(hp.x) > abs(hp.y):
+#			p += Vector2(hp.x, 0.0).normalized() * 0.1
+#		else:
+#			p += Vector2(0.0, hp.y).normalized() * 0.1
+	return {"position": p, "wall": wall_no}
+
+func add_exit(r: Rect2, t: Rect2) -> void:
+	var room = rooms[r]
+	var door_data = get_room_door(rooms[r], rooms[t])
+	if !door_data:
+		return
+	if room.x == 0 || room.y == 0:
+		return
+	var exit_data = {}
+	var p = door_data.position
+	exit_data.wall_id = door_data.wall
+	exit_data.position = p
+	exit_data.rel_pos = p - r.position
+	exit_data.other = t
+	exit_data.current = r
+	var door_x = int(clamp(exit_data.rel_pos.x, 0.0, room.x - 1))
+	var door_y = int(clamp(exit_data.rel_pos.y, 0.0, room.y - 1))
+	exit_data.door_x = door_x
+	exit_data.door_y = door_y
+#	room.grid[door_y * room.x + door_x].element = ELEMENT_DOOR
+	rooms[r].exits.push_back(exit_data)
+
+func build_door_grid_data():
+	for d in door_data:
+		if d.a == d.b:
+			continue
+#		var exit_data = {}
+		var r = d.a
+		var t = d.b
+		if r == null || t == null:
+			continue
+		add_exit(r, t)
 
 func init_grown_rects():
 	var max_area = 0
@@ -462,8 +643,17 @@ func _process(delta):
 				build_doors()
 				state = 6
 		6:
+			build_room_data()
 			state = 7
 		7:
+			print("door data")
+			build_door_data()
+			state = 8
+		8:
+			print("door grid data")
+			build_door_grid_data()
+			state = 9
+		9:
 			print("completed room set")
 			emit_signal("complete")
-			state = 8
+			state = 10

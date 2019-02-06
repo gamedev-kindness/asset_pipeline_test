@@ -11,7 +11,7 @@ script = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 0.1, 0.1 )
+zoom = Vector2( 0.02, 0.02 )
 
 [node name="outline" type="Polygon2D" parent="."]
 color = Color( 1, 1, 1, 0 )

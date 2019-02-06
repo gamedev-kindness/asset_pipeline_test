@@ -11,10 +11,72 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+func create_horiz_surface(surf: SurfaceTool, r: Rect2, height: float, step: float, invert: bool):
+		var xes = []
+		var yes = []
+		var x0 = r.position.x
+		var y0 = r.position.y
+		var n = Vector3(0, 1, 0)
+		while r.position.x + r.size.x - x0 > step:
+			xes.push_back(x0)
+			x0 += step
+		while r.position.y + r.size.y - y0 > step:
+			yes.push_back(y0)
+			y0 += step
+		if xes.size() == 0:
+			xes.push_back(r.position.x)
+		if yes.size() == 0:
+			yes.push_back(r.position.y)
+		xes.push_back(r.position.x + r.size.x)
+		yes.push_back(r.position.y + r.size.y)
+		for s in range(xes.size() - 1):
+			for t in range(yes.size() - 1):
+				var tp0 = Vector3(xes[s], height, yes[t])
+				var tp1 = Vector3(xes[s], height, yes[t + 1])
+				var tp2 = Vector3(xes[s + 1], height, yes[t + 1])
+				var tp3 = Vector3(xes[s + 1], height, yes[t])
+				var tri1 = [tp0, tp2, tp1]
+				var tri2 = [tp0, tp3, tp2]
+				if invert:
+					tri1.invert()
+					tri2.invert()
+				for sp in tri1 + tri2:
+					surf.add_normal(n)
+					surf.add_uv(Vector2(sp.x / 3.0, sp.z / 3.0))
+					surf.add_vertex(sp)
+func create_wall_segment(surf: SurfaceTool, sp1: Vector2, sp2: Vector2, step: float, heights: Array):
+	var xes = []
+	var p = sp1
+	var dir = (sp2 - sp1).normalized()
+	var side = dir.tangent()
+	while p.distance_to(sp2) > step:
+		xes.push_back(p)
+		p += dir * 0.1
+		assert xes.size() < 5000
+	if xes.size() == 0:
+		xes.push_back(sp1)
+	xes.push_back(sp2)
+	for t in range(xes.size() - 1):
+		for h in range(0, heights.size(), 2):
+			var tp0 = Vector3(xes[t].x, heights[h], xes[t].y)
+			var tp1 = Vector3(xes[t].x, heights[h + 1], xes[t].y)
+			var tp2 = Vector3(xes[t + 1].x, heights[h + 1], xes[t + 1].y)
+			var tp3 = Vector3(xes[t + 1].x, heights[h], xes[t + 1].y)
+			var n = Vector3(side.x, 0.0, side.y)
+			var tri1 = [tp0, tp1, tp2]
+			var tri2 = [tp0, tp2, tp3]
+			for sp in tri1 + tri2:
+				surf.add_normal(n)
+				surf.add_uv(Vector2(sp.x / 3.0, sp.y / 3.0))
+				surf.add_vertex(sp)
+
+
 func create_walls(rects: Array, rooms: Dictionary, height: float, walls_mat: Material) -> ArrayMesh:
 	var walls_surf = SurfaceTool.new()
 	var mdt_walls = MeshDataTool.new()
 	var mesh = ArrayMesh.new()
+	var state = 0
+	var old_state = 0
 	walls_surf.begin(Mesh.PRIMITIVE_TRIANGLES)
 	for xr in rects:
 		var r = Rect2(xr.position + Vector2(0.1, 0.1), xr.size - Vector2(0.2, 0.2))
@@ -26,37 +88,95 @@ func create_walls(rects: Array, rooms: Dictionary, height: float, walls_mat: Mat
 		for seg in range(poly.size()):
 			var sp1 = poly[seg]
 			var sp2 = poly[(seg + 1) % poly.size()]
-			var xes = []
+			
 			var dir = (sp2 - sp1).normalized()
 			var side = dir.tangent()
 			var p = sp1
-			while p.distance_to(sp2) > 0.1:
-				xes.push_back(p)
-				p += dir * 0.1
-			if xes.size() == 0:
-				xes.push_back(sp1)
-			xes.push_back(sp2)
-			for t in range(xes.size() - 1):
-				var room = rooms[xr]
-				var door = false
+			var room = rooms[xr]
+			var path = [sp1]
+			var path_region = []
+			var exits = []
+			path_region.push_back(0)
+			if sp1.x == sp2.x:
 				for k in room.exits:
-					if xes[t].distance_to(k.position) <= 0.5:
-						door = true
+					if abs(k.position.x - sp1.x) < 0.11 && k.position.y > min(sp1.y, sp2.y) && k.position.y < max(sp1.y, sp2.y):
+						var tpos = Vector2(sp1.x, k.position.y)
+#						exits.push_back(tpos - dir * 0.5)
+						exits.push_back(tpos)
+#						exits.push_back(tpos + dir * 0.5)
+#						print("\t||| added: ", k.position, " -> ", tpos, " sp1: ", sp1)
+			elif sp1.y == sp2.y:
+				for k in room.exits:
+					if abs(k.position.y - sp1.y) < 0.11 && k.position.x > min(sp1.x, sp2.x) && k.position.x < max(sp1.x, sp2.x):
+						var tpos = Vector2(k.position.x, sp1.y)
+#						exits.push_back(tpos - dir * 0.5)
+						exits.push_back(tpos)
+#						exits.push_back(tpos + dir * 0.5)
+#						print("\t--- added: ", k.position, " -> ", tpos, " sp1: ", sp1)
+#			print("exits size: ", exits.size())
+			for k in range(exits.size()):
+				for l in range(exits.size()):
+					if k == l:
+						continue
+					if sp1.distance_to(exits[k]) < sp1.distance_to(exits[l]):
+						var tmp = exits[l]
+						exits[l] = exits[k]
+						exits[k] = tmp
+			var exits_unique = []
+			for h in range(exits.size()):
+				var ok = true
+				for g in range(exits_unique.size()):
+					if exits[h].distance_to(exits_unique[g]) < 0.1:
+						ok = false
 						break
-				var tp0 = Vector3(xes[t].x, 0.0, xes[t].y)
-				var tp1 = Vector3(xes[t].x, height, xes[t].y)
-				var tp2 = Vector3(xes[t + 1].x, height, xes[t + 1].y)
-				var tp3 = Vector3(xes[t + 1].x, 0.0, xes[t + 1].y)
-				if door:
-					tp0.y = 2.0
-					tp3.y = 2.0
-				var n = Vector3(side.x, 0.0, side.y)
-				var tri1 = [tp0, tp1, tp2]
-				var tri2 = [tp0, tp2, tp3]
-				for sp in tri1 + tri2:
-					walls_surf.add_normal(n)
-					walls_surf.add_uv(Vector2(sp.x / 3.0, sp.y / 3.0))
-					walls_surf.add_vertex(sp)
+				if ok:
+					exits_unique.push_back(exits[h])
+			for m in exits_unique:
+				var can_add = true
+				var dl = 0.6
+				var de = 0.5
+				var dst = 0.0
+				for r in range(path.size()):
+					dst = m.distance_to(path[r])
+					if dst < dl + 0.1:
+						can_add = false
+						break
+				if can_add:
+					path.push_back(m - dir * dl)
+					path_region.push_back(0)
+					path.push_back(m - dir * de)
+					path_region.push_back(1)
+					path.push_back(m + dir * de)
+					path_region.push_back(0)
+					path.push_back(m + dir * dl)
+					path_region.push_back(0)
+					var door_rect = Rect2(m - dir * de, Vector2())
+					door_rect = door_rect.expand(m - dir *de)
+					print("1:", door_rect)
+					door_rect = door_rect.expand(m + dir *de)
+					print("2:", door_rect)
+					door_rect = door_rect.expand(m - dir *de + side * 0.1)
+					print("3:", door_rect)
+					door_rect = door_rect.expand(m - dir *de + side * 0.1)
+					print("4:", door_rect)
+					create_horiz_surface(walls_surf, door_rect, 2.0, 0.2, true)
+					create_horiz_surface(walls_surf, door_rect, 0.0, 0.2, false)
+				else:
+					print("can't add door, dst: ", dst)
+			path.push_back(sp2)
+			path_region.push_back(0)
+			var re = []
+			assert path.size() < 24
+			assert path.size() == path_region.size()
+			
+			for tn in range(path.size() - 1):
+				var heights = []
+				if path_region[tn] == 0:
+					heights = [0.0, 1.0, 1.0, 2.0, 2.0, height]
+				elif path_region[tn] == 1:
+					heights = [2.0, height]
+				create_wall_segment(walls_surf, path[tn], path[tn + 1], 0.1, heights)
+
 	walls_surf.generate_normals()
 	walls_surf.index()
 	mdt_walls.create_from_surface(walls_surf.commit(), 0)

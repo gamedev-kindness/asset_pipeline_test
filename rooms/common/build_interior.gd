@@ -18,7 +18,6 @@ var doors = [Vector2(-10, 0)]
 var wall_width = 2.0
 
 var rnd
-var rooms = {}
 var door_pairing = {}
 
 var room_classes = {
@@ -105,8 +104,8 @@ func classify_room(room):
 		return null
 	for m in mandatory_rooms:
 		var ok = false
-		for h in rooms.keys():
-			var r = rooms[h]
+		for h in $random_split.rooms.keys():
+			var r = $random_split.rooms[h]
 			if !r.has("class") || r.class == null:
 				continue
 			if r.class == room_classes[m]:
@@ -126,8 +125,8 @@ func check_room_classes():
 		m_classes.push_back(room_classes[k])
 	for c in m_classes:
 		var ok = false
-		for k in rooms.keys():
-			if rooms[k].class == c:
+		for k in $random_split.rooms.keys():
+			if $random_split.rooms[k].class == c:
 				ok = true
 				break
 		if !ok:
@@ -185,138 +184,23 @@ func build_outline():
 			sp.translation = actual_pos
 			sp.rotation.y = -(p2 - p1).angle()
 			p += dir * wall_width
-func get_rect_segments(r: Rect2) -> Array:
-		var width_x = r.size.x
-		var width_y = r.size.y
-		var p1 = r.position
-		var p2 = r.position + Vector2(width_x, 0.0)
-		var p3 = r.position + Vector2(width_x, width_y)
-		var p4 = r.position + Vector2(0, width_y)
-		var wall_segment1 = [p1, p2]
-		var wall_segment2 = [p2, p3]
-		var wall_segment3 = [p3, p4]
-		var wall_segment4 = [p4, p1]
-		return [wall_segment1, wall_segment2, wall_segment3, wall_segment4]
 enum {ELEMENT_FLOOR, ELEMENT_ANGLE, ELEMENT_WALL, ELEMENT_DOOR}
-func get_room_door(room1, room2):
-	var p
-	var wall_no = -1
-	var p1 = room1.rect.position + room1.rect.size / 2.0
-	var p2 = room2.rect.position + room2.rect.size / 2.0
-	for wall_id in range(room1.walls.size()):
-		var s1 = room1.walls[wall_id].segment[0]
-		var s2 = room1.walls[wall_id].segment[1]
-		p = Geometry.segment_intersects_segment_2d(p1, p2, s1, s2)
-		if p:
-			wall_no = wall_id
-			break
-	if !p:
-		return null
-	else:
-		return {"position": p, "wall": wall_no}
-func build_room_data():
-	for r in $random_split.rects:
-		var width_x = int(r.size.x + 0.5)
-		var width_y = int(r.size.y + 0.5)
-		var room = {
-			"rect": r,
-			"x": width_x,
-			"y": width_y,
-			"exits": [],
-			"walls": [],
-			"grid": []
-		}
-		var segments = get_rect_segments(r)
-		for s in segments:
-			var wall_data = {}
-			wall_data.segment = s
-			room.walls.push_back(wall_data)
-			var seg_angle = (s[1] -s[0]).angle()
-			wall_data.seg_angle = seg_angle
-		room.grid.resize(width_x * width_y)
-		var wall_id = 0
-		for h in range(width_y):
-			for i in range(width_x):
-				var element = ELEMENT_WALL
-				var angle = 0.0
-				if h in [0, width_y - 1] && i in [0, width_x - 1]:
-					element = ELEMENT_ANGLE
-					if h == 0 && i == 0:
-						angle = PI
-						wall_id = 2
-					elif h == width_y - 1 && i == width_x - 1:
-						angle = 0
-						wall_id = 3
-					if i == 0 && h == width_y - 1:
-						angle = -PI / 2.0
-						wall_id = 1
-					elif i == width_x - 1 && h == 0:
-						angle = PI / 2.0
-						wall_id = 0
-				elif h in [0, width_y - 1] && i in range(width_x):
-					element = ELEMENT_WALL
-					if h == 0:
-						angle = PI
-						wall_id = 0
-					elif h == width_y - 1:
-						angle = 0
-						wall_id = 3
-				elif i in [0, width_x - 1] && h in range(width_y):
-					element = ELEMENT_WALL
-					if i == 0:
-						angle = -PI / 2.0
-						wall_id = 1
-					elif i == width_x - 1:
-						angle = PI / 2.0
-						wall_id = 2
-				else:
-					element = ELEMENT_FLOOR
-					angle = 0.0
-					wall_id = 0
-				room.grid[h * width_x + i] = {
-					"element": element,
-					"angle": angle,
-					"wall_id": wall_id,
-					"seg_angle": room.walls[wall_id].seg_angle
-				}
-				print("angle: ", angle, " seg_angle: ", room.walls[wall_id].seg_angle, "element: ", element, "wall_id: ", wall_id)
-		rooms[r] = room
-func build_door_data():
-	for d in $random_split.door_data:
-		if !rooms.has(d.a):
-			print("bad rect ", d.a)
-		if !rooms.has(d.b):
-			print("bad rect ", d.b)
-		var back_route_exists = false
-		for nd in $random_split.door_data:
-			if d.a == nd.b && d.b == nd.a:
-				back_route_exists = true
-		if back_route_exists:
-			continue
-		var new_data = d.duplicate()
-		new_data.a = d.b
-		new_data.b = d.a
-		$random_split.door_data.push_back(new_data)
-
-func get_exit_positions(r, t):
-	var room1 = rooms[r]
-	var room2 = rooms[t]
-	var exit1
-	var exit2
-	for k in room1.exits:
-		if k.other == t:
-			exit1 = k
-			break
-	for k in room2.exits:
-		if k.other == r:
-			exit2 = k
-			break
-	if exit1 == null || exit2 == null:
-		return []
-	return [exit1, exit2]
+#func fix_foom_exits():
+#	for r1 in rooms.keys():
+#		for r2 in rooms.keys():
+#			if r1 == r2:
+#				continue
+#			for e1 in range(rooms[r1].exits.size()):
+#				for e2 in range(rooms[r2].exits.size()):
+#					var me1 = rooms[r1].exits[e1].position
+#					var me2 = rooms[r2].exits[e2].position
+#					if me1.distance_to(me2) < 1.0:
+#						var np = me1.linear_interpolate(me2, 0.5)
+#						rooms[r1].exits[e1].position = np
+#						rooms[r2].exits[e2].position = np
 func classify_rooms():
-	for k in rooms.keys():
-		rooms[k].class = classify_room(rooms[k])
+	for k in $random_split.rooms.keys():
+		$random_split.rooms[k].class = classify_room($random_split.rooms[k])
 var room_connections = []
 func build_room_connection_pairs():
 	print("door data size:", $random_split.door_data.size())
@@ -325,7 +209,7 @@ func build_room_connection_pairs():
 			continue
 		var r = d.a
 		var t = d.b
-		var exits = get_exit_positions(r, t)
+		var exits = $random_split.get_exit_positions(r, t)
 		if exits.size() > 0:
 #			var p1 = r.position + Vector2(exits[0].door_x, exits[0].door_y)
 #			var p2 = t.position + Vector2(exits[1].door_x, exits[1].door_y)
@@ -350,36 +234,6 @@ func clear_connections():
 		m.queue_free()
 	room_connections.clear()
 
-func add_exit(r: Rect2, t: Rect2) -> void:
-	var room = rooms[r]
-	var door_data = get_room_door(rooms[r], rooms[t])
-	if !door_data:
-		return
-	if room.x == 0 || room.y == 0:
-		return
-	var exit_data = {}
-	var p = door_data.position
-	exit_data.wall_id = door_data.wall
-	exit_data.position = p
-	exit_data.rel_pos = p - r.position
-	exit_data.other = t
-	exit_data.current = r
-	var door_x = int(clamp(exit_data.rel_pos.x, 0.0, room.x - 1))
-	var door_y = int(clamp(exit_data.rel_pos.y, 0.0, room.y - 1))
-	exit_data.door_x = door_x
-	exit_data.door_y = door_y
-	room.grid[door_y * room.x + door_x].element = ELEMENT_DOOR
-	rooms[r].exits.push_back(exit_data)
-func build_door_grid_data():
-	for d in $random_split.door_data:
-		if d.a == d.b:
-			continue
-#		var exit_data = {}
-		var r = d.a
-		var t = d.b
-		if r == null || t == null:
-			continue
-		add_exit(r, t)
 
 func build_room_floors():
 	print("rect count: ", $random_split.rects.size())
@@ -394,7 +248,7 @@ func build_room_floors():
 	col.shape = colmesh
 	sb.add_child(col)
 func build_room_walls():
-	var walls_mesh = $geometry_gen.create_walls($random_split.rects, rooms, 2.8, load("res://rooms/room_kit/test_wall1_material.tres"))
+	var walls_mesh = $geometry_gen.create_walls($random_split.rects, $random_split.rooms, 2.8, load("res://rooms/room_kit/test_wall1_material.tres"))
 	var walls_mi = MeshInstance.new()
 	walls_mi.mesh = walls_mesh
 	add_child(walls_mi)
@@ -408,39 +262,39 @@ func build_rooms():
 	var id = 0
 	for r in $random_split.rects:
 		print("room: ", id)
-		var room = rooms[r]
+		var room = $random_split.rooms[r]
 		var width_x = room.x
 		var width_y = room.y
 		print("room: ", id, "size: ", width_x, " ", width_y)
 		
-		for h in range(width_y):
-			for i in range(width_x):
-				var angle = room.grid[h * width_x + i].angle
-				var wall = false
-				var wall_angle = false
-				var door = false
-				match(room.grid[h * width_x + i].element):
+#		for h in range(width_y):
+#			for i in range(width_x):
+#				var angle = room.grid[h * width_x + i].angle
+#				var wall = false
+#				var wall_angle = false
+#				var door = false
+#				match(room.grid[h * width_x + i].element):
 #					ELEMENT_ANGLE:
 #						wall_angle = true
 #						var angle_model = internal_angle.instance()
 #						add_child(angle_model)
 #						angle_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
 #						angle_model.rotation.y = angle
-					ELEMENT_WALL:
+#					ELEMENT_WALL:
 #						wall = true
 #						var wall_model = internal_wall1.instance()
 #						add_child(wall_model)
 #						wall_model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h)
 #						wall_model.rotation.y = angle
-						if room.class:
-							if rnd.randf() < room.class.wall_item_probability:
-								var item = room.class.wall_items[rnd.randi() % room.class.wall_items.size()]
-								var model = items[item].model.instance()
-								add_child(model)
-								var offset = Vector3(0.0, 0, -0.1)
-								var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
-								model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h) + tf
-								model.rotation.y = PI + angle
+#						if room.class:
+#							if rnd.randf() < room.class.wall_item_probability:
+#								var item = room.class.wall_items[rnd.randi() % room.class.wall_items.size()]
+#								var model = items[item].model.instance()
+#								add_child(model)
+#								var offset = Vector3(0.0, 0, -0.1)
+#								var tf = Transform(Quat(Vector3(0, 1, 0), angle)) * offset
+#								model.translation = Vector3(r.position.x + i, 0.0, r.position.y + h) + tf
+#								model.rotation.y = PI + angle
 #					ELEMENT_DOOR:
 #						door = true
 #						var door_model = internal_door.instance()
@@ -465,6 +319,13 @@ func build_rooms():
 					bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
 					if r.size.y > r.size.x:
 						bed_model.rotation.y = -PI / 2.0
+		elif room.class && room.class == room_classes.bathroom && r.size.x >= 1.0 && r.size.y >= 1.0:
+			var pos = Vector3()
+			var toilet_model = toilet.instance()
+			add_child(toilet_model)
+			toilet_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
+			if r.size.y > r.size.x:
+				toilet_model.rotation.y = -PI / 2.0
 #		elif room.class && room.class == room_classes.bedroom:
 #			var pos = Vector3()
 #			var bed_model = bed.instance()
@@ -496,28 +357,23 @@ func _process(delta):
 			print("reset values")
 			rnd.seed = OS.get_unix_time()
 			$random_split.state = 0
-			rooms.clear()
+			$random_split.rooms.clear()
 			door_pairing.clear()
 			clear_connections()
 			print("waiting for signal")
 			state = -1
 
 		1:
-			build_outline()
 			state = 2
 		2:
-			build_room_data()
 			state = 3
 		3:
-			print("door data")
-			build_door_data()
 			state = 4
 		4:
 			state = 5
 		5:
-			print("door grid data")
-			build_door_grid_data()
 			print("room connections")
+#			fix_foom_exits()
 			build_room_connection_pairs()
 			state = 6
 		6:
@@ -544,6 +400,7 @@ func _process(delta):
 			build_navigation()
 			state = 10
 		10:
+			build_outline()
 			for k in get_tree().get_nodes_in_group("beds"):
 				k.emit_signal("spawn")
 			state = 11
