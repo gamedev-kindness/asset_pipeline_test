@@ -12,7 +12,7 @@ func _ready():
 #func _process(delta):
 #	pass
 func init(obj):
-	awareness.at[obj].travel("Sleep")
+	awareness.at[obj].travel("Stand")
 
 func run(obj, delta):
 	# Forcing AI wakeup/sleeping - need tunables
@@ -20,6 +20,9 @@ func run(obj, delta):
 		if awareness.action_cooldown[obj] > 0.0:
 			awareness.action_cooldown[obj] -= delta
 			return ""
+	if awareness.at[obj].get_current_node() != "Stand":
+		awareness.at[obj].travel("Stand")
+		return ""
 	return "SelectTarget"
 
 

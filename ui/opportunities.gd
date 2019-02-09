@@ -33,7 +33,7 @@ func _process(delta):
 		for i in awareness.active_items[current]:
 			if i.is_in_group("characters") && !current.action:
 				$Talk.show()
-				if awareness.at[i].get_current_node() == "Sleeping":
+				if awareness.at[i]["parameters/playback"].get_current_node() == "Sleeping":
 					$WakeUp.show()
 				if awareness.get_other_direction(current, i) == "BACK":
 					$GrabFromBack.show()

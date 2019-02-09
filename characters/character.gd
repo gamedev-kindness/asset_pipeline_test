@@ -32,13 +32,15 @@ var actions = {
 			"active": "KickToBed",
 			"passive": "KickedToBed",
 			"ik": true,
+			"tears": true,
 			"direction":"BACK",
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), 0)),
 	},
 	"grab_from_back": {
 			"active": "GrabFromBack",
-			"passive": "GrabbedFromBack",
+			"passive":"GrabbedFromBack",
 			"ik": true,
+			"tears": true,
 			"direction":"BACK",
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), 0)),
 			"valid_actions": ["Navigate", "Stand"]
@@ -47,12 +49,14 @@ var actions = {
 			"active": "FrontGrab",
 			"passive": "FrontGrabbed",
 			"ik": false,
+			"tears": true,
 			"direction":"FRONT",
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI)),
 	},
 	"front_grab_face_slap": {
 			"active": "FrontGrabFaceSlap",
 			"passive": "FrontGrabbedFaceSlapped",
+			"tears": true,
 			"ik": false,
 			"direction":"FRONT",
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
@@ -60,10 +64,19 @@ var actions = {
 	"missionary1": {
 			"active": "Missionary1_1",
 			"passive": "Missionary1_2",
+			"tears": true,
 			"ik": false,
 			"direction":"FRONT",
 			"xform": Transform(Basis(), Vector3(0, 0, -0.5)) * Transform(Quat(Vector3(0, 1, 0), PI))
 	}
+}
+
+var pair_act = {
+	"GrabFromBack": {"name": "grab_from_back", "check": "check_state_valid"},
+	"KickToBed": {"name": "kick_to_bed", "check": "check_state_valid"},
+	"FrontGrab": {"name": "front_grab", "check": "check_state_valid"},
+	"FrontGrabFaceSlap": {"name": "front_grab_face_slap"},
+	"Missionary1": {"name": "missionary1"}
 }
 
 var set_count = 0
@@ -140,7 +153,7 @@ func do_action(other, name):
 		self.other = other
 		print("setting main to FrontGrab")
 		var parent_sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-		other.emit_signal("passive_action", self, passive, actions[name].ik, actions[name].xform)
+		other.emit_signal("passive_action", self, passive, actions[name].ik, actions[name].xform, actions[name].tears)
 		while parent_sm.get_current_node() != "FrontGrab":
 			parent_sm.travel("FrontGrab")
 			yield(get_tree().create_timer(0.2), "timeout")
@@ -151,7 +164,8 @@ func do_action(other, name):
 		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 		sm.travel(active)
 		self.other = other
-		other.emit_signal("passive_action", self, passive, actions[name].ik, actions[name].xform)
+		awareness.passive_action[other] = {"action": passive, "other": self}
+#		other.emit_signal("passive_action", self, passive, actions[name].ik, actions[name].xform, actions[name].tears)
 	if actions[name].ik:
 		emit_signal("set_feet_ik", true)
 		feet_ik_enabled = true
@@ -161,7 +175,7 @@ var allowed_states_for_action = ["Navigate", "Stand"]
 func check_state_valid(other):
 	if !awareness.at.has(other):
 		return false
-	return 	awareness.at[other].get_current_node() in allowed_states_for_action
+	return 	awareness.at[other]["parameters/playback"].get_current_node() in allowed_states_for_action
 func do_ui_action(act):
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 	var other = self.other
@@ -170,13 +184,6 @@ func do_ui_action(act):
 	print(act)
 	if other == null:
 		print("other is null")
-	var pair_act = {
-		"GrabFromBack": {"name": "grab_from_back", "check": "check_state_valid"},
-		"KickToBed": {"name": "kick_to_bed", "check": "check_state_valid"},
-		"FrontGrab": {"name": "front_grab", "check": "check_state_valid"},
-		"FrontGrabFaceSlap": {"name": "front_grab_face_slap"},
-		"Missionary1": {"name": "missionary1"}
-	}
 	if act in pair_act.keys():
 		if pair_act[act].has("check") && pair_act[act].check == "check_state_valid":
 			print("checking state:")
@@ -199,9 +206,10 @@ func do_ui_action(act):
 	elif act == "LeaveAction":
 			set_action_mode(false)
 			if other != null:
-				other.set_action_mode(false)
+#				other.set_action_mode(false)
 				remove_collision_exception_with(other)
 				other.remove_collision_exception_with(self)
+				awareness.passive_action.erase(other)
 			if sm.is_playing():
 				sm.travel("Stand")
 			self.other = null
@@ -229,27 +237,27 @@ func do_active_action(other):
 #			do_action(other, "kick_to_bed")
 #		else:
 #			do_action(other, "grab_from_back")
-func do_passive_action(other, action, ik, xform):
-	if action in ["FrontGrabbedFaceSlapped", "Missionary1_2"]:
-		var sm_parent: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-		sm_parent.travel("FrontGrabbed")
-		while sm_parent.get_current_node() != "FrontGrabbed":
-			sm_parent.travel("FrontGrabbed")
-			yield(get_tree().create_timer(0.2), "timeout")
-		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/FrontGrabbed/playback"]
-		sm.travel(action)
-	else:
-		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-		sm.travel(action)
-	if ik:
-		emit_signal("set_feet_ik", true)
-		feet_ik_enabled = true
-		
-	var move_fix = xform
-	transform = (other.transform * move_fix).orthonormalized()
-	set_action_mode(true)
-	enable_tears()
-	self.other = other
+#func do_passive_action(other, action, ik, xform):
+#	if action in ["FrontGrabbedFaceSlapped", "Missionary1_2"]:
+#		var sm_parent: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+#		sm_parent.travel("FrontGrabbed")
+#		while sm_parent.get_current_node() != "FrontGrabbed":
+#			sm_parent.travel("FrontGrabbed")
+#			yield(get_tree().create_timer(0.2), "timeout")
+#		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/FrontGrabbed/playback"]
+#		sm.travel(action)
+#	else:
+#		var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+#		sm.travel(action)
+#	if ik:
+#		emit_signal("set_feet_ik", true)
+#		feet_ik_enabled = true
+#
+#	var move_fix = xform
+#	transform = (other.transform * move_fix).orthonormalized()
+#	set_action_mode(true)
+#	enable_tears()
+#	self.other = other
 func _ready():
 	skel = get_children()[0]
 	fps_camera = get_children()[0].get_node("head/Camera")
@@ -258,7 +266,7 @@ func _ready():
 	skel.rotation = Vector3()
 	add_to_group("characters")
 	connect("active_action", self, "do_active_action")
-	connect("passive_action", self, "do_passive_action")
+#	connect("passive_action", self, "do_passive_action")
 	connect("ui_action", self, "do_ui_action")
 	disable_tears()
 	$AnimationTree.active = true
@@ -291,6 +299,16 @@ func _ready():
 
 var despawn_cooldown = 0.0
 var despawned = false
+
+func get_head_position():
+	return skel.get_node("head").global_transform.origin
+#func dialogue(other):
+#	print(self.name, " initiated dialogue with ", other.name)
+#	$dialogue.dialogue(self, other, skel.get_node("head").global_transform.origin)
+#	return true
+#func answer_dialogue(other):
+#	print(self.name, " answers ", other.name)
+#	$dialogue.dialogue_answer(self, other, skel.get_node("head").global_transform.origin)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func process_player_navigation(delta, sm):
@@ -342,19 +360,19 @@ func _process(delta):
 					sm.travel("Stand")
 					$main_shape.disabled = false
 
-	elif posessed && action:
-		if settings.game_input_enabled:
-			if Input.is_action_just_pressed("activate") && cooldown < 0.1:
-				set_action_mode(false)
-				other.set_action_mode(false)
-				remove_collision_exception_with(other)
-				if sm.is_playing():
-					sm.travel("Stand")
-#				print("action stopped")
-				cooldown = 1.0
+#	elif posessed && action:
+#		if settings.game_input_enabled:
+#			if Input.is_action_just_pressed("activate") && cooldown < 0.1:
+#				set_action_mode(false)
+#				other.set_action_mode(false)
+#				remove_collision_exception_with(other)
+#				if sm.is_playing():
+#					sm.travel("Stand")
+##				print("action stopped")
+#				cooldown = 1.0
 		
-	else:
-		if $AI.has_method("run") && !action:
+	elif !posessed:
+		if $AI.has_method("run"):
 			$AI.run(delta, self, $AnimationTree)
 	if true:
 		var rm = $AnimationTree.get_root_motion_transform()

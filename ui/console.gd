@@ -90,7 +90,7 @@ func process_command(c: String):
 			for k in get_tree().get_nodes_in_group("characters"):
 				d.text += "\n" + k.name + "\n===\n"
 				if awareness.at.has(k):
-					var sm = awareness.at[k]
+					var sm = awareness.at[k]["parameters/playback"]
 					d.text += "state: " +  sm.get_current_node() + "\n"
 				if awareness.targets.has(k):
 					d.text += "target: " + str(awareness.targets[k]) + "\n"

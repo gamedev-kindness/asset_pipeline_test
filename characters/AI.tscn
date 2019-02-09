@@ -1,14 +1,17 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://characters/AI.gd" type="Script" id=1]
 [ext_resource path="res://characters/AI/WalkTo.gd" type="Script" id=2]
-[ext_resource path="res://characters/AI/states/Sleeping.gd" type="Script" id=3]
-[ext_resource path="res://characters/AI/states/SelectTarget.gd" type="Script" id=4]
-[ext_resource path="res://characters/AI/states/GoToTarget.gd" type="Script" id=5]
-[ext_resource path="res://characters/AI/states/ActivateTarget.gd" type="Script" id=6]
-[ext_resource path="res://characters/AI/states/RandomWalk.gd" type="Script" id=7]
-[ext_resource path="res://characters/AI/states/broken.gd" type="Script" id=8]
-[ext_resource path="res://characters/AI/states/slave.gd" type="Script" id=9]
+[ext_resource path="res://characters/AI/states/BTRoot.gd" type="Script" id=3]
+[ext_resource path="res://characters/AI/states/BTUtilitySelector.gd" type="Script" id=4]
+[ext_resource path="res://characters/AI/states/BTSelector.gd" type="Script" id=5]
+[ext_resource path="res://characters/AI/states/BTSequence.gd" type="Script" id=6]
+[ext_resource path="res://characters/AI/states/BTCondHasTarget.gd" type="Script" id=7]
+[ext_resource path="res://characters/AI/states/BTActivateTarget.gd" type="Script" id=8]
+[ext_resource path="res://characters/AI/states/BTWalkToTarget.gd" type="Script" id=9]
+[ext_resource path="res://characters/AI/states/BTSelectTarget.gd" type="Script" id=10]
+[ext_resource path="res://characters/AI/states/BTInitiateDialogue.gd" type="Script" id=11]
+[ext_resource path="res://characters/AI/states/BTPlayPassiveAction.gd" type="Script" id=12]
 
 [node name="AI" type="Node"]
 script = ExtResource( 1 )
@@ -22,24 +25,124 @@ script = ExtResource( 2 )
 
 [node name="states" type="Node" parent="."]
 
-[node name="Sleeping" type="Node" parent="states"]
+[node name="BTRoot" type="Node" parent="states"]
 script = ExtResource( 3 )
 
-[node name="SelectTarget" type="Node" parent="states"]
+[node name="BTUtilitySelector" type="Node" parent="states/BTRoot"]
 script = ExtResource( 4 )
 
-[node name="GoToTarget" type="Node" parent="states"]
+[node name="toilet" type="Node" parent="states/BTRoot/BTUtilitySelector"]
+editor/display_folded = true
 script = ExtResource( 5 )
 
-[node name="ActivateTarget" type="Node" parent="states"]
+[node name="BTSequence" type="Node" parent="states/BTRoot/BTUtilitySelector/toilet"]
 script = ExtResource( 6 )
 
-[node name="RandomWalk" type="Node" parent="states"]
+[node name="BTCondHasTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/toilet/BTSequence"]
 script = ExtResource( 7 )
 
-[node name="broken" type="Node" parent="states"]
+[node name="BTSelector" type="Node" parent="states/BTRoot/BTUtilitySelector/toilet/BTSequence"]
+script = ExtResource( 5 )
+
+[node name="BTActivateTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/toilet/BTSequence/BTSelector"]
 script = ExtResource( 8 )
 
-[node name="slave" type="Node" parent="states"]
+[node name="BTWalkToTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/toilet/BTSequence/BTSelector"]
 script = ExtResource( 9 )
+
+[node name="BTSelectTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/toilet"]
+script = ExtResource( 10 )
+target = "toilet"
+
+[node name="shower" type="Node" parent="states/BTRoot/BTUtilitySelector"]
+editor/display_folded = true
+script = ExtResource( 5 )
+
+[node name="BTSequence" type="Node" parent="states/BTRoot/BTUtilitySelector/shower"]
+script = ExtResource( 6 )
+
+[node name="BTCondHasTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/shower/BTSequence"]
+script = ExtResource( 7 )
+
+[node name="BTSelector" type="Node" parent="states/BTRoot/BTUtilitySelector/shower/BTSequence"]
+script = ExtResource( 5 )
+
+[node name="BTActivateTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/shower/BTSequence/BTSelector"]
+script = ExtResource( 8 )
+
+[node name="BTWalkToTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/shower/BTSequence/BTSelector"]
+script = ExtResource( 9 )
+
+[node name="BTSelectTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/shower"]
+script = ExtResource( 10 )
+target = "shower"
+
+[node name="characters" type="Node" parent="states/BTRoot/BTUtilitySelector"]
+editor/display_folded = true
+script = ExtResource( 5 )
+
+[node name="BTSequence" type="Node" parent="states/BTRoot/BTUtilitySelector/characters"]
+script = ExtResource( 6 )
+
+[node name="BTCondHasTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/characters/BTSequence"]
+script = ExtResource( 7 )
+
+[node name="BTSelector" type="Node" parent="states/BTRoot/BTUtilitySelector/characters/BTSequence"]
+script = ExtResource( 5 )
+
+[node name="BTInitiateDialogue" type="Node" parent="states/BTRoot/BTUtilitySelector/characters/BTSequence/BTSelector"]
+script = ExtResource( 11 )
+target_distance = 0.6
+
+[node name="BTWalkToTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/characters/BTSequence/BTSelector"]
+script = ExtResource( 9 )
+target_distance = 0.6
+
+[node name="BTSelectTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/characters"]
+script = ExtResource( 10 )
+target = "character_front_target"
+
+[node name="broken" type="Node" parent="states/BTRoot/BTUtilitySelector"]
+script = ExtResource( 5 )
+
+[node name="BTInitiateDialogue" type="Node" parent="states/BTRoot/BTUtilitySelector/broken"]
+script = ExtResource( 11 )
+target_distance = 4.0
+
+[node name="BTWalkToTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/broken"]
+script = ExtResource( 9 )
+target_distance = 4.0
+
+[node name="BTSelectTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/broken"]
+script = ExtResource( 10 )
+target = "character_front_target"
+
+[node name="slave" type="Node" parent="states/BTRoot/BTUtilitySelector"]
+script = ExtResource( 5 )
+
+[node name="BTWalkToTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/slave"]
+script = ExtResource( 9 )
+target_distance = 4.0
+
+[node name="BTSelectTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/slave"]
+script = ExtResource( 10 )
+target = "character_front_target"
+
+[node name="food" type="Node" parent="states/BTRoot/BTUtilitySelector"]
+editor/display_folded = true
+script = ExtResource( 5 )
+
+[node name="BTSelectTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/food"]
+script = ExtResource( 10 )
+target = "food"
+
+[node name="passive_action" type="Node" parent="states/BTRoot/BTUtilitySelector"]
+editor/display_folded = true
+script = ExtResource( 5 )
+
+[node name="BTPlayPassiveAction" type="Node" parent="states/BTRoot/BTUtilitySelector/passive_action"]
+script = ExtResource( 12 )
+
+[node name="dialogue" type="Node" parent="states/BTRoot/BTUtilitySelector"]
+script = ExtResource( 6 )
 

@@ -20,7 +20,7 @@ var sleeping = true
 var state = 0
 var init = false
 func run(delta, obj, tree):
-	var sm: AnimationNodeStateMachinePlayback = tree["parameters/playback"]
+	var sm: AnimationTree = tree
 	awareness.at[obj] = sm
 #	var next = "Stand"
 #	if navigating:
@@ -28,18 +28,20 @@ func run(delta, obj, tree):
 #	if sleeping:
 #		next = "Sleep"
 #	sm.travel(next)
-	# Forcing AI wakeup/sleeping - need tunables
-	var stateobj = $states.get_children()[state]
-	if !init:
-		stateobj.init(obj)
-		init = true
-	var next_state_s = stateobj.run(obj, delta)
-	var old_state = state
-	for n in range($states.get_child_count()):
-		if $states.get_children()[n].name == next_state_s:
-			state = n
-			break
-	if old_state != state:
-		$states.get_children()[old_state].exit(obj)
-		$states.get_children()[state].init(obj)
-	
+#	# Forcing AI wakeup/sleeping - need tunables
+#	var stateobj = $states.get_children()[state]
+#	if !init:
+#		stateobj.init(obj)
+#		init = true
+#	var next_state_s = stateobj.run(obj, delta)
+#	var old_state = state
+#	for n in range($states.get_child_count()):
+#		if $states.get_children()[n].name == next_state_s:
+#			state = n
+#			break
+#	if old_state != state:
+#		$states.get_children()[old_state].exit(obj)
+#		$states.get_children()[state].init(obj)
+	for k in $states.get_children():
+		if k.has_method("_execute"):
+			k._execute(obj, delta)

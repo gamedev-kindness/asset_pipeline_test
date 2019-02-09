@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="speech" type="RichTextLabel"]
+margin_right = 120.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 120, 80 )
+text = "Hello
+"
+

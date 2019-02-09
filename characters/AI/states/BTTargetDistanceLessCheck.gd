@@ -1,8 +1,9 @@
-extends AIState
-
+extends BTConditional
+class_name BTTargetDistanceLessCheck
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+export var max_distance: float = 1.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -11,17 +12,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-func init(obj):
-	awareness.at[obj].travel("Sleep")
-
 func run(obj, delta):
-	# Forcing AI wakeup/sleeping - need tunables
-	if awareness.action_cooldown.has(obj):
-		if awareness.action_cooldown[obj] > 0.0:
-			awareness.action_cooldown[obj] -= delta
-			return ""
-	return "SelectTarget"
-
-
-func exit(obj):
-	pass
+	if awareness.targets.has(obj):
+		if awareness.distance(obj, awareness.targets[obj]) <= max_distance:
+			return BT_OK
+	return BT_ERROR

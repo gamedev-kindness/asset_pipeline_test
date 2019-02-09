@@ -275,16 +275,36 @@ var utilities = {
 		"tag": "shower",
 	},
 	"broken": {
-		"score": 1490,
+		"score": 495,
 		"trait": "broken",
-		"behavior": "kneel"
+		"behavior": "broken"
 	},
 	"slave": {
 		"score": 495,
 		"trait": "slave",
 		"behavior": "slave"
+	},
+	"passive_action": {
+		"score": 10000,
+		"flag": "passive_action",
+		"behavior": "passive_action"
+	},
+	"active_action": {
+		"score": 10000,
+		"flag": "active_action",
+		"behavior": "active_action"
+	},
+	"dialogue": {
+		"score": 500,
+		"flag": "dialogue",
+		"behavior": "dialogue"
 	}
 }
+
+var passive_action = {}
+var active_action = {}
+var ai_state = {}
+var dialogue_mode = {}
 
 func get_utility(obj, un):
 	if needs.has(obj) && utilities.has(un) && utilities[un].has("need"):
@@ -294,6 +314,17 @@ func get_utility(obj, un):
 			return utilities[un].score
 		else:
 			return 0.0
+	elif utilities.has(un) && utilities[un].has("flag"):
+		if utilities[un].flag == "passive_action":
+			if passive_action.has(obj):
+				return utilities[un].score
+		if utilities[un].flag == "active_action":
+			if active_action.has(obj):
+				return utilities[un].score
+		if utilities[un].flag == "dialogue":
+			if dialogue_mode.has(obj):
+				return utilities[un].score
+		return 0.0
 	else:
 		return 0.0
 

@@ -1,5 +1,5 @@
-extends AIState
-
+extends BTComposite
+class_name BTSelector
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -12,16 +12,12 @@ func _ready():
 #func _process(delta):
 #	pass
 func init(obj):
-	awareness.at[obj].travel("Sleep")
-
-func run(obj, delta):
-	# Forcing AI wakeup/sleeping - need tunables
-	if awareness.action_cooldown.has(obj):
-		if awareness.action_cooldown[obj] > 0.0:
-			awareness.action_cooldown[obj] -= delta
-			return ""
-	return "SelectTarget"
-
-
+	pass
 func exit(obj):
 	pass
+func run(obj, delta):
+	for c in get_children():
+		var status = c._execute(obj, delta)
+		if status != BT_ERROR:
+			return status
+	return BT_ERROR

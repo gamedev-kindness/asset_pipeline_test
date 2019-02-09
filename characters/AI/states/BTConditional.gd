@@ -1,5 +1,5 @@
-extends AIState
-
+extends BTBase
+class_name BTConditional
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -12,16 +12,10 @@ func _ready():
 #func _process(delta):
 #	pass
 func init(obj):
-	awareness.at[obj].travel("Sleep")
+	pass
 
 func run(obj, delta):
-	# Forcing AI wakeup/sleeping - need tunables
-	if awareness.action_cooldown.has(obj):
-		if awareness.action_cooldown[obj] > 0.0:
-			awareness.action_cooldown[obj] -= delta
-			return ""
-	return "SelectTarget"
-
+	return BT_OK
 
 func exit(obj):
 	pass

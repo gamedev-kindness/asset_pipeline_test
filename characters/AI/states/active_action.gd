@@ -11,17 +11,3 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
-func init(obj):
-	awareness.at[obj].travel("Sleep")
-
-func run(obj, delta):
-	# Forcing AI wakeup/sleeping - need tunables
-	if awareness.action_cooldown.has(obj):
-		if awareness.action_cooldown[obj] > 0.0:
-			awareness.action_cooldown[obj] -= delta
-			return ""
-	return "SelectTarget"
-
-
-func exit(obj):
-	pass
