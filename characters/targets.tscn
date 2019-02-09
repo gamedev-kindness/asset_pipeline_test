@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="targets" type="Spatial"]
+
+[node name="character_front_target" type="Spatial" parent="." groups=[
+"character_front_target",
+]]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.4 )
+
+[node name="character_back_target" type="Spatial" parent="." groups=[
+"character_back_target",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+
