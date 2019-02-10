@@ -107,11 +107,11 @@ script = ExtResource( 5 )
 
 [node name="BTInitiateDialogue" type="Node" parent="states/BTRoot/BTUtilitySelector/broken"]
 script = ExtResource( 11 )
-target_distance = 4.0
+target_distance = 0.8
 
 [node name="BTWalkToTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/broken"]
 script = ExtResource( 9 )
-target_distance = 4.0
+target_distance = 0.8
 
 [node name="BTSelectTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/broken"]
 script = ExtResource( 10 )
