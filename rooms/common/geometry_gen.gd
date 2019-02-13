@@ -51,7 +51,7 @@ func create_wall_segment(surf: SurfaceTool, sp1: Vector2, sp2: Vector2, step: fl
 	var side = dir.tangent()
 	while p.distance_to(sp2) > step:
 		xes.push_back(p)
-		p += dir * 0.1
+		p += dir * step
 		assert xes.size() < 5000
 	if xes.size() == 0:
 		xes.push_back(sp1)
@@ -71,14 +71,15 @@ func create_wall_segment(surf: SurfaceTool, sp1: Vector2, sp2: Vector2, step: fl
 				surf.add_vertex(sp)
 
 
-func create_walls(rects: Array, rooms: Dictionary, height: float, walls_mat: Material) -> ArrayMesh:
-	var walls_surf = SurfaceTool.new()
-	var mdt_walls = MeshDataTool.new()
-	var mesh = ArrayMesh.new()
+func create_walls(rects: Array, rooms: Dictionary, height: float, walls_mat: Material, step: float) -> Array:
 	var state = 0
 	var old_state = 0
-	walls_surf.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var meshes = []
 	for xr in rects:
+		var walls_surf = SurfaceTool.new()
+		var mdt_walls = MeshDataTool.new()
+		var mesh = ArrayMesh.new()
+		walls_surf.begin(Mesh.PRIMITIVE_TRIANGLES)
 		var r = Rect2(xr.position + Vector2(0.1, 0.1), xr.size - Vector2(0.2, 0.2))
 		var p0 = r.position
 		var p1 = r.position + Vector2(r.size.x, 0)
@@ -133,8 +134,8 @@ func create_walls(rects: Array, rooms: Dictionary, height: float, walls_mat: Mat
 					exits_unique.push_back(exits[h])
 			for m in exits_unique:
 				var can_add = true
-				var dl = 0.6
-				var de = 0.5
+				var dl = 0.5
+				var de = 0.4
 				var dst = 0.0
 				for r in range(path.size()):
 					dst = m.distance_to(path[r])
@@ -161,6 +162,8 @@ func create_walls(rects: Array, rooms: Dictionary, height: float, walls_mat: Mat
 					print("4:", door_rect)
 					create_horiz_surface(walls_surf, door_rect, 2.0, 0.2, true)
 					create_horiz_surface(walls_surf, door_rect, 0.0, 0.2, false)
+					create_wall_segment(walls_surf, m - dir * de, m - dir * de + side * 0.1, step, [0.0, 1.0, 1.0, 2.0])
+					create_wall_segment(walls_surf, m + dir * de + side * 0.1, m + dir * de, step, [0.0, 1.0, 1.0, 2.0])
 				else:
 					print("can't add door, dst: ", dst)
 			path.push_back(sp2)
@@ -173,16 +176,18 @@ func create_walls(rects: Array, rooms: Dictionary, height: float, walls_mat: Mat
 				var heights = []
 				if path_region[tn] == 0:
 					heights = [0.0, 1.0, 1.0, 2.0, 2.0, height]
+					create_wall_segment(walls_surf, path[tn], path[tn + 1], step, heights)
 				elif path_region[tn] == 1:
 					heights = [2.0, height]
-				create_wall_segment(walls_surf, path[tn], path[tn + 1], 0.1, heights)
+					create_wall_segment(walls_surf, path[tn], path[tn + 1], step, heights)
 
-	walls_surf.generate_normals()
-	walls_surf.index()
-	mdt_walls.create_from_surface(walls_surf.commit(), 0)
-	mdt_walls.set_material(walls_mat)
-	mdt_walls.commit_to_surface(mesh)
-	return mesh
+		walls_surf.generate_normals()
+		walls_surf.index()
+		mdt_walls.create_from_surface(walls_surf.commit(), 0)
+		mdt_walls.set_material(walls_mat)
+		mdt_walls.commit_to_surface(mesh)
+		meshes.push_back(mesh)
+	return meshes
 
 func create_floor(rects: Array, floor_mat: Material) -> ArrayMesh:
 	var floor_surf = SurfaceTool.new()
@@ -264,69 +269,69 @@ func get_walls_mesh(p1: Vector2, p2: Vector2, width: float, height: float) -> Ar
 	var mesh = walls_surf.commit()
 	print("surfaces:", mesh.get_surface_count())
 	return mesh
-func create_room_connection(p1: Vector2, p2: Vector2, width: float, height: float, walls_mat: Material, floor_mat: Material, ceiling_mat:Material):
-	var depth = (p2 - p1).length()
-	var mesh = ArrayMesh.new()
-	var floor_surf = SurfaceTool.new()
-	var ceiling_surf = SurfaceTool.new()
-	var mdt_walls = MeshDataTool.new()
-	var mdt_floor = MeshDataTool.new()
-	var mdt_ceiling = MeshDataTool.new()
-	var p = p1
-	var zs = []
-	var dir = (p2 - p1).normalized()
-	var side = dir.tangent()
-	while (p2 - p).length() > 0.1:
-		zs.push_back(p)
-		p += dir * 0.1
-	if zs.size() == 0:
-		zs.push_back(p1)
-	zs.push_back(p2)
-	floor_surf.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for t in range(zs.size() - 1):
-		var lp = zs[t] - 0.5 * side
-		var rp = zs[t] + 0.5 * side
-		var nlp = zs[t + 1] - 0.5 * side
-		var nrp = zs[t + 1] + 0.5 * side
-		var tp0 = Vector3(lp.x, 0.0, lp.y)
-		var tp1 = Vector3(rp.x, 0.0, rp.y)
-		var tp2 = Vector3(nrp.x, 0.0, nrp.y)
-		var tp3 = Vector3(nlp.x, 0.0, nlp.y)
-		var n = Vector3(0, 1, 0)
-		var tri1 = [tp0, tp1, tp2]
-		var tri2 = [tp0, tp2, tp3]
-		for p in tri1 + tri2:
-			floor_surf.add_normal(n)
-			floor_surf.add_uv(Vector2(p.x / 3.0, p.z / 3.0))
-			floor_surf.add_vertex(p)
-	ceiling_surf.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for t in range(zs.size() - 1):
-		var lp = zs[t] - 0.5 * side
-		var rp = zs[t] + 0.5 * side
-		var nlp = zs[t + 1] - 0.5 * side
-		var nrp = zs[t + 1] + 0.5 * side
-		var tp0 = Vector3(lp.x, 0.0, lp.y)
-		var tp1 = Vector3(rp.x, 0.0, rp.y)
-		var tp2 = Vector3(nrp.x, 0.0, nrp.y)
-		var tp3 = Vector3(nlp.x, 0.0, nlp.y)
-		var n = Vector3(0, -1, 0)
-		var tri1 = [tp0, tp2, tp1]
-		var tri2 = [tp0, tp3, tp2]
-		for p in tri1 + tri2:
-			ceiling_surf.add_normal(n)
-			ceiling_surf.add_uv(Vector2(p.x / 3.0, p.z / 3.0))
-			ceiling_surf.add_vertex(p)
-	for r in [floor_surf, ceiling_surf]:
-		r.generate_normals()
-		r.index()
-	var tmp = get_walls_mesh(p1, p2, width, height)
-	mdt_walls.create_from_surface(tmp, 0)
-	mdt_walls.set_material(walls_mat)
-	mdt_walls.commit_to_surface(mesh)
-	mdt_floor.create_from_surface(floor_surf.commit(), 0)
-	mdt_floor.set_material(floor_mat)
-	mdt_floor.commit_to_surface(mesh)
-	mdt_ceiling.create_from_surface(ceiling_surf.commit(), 0)
-	mdt_ceiling.set_material(ceiling_mat)
-	mdt_ceiling.commit_to_surface(mesh)
-	return mesh
+#func create_room_connection(p1: Vector2, p2: Vector2, width: float, height: float, walls_mat: Material, floor_mat: Material, ceiling_mat:Material):
+#	var depth = (p2 - p1).length()
+#	var mesh = ArrayMesh.new()
+#	var floor_surf = SurfaceTool.new()
+#	var ceiling_surf = SurfaceTool.new()
+#	var mdt_walls = MeshDataTool.new()
+#	var mdt_floor = MeshDataTool.new()
+#	var mdt_ceiling = MeshDataTool.new()
+#	var p = p1
+#	var zs = []
+#	var dir = (p2 - p1).normalized()
+#	var side = dir.tangent()
+#	while (p2 - p).length() > 0.1:
+#		zs.push_back(p)
+#		p += dir * 0.1
+#	if zs.size() == 0:
+#		zs.push_back(p1)
+#	zs.push_back(p2)
+#	floor_surf.begin(Mesh.PRIMITIVE_TRIANGLES)
+#	for t in range(zs.size() - 1):
+#		var lp = zs[t] - 0.5 * side
+#		var rp = zs[t] + 0.5 * side
+#		var nlp = zs[t + 1] - 0.5 * side
+#		var nrp = zs[t + 1] + 0.5 * side
+#		var tp0 = Vector3(lp.x, 0.0, lp.y)
+#		var tp1 = Vector3(rp.x, 0.0, rp.y)
+#		var tp2 = Vector3(nrp.x, 0.0, nrp.y)
+#		var tp3 = Vector3(nlp.x, 0.0, nlp.y)
+#		var n = Vector3(0, 1, 0)
+#		var tri1 = [tp0, tp1, tp2]
+#		var tri2 = [tp0, tp2, tp3]
+#		for p in tri1 + tri2:
+#			floor_surf.add_normal(n)
+#			floor_surf.add_uv(Vector2(p.x / 3.0, p.z / 3.0))
+#			floor_surf.add_vertex(p)
+#	ceiling_surf.begin(Mesh.PRIMITIVE_TRIANGLES)
+#	for t in range(zs.size() - 1):
+#		var lp = zs[t] - 0.5 * side
+#		var rp = zs[t] + 0.5 * side
+#		var nlp = zs[t + 1] - 0.5 * side
+#		var nrp = zs[t + 1] + 0.5 * side
+#		var tp0 = Vector3(lp.x, 0.0, lp.y)
+#		var tp1 = Vector3(rp.x, 0.0, rp.y)
+#		var tp2 = Vector3(nrp.x, 0.0, nrp.y)
+#		var tp3 = Vector3(nlp.x, 0.0, nlp.y)
+#		var n = Vector3(0, -1, 0)
+#		var tri1 = [tp0, tp2, tp1]
+#		var tri2 = [tp0, tp3, tp2]
+#		for p in tri1 + tri2:
+#			ceiling_surf.add_normal(n)
+#			ceiling_surf.add_uv(Vector2(p.x / 3.0, p.z / 3.0))
+#			ceiling_surf.add_vertex(p)
+#	for r in [floor_surf, ceiling_surf]:
+#		r.generate_normals()
+#		r.index()
+#	var tmp = get_walls_mesh(p1, p2, width, height)
+#	mdt_walls.create_from_surface(tmp, 0)
+#	mdt_walls.set_material(walls_mat)
+#	mdt_walls.commit_to_surface(mesh)
+#	mdt_floor.create_from_surface(floor_surf.commit(), 0)
+#	mdt_floor.set_material(floor_mat)
+#	mdt_floor.commit_to_surface(mesh)
+#	mdt_ceiling.create_from_surface(ceiling_surf.commit(), 0)
+#	mdt_ceiling.set_material(ceiling_mat)
+#	mdt_ceiling.commit_to_surface(mesh)
+#	return mesh

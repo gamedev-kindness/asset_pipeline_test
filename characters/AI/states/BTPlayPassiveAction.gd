@@ -109,7 +109,7 @@ func run(obj, delta):
 	if passive_actions[action].tears:
 		obj.enable_tears()
 	return BT_BUSY
-func exit(obj):
+func exit(obj, status):
 	obj.disable_tears()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

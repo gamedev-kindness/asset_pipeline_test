@@ -15,9 +15,11 @@ func _ready():
 #	pass
 func check_target_valid(obj):
 	if !awareness.targets.has(obj):
+		print(obj.name, " check_target_valid: no target")
 		return false
 	var tgt = awareness.targets[obj]
 	if tgt.is_in_group("toilet") && tgt.get_parent().busy:
+		print(obj.name, " check_target_valid: toilet busy")
 		return false
 	return true
 func update_path(obj):
@@ -39,20 +41,30 @@ func update_path(obj):
 	return false
 
 func init(obj):
-	awareness.at[obj]["parameters/playback"].travel("Navigate")
-func exit(obj):
+	if awareness.current_path.has(obj):
+		awareness.at[obj]["parameters/playback"].travel("Navigate")
+func exit(obj, status):
 	pass
 func run(obj, delta):
 	if !awareness.current_path.has(obj):
+		print(obj.name, " walking: no path")
 		return BT_ERROR
 	if awareness.current_path[obj].size() == 0 || !check_target_valid(obj):
+		print(obj.name, " walking: no or invalid target: path size:  ", awareness.current_path[obj].size())
 		return BT_ERROR
+#	print(obj.name, " walking")
 	if awareness.action_cooldown.has(obj):
 		if awareness.action_cooldown[obj] > 0.0:
 			awareness.action_cooldown[obj] -= delta
+#			print(obj.name, " walking: cooldown")
 			return BT_BUSY
+	if awareness.at[obj]["parameters/playback"].get_current_node() != "Navigate":
+		awareness.at[obj]["parameters/playback"].travel("Navigate")
+		return BT_BUSY
 	if awareness.at[obj]["parameters/playback"].get_current_node() == "Navigate":
 		var point = awareness.current_path[obj][0]
+#		print(obj.name, " walking ", point)
+#		print(obj.name, " walking to: ", point)
 		var direction = (point - obj.global_transform.origin).normalized()
 		if awareness.raycasts[obj].left.is_colliding() && awareness.raycasts[obj].right.is_colliding():
 			direction = -direction * 20.0
@@ -67,6 +79,7 @@ func run(obj, delta):
 		if obj.global_transform.origin.distance_squared_to(point) < 1.0:
 			awareness.current_path[obj].remove(0)
 			if awareness.current_path[obj].size() == 0 || awareness.distance(obj, awareness.targets[obj]) < target_distance:
+				print(obj.name, " at destination")
 				return BT_OK
 		var tf_turn = Transform(Quat(Vector3(0, 1, 0), -angle * delta))
 		obj.orientation *= tf_turn

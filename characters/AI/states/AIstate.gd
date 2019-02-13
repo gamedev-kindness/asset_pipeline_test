@@ -15,7 +15,7 @@ func _ready():
 #	pass
 func init(obj):
 	pass
-func exit(obj):
+func exit(obj, status):
 	pass
 func run(obj, delta):
 	pass

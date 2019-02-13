@@ -20,8 +20,8 @@ func _open(obj):
 #	print("open on ", get_name(), "obj ", obj.get_name())
 	awareness.ai_state[obj].nodes[self] = {}
 	init(obj)
-func _close(obj):
-	exit(obj)
+func _close(obj, status):
+	exit(obj, status)
 #	print("close on ", get_name(), "obj ", obj.get_name())
 	awareness.ai_state[obj].nodes.erase(self)
 func init(obj):
@@ -30,7 +30,7 @@ func init(obj):
 func run(obj, delta):
 	pass
 
-func exit(obj):
+func exit(obj, status):
 	pass
 
 func _execute(obj, delta):
@@ -38,5 +38,5 @@ func _execute(obj, delta):
 		_open(obj)
 	var status = run(obj, delta)
 	if status != BT_BUSY:
-		_close(obj)
+		_close(obj, status)
 	return status

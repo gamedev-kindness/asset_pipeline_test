@@ -17,5 +17,5 @@ func init(obj):
 func run(obj, delta):
 	return BT_OK
 
-func exit(obj):
+func exit(obj, status):
 	pass

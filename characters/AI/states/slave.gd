@@ -26,5 +26,5 @@ func run(obj, delta):
 	return "SelectTarget"
 
 
-func exit(obj):
+func exit(obj, status):
 	pass

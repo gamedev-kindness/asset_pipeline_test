@@ -15,5 +15,5 @@ func init(obj):
 func run(obj, delta):
 	pass
 
-func exit(obj):
+func exit(obj, status):
 	pass

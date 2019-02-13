@@ -32,7 +32,6 @@ script = ExtResource( 3 )
 script = ExtResource( 4 )
 
 [node name="toilet" type="Node" parent="states/BTRoot/BTUtilitySelector"]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="BTSequence" type="Node" parent="states/BTRoot/BTUtilitySelector/toilet"]
@@ -78,7 +77,6 @@ script = ExtResource( 10 )
 target = "shower"
 
 [node name="characters" type="Node" parent="states/BTRoot/BTUtilitySelector"]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="BTSequence" type="Node" parent="states/BTRoot/BTUtilitySelector/characters"]

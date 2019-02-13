@@ -99,7 +99,7 @@ func classify_room(room):
 				matching_rooms.push_back(room_classes[k])
 			elif (!public) && room_classes[k].private:
 				matching_rooms.push_back(room_classes[k])
-			matching_rooms.push_back(room_classes[k])
+#			matching_rooms.push_back(room_classes[k])
 	if matching_rooms.size() == 0:
 		return null
 	for m in mandatory_rooms:
@@ -201,38 +201,38 @@ enum {ELEMENT_FLOOR, ELEMENT_ANGLE, ELEMENT_WALL, ELEMENT_DOOR}
 func classify_rooms():
 	for k in $random_split.rooms.keys():
 		$random_split.rooms[k].class = classify_room($random_split.rooms[k])
-var room_connections = []
-func build_room_connection_pairs():
-	print("door data size:", $random_split.door_data.size())
-	for d in $random_split.door_data:
-		if d.a == d.b:
-			continue
-		var r = d.a
-		var t = d.b
-		var exits = $random_split.get_exit_positions(r, t)
-		if exits.size() > 0:
-#			var p1 = r.position + Vector2(exits[0].door_x, exits[0].door_y)
-#			var p2 = t.position + Vector2(exits[1].door_x, exits[1].door_y)
-			var p1 = r.position + exits[0].rel_pos
-			var p2 = t.position + exits[1].rel_pos
-			print("build pair: ", p1, " ", p2, p1.distance_to(p2))
-			var mesh = $geometry_gen.create_room_connection(p1, p2, 1.0, 2.0, null, null, null)
-			var mi = MeshInstance.new()
-			mi.mesh = mesh
-			add_child(mi)
-			var sb = StaticBody.new()
-			add_child(sb)
-			var col = CollisionShape.new()
-			var colmesh = mesh.create_trimesh_shape()
-			col.shape = colmesh
-			sb.add_child(col)
-			room_connections.push_back(mi)
-			room_connections.push_back(sb)
+#var room_connections = []
+#func build_room_connection_pairs():
+#	print("door data size:", $random_split.door_data.size())
+#	for d in $random_split.door_data:
+#		if d.a == d.b:
+#			continue
+#		var r = d.a
+#		var t = d.b
+#		var exits = $random_split.get_exit_positions(r, t)
+#		if exits.size() > 0:
+##			var p1 = r.position + Vector2(exits[0].door_x, exits[0].door_y)
+##			var p2 = t.position + Vector2(exits[1].door_x, exits[1].door_y)
+#			var p1 = r.position + exits[0].rel_pos
+#			var p2 = t.position + exits[1].rel_pos
+#			print("build pair: ", p1, " ", p2, p1.distance_to(p2))
+##			var mesh = $geometry_gen.create_room_connection(p1, p2, 1.0, 2.0, null, null, null)
+##			var mi = MeshInstance.new()
+##			mi.mesh = mesh
+##			add_child(mi)
+##			var sb = StaticBody.new()
+##			add_child(sb)
+##			var col = CollisionShape.new()
+##			var colmesh = mesh.create_trimesh_shape()
+##			col.shape = colmesh
+##			sb.add_child(col)
+##			room_connections.push_back(mi)
+##			room_connections.push_back(sb)
 
-func clear_connections():
-	for m in room_connections:
-		m.queue_free()
-	room_connections.clear()
+#func clear_connections():
+#	for m in room_connections:
+#		m.queue_free()
+#	room_connections.clear()
 
 
 func build_room_floors():
@@ -248,16 +248,18 @@ func build_room_floors():
 	col.shape = colmesh
 	sb.add_child(col)
 func build_room_walls():
-	var walls_mesh = $geometry_gen.create_walls($random_split.rects, $random_split.rooms, 2.8, load("res://rooms/room_kit/test_wall1_material.tres"))
-	var walls_mi = MeshInstance.new()
-	walls_mi.mesh = walls_mesh
-	add_child(walls_mi)
+	var walls_meshes = $geometry_gen.create_walls($random_split.rects, $random_split.rooms, 2.8, load("res://rooms/room_kit/test_wall1_material.tres"), 0.5)
+	for k in walls_meshes:
+		var walls_mi = MeshInstance.new()
+		walls_mi.mesh = k
+		add_child(walls_mi)
 	var sb = StaticBody.new()
 	add_child(sb)
-	var col = CollisionShape.new()
-	var colmesh = walls_mesh.create_trimesh_shape()
-	col.shape = colmesh
-	sb.add_child(col)
+	for k in walls_meshes:
+		var col = CollisionShape.new()
+		var colmesh = k.create_trimesh_shape()
+		col.shape = colmesh
+		sb.add_child(col)
 func build_rooms():
 	var id = 0
 	for r in $random_split.rects:
@@ -308,15 +310,21 @@ func build_rooms():
 #						floor_model.rotation.y = angle
 #						print("p6")
 		print("room infill: ", id, "size: ", width_x, " ", width_y)
+		var center = r.position + r.size * 0.5
 		if room.class && room.class == room_classes.bedroom && r.size.x >= 3.0 && r.size.y >= 3.0:
-			var dim_x = int((r.size.x - 1.0)/ 3.0)
-			var dim_y = int((r.size.y - 1.0)/ 3.0)
-			for th in range(dim_x):
-				for tg in range(dim_y):
-					var pos = Vector3(th - float(dim_x) / 2.0, 0.0, tg - float(dim_y) / 2.0)* 3.0
+			var room_width = r.size.x
+			var room_height = r.size.y
+			var bed_width = 2.8
+			var bed_height = 2.8
+			var x_count = int((room_width - 1.0) / bed_width)
+			var y_count = int((room_height - 1.0) / bed_height)
+			var start_pos = Vector3(center.x - (x_count * bed_width) * 0.5 + bed_width * 0.5, 0.0, center.y - (y_count * bed_height) * 0.5 + bed_height * 0.5)
+			for th in range(x_count):
+				for tg in range(y_count):
+					var pos = start_pos + Vector3(th * bed_width, 0.0, tg * bed_height)
 					var bed_model = bed.instance()
 					add_child(bed_model)
-					bed_model.translation = Vector3(r.position.x + r.size.x / 2.0, 0.0, r.position.y + r.size.y / 2.0) + pos
+					bed_model.translation = pos
 					if r.size.y > r.size.x:
 						bed_model.rotation.y = -PI / 2.0
 		elif room.class && room.class == room_classes.bathroom && r.size.x >= 1.0 && r.size.y >= 1.0:
@@ -334,6 +342,15 @@ func build_rooms():
 #			if r.size.y > r.size.x:
 #				bed_model.rotation.y = -PI / 2.0
 			print("room complete: ", id, "size: ", width_x, " ", width_y)
+		for e in room.exits:
+			var nav = Path.new()
+			add_child(nav)
+			nav.add_to_group("nav")
+			var p = e.position
+			while p.distance_to(center) > 0.1:
+				nav.curve.add_point(Vector3(p.x, 0.0, p.y))
+				p += (center - p).normalized() * 0.1
+			nav.curve.add_point(Vector3(center.x, 0.0, center.y))
 		id += 1
 
 # Called when the node enters the scene tree for the first time.
@@ -359,7 +376,7 @@ func _process(delta):
 			$random_split.state = 0
 			$random_split.rooms.clear()
 			door_pairing.clear()
-			clear_connections()
+#			clear_connections()
 			print("waiting for signal")
 			state = -1
 
@@ -372,9 +389,9 @@ func _process(delta):
 		4:
 			state = 5
 		5:
-			print("room connections")
+#			print("room connections")
 #			fix_foom_exits()
-			build_room_connection_pairs()
+#			build_room_connection_pairs()
 			state = 6
 		6:
 			classify_rooms()
@@ -394,13 +411,19 @@ func _process(delta):
 			build_rooms()
 			state = 9
 		9:
+#			classify_rooms()
+#			if !check_room_classes():
+#				print("discarded classify")
+#				state = 0
+			state = 10
+		10:
 			if get_tree().get_nodes_in_group("beds").size() < 2:
 				print("discarded character count")
 				state = 0
 			build_navigation()
-			state = 10
-		10:
+			state = 11
+		11:
 			build_outline()
 			for k in get_tree().get_nodes_in_group("beds"):
 				k.emit_signal("spawn")
-			state = 11
+			state = 12

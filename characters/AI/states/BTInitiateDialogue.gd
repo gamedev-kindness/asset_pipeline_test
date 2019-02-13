@@ -44,5 +44,8 @@ func run(obj, delta):
 		return BT_OK
 	else:
 		return BT_ERROR
-func exit(obj):
-	awareness.targets.erase(obj)
+func exit(obj, status):
+	if status == BT_OK:
+		awareness.targets.erase(obj)
+		awareness.current_path.erase(obj)
+
