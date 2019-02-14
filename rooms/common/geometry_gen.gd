@@ -134,8 +134,8 @@ func create_walls(rects: Array, rooms: Dictionary, height: float, walls_mat: Mat
 					exits_unique.push_back(exits[h])
 			for m in exits_unique:
 				var can_add = true
-				var dl = 0.5
-				var de = 0.4
+				var dl = 0.6
+				var de = 0.5
 				var dst = 0.0
 				for r in range(path.size()):
 					dst = m.distance_to(path[r])

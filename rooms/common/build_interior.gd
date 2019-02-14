@@ -32,7 +32,7 @@ var room_classes = {
 	"bedroom": {
 		"name": "bedroom",
 		"private": true,
-		"min_area": 60,
+		"min_area": 12,
 		"max_area": 80,
 		"wall_item_probability": 0.0,
 		"wall_items": [],
