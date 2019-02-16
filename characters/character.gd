@@ -292,10 +292,21 @@ func _ready():
 		"right": $raycast_right
 	}
 	awareness.raycasts[self] = raycasts
+	var character_name = ""
+	var character_firstname = ""
+	var character_lastname = ""
 	if name.begins_with("male"):
 		awareness.gender[self] = "male"
+		character_firstname = awareness.build_male_firstname().capitalize()
+		
 	elif name.begins_with("female"):
 		awareness.gender[self] = "female"
+		character_firstname = awareness.build_female_firstname().capitalize()
+	character_lastname = awareness.build_lastname().capitalize()
+	character_name = character_firstname + " " + character_lastname
+	awareness.character_name[self] = character_name
+	awareness.character_firstname[self] = character_firstname
+	awareness.character_lastname[self] = character_lastname
 
 var despawn_cooldown = 0.0
 var despawned = false

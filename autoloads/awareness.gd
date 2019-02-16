@@ -46,9 +46,36 @@ var raycasts = {}
 var need_changes = {}
 var gender = {}
 var disposition = {}
+var markov_rnd
+var name_data = {}
+var character_name = {}
+var character_firstname = {}
+var character_lastname = {}
 
 func _ready():
 	astar = AStar.new()
+	markov_rnd = RandomNumberGenerator.new()
+	markov_rnd.seed = OS.get_unix_time()
+	var fd = File.new()
+	fd.open("res://characters/name_data.json", File.READ)
+	var seedings_data = fd.get_as_text()
+	var seedings_json = JSON.parse(seedings_data)
+	var seedings = seedings_json.result
+	fd.close()
+	for e in seedings.keys():
+		for k in seedings[e]:
+			if !name_data.has(e):
+				name_data[e] = {}
+				name_data[e].start = []
+				name_data[e].ngrams = {}
+			for n in [settings.markov_order]:
+				for l in range(k.length() - n + 1):
+					if !name_data[e].ngrams.has(k.substr(l, n)):
+						name_data[e].ngrams[k.substr(l, n)] = [k.substr(l + n, 1)]
+					else:
+						name_data[e].ngrams[k.substr(l, n)].push_back(k.substr(l + n, 1))
+					if l == 0:
+						name_data[e].start.push_back(k.substr(l, n))
 
 
 func rebuild_map():
@@ -337,3 +364,24 @@ func add_trait(obj, trait):
 		traits[obj] = []
 	if ! trait in traits[obj]:
 		traits[obj].push_back(trait)
+func build_name(starts, ngrams):
+	var start = starts[markov_rnd.randi() % starts.size()]
+	var result = start
+	while result.length() < 15:
+#		var order = rnd.randi() %3 + 1
+#		order = min(order, result.length())
+		var key = result.substr(result.length() - settings.markov_order, settings.markov_order)
+		if key == "":
+			break
+		var next = ngrams[key]
+		var next_ch = next[markov_rnd.randi() % next.size()]
+		if next_ch == '':
+			break
+		result += next_ch
+	return(result)
+func build_male_firstname():
+	return build_name(name_data["male_firstname"].start, name_data["male_firstname"].ngrams)
+func build_female_firstname():
+	return build_name(name_data["female_firstname"].start, name_data["female_firstname"].ngrams)
+func build_lastname():
+	return build_name(name_data["lastname"].start, name_data["lastname"].ngrams)

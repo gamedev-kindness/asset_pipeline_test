@@ -15,3 +15,4 @@ var max_characters_spawned = 20
 var game_input_enabled = false
 var console_enabled = false
 var inventory_enabled = false
+var markov_order = 3
