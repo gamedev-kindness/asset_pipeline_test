@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://characters/AI.gd" type="Script" id=1]
 [ext_resource path="res://characters/AI/WalkTo.gd" type="Script" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://characters/AI/states/BTSelectTarget.gd" type="Script" id=10]
 [ext_resource path="res://characters/AI/states/BTInitiateDialogue.gd" type="Script" id=11]
 [ext_resource path="res://characters/AI/states/BTPlayPassiveAction.gd" type="Script" id=12]
+[ext_resource path="res://characters/AI/states/BTTargetDistanceLessCheck.gd" type="Script" id=13]
+[ext_resource path="res://characters/AI/states/BTPlayAnimationState.gd" type="Script" id=14]
 
 [node name="AI" type="Node"]
 script = ExtResource( 1 )
@@ -143,4 +145,28 @@ script = ExtResource( 12 )
 
 [node name="dialogue" type="Node" parent="states/BTRoot/BTUtilitySelector"]
 script = ExtResource( 6 )
+
+[node name="BTSelector" type="Node" parent="states/BTRoot/BTUtilitySelector/dialogue"]
+script = ExtResource( 5 )
+
+[node name="stand_seq" type="Node" parent="states/BTRoot/BTUtilitySelector/dialogue/BTSelector"]
+script = ExtResource( 6 )
+
+[node name="BTTargetDistanceLessCheck" type="Node" parent="states/BTRoot/BTUtilitySelector/dialogue/BTSelector/stand_seq"]
+script = ExtResource( 13 )
+max_distance = 1.0
+
+[node name="BTPlayAnimationState" type="Node" parent="states/BTRoot/BTUtilitySelector/dialogue/BTSelector/stand_seq"]
+script = ExtResource( 14 )
+sequence = "Stand"
+
+[node name="walk_seq" type="Node" parent="states/BTRoot/BTUtilitySelector/dialogue/BTSelector"]
+script = ExtResource( 6 )
+
+[node name="BTCondHasTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/dialogue/BTSelector/walk_seq"]
+script = ExtResource( 7 )
+
+[node name="BTWalkToTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/dialogue/BTSelector/walk_seq"]
+script = ExtResource( 9 )
+target_distance = 0.9
 

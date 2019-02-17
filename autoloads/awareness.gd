@@ -51,6 +51,8 @@ var name_data = {}
 var character_name = {}
 var character_firstname = {}
 var character_lastname = {}
+var roster = {}
+var phone_number = {}
 
 func _ready():
 	astar = AStar.new()
@@ -385,3 +387,92 @@ func build_female_firstname():
 	return build_name(name_data["female_firstname"].start, name_data["female_firstname"].ngrams)
 func build_lastname():
 	return build_name(name_data["lastname"].start, name_data["lastname"].ngrams)
+
+
+func add_to_roster(owner, obj):
+	if !roster.has(owner):
+		roster[owner] = {}
+	if roster[owner].has(obj):
+		return
+	var new_data = {
+		"obj": obj,
+		"disposition": {
+			"acquaintance": 0,
+			"friendship": 0,
+			"love": 0,
+			"hate": 0,
+			"jealousity": 0,
+			"master": 0,
+			"slave": 0
+		},
+		"sex_partner": false,
+	}
+	roster[owner][obj] = new_data
+func are_acquientances(obj, other):
+	if obj == other:
+		return true
+	if !roster.has(obj):
+		return false
+	if roster[obj].has(other):
+		return true
+	else:
+		return false
+func are_enemies(obj, other):
+	if obj == other:
+		return false
+	if !roster.has(obj):
+		return false
+	if !roster[obj].has(other):
+		return false
+	else:
+		var d = roster[obj][other].disposition
+		return d.hate > d.love && d.hate > d.friendship
+func are_friends(obj, other):
+	if obj == other:
+		return true
+	if !roster.has(obj):
+		return false
+	if !roster[obj].has(other):
+		return false
+	else:
+		if are_enemies(obj, other):
+			return false
+		var d = roster[obj][other].disposition
+		return d.friendship > 0
+func are_lovers(obj, other):
+	if obj == other:
+		return true
+	if !roster.has(obj):
+		return false
+	if !roster[obj].has(other):
+		return false
+	else:
+		var d = roster[obj][other].disposition
+		return d.love > d.friendship
+func is_slave(obj, other):
+	if obj == other:
+		return false
+	if !roster.has(obj):
+		return false
+	if !roster[obj].has(other):
+		return false
+	else:
+		var d = roster[obj][other].disposition
+		return d["slave"] > d.friendship && d["slave"] > d.love
+func is_master(obj, other):
+	if obj == other:
+		return false
+	if !roster.has(obj):
+		return false
+	if !roster[obj].has(other):
+		return false
+	else:
+		if is_slave(obj, other):
+			return false
+		var d = roster[obj][other].disposition
+		return d["master"] > d.friendship && d["master"] > d.love
+func get_master(obj):
+	for k in roster[obj].keys():
+		if is_master(obj, k):
+			return k
+	return null

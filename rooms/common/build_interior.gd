@@ -25,14 +25,14 @@ var room_classes = {
 		"name": "bathroom",
 		"private": true,
 		"min_area": 3,
-		"max_area": 60,
+		"max_area": 40,
 		"wall_item_probability": 0.1,
 		"wall_items": ["toilet", "shower"]
 	},
 	"bedroom": {
 		"name": "bedroom",
 		"private": true,
-		"min_area": 12,
+		"min_area": 8,
 		"max_area": 80,
 		"wall_item_probability": 0.0,
 		"wall_items": [],

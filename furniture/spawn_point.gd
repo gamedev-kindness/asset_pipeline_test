@@ -30,9 +30,9 @@ func _process(delta):
 				male_count += 1
 			if k.name.begins_with("female"):
 				female_count += 1
-		if awareness.player_character != null && awareness.distance(awareness.player_character, self) > 5.0:
-			delay += awareness.distance(awareness.player_character, self) * 0.2
-			return
+#		if awareness.player_character != null && awareness.distance(awareness.player_character, self) > 5.0:
+#			delay += awareness.distance(awareness.player_character, self) * 0.2
+#			return
 			
 		if male_count + female_count < settings.max_characters_spawned:
 			var characters = content.characters

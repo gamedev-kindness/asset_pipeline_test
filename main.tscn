@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://ui/opportunities.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://ui/console.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/stats.tscn" type="PackedScene" id=6]
 [ext_resource path="res://rooms/common/build_interior.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/roster.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -26,6 +27,7 @@ transform = Transform( 1, 0, 0, 0, 0.616747, 0.787161, 0, -0.787161, 0.616747, 0
 visible = false
 
 [node name="wtf_waiting" type="Panel" parent="."]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -101,6 +103,24 @@ position = Vector2( 116.938, 12.642 )
 color = Color( 0.290196, 0.231373, 0.231373, 1 )
 polygon = PoolVector2Array( 35.2468, 24.9259, 39.79, 19.1975, 43.5432, 24.9259 )
 
+[node name="roster_button" type="TextureButton" parent="clock_control"]
+margin_top = 152.0
+margin_right = 191.0
+margin_bottom = 216.0
+rect_min_size = Vector2( 64, 64 )
+
+[node name="Polygon2D" type="Polygon2D" parent="clock_control/roster_button"]
+position = Vector2( 116.741, -1.38272 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 18.2693, 13.0242, 24.4144, 7.7095, 35.8741, 6.54692, 42.5175, 10.0347, 49.8251, 6.38084, 58.7936, 7.04517, 64.7726, 11.0312, 64.6066, 29.7986, 65.1049, 40.4279, 64.9387, 46.573, 52.4825, 46.573, 44.6766, 46.7391, 35.7081, 46.407, 19.4319, 46.2409, 16.9406, 31.2934, 18.2693, 24.3178 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="clock_control/roster_button"]
+polygon = PoolVector2Array( 137.169, 11.9736, 142.484, 7.48938, 151.453, 6.82504, 158.096, 10.4789, 167.563, 6.99112, 174.87, 7.65546, 179.521, 10.9771, 180.351, 42.2008, 175.036, 38.547, 168.891, 37.7166, 159.923, 41.0382, 152.947, 37.2183, 143.979, 37.7166, 137.169, 41.8686, 136.505, 26.9211 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="clock_control/roster_button"]
+color = Color( 0.756863, 0.160784, 0.160784, 1 )
+polygon = PoolVector2Array( 158.176, 6.63504, 161.87, 5.77742, 163.411, 31.4054, 162.082, 33.7306, 159.757, 31.2393 )
+
 [node name="inventory" parent="." instance=ExtResource( 4 )]
 visible = false
 
@@ -112,4 +132,7 @@ margin_bottom = 300.0
 visible = false
 
 [node name="modular_room" parent="." instance=ExtResource( 7 )]
+
+[node name="roster" parent="." instance=ExtResource( 8 )]
+visible = false
 

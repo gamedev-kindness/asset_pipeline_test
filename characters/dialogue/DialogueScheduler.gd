@@ -58,13 +58,19 @@ var texts = {
 		]
 	},
 	"greetings": [
-		["Hi!", ["neutral", "sane"], ["greeting"]],
-		["Hello!", ["neutral", "sane"], ["greeting"]],
-		["Hello #plural_insult_nouns#!", ["evil", "multiple_characters", "sane"], ["greeting", "insult"]],
-		["Hello #singular_insult_nouns#!", ["evil", "single_character", "sane"], ["greeting", "insult"]],
-		["...", ["broken"], ["greeting", "stupid"]],
-		["Aaaaahhhh", ["broken"], ["greeting", "stupid"]],
-		["Grrrrr", ["broken", "evil"], ["greeting", "stupid"]]
+		["Hi!", ["neutral", "sane", "acq"], ["greeting"]],
+		["Hello!", ["neutral", "sane", "acq"], ["greeting"]],
+		["Hello! My name is #@character_name#, nice to meet you!", ["neutral", "sane", "nacq"], ["greeting"]],
+		["Hello! My name is #@character_name#, at your service!", ["neutral", "sane", "nacq"], ["greeting"]],
+		["Hello #plural_insult_nouns#!", ["evil", "multiple_characters", "sane", "acq"], ["greeting", "insult"]],
+		["Hello #singular_insult_nouns#!", ["evil", "single_character", "sane", "acq"], ["greeting", "insult"]],
+		["Hello #plural_insult_nouns#! I am #@character_name#, fear me!", ["evil", "multiple_characters", "sane", "nacq"], ["greeting", "insult"]],
+		["Hello #singular_insult_nouns#! I am #@character_name#, respect me!", ["evil", "single_character", "sane", "nacq"], ["greeting", "insult"]],
+		["...", ["broken", "acq"], ["greeting", "stupid"]],
+		["... me #@character_name#, don't beat me...", ["broken", "nacq"], ["greeting", "stupid"]],
+		["Aaaaahhhh", ["broken", "acq"], ["greeting", "stupid"]],
+		["Grrrrr", ["broken", "evil", "acq"], ["greeting", "stupid"]],
+		["Grrrrr .. #@character_name# will remember you...", ["broken", "evil", "nacq"], ["greeting", "stupid"]]
 	],
 	"plural_insult_nouns": [
 		["bitches", ["neutral", "sane"], ["insult"]],
@@ -100,12 +106,15 @@ func parse_rule(obj: Object, grammar:Dictionary, text: String, keywords: Array) 
 		var l = tend - tstart
 		var token = text.substr(tstart, l)
 		print("subs: ", text.substr(tstart, l))
-		var item_list = filter_list(obj, grammar[token])
-		var item = item_list[randi() % item_list.size()]
-		text = text.replace("#" + token + "#", item[0])
-		for k in item[2]:
-			if !k in kw:
-				kw.push_back(k)
+		if token == "@character_name":
+			text = text.replace("#" + token + "#", awareness.character_name[obj])
+		else:
+			var item_list = filter_list(obj, grammar[token])
+			var item = item_list[randi() % item_list.size()]
+			text = text.replace("#" + token + "#", item[0])
+			for k in item[2]:
+				if !k in kw:
+					kw.push_back(k)
 	print("kw2: ", kw)
 	return [text, kw]
 	
@@ -130,6 +139,24 @@ func match_keyword(obj, kw):
 		"signle_character":
 			if character_list.size() == 2:
 				return true
+		"acq":
+			var acq = true
+			for k in character_list:
+				if obj == k:
+					continue
+				if !awareness.are_acquientances(obj, k):
+					acq = false
+					break
+			return acq
+		"nacq":
+			var nacq = false
+			for k in character_list:
+				if obj == k:
+					continue
+				if !awareness.are_acquientances(obj, k):
+					nacq = true
+					break
+			return nacq
 	return false
 func filter_list(obj, list):
 	var ret = []
@@ -186,6 +213,13 @@ func _process(delta):
 						say(obj, res[0])
 						print("dialogue_state: ", state, " ", dialogue_state)
 						last_state = item[3][randi() % item[3].size()]
+					for k in range(character_list.size()):
+						for t in range(character_list.size()):
+							if k == t:
+								continue
+							if !awareness.roster.has(character_list[k]) || !awareness.roster[character_list[k]].has(character_list[t]):
+								awareness.add_to_roster(character_list[k], character_list[t])
+							awareness.roster[character_list[k]][character_list[t]].disposition.acquaintance += 1
 					print("reactions: ", reactions)
 					if "end" in reactions:
 						awareness.needs[character_list[token]]["Socialization"] = 0.0
@@ -194,11 +228,16 @@ func _process(delta):
 					state = last_state
 					cooldown = dialogue_delay
 					token = randi() % character_list.size()
+# Displaying the text so that only one we can see is actually displayed
 	for h in character_list:
 		var box_position = h.get_head_position()
-		var pos = get_viewport().get_camera().unproject_position(box_position)
-		speech_text[h].rect_position = pos - Vector2(0, 32)
-		speech_text[h].rect_size = Vector2(120, 64)
+		if get_viewport().get_camera().global_transform.xform_inv(box_position).z <= 0.0:
+			var pos = get_viewport().get_camera().unproject_position(box_position)
+			speech_text[h].rect_position = pos - Vector2(0, 32)
+			speech_text[h].rect_size = Vector2(120, 64)
+			speech_text[h].show()
+		else:
+			speech_text[h].hide()
 	if character_list.size() < 2:
 		print("closing dialogue")
 		remove_character(character_list[0])
