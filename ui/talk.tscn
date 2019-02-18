@@ -1,0 +1,45 @@
+[gd_scene format=2]
+
+[node name="talk" type="Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -75.0
+rect_min_size = Vector2( 0, 80 )
+
+[node name="hb" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="hello" type="TextureButton" parent="hb"]
+margin_right = 80.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+
+[node name="Polygon2D" type="Polygon2D" parent="hb/hello"]
+polygon = PoolVector2Array( 22, 7.74524, 33, 36.7452, 42, 4.74524 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="hb/hello"]
+polygon = PoolVector2Array( 27, 47.7452, 38, 47.7452, 39, 55.7452, 38, 64.7452, 27, 64.7452, 23, 57.7452 )
+
+[node name="weather" type="TextureButton" parent="hb"]
+margin_left = 84.0
+margin_right = 164.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+
+[node name="Polygon2D" type="Polygon2D" parent="hb/weather"]
+polygon = PoolVector2Array( 17, 37.7452, 5, 25.7452, 5, 11.7452, 20, -2.25476, 43, -1.25476, 49, 8.74524, 49, 20.7452, 43, 33.7452, 33, 37.7452, 35, 66.7452, 19, 62.7452 )
+
+[node name="end" type="TextureButton" parent="hb"]
+margin_left = 168.0
+margin_right = 248.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 80, 80 )
+
+[node name="Polygon2D" type="Polygon2D" parent="hb/end"]
+polygon = PoolVector2Array( 16, -0.254761, 59, -0.254761, 59, 60.7452, 22, 59.7452 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="hb/end"]
+polygon = PoolVector2Array( 78, 16.7452, 44, 31.7452, 76, 48.7452 )
+
