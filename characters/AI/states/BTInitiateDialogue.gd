@@ -21,7 +21,8 @@ func init(obj):
 func run(obj, delta):
 	if awareness.targets.has(obj) && awareness.distance(obj, awareness.targets[obj]) < target_distance:
 		print(name + ": distance: ", awareness.distance(obj, awareness.targets[obj]))
-		# TODO: make proper conditions here
+		if !awareness.can_initiate_dialogue(obj, get_state(obj).character):
+			return BT_ERROR
 		var dialogue = awareness.initiate_dialogue(obj, get_state(obj).character)
 		# TODO: Use animations to turn properly for proper facing
 		var center = Vector3()

@@ -400,6 +400,7 @@ func add_to_roster(owner, obj):
 			"acquaintance": 0,
 			"friendship": 0,
 			"love": 0,
+			"lust": 0,
 			"hate": 0,
 			"jealousity": 0,
 			"master": 0,
@@ -493,3 +494,21 @@ func initiate_dialogue(obj, other):
 			awareness.dialogue_mode[other] = dialogue
 			dialogue.add_character(other)
 		return dialogue
+func can_initiate_dialogue(obj, other):
+	if is_slave(obj, other):
+		return false
+	if are_friends(obj, other):
+		return true
+	if is_slave(other, obj):
+		return true
+	if is_master(obj, other):
+		return true
+	if at.has(other):
+		if at[other]["parameters/playback"].get_current_node() == "Toilet1":
+			return false
+		if at[other]["parameters/playback"].get_current_node() == "Toilet2":
+			return false
+	return true
+
+func obj2targets(obj):
+	return obj.get_node("targets").get_children()
