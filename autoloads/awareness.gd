@@ -476,3 +476,20 @@ func get_master(obj):
 		if is_master(obj, k):
 			return k
 	return null
+
+func initiate_dialogue(obj, other):
+		var dialogue
+		if awareness.dialogue_mode.has(obj):
+			dialogue = awareness.dialogue_mode[obj]
+		elif awareness.dialogue_mode.has(other):
+			dialogue = awareness.dialogue_mode[other]
+		else:
+			dialogue = DialogueScheduler.new()
+			get_node("/root").add_child(dialogue)
+		if !awareness.dialogue_mode.has(obj):
+			awareness.dialogue_mode[obj] = dialogue
+			dialogue.add_character(obj)
+		if !awareness.dialogue_mode.has(other):
+			awareness.dialogue_mode[other] = dialogue
+			dialogue.add_character(other)
+		return dialogue

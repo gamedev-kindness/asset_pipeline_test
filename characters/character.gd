@@ -203,6 +203,9 @@ func do_ui_action(act):
 			add_collision_exception_with(other)
 			other.add_collision_exception_with(self)
 			do_action(other, pair_act[act].name)
+	elif act == "Talk":
+		if other != null:
+			awareness.initiate_dialogue(self, other)
 	elif act == "LeaveAction":
 			set_action_mode(false)
 			if other != null:

@@ -22,20 +22,7 @@ func run(obj, delta):
 	if awareness.targets.has(obj) && awareness.distance(obj, awareness.targets[obj]) < target_distance:
 		print(name + ": distance: ", awareness.distance(obj, awareness.targets[obj]))
 		# TODO: make proper conditions here
-		var dialogue
-		if awareness.dialogue_mode.has(obj):
-			dialogue = awareness.dialogue_mode[obj]
-		elif awareness.dialogue_mode.has(get_state(obj).character):
-			dialogue = awareness.dialogue_mode[get_state(obj).character]
-		else:
-			dialogue = DialogueScheduler.new()
-			get_node("/root").add_child(dialogue)
-		if !awareness.dialogue_mode.has(obj):
-			awareness.dialogue_mode[obj] = dialogue
-			dialogue.add_character(obj)
-		if !awareness.dialogue_mode.has(get_state(obj).character):
-			awareness.dialogue_mode[get_state(obj).character] = dialogue
-			dialogue.add_character(get_state(obj).character)
+		var dialogue = awareness.initiate_dialogue(obj, get_state(obj).character)
 		# TODO: Use animations to turn properly for proper facing
 		var center = Vector3()
 		for k in dialogue.character_list:
