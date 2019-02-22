@@ -23,21 +23,12 @@ func check_target_valid(obj):
 func get_closest_target(obj, target):
 	var dist = 1000000.0
 	var target_node
-	print("num targets: ", target, ": ", get_tree().get_nodes_in_group(target).size())
+#	print("num targets: ", target, ": ", get_tree().get_nodes_in_group(target).size())
 	for n in get_tree().get_nodes_in_group(target):
 		var ndist = awareness.distance(obj, n)
 		# Add logic if we want to forcefully free the target
 		if n.is_in_group("toilet") && n.get_parent().busy:
 			continue
-		if n.is_in_group("character_front_target"):
-			# Check traits here
-			if n == obj.get_node("targets/character_front_target"):
-				continue
-			if awareness.gender.has(n) && awareness.gender.has(obj):
-				if awareness.gender[n] == awareness.gender[obj]:
-					continue
-#		if n.is_in_group("shower") && n.get_parent().busy:
-#			continue
 		if ndist < dist:
 			dist = ndist
 			target_node = n
@@ -48,11 +39,11 @@ func init(obj):
 func exit(obj, status):
 	pass
 func run(obj, delta):
-	print(obj.name, " select target: ", target)
+#	print(obj.name, " select target: ", target)
 	var target_node = get_closest_target(obj, target)
-	print(obj.name, " select target ", target_node)
+#	print(obj.name, " select target ", target_node)
 	if target_node != null:
-		print(obj.name, " select target ", target_node.name)
+#		print(obj.name, " select target ", target_node.name)
 		var path_t = awareness.build_path_to_obj(obj, target_node)
 		var path = []
 		for k in path_t:
@@ -61,7 +52,7 @@ func run(obj, delta):
 		awareness.current_path[obj] = path
 		awareness.targets[obj] = target_node
 #		print(obj.name, " select target path: ", path)
-		print(obj.name, " select target pos: ", target_node.global_transform.origin)
-		print(obj.name, " select object pos: ", obj.global_transform.origin)
+#		print(obj.name, " select target pos: ", target_node.global_transform.origin)
+#		print(obj.name, " select object pos: ", obj.global_transform.origin)
 		return BT_OK
 	return BT_ERROR

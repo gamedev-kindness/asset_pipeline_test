@@ -10,7 +10,6 @@
 [ext_resource path="res://ui/roster.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
-
 size = 32
 font_data = ExtResource( 3 )
 

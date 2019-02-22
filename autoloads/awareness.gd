@@ -26,33 +26,41 @@ var max_character_sight_distance = 12.0
 var max_distance_to_camera  = 20.0
 
 var sight_map = {}
-var inventory = {}
-
-# RPG data
-var stats = {}
-var needs = {}
-var skills = {}
-var skill_levels = {}
-var current_level = {}
-var traits = {}
-var till_next_level = {}
 var astar: AStar
+
+# character data
+#var inventory = {}
+#var stats = {}
+#var needs = {}
+#var skills = {}
+#var skill_levels = {}
+#var current_level = {}
+#var traits = {}
+#var till_next_level = {}
+#var target_activation_time = {}
+#var gender = {}
+#var disposition = {}
+#var character_name = {}
+#var character_firstname = {}
+#var character_lastname = {}
+#var roster = {}
+#var phone_number = {}
 var current_path = {}
 var at = {}
 var action_cooldown = {}
 var targets = {}
-var target_activation_time = {}
 var raycasts = {}
 var need_changes = {}
-var gender = {}
-var disposition = {}
+var passive_action = {}
+var active_action = {}
+var ai_state = {}
+var dialogue_mode = {}
+# Saveable data
+var character_data = {}
 var markov_rnd
 var name_data = {}
-var character_name = {}
-var character_firstname = {}
-var character_lastname = {}
-var roster = {}
-var phone_number = {}
+
+var character_save_data = {}
 
 func _ready():
 	astar = AStar.new()
@@ -126,17 +134,25 @@ func get_neighbors_by_group(p:Spatial, group: String):
 	return ret
 
 func remove_deleted(c):
+	print("erasing: ", c, " ", c.name)
 	if c in characters:
 		characters.erase(c)
-		inventory[c] = []
+		character_data[c].inventory = []
 		update_active()
-
+	if c in sight_map.keys():
+		sight_map.erase(c)
 	if c in objects:
 		objects.erase(c)
 		update_active()
 	for fc in chunks.keys():
 		if c in chunks[fc]:
 			chunks[fc].erase(c)
+	for m in [at, current_path, action_cooldown, targets, raycasts, need_changes,
+			   passive_action, active_action, ai_state]:
+		if c in m.keys():
+			m.erase(c)
+	if dialogue_mode.has(c):
+		dialogue_mode[c].remove_character(c)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var time_paused = false
@@ -171,7 +187,9 @@ func _process(delta):
 		if !k in characters:
 			characters.push_back(k)
 			k.connect("tree_exited", self, "remove_deleted", [k])
-			inventory[k] = []
+			if !character_data.has(k):
+				character_data[k] = {}
+			character_data[k].inventory = []
 	for k in get_tree().get_nodes_in_group("character_holders"):
 		add_chunk(chunks1, k)
 		if !k in character_holders:
@@ -194,10 +212,9 @@ func _process(delta):
 static func distance(n1: Spatial, n2: Spatial) -> float:
 	return n1.global_transform.origin.distance_to(n2.global_transform.origin)
 
-var active_items = {}
 var max_active_distance = 1.2
 var active_angle = PI
-
+var active_items = {}
 
 func update_active():
 	for a in characters:
@@ -330,16 +347,22 @@ var utilities = {
 	}
 }
 
-var passive_action = {}
-var active_action = {}
-var ai_state = {}
-var dialogue_mode = {}
-
 func get_utility(obj, un):
-	if needs.has(obj) && utilities.has(un) && utilities[un].has("need"):
-		return utilities[un].score * needs[obj][utilities[un].need]
-	elif traits.has(obj) && utilities.has(un) && utilities[un].has("trait"):
-		if traits[obj].has(un):
+	if !character_data.has(obj):
+		return 0.0
+	if character_data[obj].needs.empty():
+		return 0.0
+	if utilities.has(un) && utilities[un].has("need"):
+		var sc = utilities[un].score
+		if un in ["toilet1", "toilet2"]:
+			if get_tree().get_nodes_in_group("toilet").size() == 0:
+				sc = 0.0
+		if un in "shower":
+			if get_tree().get_nodes_in_group("shower").size() == 0:
+				sc = 0.0
+		return sc * character_data[obj].needs[utilities[un].need]
+	elif utilities.has(un) && utilities[un].has("trait"):
+		if character_data[obj].traits.has(un):
 			return utilities[un].score
 		else:
 			return 0.0
@@ -358,14 +381,16 @@ func get_utility(obj, un):
 		return 0.0
 
 func get_traits(obj):
-	return traits[obj]
+	return character_data[obj].traits
 func has_trait(obj, trait):
-	return trait in traits[obj]
+	return trait in character_data[obj].traits
 func add_trait(obj, trait):
-	if !traits.has(obj):
-		traits[obj] = []
-	if ! trait in traits[obj]:
-		traits[obj].push_back(trait)
+	if !character_data.has(obj):
+		character_data[obj] = {}
+	if !character_data[obj].has("traits"):
+		character_data[obj].traits = []
+	if ! trait in character_data[obj].traits:
+		character_data[obj].traits.push_back(trait)
 func build_name(starts, ngrams):
 	var start = starts[markov_rnd.randi() % starts.size()]
 	var result = start
@@ -388,11 +413,26 @@ func build_female_firstname():
 func build_lastname():
 	return build_name(name_data["lastname"].start, name_data["lastname"].ngrams)
 
+func add_character_data(obj):
+	if !character_data.has(obj):
+		character_data[obj] = {
+			"gender": "",
+			"character_name": "",
+			"firstname": "",
+			"lastname": "",
+			"roster": {},
+			"needs": {},
+			"traits": [],
+			"stats": {},
+			"skills": {},
+			"current_level": 1
+		}
+
 
 func add_to_roster(owner, obj):
-	if !roster.has(owner):
-		roster[owner] = {}
-	if roster[owner].has(obj):
+	if !character_data.has(owner):
+		add_character_data(owner)
+	if character_data[owner].roster.has(obj):
 		return
 	var new_data = {
 		"obj": obj,
@@ -408,72 +448,70 @@ func add_to_roster(owner, obj):
 		},
 		"sex_partner": false,
 	}
-	roster[owner][obj] = new_data
+	character_data[owner].roster[obj] = new_data
+func get_roster(obj):
+	if character_data.has(obj):
+		return character_data[obj].roster
+	return []
+func in_roster(obj, other):
+	return get_roster(obj).has(other)
 func are_acquientances(obj, other):
 	if obj == other:
 		return true
-	if !roster.has(obj):
-		return false
-	if roster[obj].has(other):
+	if in_roster(obj, other):
 		return true
 	else:
 		return false
+func get_disposition(obj, other):
+	return character_data[obj].roster[other].disposition
 func are_enemies(obj, other):
 	if obj == other:
 		return false
-	if !roster.has(obj):
-		return false
-	if !roster[obj].has(other):
+	if !in_roster(obj, other):
 		return false
 	else:
-		var d = roster[obj][other].disposition
+		var d = get_disposition(obj, other)
 		return d.hate > d.love && d.hate > d.friendship
 func are_friends(obj, other):
 	if obj == other:
 		return true
-	if !roster.has(obj):
-		return false
-	if !roster[obj].has(other):
+	if !in_roster(obj, other):
 		return false
 	else:
 		if are_enemies(obj, other):
 			return false
-		var d = roster[obj][other].disposition
+		var d = get_disposition(obj, other)
 		return d.friendship > 0
 func are_lovers(obj, other):
 	if obj == other:
 		return true
-	if !roster.has(obj):
-		return false
-	if !roster[obj].has(other):
+	if !get_roster(obj).has(other):
 		return false
 	else:
-		var d = roster[obj][other].disposition
+		var d = get_disposition(obj, other)
 		return d.love > d.friendship
 func is_slave(obj, other):
 	if obj == other:
 		return false
-	if !roster.has(obj):
+	if !get_roster(other).has(obj):
 		return false
-	if !roster[obj].has(other):
+	if !get_roster(obj).has(other):
 		return false
 	else:
-		var d = roster[obj][other].disposition
+		var d = get_disposition(obj, other)
 		return d["slave"] > d.friendship && d["slave"] > d.love
 func is_master(obj, other):
 	if obj == other:
 		return false
-	if !roster.has(obj):
-		return false
-	if !roster[obj].has(other):
+	if !get_roster(obj).has(other):
 		return false
 	else:
 		if is_slave(obj, other):
 			return false
-		var d = roster[obj][other].disposition
+		var d = get_disposition(obj, other)
 		return d["master"] > d.friendship && d["master"] > d.love
 func get_master(obj):
-	for k in roster[obj].keys():
+	for k in get_roster(obj).keys():
 		if is_master(obj, k):
 			return k
 	return null
@@ -512,3 +550,24 @@ func can_initiate_dialogue(obj, other):
 
 func obj2targets(obj):
 	return obj.get_node("targets").get_children()
+
+func save_character(obj, data: Dictionary) -> void:
+	var char_name = character_data[obj].character_name
+	data[char_name] = character_data[obj].duplicate()
+	data[char_name].transform = obj.global_transform
+	data[char_name].posessed = obj.posessed
+	for k in data[char_name].roster.keys():
+		var rdata = data[char_name].roster[k].duplicate()
+		rdata.erase("obj")
+		data[char_name].roster.erase(k)
+		data[char_name].roster[character_data[k].character_name] = rdata
+		
+func save_all_characters(data: Dictionary) -> void:
+	for k in get_tree().get_nodes_in_group("characters"):
+		save_character(k, data)
+
+func get_gender(obj):
+	if character_data.has(obj):
+		return character_data[obj].gender
+	else:
+		return ""

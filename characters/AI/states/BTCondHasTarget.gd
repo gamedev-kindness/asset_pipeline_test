@@ -14,9 +14,9 @@ func _ready():
 #	pass
 func run(obj, delta):
 	if awareness.targets.has(obj):
-		print(name, " ", obj.name, " has target")
+#		print(name, " ", obj.name, " has target")
 		return BT_OK
 	else:
-		print(name, " ", obj.name, " no target")
+#		print(name, " ", obj.name, " no target")
 		return BT_ERROR
 		

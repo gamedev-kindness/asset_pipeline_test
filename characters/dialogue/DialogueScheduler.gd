@@ -107,7 +107,7 @@ func parse_rule(obj: Object, grammar:Dictionary, text: String, keywords: Array) 
 		var token = text.substr(tstart, l)
 		print("subs: ", text.substr(tstart, l))
 		if token == "@character_name":
-			text = text.replace("#" + token + "#", awareness.character_name[obj])
+			text = text.replace("#" + token + "#", awareness.character_data[obj].character_name)
 		else:
 			var item_list = filter_list(obj, grammar[token])
 			var item = item_list[randi() % item_list.size()]
@@ -217,12 +217,12 @@ func _process(delta):
 						for t in range(character_list.size()):
 							if k == t:
 								continue
-							if !awareness.roster.has(character_list[k]) || !awareness.roster[character_list[k]].has(character_list[t]):
+							if awareness.get_roster(character_list[k]).empty() || !awareness.in_roster(character_list[k], character_list[t]):
 								awareness.add_to_roster(character_list[k], character_list[t])
-							awareness.roster[character_list[k]][character_list[t]].disposition.acquaintance += 1
+							awareness.get_disposition(character_list[k], character_list[t]).acquaintance += 1
 					print("reactions: ", reactions)
 					if "end" in reactions:
-						awareness.needs[character_list[token]]["Socialization"] = 0.0
+						awareness.character_data[character_list[token]].needs["Socialization"] = 0.0
 						remove_character(character_list[token])
 					dialogue_state = "thesis"
 					state = last_state
@@ -240,7 +240,8 @@ func _process(delta):
 			speech_text[h].hide()
 	if character_list.size() < 2:
 		print("closing dialogue")
-		remove_character(character_list[0])
+		if character_list.size() > 0:
+			remove_character(character_list[0])
 		character_list.clear()
 		set_process(false)
 		queue_free()
@@ -260,6 +261,8 @@ func remove_character(obj):
 		var speech = speech_text[obj]
 		speech_text.erase(obj)
 		speech.queue_free()
+		if token >= character_list.size():
+			token = 0
 		if character_list[token] == obj:
 			token = 0
 		character_list.erase(obj)

@@ -29,8 +29,8 @@ func get_closest_target(obj, target):
 		# Add logic if we want to forcefully free the target
 		if n == obj:
 			continue
-		if awareness.gender.has(n) && awareness.gender.has(obj):
-			if awareness.gender[n] == awareness.gender[obj]:
+		if awareness.get_gender(n).length() > 0 && awareness.get_gender(obj).length() > 0:
+			if awareness.get_gender(n) == awareness.get_gender(obj):
 				ndist *= 1.5
 		if awareness.is_master(obj, n):
 			ndist *= 0.25

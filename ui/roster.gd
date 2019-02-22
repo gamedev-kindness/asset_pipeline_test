@@ -22,10 +22,10 @@ func visibility_changed():
 		for k in entries:
 			$VBoxContainer.remove_child(k)
 			k.queue_free()
-		if !awareness.roster.has(awareness.player_character):
+		if !awareness.character_data.has(awareness.player_character):
 			return
-		for k in awareness.roster[awareness.player_character].keys():
-			var chname = awareness.character_name[k]
+		for k in awareness.get_roster(awareness.player_character).keys():
+			var chname = awareness.character_data[k].character_name
 			var entry = HBoxContainer.new()
 			var label = Label.new()
 			label.text = chname

@@ -73,22 +73,22 @@ func process_command(c: String):
 			$VBoxContainer/RichTextLabel.text += "\n"
 		"inv":
 			d.append_bbcode("[b]Inventory[/b]\n")
-			var items = awareness.inventory[awareness.player_character]
+			var items = awareness.character_data[awareness.player_character].inventory
 			for i in items:
 				d.text += i + "\n"
 		"stats":
 			d.append_bbcode("[b]Stats[/b]\n")
-			for h in awareness.stats[awareness.player_character].keys():
-				d.text += h + " " + str(awareness.stats[awareness.player_character][h]) + "\n"
+			for h in awareness.character_data[awareness.player_character].stats.keys():
+				d.text += h + " " + str(awareness.character_data[awareness.player_character].stats[h]) + "\n"
 			d.append_bbcode("[b]Skills[/b]\n")
-			for h in awareness.skills[awareness.player_character].keys():
-				d.text += h + " " + str(awareness.skills[awareness.player_character][h]) + "\n"
+			for h in awareness.character_data[awareness.player_character].skills.keys():
+				d.text += h + " " + str(awareness.character_data[awareness.player_character].skills[h]) + "\n"
 			d.append_bbcode("[b]Needs[/b]\n")
-			for h in awareness.needs[awareness.player_character].keys():
-				d.text += h + " " + str(awareness.needs[awareness.player_character][h]) + "\n"
+			for h in awareness.character_data[awareness.player_character].needs.keys():
+				d.text += h + " " + str(awareness.character_data[awareness.player_character].needs[h]) + "\n"
 		"chars":
 			for k in get_tree().get_nodes_in_group("characters"):
-				d.text += "\n" + k.name + "\n" + "name: " + awareness.character_name[k] + "\n===\n"
+				d.text += "\n" + k.name + "\n" + "name: " + awareness.character_data[k].character_name + "\n===\n"
 				if awareness.at.has(k):
 					var sm = awareness.at[k]["parameters/playback"]
 					d.text += "state: " +  sm.get_current_node() + "\n"

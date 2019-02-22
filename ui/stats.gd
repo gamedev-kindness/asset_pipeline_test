@@ -27,9 +27,9 @@ func _process(delta):
 			if c.name == "back_button":
 				continue
 			c.queue_free()
-		for s in awareness.stats[awareness.player_character].keys():
+		for s in awareness.character_data[awareness.player_character].stats.keys():
 			var data = load("res://ui/stat_data.tscn").instance()
 			data.set_stat_name(s)
-			data.set_stat_value(awareness.stats[awareness.player_character][s])
+			data.set_stat_value(awareness.character_data[awareness.player_character].stats[s])
 			$vb.add_child(data)
 		$vb.update()

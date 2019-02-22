@@ -55,20 +55,18 @@ func _process(delta):
 		
 		for h in $needs.get_children():
 			needs[h.name] = 0.0
-		awareness.needs[character] = needs
-		if !awareness.current_level.has(character):
-			awareness.current_level[character] = 1
-		if !awareness.skills.has(character):
+		awareness.character_data[character].needs = needs
+		if awareness.character_data[character].skills.empty():
+			awareness.character_data[character].skill_levels = {}
 			for h in $skills.get_children():
-				awareness.skill_levels[character] = {}
-				awareness.skill_levels[character][h.name] = 1
-				skills[h.name] = int(float(h.base_value) * h.curve.interpolate_baked(float(awareness.skill_levels[character][h.name]) / float(h.max_level - h.min_level)))
-			awareness.skills[character] = skills
-		if !awareness.stats.has(character):
+				awareness.character_data[character].skill_levels[h.name] = 1
+				skills[h.name] = int(float(h.base_value) * h.curve.interpolate_baked(float(awareness.character_data[character].skill_levels[h.name]) / float(h.max_level - h.min_level)))
+			awareness.character_data[character].skills = skills
+		if awareness.character_data[character].stats.empty():
 			for h in $stats.get_children():
-				stats[h.name] = int(float(h.base_value) * h.curve.interpolate_baked(float(awareness.current_level[character]) / float(max_level - min_level)))
-			awareness.stats[character] = stats
-		awareness.till_next_level[character] = int(float(score_base) * leveling.interpolate_baked(float(awareness.current_level[character]) / float(max_level - min_level)))
+				stats[h.name] = int(float(h.base_value) * h.curve.interpolate_baked(float(awareness.character_data[character].current_level) / float(max_level - min_level)))
+			awareness.character_data[character].stats = stats
+		awareness.character_data[character].till_next_level = int(float(score_base) * leveling.interpolate_baked(float(awareness.character_data[character].current_level) / float(max_level - min_level)))
 		var need_changes = {
 			"Toilet1": 1.0 / (8.0 * 60.0),
 			"Toilet2": 1.0 / (24.0 * 60.0),
@@ -82,16 +80,16 @@ func _process(delta):
 		awareness.need_changes[character] = {}
 		for k in need_changes.keys():
 			awareness.need_changes[character][k] = randf() * 0.5 * need_changes[k] + need_changes[k] * 0.5
-		if !awareness.traits.has(character):
-			awareness.traits[character] = []
-		for k in traits:
-			if randf() <= k.probability:
-				awareness.traits[character].push_back(k.name)
+		if awareness.character_data[character].traits.empty():
+			awareness.character_data[character].traits = []
+			for k in traits:
+				if randf() <= k.probability:
+					awareness.character_data[character].traits.push_back(k.name)
 		state = PROCEED
 	elif state == PROCEED:
-		if awareness.needs.has(character):
-			for h in awareness.needs[character].keys():
+		if !awareness.character_data[character].needs.empty():
+			for h in awareness.character_data[character].needs.keys():
 				if awareness.need_changes[character].has(h):
-					awareness.needs[character][h] += delta * awareness.need_changes[character][h]
+					awareness.character_data[character].needs[h] += delta * awareness.need_changes[character][h]
 				else:
-					awareness.needs[character][h] += delta / (24.0 * 60.0 * 10.0)
+					awareness.character_data[character].needs[h] += delta / (24.0 * 60.0 * 10.0)
