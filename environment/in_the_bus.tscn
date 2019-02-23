@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://environment/in_the_bus/in_the_bus.gd" type="Script" id=1]
 [ext_resource path="res://vehicles/the_bus.tscn" type="PackedScene" id=2]
 [ext_resource path="res://environment/in_the_bus/camera_control.gd" type="Script" id=3]
+[ext_resource path="res://environment/spawn_point.gd" type="Script" id=4]
 
 [sub_resource type="ProceduralSky" id=1]
 sky_top_color = Color( 0.0705882, 0.207843, 0.427451, 1 )
@@ -29,13 +30,42 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.300595, 0 )
 
 [node name="camera_control" type="Spatial" parent="the_bus"]
-transform = Transform( 0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, 0.34202, -0.281, 1.9494, 4.57 )
+transform = Transform( 0.34202, 0, 0.939693, 0, 1, 0, -0.939693, 0, 0.34202, 0.00641622, 2.06882, 3.6916 )
 script = ExtResource( 3 )
 
 [node name="Camera" type="Camera" parent="the_bus/camera_control"]
-transform = Transform( 1, 0, 0, 0, 0.906307, 0.422618, 0, -0.422618, 0.906307, -6.54161e-05, -0.000469923, -0.000286579 )
+transform = Transform( 1, 1.49012e-08, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, -6.53267e-05, -0.000469923, -0.000286579 )
 environment = SubResource( 2 )
 fov = 55.0
+
+[node name="SpawnPoint" type="Spatial" parent="the_bus"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.473015, 0.802746, 4.42767 )
+script = ExtResource( 4 )
+player = true
+parented = true
+vehicle = true
+top_state = "Sitting"
+
+[node name="SpawnPoint2" type="Spatial" parent="the_bus"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.929342, 0.802746, 4.42767 )
+script = ExtResource( 4 )
+parented = true
+vehicle = true
+top_state = "Sitting"
+
+[node name="SpawnPoint3" type="Spatial" parent="the_bus"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.926834, 0.802746, 4.42879 )
+script = ExtResource( 4 )
+parented = true
+vehicle = true
+top_state = "Sitting"
+
+[node name="SpawnPoint4" type="Spatial" parent="the_bus"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.478088, 0.802746, 4.42879 )
+script = ExtResource( 4 )
+parented = true
+vehicle = true
+top_state = "Sitting"
 
 [node name="ground" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
@@ -43,6 +73,7 @@ mesh = SubResource( 3 )
 material/0 = null
 
 [node name="StaticBody" type="StaticBody" parent="ground"]
+collision_mask = 1023
 
 [node name="CollisionShape" type="CollisionShape" parent="ground/StaticBody"]
 shape = SubResource( 4 )

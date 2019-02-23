@@ -14,6 +14,31 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://characters/AI/states/AIstate.gd"
 }, {
+"base": "Node",
+"class": "ActionFrontGrab",
+"language": "GDScript",
+"path": "res://characters/actions/ActionFrontGrab.gd"
+}, {
+"base": "Node",
+"class": "ActionFrontGrabFaceSlap",
+"language": "GDScript",
+"path": "res://characters/actions/ActionFrontGrabFaceSlap.gd"
+}, {
+"base": "Node",
+"class": "ActionGrabFromBack",
+"language": "GDScript",
+"path": "res://characters/actions/ActionGrabFromBack.gd"
+}, {
+"base": "Node",
+"class": "ActionKickToBed",
+"language": "GDScript",
+"path": "res://characters/actions/ActionKickToBed.gd"
+}, {
+"base": "Node",
+"class": "ActionMissionary1",
+"language": "GDScript",
+"path": "res://characters/actions/ActionMissionary1.gd"
+}, {
 "base": "AnimationNodeAnimation",
 "class": "AnimationNodeOtherNaimation",
 "language": "GDScript",
@@ -55,6 +80,11 @@ _global_script_classes=[ {
 "path": "res://characters/AI/states/BTConditional.gd"
 }, {
 "base": "Node",
+"class": "BTIk",
+"language": "GDScript",
+"path": "res://characters/AI/states/BTIk.gd"
+}, {
+"base": "Node",
 "class": "BTInitiateDialogue",
 "language": "GDScript",
 "path": "res://characters/AI/states/BTInitiateDialogue.gd"
@@ -63,11 +93,6 @@ _global_script_classes=[ {
 "class": "BTPlayAnimationState",
 "language": "GDScript",
 "path": "res://characters/AI/states/BTPlayAnimationState.gd"
-}, {
-"base": "Node",
-"class": "BTPlayPassiveAction",
-"language": "GDScript",
-"path": "res://characters/AI/states/BTPlayPassiveAction.gd"
 }, {
 "base": "Node",
 "class": "BTRoot",
@@ -120,6 +145,11 @@ _global_script_classes=[ {
 "path": "res://characters/AI/states/BTWalkToTarget.gd"
 }, {
 "base": "Node",
+"class": "BaseAction",
+"language": "GDScript",
+"path": "res://characters/actions/BaseAction.gd"
+}, {
+"base": "Node",
 "class": "DialogueScheduler",
 "language": "GDScript",
 "path": "res://characters/dialogue/DialogueScheduler.gd"
@@ -128,9 +158,24 @@ _global_script_classes=[ {
 "class": "Pickable",
 "language": "GDScript",
 "path": "res://inventory/pickable.gd"
+}, {
+"base": "Spatial",
+"class": "SpawnPoint",
+"language": "GDScript",
+"path": "res://environment/spawn_point.gd"
+}, {
+"base": "Spatial",
+"class": "SpawnPointBed",
+"language": "GDScript",
+"path": "res://furniture/spawn_point.gd"
 } ]
 _global_script_class_icons={
 "AIState": "",
+"ActionFrontGrab": "",
+"ActionFrontGrabFaceSlap": "",
+"ActionGrabFromBack": "",
+"ActionKickToBed": "",
+"ActionMissionary1": "",
 "AnimationNodeOtherNaimation": "",
 "BTActivateTarget": "",
 "BTBase": "",
@@ -139,9 +184,9 @@ _global_script_class_icons={
 "BTCondHasTarget": "",
 "BTCondOtherStateMachine": "",
 "BTConditional": "",
+"BTIk": "",
 "BTInitiateDialogue": "",
 "BTPlayAnimationState": "",
-"BTPlayPassiveAction": "",
 "BTRoot": "",
 "BTSelectCharacterTarget": "",
 "BTSelectTarget": "",
@@ -152,8 +197,11 @@ _global_script_class_icons={
 "BTTask": "",
 "BTUtilitySelector": "",
 "BTWalkToTarget": "",
+"BaseAction": "",
 "DialogueScheduler": "",
-"Pickable": ""
+"Pickable": "",
+"SpawnPoint": "",
+"SpawnPointBed": ""
 }
 
 [application]
@@ -165,6 +213,8 @@ run/main_scene="res://ui/menu_root.tscn"
 awareness="*res://autoloads/awareness.gd"
 settings="*res://autoloads/settings.gd"
 content="*res://autoloads/content.gd"
+action="*res://autoloads/action.gd"
+player="*res://autoloads/player.gd"
 
 [input]
 

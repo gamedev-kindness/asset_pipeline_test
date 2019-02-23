@@ -51,14 +51,14 @@ var action_cooldown = {}
 var targets = {}
 var raycasts = {}
 var need_changes = {}
-var passive_action = {}
-var active_action = {}
 var ai_state = {}
 var dialogue_mode = {}
+var passenger_mode = {}
 # Saveable data
 var character_data = {}
 var markov_rnd
 var name_data = {}
+var action_mode = {}
 
 var character_save_data = {}
 
@@ -90,6 +90,8 @@ func _ready():
 
 func rebuild_map():
 	var camera = player_character.tps_camera
+	if camera == null:
+		camera = get_viewport().get_camera()
 	for k in characters:
 		if distance(k, camera) > max_distance_to_camera:
 			continue
@@ -148,7 +150,7 @@ func remove_deleted(c):
 		if c in chunks[fc]:
 			chunks[fc].erase(c)
 	for m in [at, current_path, action_cooldown, targets, raycasts, need_changes,
-			   passive_action, active_action, ai_state]:
+			   action_mode, ai_state]:
 		if c in m.keys():
 			m.erase(c)
 	if dialogue_mode.has(c):
@@ -188,8 +190,7 @@ func _process(delta):
 			characters.push_back(k)
 			k.connect("tree_exited", self, "remove_deleted", [k])
 			if !character_data.has(k):
-				character_data[k] = {}
-			character_data[k].inventory = []
+				add_character_data(k)
 	for k in get_tree().get_nodes_in_group("character_holders"):
 		add_chunk(chunks1, k)
 		if !k in character_holders:
@@ -330,20 +331,20 @@ var utilities = {
 		"trait": "slave",
 		"behavior": "slave"
 	},
-	"passive_action": {
+	"action": {
 		"score": 10000,
-		"flag": "passive_action",
-		"behavior": "passive_action"
-	},
-	"active_action": {
-		"score": 10000,
-		"flag": "active_action",
-		"behavior": "active_action"
+		"flag": "action",
+		"behavior": "action"
 	},
 	"dialogue": {
 		"score": 500,
 		"flag": "dialogue",
 		"behavior": "dialogue"
+	},
+	"passenger": {
+		"score": 9000,
+		"flag": "passenger",
+		"behavior": "passenger"
 	}
 }
 
@@ -367,14 +368,14 @@ func get_utility(obj, un):
 		else:
 			return 0.0
 	elif utilities.has(un) && utilities[un].has("flag"):
-		if utilities[un].flag == "passive_action":
-			if passive_action.has(obj):
-				return utilities[un].score
-		if utilities[un].flag == "active_action":
-			if active_action.has(obj):
+		if utilities[un].flag == "action":
+			if action_mode.has(obj):
 				return utilities[un].score
 		if utilities[un].flag == "dialogue":
 			if dialogue_mode.has(obj):
+				return utilities[un].score
+		if utilities[un].flag == "passenger":
+			if passenger_mode.has(obj):
 				return utilities[un].score
 		return 0.0
 	else:

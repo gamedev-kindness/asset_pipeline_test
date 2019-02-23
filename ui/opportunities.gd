@@ -31,7 +31,7 @@ func _process(delta):
 	$WakeUp.hide()
 	if awareness.active_items.has(current):
 		for i in awareness.active_items[current]:
-			if i.is_in_group("characters") && !current.action:
+			if i.is_in_group("characters") && !awareness.action_mode.has(current):
 				$Talk.show()
 				if awareness.at.has(i):
 					if awareness.at[i]["parameters/playback"].get_current_node() == "Sleeping":
@@ -41,7 +41,7 @@ func _process(delta):
 					$KickToBed.show()
 				elif awareness.get_other_direction(current, i) == "FRONT":
 					$FrontGrab.show()
-			elif current.action:
+			elif awareness.action_mode.has(current):
 				$LeaveAction.show()
 				if front_grab_mode:
 					$FrontGrabFaceSlap.show()

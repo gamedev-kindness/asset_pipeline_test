@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://characters/female_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
@@ -10,23 +10,20 @@
 [ext_resource path="res://characters/aplayer.gd" type="Script" id=8]
 [ext_resource path="res://characters/female_body_material.tres" type="Material" id=9]
 [ext_resource path="res://characters/female_bob01_material.tres" type="Material" id=10]
-[ext_resource path="res://textures/CrudeFemaleUnderwearDiffuse.png" type="Texture" id=11]
-[ext_resource path="res://characters/crudegown_material.tres" type="Material" id=12]
-[ext_resource path="res://characters/eyebrow_material.tres" type="Material" id=13]
-[ext_resource path="res://characters/eyelashes_material.tres" type="Material" id=14]
-[ext_resource path="res://characters/female_fingernails_material.tres" type="Material" id=15]
-[ext_resource path="res://characters/eyes_material.tres" type="Material" id=16]
-[ext_resource path="res://textures/teeth.png" type="Texture" id=17]
-[ext_resource path="res://characters/female_tongue_material.tres" type="Material" id=18]
-[ext_resource path="res://characters/tears_material.tres" type="Material" id=19]
-[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=20]
-[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=21]
-[ext_resource path="res://characters/rpg.tscn" type="PackedScene" id=22]
-[ext_resource path="res://characters/animation.gd" type="Script" id=23]
-[ext_resource path="res://characters/targets.tscn" type="PackedScene" id=24]
+[ext_resource path="res://characters/crudegown_material.tres" type="Material" id=11]
+[ext_resource path="res://characters/eyebrow_material.tres" type="Material" id=12]
+[ext_resource path="res://characters/eyelashes_material.tres" type="Material" id=13]
+[ext_resource path="res://characters/female_fingernails_material.tres" type="Material" id=14]
+[ext_resource path="res://characters/eyes_material.tres" type="Material" id=15]
+[ext_resource path="res://characters/female_tongue_material.tres" type="Material" id=16]
+[ext_resource path="res://characters/tears_material.tres" type="Material" id=17]
+[ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=18]
+[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=19]
+[ext_resource path="res://characters/rpg.tscn" type="PackedScene" id=20]
+[ext_resource path="res://characters/animation.gd" type="Script" id=21]
+[ext_resource path="res://characters/targets.tscn" type="PackedScene" id=22]
 
 [sub_resource type="Animation" id=1]
-
 resource_name = "fix_position"
 tracks/0/type = "method"
 tracks/0/path = NodePath("..")
@@ -40,64 +37,44 @@ tracks/0/keys = {
 "values": [  ]
 }
 
-[sub_resource type="SpatialMaterial" id=2]
-
-albedo_texture = ExtResource( 11 )
-
-[sub_resource type="SpatialMaterial" id=3]
-
-albedo_texture = ExtResource( 17 )
-
-[sub_resource type="ParticlesMaterial" id=4]
-
+[sub_resource type="ParticlesMaterial" id=2]
 spread = 15.0
 flatness = 1.0
 initial_velocity = 2.0
 initial_velocity_random = 0.1
 angular_velocity = 1.0
 
-[sub_resource type="SpatialMaterial" id=5]
-
+[sub_resource type="SpatialMaterial" id=3]
 flags_transparent = true
 albedo_color = Color( 0.831373, 0.694118, 0.0745098, 0.498039 )
 
-[sub_resource type="SphereMesh" id=6]
-
-material = SubResource( 5 )
+[sub_resource type="SphereMesh" id=4]
+material = SubResource( 3 )
 radius = 0.01
 height = 0.02
 radial_segments = 16
 rings = 8
 
-[sub_resource type="CapsuleShape" id=7]
-
+[sub_resource type="CapsuleShape" id=5]
 margin = 0.02
 radius = 0.2
 height = 1.1
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=8]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=7]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=8]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=9]
 
-
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
-
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=11]
 
-
 [sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=13]
-
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=14]
-
-
-[sub_resource type="SphereShape" id=15]
-
+[sub_resource type="SphereShape" id=13]
 radius = 0.1
 
 [node name="female_2018" instance=ExtResource( 1 )]
@@ -122,29 +99,23 @@ material/0 = ExtResource( 9 )
 [node name="female_2018-bob01" parent="female_2018" index="2"]
 material/0 = ExtResource( 10 )
 
-[node name="female_2018-crudefemaleunderwear" parent="female_2018" index="3"]
-material/0 = SubResource( 2 )
-
 [node name="female_2018-crudegown" parent="female_2018" index="4"]
-material/0 = ExtResource( 12 )
+material/0 = ExtResource( 11 )
 
 [node name="female_2018-eyebrow001" parent="female_2018" index="5"]
-material/0 = ExtResource( 13 )
+material/0 = ExtResource( 12 )
 
 [node name="female_2018-eyelashes04" parent="female_2018" index="6"]
-material/0 = ExtResource( 14 )
+material/0 = ExtResource( 13 )
 
 [node name="female_2018-fingernails_elegant" parent="female_2018" index="7"]
-material/0 = ExtResource( 15 )
+material/0 = ExtResource( 14 )
 
 [node name="female_2018-highpolyeyes" parent="female_2018" index="8"]
-material/0 = ExtResource( 16 )
-
-[node name="female_2018-teeth_shape01" parent="female_2018" index="9"]
-material/0 = SubResource( 3 )
+material/0 = ExtResource( 15 )
 
 [node name="female_2018-tongue01" parent="female_2018" index="11"]
-material/0 = ExtResource( 18 )
+material/0 = ExtResource( 16 )
 
 [node name="head" type="BoneAttachment" parent="female_2018" index="12" groups=[
 "tps_target",
@@ -171,15 +142,27 @@ emitting = false
 amount = 128
 lifetime = 0.5
 local_coords = false
-process_material = SubResource( 4 )
-draw_pass_1 = SubResource( 6 )
+process_material = SubResource( 2 )
+draw_pass_1 = SubResource( 4 )
 
 [node name="tears" parent="female_2018" index="16"]
-material/0 = ExtResource( 19 )
+material/0 = ExtResource( 17 )
+
+[node name="sitting_ik_left" type="SkeletonIK" parent="female_2018" index="17"]
+root_bone = "upperleg02_L"
+tip_bone = "foot_L"
+interpolation = 0.7
+target_node = NodePath("../../sitting_ik_foot_target")
+
+[node name="sitting_ik_right" type="SkeletonIK" parent="female_2018" index="18"]
+root_bone = "upperleg02_R"
+tip_bone = "foot_R"
+interpolation = 0.7
+target_node = NodePath("../../sitting_ik_foot_target")
 
 [node name="main_shape" type="CollisionShape" parent="." index="1"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.753, 0.038 )
-shape = SubResource( 7 )
+shape = SubResource( 5 )
 
 [node name="RayCast" type="RayCast" parent="." index="2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, -0.11 )
@@ -197,33 +180,35 @@ enabled = true
 cast_to = Vector3( 0, 0, -0.4 )
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="5"]
-tree_root = ExtResource( 20 )
+tree_root = ExtResource( 18 )
 anim_player = NodePath("../female_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
-parameters/playback = SubResource( 8 )
-parameters/FrontGrab/playback = SubResource( 9 )
+parameters/playback = SubResource( 6 )
+parameters/FrontGrab/playback = SubResource( 7 )
 parameters/FrontGrab/FrontGrabLoop/face_slapped/active = false
 parameters/FrontGrab/FrontGrabLoop/front_grab_speed/scale = 0.3
-parameters/FrontGrab/Missionary_1_1/playback = SubResource( 10 )
-parameters/FrontGrabbed/playback = SubResource( 11 )
+parameters/FrontGrab/Missionary_1_1/playback = SubResource( 8 )
+parameters/FrontGrabbed/playback = SubResource( 9 )
 parameters/FrontGrabbed/FrontGrabbedLoop/face_slapped/active = false
 parameters/FrontGrabbed/FrontGrabbedLoop/front_grabbed_speed/scale = 0.3
-parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 12 )
+parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 10 )
 parameters/GrabbedFromBack/walk/blend_amount = 1.0
 "parameters/Navigate/OneShot 3/active" = false
 parameters/Navigate/turn_left/active = false
 parameters/Navigate/turn_right/active = false
 parameters/Navigate/walk_speed/scale = 1.0
+parameters/Sitting/wiggle_amount/add_amount = 0.1
+parameters/Sitting/wiggle_speed/scale = 1.0
 parameters/Sleep/Blend2/blend_amount = 1.0
 parameters/Sleep/sleep_scale/scale = 1.0
 parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
-parameters/UseToilet1/playback = SubResource( 13 )
-parameters/UseToilet2/playback = SubResource( 14 )
+parameters/UseToilet1/playback = SubResource( 11 )
+parameters/UseToilet2/playback = SubResource( 12 )
 
-[node name="AI" parent="." index="6" instance=ExtResource( 21 )]
+[node name="AI" parent="." index="6" instance=ExtResource( 19 )]
 
 [node name="ray_far" type="RayCast" parent="." index="7"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.12 )
@@ -232,12 +217,20 @@ cast_to = Vector3( 0, -1, -2.5 )
 
 [node name="minimal_shape" type="CollisionShape" parent="." index="8"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0952968, 0 )
-shape = SubResource( 15 )
+shape = SubResource( 13 )
 
-[node name="rpg" parent="." index="9" instance=ExtResource( 22 )]
+[node name="rpg" parent="." index="9" instance=ExtResource( 20 )]
 
 [node name="animation" type="Node" parent="." index="10"]
-script = ExtResource( 23 )
+script = ExtResource( 21 )
 
-[node name="targets" parent="." index="11" instance=ExtResource( 24 )]
+[node name="targets" parent="." index="11" instance=ExtResource( 22 )]
+
+[node name="ground" type="RayCast" parent="." index="12"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.1, 0 )
+
+[node name="sitting_ik_foot_target" type="Position3D" parent="." index="13"]
+transform = Transform( -0.999967, 0.00812274, 0, -0.00655629, -0.807125, 0.590344, 0.00479522, 0.590325, 0.807152, 0, 0.0636081, 0 )
 

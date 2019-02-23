@@ -20,7 +20,7 @@ func _open(obj):
 #	print("open on ", get_name(), "obj ", obj.get_name())
 	awareness.ai_state[obj].nodes[self] = {}
 	init(obj)
-func _close(obj, status):
+func _close(obj, status = BT_OK):
 	exit(obj, status)
 #	print("close on ", get_name(), "obj ", obj.get_name())
 	awareness.ai_state[obj].nodes.erase(self)

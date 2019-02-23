@@ -33,6 +33,7 @@ func do_spawn(obj):
 		var offset_moved = awareness.player_character.global_transform.xform(offset)
 		i.global_transform.origin = offset_moved
 		i.global_transform.basis = awareness.player_character.global_transform.basis
+		i.init_data()
 		awareness.add_trait(i, "broken")
 	if obj in content.items.keys():
 		var i = content.items[obj].obj.instance()
@@ -41,6 +42,7 @@ func do_spawn(obj):
 		var offset_moved = awareness.player_character.global_transform.xform(offset)
 		i.global_transform.origin = offset_moved
 		i.global_transform.basis = awareness.player_character.global_transform.basis
+		
 
 func process_command(c: String):
 	print("command:", c)

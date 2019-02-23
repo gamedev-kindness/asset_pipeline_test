@@ -1,4 +1,5 @@
 extends Spatial
+class_name SpawnPointBed
 signal spawn
 # Declare member variables here. Examples:
 # var a = 2
@@ -46,6 +47,7 @@ func _process(delta):
 			var c = characters[selection].obj.instance()
 			root.add_child(c)
 			c.global_transform = global_transform
+			c.init_data()
 			print("SPAWN")
 		spawn_enabled = false
 		queue_free()

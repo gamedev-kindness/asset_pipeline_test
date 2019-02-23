@@ -3,7 +3,6 @@
 [ext_resource path="res://textures/brown_eye.png" type="Texture" id=1]
 
 [resource]
-
 flags_transparent = true
 albedo_texture = ExtResource( 1 )
 rim_enabled = true

@@ -14,19 +14,15 @@
 [ext_resource path="res://characters/targets.tscn" type="PackedScene" id=12]
 
 [sub_resource type="SpatialMaterial" id=1]
-
 albedo_texture = ExtResource( 8 )
 
 [sub_resource type="Curve" id=2]
-
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.3416 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=3]
-
 curve = SubResource( 2 )
 
 [sub_resource type="ParticlesMaterial" id=4]
-
 trail_size_modifier = SubResource( 3 )
 spread = 15.0
 flatness = 1.0
@@ -37,53 +33,39 @@ damping = 8.42
 damping_random = 0.3
 
 [sub_resource type="SpatialMaterial" id=5]
-
 flags_transparent = true
 albedo_color = Color( 0.811765, 0.929412, 0.121569, 0.521569 )
 
 [sub_resource type="SphereMesh" id=6]
-
 material = SubResource( 5 )
 radius = 0.01
 height = 0.02
 
 [sub_resource type="CapsuleShape" id=7]
-
 radius = 0.25
 height = 1.23
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=8]
 
-
 [sub_resource type="AnimationNodeStateMachinePlayback" id=9]
-
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
-
 [sub_resource type="AnimationNodeStateMachinePlayback" id=11]
-
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
-
 [sub_resource type="AnimationNodeStateMachinePlayback" id=13]
-
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=14]
 
-
 [sub_resource type="AnimationNodeStateMachinePlayback" id=15]
-
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=16]
 
-
 [sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
-
 [sub_resource type="SphereShape" id=18]
-
 radius = 0.1
 
 [node name="male_2018" instance=ExtResource( 1 )]
@@ -130,6 +112,18 @@ local_coords = false
 process_material = SubResource( 4 )
 draw_pass_1 = SubResource( 6 )
 
+[node name="sitting_ik_left" type="SkeletonIK" parent="male_g_2018" index="13"]
+root_bone = "upperleg02_L"
+tip_bone = "foot_L"
+interpolation = 0.7
+target_node = NodePath("../../sitting_ik_foot_target")
+
+[node name="sitting_ik_right" type="SkeletonIK" parent="male_g_2018" index="14"]
+root_bone = "upperleg02_R"
+tip_bone = "foot_R"
+interpolation = 0.7
+target_node = NodePath("../../sitting_ik_foot_target")
+
 [node name="main_shape" type="CollisionShape" parent="." index="1"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.879, 0.05 )
 shape = SubResource( 7 )
@@ -175,6 +169,8 @@ parameters/Navigate/blink/active = false
 parameters/Navigate/turn_left/active = false
 parameters/Navigate/turn_right/active = false
 parameters/Navigate/walk_speed/scale = 1.0
+parameters/Sitting/wiggle_amount/add_amount = 0.1
+parameters/Sitting/wiggle_speed/scale = 1.0
 parameters/Sleep/Blend2/blend_amount = 1.0
 parameters/Sleep/sleep_scale/scale = 1.0
 parameters/Stand/TimeScale/scale = 1.0
@@ -196,4 +192,13 @@ shape = SubResource( 18 )
 [node name="rpg" parent="." index="9" instance=ExtResource( 11 )]
 
 [node name="targets" parent="." index="10" instance=ExtResource( 12 )]
+
+[node name="ground" type="RayCast" parent="." index="11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.1, 0 )
+collision_mask = 1023
+
+[node name="sitting_ik_foot_target" type="Position3D" parent="." index="12"]
+transform = Transform( -0.999935, 0.0114361, 0, -0.0114361, -0.999935, 0, 0, 0, 1, 0, 0.0434341, 0 )
 

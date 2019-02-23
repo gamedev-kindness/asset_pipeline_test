@@ -3,7 +3,6 @@
 [ext_resource path="res://textures/female_fingernails_diffuse.png" type="Texture" id=1]
 
 [resource]
-
 albedo_texture = ExtResource( 1 )
 metallic = 0.5
 

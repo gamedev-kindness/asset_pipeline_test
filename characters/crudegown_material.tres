@@ -3,7 +3,6 @@
 [ext_resource path="res://textures/CrudeGown.png" type="Texture" id=1]
 
 [resource]
-
 albedo_texture = ExtResource( 1 )
 rim_enabled = true
 rim = 0.18
