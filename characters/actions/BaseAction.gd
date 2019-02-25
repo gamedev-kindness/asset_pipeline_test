@@ -36,8 +36,8 @@ func remove_character(obj):
 		character_list.erase(obj)
 		if collisions:
 			for k in character_list:
-				k.remove_collision_exception(obj)
-				obj.remove_collision_exception(k)
+				k.remove_collision_exception_with(obj)
+				obj.remove_collision_exception_with(k)
 		awareness.action_mode.erase(obj)
 		print("removed character ", obj)
 var state = 0
@@ -69,9 +69,11 @@ func _process(delta):
 							var pdata = l.split(",")
 							var playback = "parameters/" + pdata[0] + "/playback"
 							var what = pdata[1]
+							print(name, ": ", k, ": animation: ", playback, "=", what) 
 							at[playback].travel(what)
 						else:
 							var playback = "parameters/playback"
 							var what = l
+							print(name, ": ", k, ": animation: ", playback, "=", what) 
 							at[playback].travel(what)
 			state = 1

@@ -1,0 +1,10 @@
+{
+	"Spank": {
+		"name": "Spank",
+		"path": "res://characters/actions/action_spank.tres"
+	},
+	"Spanked": {
+		"name": "Spanked",
+		"path": "res://characters/actions/action_spanked.tres"
+	}
+}

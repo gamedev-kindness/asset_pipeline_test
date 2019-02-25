@@ -68,11 +68,13 @@ height = 1.23
 [sub_resource type="SphereShape" id=18]
 radius = 0.1
 
-[node name="male_2018" instance=ExtResource( 1 )]
+[node name="male_2018" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="male_g_2018" parent="." index="0"]
 transform = Transform( 0.999972, -0.00372589, 0.00651516, 0.00432931, 0.995449, -0.0952021, -0.00613079, 0.0952277, 0.995437, 9.31323e-10, 2.98023e-08, 0 )
+bones/14/bound_children = [ NodePath("head") ]
+bones/81/bound_children = [ NodePath("penis") ]
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="male_g_2018" index="0"]

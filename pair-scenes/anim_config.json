@@ -1,4 +1,18 @@
 {
+	"animation-experiments": {
+		"female": [
+			{
+				"name": "spanked_start",
+				"path": "res://characters/female/spanked_start.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "spank_start",
+				"path": "res://characters/male/spank_start.anim"
+			}
+		]
+	},
 	"back-grabbing": {
 		"female": [
 			{
