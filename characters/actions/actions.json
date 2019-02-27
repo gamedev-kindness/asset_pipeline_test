@@ -1,4 +1,24 @@
 {
+	"Front": {
+		"name": "Front",
+		"path": "res://characters/actions/action_front.tres"
+	},
+	"Front-grab": {
+		"name": "Front-grab",
+		"path": "res://characters/actions/action_front-grab.tres"
+	},
+	"Front-grab@down": {
+		"name": "Front-grab@down",
+		"path": "res://characters/actions/action_front-grab@down.tres"
+	},
+	"Front-grabbed": {
+		"name": "Front-grabbed",
+		"path": "res://characters/actions/action_front-grabbed.tres"
+	},
+	"Front-grabbed@down": {
+		"name": "Front-grabbed@down",
+		"path": "res://characters/actions/action_front-grabbed@down.tres"
+	},
 	"Spank": {
 		"name": "Spank",
 		"path": "res://characters/actions/action_spank.tres"
@@ -6,5 +26,9 @@
 	"Spanked": {
 		"name": "Spanked",
 		"path": "res://characters/actions/action_spanked.tres"
+	},
+	"default": {
+		"name": "default",
+		"path": "res://characters/actions/action_default.tres"
 	}
 }

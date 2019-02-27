@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://characters/male_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
@@ -65,14 +65,18 @@ height = 1.23
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
-[sub_resource type="SphereShape" id=18]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=18]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
+
+[sub_resource type="SphereShape" id=20]
 radius = 0.1
 
 [node name="male_2018" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="male_g_2018" parent="." index="0"]
-transform = Transform( 0.999972, -0.00372589, 0.00651516, 0.00432931, 0.995449, -0.0952021, -0.00613079, 0.0952277, 0.995437, 9.31323e-10, 2.98023e-08, 0 )
+transform = Transform( 0.999972, -0.00373728, 0.00652307, 0.00434075, 0.995459, -0.0950957, -0.00613805, 0.0951213, 0.995447, 9.31323e-10, 2.98023e-08, 0 )
 bones/14/bound_children = [ NodePath("head") ]
 bones/81/bound_children = [ NodePath("penis") ]
 script = ExtResource( 3 )
@@ -151,18 +155,20 @@ anim_player = NodePath("../male_g_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
 parameters/playback = SubResource( 8 )
-parameters/FrontGrab/playback = SubResource( 9 )
+parameters/Front-grab/playback = SubResource( 9 )
+parameters/Front-grabbed/playback = SubResource( 10 )
+parameters/FrontGrab/playback = SubResource( 11 )
 parameters/FrontGrab/FrontGrabLoop/face_slapped/active = false
 parameters/FrontGrab/FrontGrabLoop/front_grab_speed/scale = 0.3
-parameters/FrontGrab/Missionary_1_1/playback = SubResource( 10 )
-parameters/FrontGrabbed/playback = SubResource( 11 )
+parameters/FrontGrab/Missionary_1_1/playback = SubResource( 12 )
+parameters/FrontGrabbed/playback = SubResource( 13 )
 parameters/FrontGrabbed/FrontGrabbedLoop/face_slapped/active = false
 parameters/FrontGrabbed/FrontGrabbedLoop/front_grabbed_speed/scale = 0.3
-parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 12 )
-parameters/GrabCarry/playback = SubResource( 13 )
+parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 14 )
+parameters/GrabCarry/playback = SubResource( 15 )
 parameters/GrabFromBack/walk/blend_amount = 1.0
-parameters/GrabbedCarried/playback = SubResource( 14 )
-parameters/Idle/playback = SubResource( 15 )
+parameters/GrabbedCarried/playback = SubResource( 16 )
+parameters/Idle/playback = SubResource( 17 )
 parameters/Idle/conditions/broken_state = false
 parameters/Idle/Stand/TimeScale/scale = 1.0
 parameters/Idle/Stand/blink/active = false
@@ -178,8 +184,8 @@ parameters/Sleep/sleep_scale/scale = 1.0
 parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
-parameters/UseToilet1/playback = SubResource( 16 )
-parameters/UseToilet2/playback = SubResource( 17 )
+parameters/UseToilet1/playback = SubResource( 18 )
+parameters/UseToilet2/playback = SubResource( 19 )
 
 [node name="AI" parent="." index="6" instance=ExtResource( 10 )]
 
@@ -189,7 +195,7 @@ cast_to = Vector3( 0, -1, -1.5 )
 
 [node name="minimal_shape" type="CollisionShape" parent="." index="8"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.101824, 0.05 )
-shape = SubResource( 18 )
+shape = SubResource( 20 )
 
 [node name="rpg" parent="." index="9" instance=ExtResource( 11 )]
 

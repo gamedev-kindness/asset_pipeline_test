@@ -87,6 +87,60 @@
 			}
 		]
 	},
+	"front_grab_new": {
+		"female": [
+			{
+				"name": "front-grabbed@down_start",
+				"path": "res://characters/female/front-grabbed@down_start.anim"
+			},
+			{
+				"name": "front-grabbed_end",
+				"path": "res://characters/female/front-grabbed_end.anim"
+			},
+			{
+				"name": "front-grabbed_end-failure",
+				"path": "res://characters/female/front-grabbed_end-failure.anim"
+			},
+			{
+				"name": "front-grabbed_loop",
+				"path": "res://characters/female/front-grabbed_loop.anim"
+			},
+			{
+				"name": "front-grabbed_start",
+				"path": "res://characters/female/front-grabbed_start.anim"
+			},
+			{
+				"name": "front-grabbed_struggle-loop",
+				"path": "res://characters/female/front-grabbed_struggle-loop.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "front-grab@down_start",
+				"path": "res://characters/male/front-grab@down_start.anim"
+			},
+			{
+				"name": "front-grab_end",
+				"path": "res://characters/male/front-grab_end.anim"
+			},
+			{
+				"name": "front-grab_end-failure",
+				"path": "res://characters/male/front-grab_end-failure.anim"
+			},
+			{
+				"name": "front-grab_loop",
+				"path": "res://characters/male/front-grab_loop.anim"
+			},
+			{
+				"name": "front-grab_start",
+				"path": "res://characters/male/front-grab_start.anim"
+			},
+			{
+				"name": "front-grab_struggle-loop",
+				"path": "res://characters/male/front-grab_struggle-loop.anim"
+			}
+		]
+	},
 	"grab_from_back": {
 		"female": [
 			{

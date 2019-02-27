@@ -82,7 +82,7 @@ collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="female_2018" parent="." index="0"]
-transform = Transform( 0.99999, 0.00185586, -0.0041129, -0.00293942, 0.95949, -0.281726, 0.00342344, 0.281735, 0.959486, 2.32831e-10, 3.58579e-08, -4.76836e-08 )
+transform = Transform( 1, -1.11759e-08, -5.58794e-09, 1.11759e-08, 1, 7.91624e-09, 5.58794e-09, -7.91624e-09, 1, 1.58325e-08, 1.86265e-09, -2.93367e-08 )
 bones/6/bound_children = [ NodePath("pelvis") ]
 bones/21/bound_children = [ NodePath("head") ]
 script = ExtResource( 3 )

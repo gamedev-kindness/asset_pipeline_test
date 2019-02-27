@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/eyelashes04.png-246e91bbceecc1759538fca65e4d6074.s3tc.stex"
 path.etc2="res://.import/eyelashes04.png-246e91bbceecc1759538fca65e4d6074.etc2.stex"
+metadata={
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
+}
 
 [deps]
 

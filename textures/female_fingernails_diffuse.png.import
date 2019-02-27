@@ -4,6 +4,10 @@ importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/female_fingernails_diffuse.png-687fb08d8af05b844ee4ad5c5f092c36.s3tc.stex"
 path.etc2="res://.import/female_fingernails_diffuse.png-687fb08d8af05b844ee4ad5c5f092c36.etc2.stex"
+metadata={
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
+}
 
 [deps]
 
