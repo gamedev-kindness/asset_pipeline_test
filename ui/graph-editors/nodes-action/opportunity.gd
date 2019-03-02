@@ -76,6 +76,11 @@ func set_data(data):
 	title = data.title
 	$GridContainer/LineEdit.text = data.title
 	icon_path = data.icon_path
+	icon = Image.new()
+	icon.load(data.icon_path)
+	var tex = ImageTexture.new()
+	tex.create_from_image(icon)
+	$TextureRect.texture = tex
 	param_block = data.param_block
 	direction = data.direction
 	update_items()

@@ -35,6 +35,14 @@
 			"parent": "",
 			"position": "1600 -320",
 			"title": "Spank"
+		},
+		"Talk": {
+			"direction": "ANY",
+			"icon_path": "res://icons/icons__6.png",
+			"param_block": "None",
+			"parent": "",
+			"position": "320 600",
+			"title": "Talk"
 		}
 	},
 	"parameters": {

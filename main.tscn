@@ -1,17 +1,17 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
-[ext_resource path="res://ui/opportunities.tscn" type="PackedScene" id=2]
-[ext_resource path="res://fonts/DroidSansFallback.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://ui/inventory.tscn" type="PackedScene" id=4]
-[ext_resource path="res://ui/console.tscn" type="PackedScene" id=5]
-[ext_resource path="res://ui/stats.tscn" type="PackedScene" id=6]
-[ext_resource path="res://rooms/common/build_interior.tscn" type="PackedScene" id=7]
-[ext_resource path="res://ui/roster.tscn" type="PackedScene" id=8]
+[ext_resource path="res://fonts/DroidSansFallback.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://ui/inventory.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/console.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/stats.tscn" type="PackedScene" id=5]
+[ext_resource path="res://rooms/common/build_interior.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/roster.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/opportunities_new.tscn" type="PackedScene" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
-font_data = ExtResource( 3 )
+font_data = ExtResource( 2 )
 
 [node name="root" type="Spatial"]
 script = ExtResource( 1 )
@@ -21,9 +21,6 @@ transform = Transform( 1, 0, 0, 0, 0.108412, 0.994106, 0, -0.994106, 0.108412, 0
 
 [node name="SpotLight" type="SpotLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.616747, 0.787161, 0, -0.787161, 0.616747, 0, 2.87061, 0.55455 )
-
-[node name="opportunities" parent="." instance=ExtResource( 2 )]
-visible = false
 
 [node name="wtf_waiting" type="Panel" parent="."]
 editor/display_folded = true
@@ -120,18 +117,21 @@ polygon = PoolVector2Array( 137.169, 11.9736, 142.484, 7.48938, 151.453, 6.82504
 color = Color( 0.756863, 0.160784, 0.160784, 1 )
 polygon = PoolVector2Array( 158.176, 6.63504, 161.87, 5.77742, 163.411, 31.4054, 162.082, 33.7306, 159.757, 31.2393 )
 
-[node name="inventory" parent="." instance=ExtResource( 4 )]
+[node name="inventory" parent="." instance=ExtResource( 3 )]
 visible = false
 
-[node name="console" parent="." instance=ExtResource( 5 )]
+[node name="console" parent="." instance=ExtResource( 4 )]
 visible = false
 margin_bottom = 300.0
 
-[node name="stats" parent="." instance=ExtResource( 6 )]
+[node name="stats" parent="." instance=ExtResource( 5 )]
 visible = false
 
-[node name="modular_room" parent="." instance=ExtResource( 7 )]
+[node name="modular_room" parent="." instance=ExtResource( 6 )]
 
-[node name="roster" parent="." instance=ExtResource( 8 )]
+[node name="roster" parent="." instance=ExtResource( 7 )]
+visible = false
+
+[node name="opportunities" parent="." instance=ExtResource( 8 )]
 visible = false
 
