@@ -90,6 +90,14 @@
 	"front_grab_new": {
 		"female": [
 			{
+				"name": "front-grabbed@down_end",
+				"path": "res://characters/female/front-grabbed@down_end.anim"
+			},
+			{
+				"name": "front-grabbed@down_loop",
+				"path": "res://characters/female/front-grabbed@down_loop.anim"
+			},
+			{
 				"name": "front-grabbed@down_start",
 				"path": "res://characters/female/front-grabbed@down_start.anim"
 			},
@@ -115,6 +123,14 @@
 			}
 		],
 		"male": [
+			{
+				"name": "front-grab@down_end",
+				"path": "res://characters/male/front-grab@down_end.anim"
+			},
+			{
+				"name": "front-grab@down_loop",
+				"path": "res://characters/male/front-grab@down_loop.anim"
+			},
 			{
 				"name": "front-grab@down_start",
 				"path": "res://characters/male/front-grab@down_start.anim"
@@ -194,6 +210,20 @@
 			{
 				"name": "missionary1-first-loop",
 				"path": "res://characters/male/missionary1-first-loop.anim"
+			}
+		]
+	},
+	"spank": {
+		"female": [
+			{
+				"name": "spanked_start",
+				"path": "res://characters/female/spanked_start.anim"
+			}
+		],
+		"male": [
+			{
+				"name": "spank_start",
+				"path": "res://characters/male/spank_start.anim"
 			}
 		]
 	}

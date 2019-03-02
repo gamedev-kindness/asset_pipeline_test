@@ -1,34 +1,268 @@
 {
-	"Front": {
-		"name": "Front",
-		"path": "res://characters/actions/action_front.tres"
+	"actions": {
+		"Front-grab": {
+			"main": "Front-grab",
+			"position": "1320 140",
+			"secondary": "Front-grabbed"
+		},
+		"Spank": {
+			"main": "Spank",
+			"position": "1320 420",
+			"secondary": "Spanked"
+		}
 	},
-	"Front-grab": {
-		"name": "Front-grab",
-		"path": "res://characters/actions/action_front-grab.tres"
+	"opportunity": {
+		"FrontGrab": {
+			"direction": "FRONT",
+			"icon_path": "res://icons/icons__5.png",
+			"param_block": "Front-grab",
+			"parent": "",
+			"position": "1020 -320",
+			"title": "FrontGrab"
+		},
+		"FrontGrabLeave": {
+			"direction": "ANY",
+			"icon_path": "res://icons/icons__1.png",
+			"param_block": "Front-grab-end",
+			"parent": "FrontGrab",
+			"position": "320 0",
+			"title": "FrontGrabLeave"
+		},
+		"Spank": {
+			"direction": "BACK",
+			"icon_path": "res://icons/icons__3.png",
+			"param_block": "Spank",
+			"parent": "",
+			"position": "1600 -320",
+			"title": "Spank"
+		}
 	},
-	"Front-grab@down": {
-		"name": "Front-grab@down",
-		"path": "res://characters/actions/action_front-grab@down.tres"
+	"parameters": {
+		"Front-grab": {
+			"conditions": {
+				"end": false,
+				"failure": false,
+				"struggle": false,
+				"success": true
+			},
+			"master_moves": true,
+			"position": "500 620",
+			"title": "Front-grab",
+			"tree": "Front-grab",
+			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 -0.4"
+		},
+		"Front-grab-end": {
+			"conditions": {
+				"end": true,
+				"failure": false,
+				"struggle": false,
+				"success": false
+			},
+			"master_moves": true,
+			"position": "500 1060",
+			"title": "Front-grab-end",
+			"tree": "Front-grab",
+			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 -0.4"
+		},
+		"Front-grab-failure": {
+			"conditions": {
+				"end": false,
+				"failure": true,
+				"struggle": false,
+				"success": false
+			},
+			"master_moves": true,
+			"position": "900 1060",
+			"title": "Front-grab-failure",
+			"tree": "Front-grab",
+			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 -0.4"
+		},
+		"Front-grab-struggle": {
+			"conditions": {
+				"end": false,
+				"failure": false,
+				"struggle": true,
+				"success": false
+			},
+			"master_moves": true,
+			"position": "900 620",
+			"title": "Front-grab-struggle",
+			"tree": "Front-grab",
+			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 -0.4"
+		},
+		"Front-grab/down": {
+			"conditions": {
+				"end": true
+			},
+			"master_moves": false,
+			"position": "1300 620",
+			"title": "Front-grab/down",
+			"tree": "Front-grab/down",
+			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 0.4"
+		},
+		"Spank": {
+			"conditions": {
+
+			},
+			"master_moves": true,
+			"position": "1740 620",
+			"title": "Spank",
+			"tree": "Spank",
+			"xform": "1 0 0 0 1 0 0 0 1 0 0 -0.4"
+		}
 	},
-	"Front-grabbed": {
-		"name": "Front-grabbed",
-		"path": "res://characters/actions/action_front-grabbed.tres"
-	},
-	"Front-grabbed@down": {
-		"name": "Front-grabbed@down",
-		"path": "res://characters/actions/action_front-grabbed@down.tres"
-	},
-	"Spank": {
-		"name": "Spank",
-		"path": "res://characters/actions/action_spank.tres"
-	},
-	"Spanked": {
-		"name": "Spanked",
-		"path": "res://characters/actions/action_spanked.tres"
-	},
-	"default": {
-		"name": "default",
-		"path": "res://characters/actions/action_default.tres"
+	"states": {
+		"Front-grab": {
+			"children": [
+				"down"
+			],
+			"children_data": {
+				"down": {
+					"children": [
+
+					],
+					"children_data": {
+
+					},
+					"conditions": [
+						"end"
+					],
+					"fullname": "Front-grab@down",
+					"level": 1,
+					"name": "down",
+					"oneshot": [
+
+					],
+					"parent": "Front-grab",
+					"random": [
+
+					],
+					"struggle": [
+
+					],
+					"title": "Front-grab/down"
+				}
+			},
+			"conditions": [
+				"end",
+				"failure",
+				"struggle",
+				"success"
+			],
+			"fullname": "Front-grab",
+			"level": 0,
+			"name": "Front-grab",
+			"oneshot": [
+
+			],
+			"parent": "",
+			"path": "res://characters/actions/action_front-grab.tres",
+			"position": "33.897854 101.315659",
+			"random": [
+
+			],
+			"struggle": [
+				"struggle-loop"
+			],
+			"title": "Front-grab"
+		},
+		"Front-grabbed": {
+			"children": [
+				"down"
+			],
+			"children_data": {
+				"down": {
+					"children": [
+
+					],
+					"children_data": {
+
+					},
+					"conditions": [
+						"end"
+					],
+					"fullname": "Front-grabbed@down",
+					"oneshot": [
+
+					],
+					"random": [
+
+					],
+					"struggle": [
+
+					]
+				}
+			},
+			"conditions": [
+				"end",
+				"failure",
+				"struggle",
+				"success"
+			],
+			"fullname": "Front-grabbed",
+			"name": "Front-grabbed",
+			"oneshot": [
+
+			],
+			"path": "res://characters/actions/action_front-grabbed.tres",
+			"position": "40 180",
+			"random": [
+
+			],
+			"struggle": [
+				"struggle-loop"
+			]
+		},
+		"Spank": {
+			"children": [
+
+			],
+			"children_data": {
+
+			},
+			"conditions": [
+
+			],
+			"fullname": "Spank",
+			"level": 0,
+			"name": "Spank",
+			"oneshot": [
+
+			],
+			"parent": "",
+			"path": "res://characters/actions/action_spank.tres",
+			"position": "40 420",
+			"random": [
+
+			],
+			"struggle": [
+
+			],
+			"title": "Spank"
+		},
+		"Spanked": {
+			"children": [
+
+			],
+			"children_data": {
+
+			},
+			"conditions": [
+
+			],
+			"fullname": "Spanked",
+			"name": "Spanked",
+			"oneshot": [
+
+			],
+			"path": "res://characters/actions/action_spanked.tres",
+			"position": "40 500",
+			"random": [
+
+			],
+			"struggle": [
+
+			]
+		}
 	}
 }

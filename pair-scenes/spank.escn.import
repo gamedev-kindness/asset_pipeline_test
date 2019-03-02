@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/animation-experiments.escn-8b12334da3bd34a527ab18989fb36f18.scn"
+path="res://.import/spank.escn-ba8fbe193f0eb835dcf08d27b0faf361.scn"
 
 [deps]
 
-source_file="res://pair-scenes/animation-experiments.escn"
-dest_files=[ "res://.import/animation-experiments.escn-8b12334da3bd34a527ab18989fb36f18.scn" ]
+source_file="res://pair-scenes/spank.escn"
+dest_files=[ "res://.import/spank.escn-ba8fbe193f0eb835dcf08d27b0faf361.scn" ]
 
 [params]
 

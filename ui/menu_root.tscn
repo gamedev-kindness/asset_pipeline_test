@@ -21,6 +21,9 @@ margin_left = -512.0
 margin_top = -125.5
 margin_right = 512.0
 margin_bottom = 125.5
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="editor" type="Button" parent="VBoxContainer"]
 margin_right = 1024.0
@@ -61,10 +64,20 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="exit" type="Button" parent="VBoxContainer"]
+[node name="development" type="Button" parent="VBoxContainer"]
 margin_top = 212.0
 margin_right = 1024.0
 margin_bottom = 261.0
+custom_fonts/font = SubResource( 1 )
+text = "Development"
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="exit" type="Button" parent="VBoxContainer"]
+margin_top = 265.0
+margin_right = 1024.0
+margin_bottom = 314.0
 custom_fonts/font = SubResource( 1 )
 text = "Exit"
 __meta__ = {

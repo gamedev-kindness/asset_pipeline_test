@@ -18,34 +18,19 @@ func create_blend_tree(anim: String) -> AnimationNodeBlendTree:
 	blend_tree.add_node(anim_node_name, anim_node, Vector2())
 	blend_tree.connect_node("output", 0, anim_node_name)
 	return blend_tree
-func action_conf_add(kname: String, data: Dictionary) -> void:
-	var f = File.new()
-	var actions_conf_data: Dictionary
-	var actions_conf_path = "res://characters/actions/actions.json"
-	if f.file_exists(actions_conf_path):
-		f.open(actions_conf_path, f.READ)
-		var json = JSON.parse(f.get_as_text())
-		actions_conf_data = json.result
-		f.close()
-	else:
-		actions_conf_data = {}
-	actions_conf_data[kname] = data
-	f.open(actions_conf_path, f.WRITE)
-	f.store_string(JSON.print(actions_conf_data, "\t", true))
-	f.close()
 func action_list_add(data: Dictionary) -> void:
 	var f = File.new()
 	var actions_list_data: Dictionary
-	var actions_list_path = "res://characters/actions/action_tree.json"
+	var actions_list_path = "res://characters/actions/actions.json"
 	if f.file_exists(actions_list_path):
 		f.open(actions_list_path, f.READ)
 		var json = JSON.parse(f.get_as_text())
 		actions_list_data = json.result
 		f.close()
 	else:
-		actions_list_data = {}
+		actions_list_data = {"states": {}}
 	for k in data.keys():
-		actions_list_data[k] = data[k]
+		actions_list_data.states[k] = data[k]
 	f.open(actions_list_path, f.WRITE)
 	f.store_string(JSON.print(actions_list_data, "\t", true))
 	f.close()
@@ -78,6 +63,7 @@ func create_state_machine(kname: String, anim_data: Dictionary) -> AnimationNode
 		var random_anims = []
 		var oneshot_anims = []
 		var struggle_anims = []
+		var conditions = []
 		var children = []
 		for anim in action_list[kname]:
 			var blend_tree : = create_blend_tree(anim)
@@ -107,29 +93,32 @@ func create_state_machine(kname: String, anim_data: Dictionary) -> AnimationNode
 			state_machine.set_end_node("end")
 		if !have_start && have_loop:
 			state_machine.set_start_node("loop")
-		if !have_loop && have_start && have_end:
+		if have_start && have_loop:
+			var transition1 : = AnimationNodeStateMachineTransition.new()
+			transition1.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
+			transition1.auto_advance = true
+			transition1.priority = 1
+			state_machine.add_transition("start", "loop", transition1)
+		elif !have_loop && have_start && have_end:
 			var transition : = AnimationNodeStateMachineTransition.new()
 			transition.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
 			state_machine.add_transition("start", "end", transition)
-		elif have_loop && have_start && have_end:
-			var transition1 : = AnimationNodeStateMachineTransition.new()
-			transition1.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
-			transition1.auto_advance = true
-			state_machine.add_transition("start", "loop", transition1)
+
+		if have_loop && have_end:
 			var transition2 : = AnimationNodeStateMachineTransition.new()
 			transition2.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_IMMEDIATE
+			transition2.advance_condition = "end"
 			state_machine.add_transition("loop", "end", transition2)
-		elif have_loop && have_start && !have_end:
-			var transition1 : = AnimationNodeStateMachineTransition.new()
-			transition1.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
-			transition1.auto_advance = true
-			state_machine.add_transition("start", "loop", transition1)
-		elif !have_loop && have_start && !have_end:
+			conditions.push_back("end")
+
+		if !have_loop && have_start && !have_end:
 			state_machine.set_end_node("start")
 		if have_start && have_end_failure:
 			var transition1 : = AnimationNodeStateMachineTransition.new()
 			transition1.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
+			transition1.advance_condition = "failure"
 			state_machine.add_transition("start", "end-failure", transition1)
+			conditions.push_back("failure")
 		if have_start || have_loop:
 			var main_node = "loop"
 			if !have_loop:
@@ -140,6 +129,7 @@ func create_state_machine(kname: String, anim_data: Dictionary) -> AnimationNode
 				state_machine.add_transition(main_node, k, transition1)
 				var transition2 : = AnimationNodeStateMachineTransition.new()
 				transition2.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
+				transition2.auto_advance = true
 				state_machine.add_transition(k, main_node, transition2)
 		if have_end_failure || have_loop || have_end || have_start:
 			var main_node = "loop"
@@ -150,13 +140,18 @@ func create_state_machine(kname: String, anim_data: Dictionary) -> AnimationNode
 			for k in struggle_anims:
 				var transition1 : = AnimationNodeStateMachineTransition.new()
 				transition1.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_IMMEDIATE
+				transition1.advance_condition = "struggle"
 				state_machine.add_transition(main_node, k, transition1)
+				conditions.push_back("struggle")
 				var transition2 : = AnimationNodeStateMachineTransition.new()
 				transition2.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_IMMEDIATE
+				transition2.advance_condition = "success"
 				state_machine.add_transition(k, main_node, transition2)
+				conditions.push_back("success")
 				if have_end_failure:
 					var transition_ef : = AnimationNodeStateMachineTransition.new()
 					transition_ef.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_IMMEDIATE
+					transition_ef.advance_condition = "failure"
 					state_machine.add_transition(k, "end-failure", transition_ef)
 		var name_level = get_name_level(kname)
 		var children_data = {}
@@ -164,8 +159,11 @@ func create_state_machine(kname: String, anim_data: Dictionary) -> AnimationNode
 			if h.begins_with(kname + "@") && get_name_level(h) == name_level + 1:
 				print("Child: ", h)
 				var child_data = {}
+				var node_name_split = h.split("@")
+				var node_name = node_name_split[node_name_split.size() - 1]
 				var child = create_state_machine(h, child_data)
-				state_machine.add_node(h, child, position)
+				state_machine.add_node(node_name, child, position)
+				child_data.fullname = h
 				if randf() > 0.5:
 					position.x += 130.0
 				else:
@@ -179,19 +177,20 @@ func create_state_machine(kname: String, anim_data: Dictionary) -> AnimationNode
 				var transition2 : = AnimationNodeStateMachineTransition.new()
 				transition2.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
 				state_machine.add_transition(h, main_node, transition2)
-				children.push_back(h)
-				children_data[h] = child_data
+				children.push_back(node_name)
+				children_data[node_name] = child_data
 		anim_data.oneshot = oneshot_anims
 		anim_data.random = random_anims
 		anim_data.struggle = struggle_anims
 		anim_data.children = children
 		anim_data.children_data = children_data
+		anim_data.conditions = conditions
 		return state_machine
 
 
 func create_state_machines():
 	print("Creating state machines for actions")
-	var sms = ["res://characters/animtree_male_generated.tres", "res://characters/animtree_female_generated.tres"]
+#	var sms = ["res://characters/animtree_male_generated.tres", "res://characters/animtree_female_generated.tres"]
 	var f : = File.new()
 	var anim_data_list = {}
 	for k in action_list.keys():
@@ -202,88 +201,12 @@ func create_state_machines():
 #			continue
 		var anim_data = {}
 		var state_machine : = create_state_machine(k, anim_data)
-#		var position = Vector2(1, 1)
-#		var have_start = false
-#		var have_loop = false
-#		var have_end = false
-#		for anim in action_list[k]:
-#			var blend_tree : = create_blend_tree(anim)
-#			var anim_node_name = ImporterCommon.get_anim_node_name(anim)
-#			state_machine.add_node(anim_node_name, blend_tree, position)
-#			if anim_node_name == "start":
-#				have_start = true
-#			elif anim_node_name == "loop":
-#				have_loop = true
-#			elif anim_node_name == "end":
-#				have_end = true
-#			if randf() > 0.5:
-#				position += Vector2(20.0, 0.0)
-#			else:
-#				position += Vector2(0.0, 20.0)
-#		if have_start:
-#			state_machine.set_start_node("start")
-#		if have_end:
-#			state_machine.set_end_node("end")
-#		if !have_loop && have_start && have_end:
-#			var transition : = AnimationNodeStateMachineTransition.new()
-#			transition.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
-#			state_machine.add_transition("start", "end", transition)
-#		elif have_loop && have_start && have_end:
-#			var transition1 : = AnimationNodeStateMachineTransition.new()
-#			transition1.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
-#			transition1.auto_advance = true
-#			state_machine.add_transition("start", "loop", transition1)
-#			var transition2 : = AnimationNodeStateMachineTransition.new()
-#			transition2.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_IMMEDIATE
-#			state_machine.add_transition("loop", "end", transition2)
-#		elif have_loop && have_start && !have_end:
-#			var transition1 : = AnimationNodeStateMachineTransition.new()
-#			transition1.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
-#			transition1.auto_advance = true
-#			state_machine.add_transition("start", "loop", transition1)
-#		elif !have_loop && have_start && !have_end:
-#			state_machine.set_end_node("start")
-##		var actions_conf_path = "res://characters/actions/actions.json"
-##		var actions_conf_data: Dictionary
-##		if f.file_exists(actions_conf_path):
-##			f.open(actions_conf_path, f.READ)
-##			var json = JSON.parse(f.get_as_text())
-##			actions_conf_data = json.result
-##			f.close()
-##		else:
-##			actions_conf_data = {}
-		var conf_data = {
-			"name": k,
-			"path": "res://characters/actions/action_" + k.to_lower() + ".tres"
-		}
-		action_conf_add(k, conf_data)
-		ResourceSaver.save("res://characters/actions/action_" + k.to_lower() + ".tres", state_machine)
-#		f.open(actions_conf_path, f.WRITE)
-#		f.store_string(JSON.print(actions_conf_data, "\t", true))
-#		f.close()
-		for sm_path in sms:
-			append_state_machine(k, sm_path, state_machine)
+		anim_data.path = fp
+		ResourceSaver.save(fp, state_machine)
+#		for sm_path in sms:
+#			append_state_machine(k, sm_path, state_machine)
+		anim_data.fullname = k
 		anim_data_list[k] = anim_data
-#			print("Working with: ", sm_path, " ", k)
-#			var sm: AnimationNodeStateMachine
-#			if f.file_exists(sm_path):
-#				sm = load(sm_path)
-#			else:
-#				sm = AnimationNodeStateMachine.new()
-#			if !ImporterCommon.sm_has_state(sm, k):
-#				print("Creating and storing")
-#				sm.add_node(k, state_machine, Vector2(100.0 + randf() * 30.0, 30.0))
-#				if have_start:
-#					var transition1 : = AnimationNodeStateMachineTransition.new()
-#					transition1.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_IMMEDIATE
-#					sm.add_transition("Stand", k, transition1)
-#					var transition2 : = AnimationNodeStateMachineTransition.new()
-#					if have_loop:
-#						transition2.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_IMMEDIATE
-#					else:
-#						transition2.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
-#					sm.add_transition(k, "Stand", transition2)
-#				ResourceSaver.save(sm_path, sm)
 	return anim_data_list
 var json_conf_name = "res://pair-scenes/anim_config.json"
 func post_import(scene):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://characters/male_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
@@ -47,21 +47,7 @@ height = 1.23
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=8]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
-
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=11]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=13]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=14]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=15]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id=16]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
@@ -155,19 +141,7 @@ anim_player = NodePath("../male_g_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
 parameters/playback = SubResource( 8 )
-parameters/Front-grab/playback = SubResource( 9 )
 parameters/Front-grabbed/playback = SubResource( 10 )
-parameters/FrontGrab/playback = SubResource( 11 )
-parameters/FrontGrab/FrontGrabLoop/face_slapped/active = false
-parameters/FrontGrab/FrontGrabLoop/front_grab_speed/scale = 0.3
-parameters/FrontGrab/Missionary_1_1/playback = SubResource( 12 )
-parameters/FrontGrabbed/playback = SubResource( 13 )
-parameters/FrontGrabbed/FrontGrabbedLoop/face_slapped/active = false
-parameters/FrontGrabbed/FrontGrabbedLoop/front_grabbed_speed/scale = 0.3
-parameters/FrontGrabbed/Missionary_1_2/playback = SubResource( 14 )
-parameters/GrabCarry/playback = SubResource( 15 )
-parameters/GrabFromBack/walk/blend_amount = 1.0
-parameters/GrabbedCarried/playback = SubResource( 16 )
 parameters/Idle/playback = SubResource( 17 )
 parameters/Idle/conditions/broken_state = false
 parameters/Idle/Stand/TimeScale/scale = 1.0

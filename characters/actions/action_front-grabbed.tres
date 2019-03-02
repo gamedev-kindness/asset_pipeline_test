@@ -1,0 +1,121 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=26 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+animation = "front-grabbed@down_end"
+
+[sub_resource type="AnimationNodeBlendTree" id=2]
+nodes/end/node = SubResource( 1 )
+nodes/end/position = Vector2( 0, 0 )
+node_connections = [ "output", 0, "end" ]
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "front-grabbed@down_loop"
+
+[sub_resource type="AnimationNodeBlendTree" id=4]
+nodes/loop/node = SubResource( 3 )
+nodes/loop/position = Vector2( 0, 0 )
+node_connections = [ "output", 0, "loop" ]
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "front-grabbed@down_start"
+
+[sub_resource type="AnimationNodeBlendTree" id=6]
+nodes/start/node = SubResource( 5 )
+nodes/start/position = Vector2( 0, 0 )
+node_connections = [ "output", 0, "start" ]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+advance_condition = "end"
+
+[sub_resource type="AnimationNodeStateMachine" id=9]
+states/end/node = SubResource( 2 )
+states/end/position = Vector2( 1, 1 )
+states/loop/node = SubResource( 4 )
+states/loop/position = Vector2( 1, 131 )
+states/start/node = SubResource( 6 )
+states/start/position = Vector2( 131, 131 )
+transitions = [ "start", "loop", SubResource( 7 ), "loop", "end", SubResource( 8 ) ]
+start_node = "start"
+end_node = "end"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "front-grabbed_end-failure"
+
+[sub_resource type="AnimationNodeBlendTree" id=11]
+nodes/end-failure/node = SubResource( 10 )
+nodes/end-failure/position = Vector2( 0, 0 )
+node_connections = [ "output", 0, "end-failure" ]
+
+[sub_resource type="AnimationNodeAnimation" id=12]
+animation = "front-grabbed_end"
+
+[sub_resource type="AnimationNodeBlendTree" id=13]
+nodes/end/node = SubResource( 12 )
+nodes/end/position = Vector2( 0, 0 )
+node_connections = [ "output", 0, "end" ]
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "front-grabbed_loop"
+
+[sub_resource type="AnimationNodeBlendTree" id=15]
+nodes/loop/node = SubResource( 14 )
+nodes/loop/position = Vector2( 0, 0 )
+node_connections = [ "output", 0, "loop" ]
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "front-grabbed_start"
+
+[sub_resource type="AnimationNodeBlendTree" id=17]
+nodes/start/node = SubResource( 16 )
+nodes/start/position = Vector2( 0, 0 )
+node_connections = [ "output", 0, "start" ]
+
+[sub_resource type="AnimationNodeAnimation" id=18]
+animation = "front-grabbed_struggle-loop"
+
+[sub_resource type="AnimationNodeBlendTree" id=19]
+nodes/struggle-loop/node = SubResource( 18 )
+nodes/struggle-loop/position = Vector2( 0, 0 )
+node_connections = [ "output", 0, "struggle-loop" ]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+advance_condition = "end"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+switch_mode = 2
+advance_condition = "failure"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+advance_condition = "struggle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+advance_condition = "success"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+advance_condition = "failure"
+
+[resource]
+states/down/node = SubResource( 9 )
+states/down/position = Vector2( 131, 521 )
+states/end/node = SubResource( 13 )
+states/end/position = Vector2( 1, 1 )
+states/end-failure/node = SubResource( 11 )
+states/end-failure/position = Vector2( 1, 131 )
+states/loop/node = SubResource( 15 )
+states/loop/position = Vector2( 1, 261 )
+states/start/node = SubResource( 17 )
+states/start/position = Vector2( 1, 391 )
+states/struggle-loop/node = SubResource( 19 )
+states/struggle-loop/position = Vector2( 1, 521 )
+transitions = [ "start", "loop", SubResource( 20 ), "loop", "end", SubResource( 21 ), "start", "end-failure", SubResource( 22 ), "loop", "struggle-loop", SubResource( 23 ), "struggle-loop", "loop", SubResource( 24 ), "struggle-loop", "end-failure", SubResource( 25 ) ]
+start_node = "start"
+end_node = "end"
+

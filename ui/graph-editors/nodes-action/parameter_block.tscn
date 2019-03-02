@@ -1,0 +1,115 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/graph-editors/nodes-action/parameter_block.gd" type="Script" id=1]
+
+[node name="parameter_block" type="GraphNode"]
+margin_right = 303.0
+margin_bottom = 413.0
+title = "Parameters"
+show_close = true
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = true
+slot/0/right_type = 2
+slot/0/right_color = Color( 1, 0, 1, 1 )
+script = ExtResource( 1 )
+
+[node name="g" type="GridContainer" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 321.0
+margin_bottom = 151.0
+columns = 2
+
+[node name="Label" type="Label" parent="g"]
+margin_top = 5.0
+margin_right = 119.0
+margin_bottom = 19.0
+text = "Title"
+
+[node name="LineEdit" type="LineEdit" parent="g"]
+margin_left = 123.0
+margin_right = 305.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="g"]
+margin_top = 28.0
+margin_right = 119.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 0, 8 )
+
+[node name="Control3" type="Control" parent="g"]
+margin_left = 123.0
+margin_top = 28.0
+margin_right = 305.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 0, 8 )
+
+[node name="Label2" type="Label" parent="g"]
+margin_top = 45.0
+margin_right = 119.0
+margin_bottom = 59.0
+text = "Translation"
+
+[node name="t" type="HBoxContainer" parent="g"]
+margin_left = 123.0
+margin_top = 40.0
+margin_right = 305.0
+margin_bottom = 64.0
+
+[node name="x" type="LineEdit" parent="g/t"]
+margin_right = 58.0
+margin_bottom = 24.0
+
+[node name="y" type="LineEdit" parent="g/t"]
+margin_left = 62.0
+margin_right = 120.0
+margin_bottom = 24.0
+
+[node name="z" type="LineEdit" parent="g/t"]
+margin_left = 124.0
+margin_right = 182.0
+margin_bottom = 24.0
+
+[node name="Label3" type="Label" parent="g"]
+margin_top = 68.0
+margin_right = 119.0
+margin_bottom = 99.0
+text = "Rotation
+"
+
+[node name="r" type="HBoxContainer" parent="g"]
+margin_left = 123.0
+margin_top = 68.0
+margin_right = 305.0
+margin_bottom = 99.0
+
+[node name="x" type="LineEdit" parent="g/r"]
+margin_right = 58.0
+margin_bottom = 31.0
+
+[node name="y" type="LineEdit" parent="g/r"]
+margin_left = 62.0
+margin_right = 120.0
+margin_bottom = 31.0
+
+[node name="z" type="LineEdit" parent="g/r"]
+margin_left = 124.0
+margin_right = 182.0
+margin_bottom = 31.0
+
+[node name="master_moves" type="CheckBox" parent="g"]
+margin_top = 103.0
+margin_right = 119.0
+margin_bottom = 127.0
+text = "Master moves"
+
+[node name="Control" type="Control" parent="g"]
+margin_left = 123.0
+margin_top = 103.0
+margin_right = 305.0
+margin_bottom = 127.0
+
+[connection signal="text_changed" from="g/LineEdit" to="." method="title_text_changed"]

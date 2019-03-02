@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/graph-editors/opportunity-editor.gd" type="Script" id=1]
+
+[node name="opportunity-editor" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="h" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="v" type="VBoxContainer" parent="h"]
+margin_right = 115.0
+margin_bottom = 600.0
+
+[node name="AddOpportunity" type="Button" parent="h/v"]
+margin_right = 115.0
+margin_bottom = 20.0
+text = "Add opportunity"
+
+[node name="Save" type="Button" parent="h/v"]
+margin_top = 24.0
+margin_right = 115.0
+margin_bottom = 44.0
+text = "Save"
+
+[node name="Exit" type="Button" parent="h/v"]
+margin_top = 48.0
+margin_right = 115.0
+margin_bottom = 68.0
+text = "Exit"
+
+[node name="ge" type="GraphEdit" parent="h"]
+margin_left = 119.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+right_disconnects = true
+scroll_offset = Vector2( -12, 0 )
+
