@@ -230,3 +230,44 @@ func get_parameter_playback_data(pb: String, prefix: String) -> Dictionary:
 		}
 	}
 	return ret
+
+func load_animations(at: AnimationTree):
+	for k in get_state_list():
+		var pt = load(json.states[k].path)
+		at.tree_root.add_node(k, pt)
+
+func apply_object_transform(obj, other, pb, prefix = ""):
+	var data = get_parameter_playback_data(pb, prefix)
+	var xform = data.playback.xform
+	var tf: Transform
+	if !data.playback.master_moves:
+		other.global_transform *= xform
+		other.orientation.basis = other.global_transform.basis
+	else:
+		obj.global_transform *= xform
+		obj.orientation.basis = obj.global_transform.basis
+
+func play_parameter_block(obj, other, pb, prefix = ""):
+	var data = get_parameter_playback_data(pb, prefix)
+	var at1 = awareness.at[obj]
+	var at2 = awareness.at[other]
+	var pl1 = data.playback.main.playback_list
+	var c1 = data.playback.main.conditions
+	var pl2 = data.playback.secondary.playback_list
+	var c2 = data.playback.secondary.conditions
+	awareness.action_mode[obj] = true
+	awareness.action_mode[other] = true
+	for k in c1.keys():
+		at1[k] = c1[k]
+	for k in pl1:
+		at1[k.playback].travel(k.travel)
+	for k in c2.keys():
+		at2[k] = c2[k]
+	for k in pl2:
+		at2[k.playback].travel(k.travel)
+	print("playing first: ", pl1, " second: ", pl2)
+
+func play_opportunity(obj, other, on, prefix = ""):
+	var pb = get_opportunity_param_block(on)
+	apply_object_transform(obj, other, pb, prefix)
+	play_parameter_block(obj, other, pb, prefix)

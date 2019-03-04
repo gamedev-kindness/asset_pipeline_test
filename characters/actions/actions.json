@@ -53,11 +53,11 @@
 				"struggle": false,
 				"success": true
 			},
-			"master_moves": true,
+			"master_moves": false,
 			"position": "500 620",
 			"title": "Front-grab",
 			"tree": "Front-grab",
-			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 -0.4"
+			"xform": "1 0 0 0 1 0 0 0 1 0 0 0.4"
 		},
 		"Front-grab-end": {
 			"conditions": {
@@ -70,7 +70,7 @@
 			"position": "500 1060",
 			"title": "Front-grab-end",
 			"tree": "Front-grab",
-			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 -0.4"
+			"xform": "-1 0 0 0 1 0 -0 0 -1 0 0 -0.4"
 		},
 		"Front-grab-failure": {
 			"conditions": {
@@ -83,7 +83,7 @@
 			"position": "900 1060",
 			"title": "Front-grab-failure",
 			"tree": "Front-grab",
-			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 -0.4"
+			"xform": "-1 0 0 0 1 0 -0 0 -1 0 0 -0.4"
 		},
 		"Front-grab-struggle": {
 			"conditions": {
@@ -96,7 +96,7 @@
 			"position": "900 620",
 			"title": "Front-grab-struggle",
 			"tree": "Front-grab",
-			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 -0.4"
+			"xform": "-1 0 0 0 1 0 -0 0 -1 0 0 -0.4"
 		},
 		"Front-grab/down": {
 			"conditions": {
@@ -106,7 +106,7 @@
 			"position": "1300 620",
 			"title": "Front-grab/down",
 			"tree": "Front-grab/down",
-			"xform": "-1 -0 0 0 -1 0 0 0 1 0 0 0.4"
+			"xform": "-1 0 0 0 1 0 -0 0 -1 0 0 0.4"
 		},
 		"Spank": {
 			"conditions": {
@@ -120,6 +120,29 @@
 		}
 	},
 	"states": {
+		"Front": {
+			"children": [
+
+			],
+			"children_data": {
+
+			},
+			"conditions": [
+
+			],
+			"fullname": "Front",
+			"oneshot": [
+
+			],
+			"path": "res://characters/actions/action_front.tres",
+			"position": "33.897854 101.315659",
+			"random": [
+
+			],
+			"struggle": [
+
+			]
+		},
 		"Front-grab": {
 			"children": [
 				"down"
@@ -239,7 +262,7 @@
 			],
 			"parent": "",
 			"path": "res://characters/actions/action_spank.tres",
-			"position": "40 420",
+			"position": "210.046844 345.221344",
 			"random": [
 
 			],
@@ -264,7 +287,7 @@
 
 			],
 			"path": "res://characters/actions/action_spanked.tres",
-			"position": "40 500",
+			"position": "249.404449 438.197205",
 			"random": [
 
 			],

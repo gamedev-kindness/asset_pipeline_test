@@ -62,11 +62,11 @@ height = 1.1
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=13]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=7]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=14]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=8]
 
-[sub_resource type="SphereShape" id=15]
+[sub_resource type="SphereShape" id=9]
 radius = 0.1
 
 [node name="female_2018" index="0" instance=ExtResource( 1 )]
@@ -74,7 +74,7 @@ collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="female_2018" parent="." index="0"]
-transform = Transform( 1, 1.11759e-08, -5.58794e-09, -1.11759e-08, 1, -2.04892e-08, 5.58794e-09, 2.04892e-08, 1, 1.76951e-08, 3.72529e-09, -1.88593e-08 )
+transform = Transform( 1, -1.67638e-08, 9.31322e-10, 1.67638e-08, 1, -4.84288e-08, -9.31322e-10, 4.84288e-08, 1, -2.32831e-09, -5.58794e-09, -1.39698e-09 )
 bones/6/bound_children = [ NodePath("pelvis") ]
 bones/21/bound_children = [ NodePath("head") ]
 script = ExtResource( 3 )
@@ -114,7 +114,7 @@ material/0 = ExtResource( 16 )
 [node name="head" type="BoneAttachment" parent="female_2018" index="12" groups=[
 "tps_target",
 ]]
-transform = Transform( -1, -3.44189e-07, 9.21082e-08, -8.27626e-08, -0.0270518, -0.999635, 3.46556e-07, -0.999633, 0.0270528, 5.58884e-07, 0.148656, 1.37609 )
+transform = Transform( -1, 8.05334e-08, 3.25549e-07, -9.42343e-08, -0.999104, -0.0423096, 3.2185e-07, -0.0423106, 0.999105, -1.19134e-08, 1.36678, -0.0365619 )
 bone_name = "head"
 
 [node name="Camera" type="Camera" parent="female_2018/head" index="0"]
@@ -127,7 +127,7 @@ transform = Transform( 1, 0, 0, 0, -0.866025, 0.500001, 0, -0.5, -0.866026, 0.08
 transform = Transform( 1, 0, 0, 0, -0.866025, 0.500001, 0, -0.5, -0.866026, -0.08, 0, 0 )
 
 [node name="pelvis" type="BoneAttachment" parent="female_2018" index="15"]
-transform = Transform( -1, -3.2592e-07, 8.4852e-08, -9.02308e-08, 0.0165401, -0.999863, 3.24472e-07, -0.999863, -0.0165401, 3.37692e-07, 0.01865, 0.817741 )
+transform = Transform( -1, 8.47282e-08, 3.25796e-07, -9.0105e-08, -0.999863, -0.0165401, 3.2435e-07, -0.0165401, 0.999863, 1.88575e-08, 0.800107, 0.0578735 )
 bone_name = "pelvis"
 
 [node name="pee_particles" type="Particles" parent="female_2018/pelvis" index="0"]
@@ -190,8 +190,8 @@ parameters/Sleep/sleep_scale/scale = 1.0
 parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
-parameters/UseToilet1/playback = SubResource( 13 )
-parameters/UseToilet2/playback = SubResource( 14 )
+parameters/UseToilet1/playback = SubResource( 7 )
+parameters/UseToilet2/playback = SubResource( 8 )
 
 [node name="AI" parent="." index="6" instance=ExtResource( 19 )]
 
@@ -202,7 +202,7 @@ cast_to = Vector3( 0, -1, -2.5 )
 
 [node name="minimal_shape" type="CollisionShape" parent="." index="8"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0952968, 0 )
-shape = SubResource( 15 )
+shape = SubResource( 9 )
 
 [node name="rpg" parent="." index="9" instance=ExtResource( 20 )]
 

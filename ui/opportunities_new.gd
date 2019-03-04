@@ -5,26 +5,24 @@ extends HBoxContainer
 # var b = "text"
 
 # Called when the node enters the scene tree for the first time.
-var json = {}
-const data_path = "res://characters/actions/actions.json"
+
+var anim_param_pb
 
 func _ready():
+	anim_param_pb = AnimationParameterPlayback.new()
 	rect_size.y = 80
 	rect_min_size.y = 80
 	var jf = File.new()
-	jf.open(data_path, File.READ)
-	var json_req = JSON.parse(jf.get_as_text())
-	json = json_req.result
-	jf.close()
-	for k in json.opportunity.keys():
-		print(k, ": ", json.opportunity[k])
+	for k in anim_param_pb.get_opportunity_list():
+		print(k)
 		var txr = TextureRect.new()
 		txr.rect_size = Vector2(80, 80)
 		txr.rect_min_size = Vector2(80, 80)
 		add_child(txr)
 		var icon = Image.new()
-		if jf.file_exists(json.opportunity[k].icon_path):
-			icon.load(json.opportunity[k].icon_path)
+		var icon_path = anim_param_pb.get_opportunity_icon_path(k)
+		if jf.file_exists(icon_path):
+			icon.load(icon_path)
 		print(icon)
 		var tex = ImageTexture.new()
 		tex.create_from_image(icon)
@@ -48,18 +46,18 @@ func _process(delta):
 	if !current:
 		cooldown = 0.5
 		return
-	for k in json.opportunity.keys():
+	for k in anim_param_pb.get_opportunity_list():
 		get_node(k).hide()
 	if awareness.active_items.has(current):
 		for i in awareness.active_items[current]:
 			if i.is_in_group("characters") && !awareness.action_mode.has(current):
-				for k in json.opportunity.keys():
+				for k in anim_param_pb.get_opportunity_list():
 					var other_dir = awareness.get_other_direction(current, i)
-					if json.opportunity[k].direction == "ANY":
+					if anim_param_pb.get_opportunity_direction(k) == "ANY":
 						get_node(k).show()
-					elif other_dir == json.opportunity[k].direction:
+					elif other_dir == anim_param_pb.get_opportunity_direction(k):
 						get_node(k).show()
-					elif other_dir in ["LEFT", "RIGHT"] && json.opportunity[k].direction == "SIDES":
+					elif other_dir in ["LEFT", "RIGHT"] && anim_param_pb.get_opportunity_direction(k) == "SIDES":
 						get_node(k).show()
 	cooldown = 0.6
 	update()
@@ -76,4 +74,8 @@ func _input(event):
 							break
 	if action != null:
 		print("action")
-#		awareness.player_character.emit_signal("ui_action", action)
+		if action != "Talk":
+			var other = awareness.get_actuator_body(awareness.player_character, "characters")
+			anim_param_pb.play_opportunity(awareness.player_character, other, action)
+		else:
+			awareness.player_character.emit_signal("ui_action", action)

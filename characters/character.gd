@@ -312,6 +312,8 @@ func _ready():
 	awareness.at[self] = $AnimationTree
 	collision_layer = 1
 	collision_mask = 0x1f
+	var anim_pb = AnimationParameterPlayback.new()
+	anim_pb.load_animations(awareness.at[self])
 	skel = get_children()[0]
 	fps_camera = get_children()[0].get_node("head/Camera")
 #	load_animations(skel)
