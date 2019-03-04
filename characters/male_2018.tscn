@@ -47,15 +47,15 @@ height = 1.23
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=8]
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
+
 [sub_resource type="AnimationNodeStateMachinePlayback" id=10]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=17]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=11]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=18]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
-
-[sub_resource type="SphereShape" id=20]
+[sub_resource type="SphereShape" id=13]
 radius = 0.1
 
 [node name="male_2018" index="0" instance=ExtResource( 1 )]
@@ -141,8 +141,8 @@ anim_player = NodePath("../male_g_2018/AnimationPlayer")
 active = true
 root_motion_track = NodePath(".:root")
 parameters/playback = SubResource( 8 )
-parameters/Front-grabbed/playback = SubResource( 10 )
-parameters/Idle/playback = SubResource( 17 )
+parameters/Front-grabbed/playback = SubResource( 9 )
+parameters/Idle/playback = SubResource( 10 )
 parameters/Idle/conditions/broken_state = false
 parameters/Idle/Stand/TimeScale/scale = 1.0
 parameters/Idle/Stand/blink/active = false
@@ -158,8 +158,8 @@ parameters/Sleep/sleep_scale/scale = 1.0
 parameters/Stand/TimeScale/scale = 1.0
 parameters/Stand/blink/active = false
 parameters/Stand/wiggle/add_amount = 0
-parameters/UseToilet1/playback = SubResource( 18 )
-parameters/UseToilet2/playback = SubResource( 19 )
+parameters/UseToilet1/playback = SubResource( 11 )
+parameters/UseToilet2/playback = SubResource( 12 )
 
 [node name="AI" parent="." index="6" instance=ExtResource( 10 )]
 
@@ -169,7 +169,7 @@ cast_to = Vector3( 0, -1, -1.5 )
 
 [node name="minimal_shape" type="CollisionShape" parent="." index="8"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.101824, 0.05 )
-shape = SubResource( 20 )
+shape = SubResource( 13 )
 
 [node name="rpg" parent="." index="9" instance=ExtResource( 11 )]
 

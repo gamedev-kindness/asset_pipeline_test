@@ -73,7 +73,7 @@ nodes/blink/position = Vector2( 620, 20 )
 nodes/output/position = Vector2( 1560, 120 )
 nodes/wiggle/node = SubResource( 14 )
 nodes/wiggle/position = Vector2( 1160, 80 )
-node_connections = [ "output", 0, "wiggle", "blink", 0, "Animation", "blink", 1, "Animation 3", "TimeScale", 0, "Animation 2", "wiggle", 0, "blink", "wiggle", 1, "TimeScale" ]
+node_connections = [ "output", 0, "wiggle", "TimeScale", 0, "Animation 2", "wiggle", 0, "blink", "wiggle", 1, "TimeScale", "blink", 0, "Animation", "blink", 1, "Animation 3" ]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=16]
 auto_advance = true
@@ -134,7 +134,7 @@ nodes/turn_right/node = SubResource( 25 )
 nodes/turn_right/position = Vector2( 920, 60 )
 nodes/walk_speed/node = SubResource( 26 )
 nodes/walk_speed/position = Vector2( 1300, 100 )
-node_connections = [ "output", 0, "blink", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "blink", 0, "walk_speed", "blink", 1, "Animation 4", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "walk_speed", 0, "turn_right" ]
+node_connections = [ "output", 0, "blink", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "blink", 0, "walk_speed", "blink", 1, "Animation 4", "walk_speed", 0, "turn_right", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation" ]
 
 [sub_resource type="AnimationNodeAnimation" id=28]
 animation = "additive-wiggling-loop"
@@ -180,7 +180,7 @@ nodes/Blend2/position = Vector2( 440, 120 )
 nodes/output/position = Vector2( 1040, 180 )
 nodes/sleep_scale/node = SubResource( 36 )
 nodes/sleep_scale/position = Vector2( 820, 160 )
-node_connections = [ "output", 0, "sleep_scale", "Blend2", 0, "Animation 2", "Blend2", 1, "Animation", "sleep_scale", 0, "Blend2" ]
+node_connections = [ "output", 0, "sleep_scale", "sleep_scale", 0, "Blend2", "Blend2", 0, "Animation 2", "Blend2", 1, "Animation" ]
 
 [sub_resource type="AnimationNodeAnimation" id=38]
 animation = "additive-wiggling-loop"
@@ -217,7 +217,7 @@ nodes/blink/position = Vector2( 620, 20 )
 nodes/output/position = Vector2( 1560, 120 )
 nodes/wiggle/node = SubResource( 43 )
 nodes/wiggle/position = Vector2( 1160, 80 )
-node_connections = [ "output", 0, "wiggle", "blink", 0, "Animation", "blink", 1, "Animation 3", "TimeScale", 0, "Animation 2", "wiggle", 0, "blink", "wiggle", 1, "TimeScale" ]
+node_connections = [ "output", 0, "wiggle", "TimeScale", 0, "Animation 2", "wiggle", 0, "blink", "wiggle", 1, "TimeScale", "blink", 0, "Animation", "blink", 1, "Animation 3" ]
 
 [sub_resource type="AnimationNodeAnimation" id=45]
 animation = "disable_pee_particles"
@@ -338,5 +338,5 @@ states/stand-to-walk/node = SubResource( 58 )
 states/stand-to-walk/position = Vector2( 496, 23 )
 transitions = [ "Navigate", "Stand", SubResource( 59 ), "Stand", "stand-to-walk", SubResource( 60 ), "stand-to-walk", "Navigate", SubResource( 61 ), "Sleep", "back_to_sit", SubResource( 62 ), "back_to_sit", "sit_to_stand", SubResource( 63 ), "sit_to_stand", "Stand", SubResource( 64 ), "Stand", "UseToilet2", SubResource( 65 ), "Stand", "UseToilet1", SubResource( 66 ), "UseToilet2", "Stand", SubResource( 67 ), "UseToilet1", "disable_pee_particles", SubResource( 68 ), "disable_pee_particles", "Stand", SubResource( 69 ), "Stand", "Idle", SubResource( 70 ), "Idle", "Stand", SubResource( 71 ), "Sitting", "sit_to_stand", SubResource( 72 ), "Stand", "Front-grabbed", SubResource( 73 ), "Front-grabbed", "Stand", SubResource( 74 ) ]
 start_node = "Sleep"
-graph_offset = Vector2( -805.954, -270.896 )
+graph_offset = Vector2( -805.954, -231.252 )
 
