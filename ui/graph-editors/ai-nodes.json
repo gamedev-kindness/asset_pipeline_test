@@ -1,0 +1,33 @@
+{
+	"modules": {
+		"Root": {
+			"BTRoot": {}
+		},
+		"Composite": {
+			"BTSelector": {},
+			"BTSequence": {},
+			"BTUtilitySelector": {}
+		},
+		"Conditions": {
+			"BTCondCanSpeak": {
+			},
+			"BTCondHasTarget": {
+			},
+			"BTTargetDistanceLessCheck": {
+			}
+		},
+		"Actions": {
+			"BTActivateTarget": {
+			},
+			"BTInitiateDialogue": {
+			},
+			"BTWalkToTarget": {
+			},
+			"BTPlayAnimationState": {
+			},
+			"BTSelectTarget": {
+			},
+			"BTActivateTarget": {
+			}
+		}
+}
