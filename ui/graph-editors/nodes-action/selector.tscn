@@ -1,0 +1,58 @@
+[gd_scene format=2]
+
+[node name="selector" type="GraphNode"]
+margin_right = 167.0
+margin_bottom = 110.0
+title = "Selector"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = true
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = true
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 151.0
+margin_bottom = 88.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Polygon2D" type="Polygon2D" parent="ReferenceRect"]
+position = Vector2( 2.76991, 0.843762 )
+scale = Vector2( 0.882883, 0.850468 )
+polygon = PoolVector2Array( 23.6507, 22.1094, 33.3618, 13.2427, 46.4508, 5.64267, 63.7619, 7.33156, 70.0952, 15.3538, 70.5175, 23.7983, 55.7397, 37.7316, 55.7397, 50.8205, 45.1841, 49.5538, 44.3396, 34.776, 58.273, 19.576, 50.673, 14.5093, 40.1174, 20.8427, 29.1396, 30.1316 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="ReferenceRect"]
+polygon = PoolVector2Array( 42.2285, 53.7761, 46.4508, 49.1316, 50.673, 50.3983, 52.7841, 55.465, 49.4063, 60.5316, 44.7619, 60.5316 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 88.0
+margin_right = 151.0
+margin_bottom = 102.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_right = 65.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "in"
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+margin_left = 69.0
+margin_right = 135.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "out"
+align = 2
+

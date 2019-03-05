@@ -1,0 +1,55 @@
+[gd_scene format=2]
+
+[node name="selector" type="GraphNode"]
+margin_right = 167.0
+margin_bottom = 110.0
+title = "Selector"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color( 1, 1, 1, 1 )
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color( 1, 1, 1, 1 )
+slot/1/left_enabled = true
+slot/1/left_type = 0
+slot/1/left_color = Color( 1, 1, 1, 1 )
+slot/1/right_enabled = true
+slot/1/right_type = 0
+slot/1/right_color = Color( 1, 1, 1, 1 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+margin_left = 16.0
+margin_top = 24.0
+margin_right = 151.0
+margin_bottom = 88.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Polygon2D" type="Polygon2D" parent="ReferenceRect"]
+position = Vector2( -1.4089, 0.693756 )
+scale = Vector2( 1.2381, 0.962963 )
+polygon = PoolVector2Array( 7.18403, 28.4427, 91.6286, 28.8649, 90.7842, 18.7316, 103.451, 31.8205, 92.0508, 41.5316, 90.7842, 34.3538, 5.91737, 33.5094 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 16.0
+margin_top = 88.0
+margin_right = 151.0
+margin_bottom = 102.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_right = 65.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "in"
+
+[node name="Label2" type="Label" parent="HBoxContainer"]
+margin_left = 69.0
+margin_right = 135.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "out"
+align = 2
+
