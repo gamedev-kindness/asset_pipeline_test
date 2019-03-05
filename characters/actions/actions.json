@@ -15,6 +15,7 @@
 		"FrontGrab": {
 			"direction": "FRONT",
 			"icon_path": "res://icons/icons__5.png",
+			"leave": false,
 			"param_block": "Front-grab",
 			"parent": "",
 			"position": "1020 -320",
@@ -23,6 +24,7 @@
 		"FrontGrabLeave": {
 			"direction": "ANY",
 			"icon_path": "res://icons/icons__1.png",
+			"leave": true,
 			"param_block": "Front-grab-end",
 			"parent": "FrontGrab",
 			"position": "320 0",
@@ -31,6 +33,7 @@
 		"Spank": {
 			"direction": "BACK",
 			"icon_path": "res://icons/icons__3.png",
+			"leave": false,
 			"param_block": "Spank",
 			"parent": "",
 			"position": "1600 -320",
@@ -39,6 +42,7 @@
 		"Talk": {
 			"direction": "ANY",
 			"icon_path": "res://icons/icons__6.png",
+			"leave": false,
 			"param_block": "None",
 			"parent": "",
 			"position": "320 600",
@@ -57,7 +61,7 @@
 			"position": "500 620",
 			"title": "Front-grab",
 			"tree": "Front-grab",
-			"xform": "1 0 0 0 1 0 0 0 1 0 0 0.4"
+			"xform": "-1 0 0 0 1 0 -0 0 -1 0 0 -0.4"
 		},
 		"Front-grab-end": {
 			"conditions": {

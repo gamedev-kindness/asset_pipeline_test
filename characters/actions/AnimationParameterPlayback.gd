@@ -69,7 +69,10 @@ func get_opportunity_parent(on: String) -> String:
 	if json.has("opportunity"):
 		return json.opportunity[on].parent
 	return ""
-
+func get_opportunity_leave(on: String) -> bool:
+	if json.has("opportunity"):
+		return json.opportunity[on].leave
+	return false
 func vec2_to_str(v: Vector2) -> String:
 	return str(v.x) + " " + str(v.y)
 func str_to_vec2(s: String) -> Vector2:
@@ -232,20 +235,27 @@ func get_parameter_playback_data(pb: String, prefix: String) -> Dictionary:
 	return ret
 
 func load_animations(at: AnimationTree):
+	var end_anim = AnimationNodeAnimation.new()
+	end_anim.animation = "signal-end"
+	at.tree_root.add_node("signal-end", end_anim)
 	for k in get_state_list():
 		var pt = load(json.states[k].path)
 		at.tree_root.add_node(k, pt)
+		var back_transition = AnimationNodeStateMachineTransition.new()
+		back_transition.auto_advance = true
+		back_transition.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
+		at.tree_root.add_transition(k, "signal-end", back_transition)
 
 func apply_object_transform(obj, other, pb, prefix = ""):
 	var data = get_parameter_playback_data(pb, prefix)
 	var xform = data.playback.xform
 	var tf: Transform
-	if !data.playback.master_moves:
-		other.global_transform *= xform
-		other.orientation.basis = other.global_transform.basis
-	else:
-		obj.global_transform *= xform
+	if data.playback.master_moves:
+		obj.global_transform = (other.global_transform * xform).orthonormalized()
 		obj.orientation.basis = obj.global_transform.basis
+	else:
+		other.global_transform = (obj.global_transform * xform).orthonormalized()
+		other.orientation.basis = other.global_transform.basis
 
 func play_parameter_block(obj, other, pb, prefix = ""):
 	var data = get_parameter_playback_data(pb, prefix)
@@ -266,8 +276,10 @@ func play_parameter_block(obj, other, pb, prefix = ""):
 	for k in pl2:
 		at2[k.playback].travel(k.travel)
 	print("playing first: ", pl1, " second: ", pl2)
+func play(obj, other, pb, prefix=""):
+	apply_object_transform(obj, other, pb, prefix)
+	play_parameter_block(obj, other, pb, prefix)
 
 func play_opportunity(obj, other, on, prefix = ""):
 	var pb = get_opportunity_param_block(on)
-	apply_object_transform(obj, other, pb, prefix)
-	play_parameter_block(obj, other, pb, prefix)
+	play(obj, other, pb, prefix)

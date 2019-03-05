@@ -67,6 +67,7 @@ func get_data():
 	data.icon_path = icon_path
 	data.param_block = param_block
 	data.direction = direction
+	data.leave = $LeaveToParent.pressed
 	if parent != null:
 		data.parent = parent.title
 	else:
@@ -83,4 +84,5 @@ func set_data(data):
 	$TextureRect.texture = tex
 	param_block = data.param_block
 	direction = data.direction
+	$LeaveToParent.pressed = data.leave
 	update_items()

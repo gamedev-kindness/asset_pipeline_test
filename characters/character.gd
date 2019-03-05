@@ -24,6 +24,14 @@ var skel
 
 var stats = {}
 
+func create_signal_track_anim(signame) -> Animation:
+	var anim = Animation.new()
+	anim.add_track(Animation.TYPE_METHOD)
+	anim.track_set_path(0, "../AnimationTree")
+	anim.track_insert_key(0, 0.0, {"method": "emit_signal", "args": [signame, self]})
+	var ap: AnimationPlayer = skel.get_node("AnimationPlayer")
+	ap.add_animation("signal-" + signame, anim)
+	return anim
 		
 #var actions = {
 #	"kick_to_bed": {
@@ -349,6 +357,7 @@ func _ready():
 		"right": $raycast_right
 	}
 	awareness.raycasts[self] = raycasts
+	create_signal_track_anim("end")
 
 var despawn_cooldown = 0.0
 var despawned = false

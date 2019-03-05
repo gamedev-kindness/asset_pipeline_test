@@ -105,7 +105,7 @@ margin_right = 500.0
 margin_bottom = 243.0
 max_value = 1000.0
 
-[node name="CheckBox" type="CheckBox" parent="."]
+[node name="LeaveToParent" type="CheckBox" parent="."]
 margin_left = 16.0
 margin_top = 267.0
 margin_right = 516.0

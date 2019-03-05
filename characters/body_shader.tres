@@ -43,7 +43,7 @@ uniform sampler2D noise2;
 
 
 void vertex() {
-// Вывод:0
+// Output:0
 
 }
 
@@ -60,7 +60,7 @@ void fragment() {
 	n_out7p0 = vec3(0.800781,0.372238,0.372238);
 	n_out7p1 = 1.000000;
 
-// Вход:4
+// Input:4
 	vec3 n_out4p0;
 	n_out4p0 = vec3(UV,0.0);
 
@@ -124,7 +124,7 @@ void fragment() {
 	float n_out8p0;
 	n_out8p0 = 0.500000;
 
-// Вывод:0
+// Output:0
 	ALBEDO = n_out10p0;
 	ROUGHNESS = n_out12p0;
 	SPECULAR = n_out13p0;
@@ -133,7 +133,7 @@ void fragment() {
 }
 
 void light() {
-// Вывод:0
+// Output:0
 
 }
 "

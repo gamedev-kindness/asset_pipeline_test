@@ -6,7 +6,7 @@ extends HBoxContainer
 
 # Called when the node enters the scene tree for the first time.
 
-var anim_param_pb
+var anim_param_pb: AnimationParameterPlayback
 
 func _ready():
 	anim_param_pb = AnimationParameterPlayback.new()
@@ -37,6 +37,7 @@ func _ready():
 		print(k.name, " ", k.rect_position, " ", k.rect_size)
 
 var cooldown = 0.0
+var current_mode = ""
 func _process(delta):
 	var current
 	if cooldown > 0.5:
@@ -59,6 +60,12 @@ func _process(delta):
 						get_node(k).show()
 					elif other_dir in ["LEFT", "RIGHT"] && anim_param_pb.get_opportunity_direction(k) == "SIDES":
 						get_node(k).show()
+	if current_mode.length() > 0:
+		for k in anim_param_pb.get_opportunity_list():
+			var op = anim_param_pb.get_opportunity_parent(k)
+			if op != current_mode:
+				continue
+			get_node(k).show()
 	cooldown = 0.6
 	update()
 
@@ -76,6 +83,18 @@ func _input(event):
 		print("action")
 		if action != "Talk":
 			var other = awareness.get_actuator_body(awareness.player_character, "characters")
-			anim_param_pb.play_opportunity(awareness.player_character, other, action)
+			var act_obj = BasicAction.new()
+			get_node("/root").add_child(act_obj)
+			var pb = anim_param_pb.get_opportunity_param_block(action)
+			act_obj.pb_start = pb
+			act_obj.add_character(awareness.player_character)
+			act_obj.add_character(other)
+			act_obj.play()
+			if anim_param_pb.get_opportunity_leave(action):
+				current_mode = anim_param_pb.get_opportunity_parent(current_mode)
+			else:
+				current_mode = action
+#			anim_param_pb.play_opportunity(awareness.player_character, other, action)
 		else:
 			awareness.player_character.emit_signal("ui_action", action)
+			current_mode = ""
