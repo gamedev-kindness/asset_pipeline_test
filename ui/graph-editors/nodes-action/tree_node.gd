@@ -14,6 +14,7 @@ var children_nodes = []
 var param_count = 0
 var params_grid
 var params = {}
+var node_type = ""
 
 func on_close_request():
 	if parent_node != null:
@@ -22,24 +23,40 @@ func on_close_request():
 		k.parent_node = null
 	queue_free()
 
+func on_title_modify(new_title):
+	title = new_title
+	update()
+
+func on_parameter_modify(new_value, param):
+	if params[param].type_id == TYPE_STRING:
+		params[param].value = new_value
+	elif params[param].type_id == TYPE_INT:
+		params[param].value = int(new_value)
+	elif params[param].type_id == TYPE_REAL:
+		params[param].value = float(new_value)
+	update()
+
 func _ready():
 	connect("close_request", self, "on_close_request")
+	$t/LineEdit.text = title
+	$t/LineEdit.connect("text_changed", self, "on_title_modify")
 
-func add_parameter(pname, pdefval):
-	if param_count == 0:
-		var g = GridContainer.new()
-		add_child(g)
-		g.columns = 2
-		g.size_flags_horizontal = SIZE_EXPAND
-		params_grid = g
-	var g = params_grid
-	var l = Label.new()
-	l.text = pname
-	g.add_child(l)
-	l.size_flags_horizontal = SIZE_EXPAND_FILL
-	var v = LineEdit.new()
-	v.text = str(pdefval)
-	g.add_child(v)
-	v.size_flags_horizontal = SIZE_EXPAND_FILL
-	params[pname] = pdefval
-	param_count += 1
+func add_parameter(pname, pdefval, type_id):
+	if type_id in [TYPE_REAL, TYPE_INT, TYPE_STRING]:
+		if param_count == 0:
+			var g = GridContainer.new()
+			add_child(g)
+			g.columns = 2
+			g.size_flags_horizontal = SIZE_EXPAND
+			params_grid = g
+		var g = params_grid
+		var l = Label.new()
+		l.text = pname
+		g.add_child(l)
+		l.size_flags_horizontal = SIZE_EXPAND_FILL
+		var v = LineEdit.new()
+		v.text = str(pdefval)
+		g.add_child(v)
+		v.size_flags_horizontal = SIZE_EXPAND_FILL
+		param_count += 1
+	params[pname] = {"value": pdefval, "type_id": type_id}

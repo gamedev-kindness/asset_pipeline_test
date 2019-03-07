@@ -1,34 +1,93 @@
 {
 	"modules": {
-		"Root": {
-			"BTRoot": {}
+		"Actions": {
+			"BTActivateTarget": {
+
+			},
+			"BTInitiateDialogue": {
+
+			},
+			"BTPlayAnimationState": {
+
+			},
+			"BTSelectTarget": {
+
+			},
+			"BTWalkToTarget": {
+
+			}
 		},
 		"Composite": {
-			"BTSelector": {},
-			"BTSequence": {},
-			"BTUtilitySelector": {}
+			"BTSelector": {
+
+			},
+			"BTSequence": {
+
+			},
+			"BTUtilitySelector": {
+
+			}
 		},
 		"Conditions": {
 			"BTCondCanSpeak": {
+
 			},
 			"BTCondHasTarget": {
+
 			},
 			"BTTargetDistanceLessCheck": {
+
 			}
 		},
-		"Actions": {
-			"BTActivateTarget": {
-			},
-			"BTInitiateDialogue": {
-			},
-			"BTWalkToTarget": {
-			},
-			"BTPlayAnimationState": {
-			},
-			"BTSelectTarget": {
-			},
-			"BTActivateTarget": {
+		"Root": {
+			"BTRoot": {
+
 			}
+		}
+	},
+	"tree": {
+		"BTRoot": {
+			"children": [
+
+			],
+			"node_type": "BTRoot",
+			"params": {
+
+			},
+			"position": "-60 40"
+		},
+		"BTTargetDistanceLessCheck": {
+			"children": [
+
+			],
+			"node_type": "BTTargetDistanceLessCheck",
+			"params": {
+				"max_distance": {
+					"type_id": 3,
+					"value": 1.5
+				}
+			},
+			"position": "520 100"
+		},
+		"BTUtilitySelector": {
+			"children": [
+
+			],
+			"node_type": "BTUtilitySelector",
+			"params": {
+
+			},
+			"position": "100 120"
+		},
+		"characters": {
+			"children": [
+
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "320 220"
 		}
 	}
 }

@@ -24,7 +24,7 @@ var nodes = {
 		"outputs": -1,
 	},
 	"BTUtilitySelector": {
-		"node": load("res://ui/graph-editors/nodes-action/utility_selector.tscn"),
+		"node": load("res://ui/graph-editors/nodes-action/selector.tscn"),
 		"inputs": 1,
 		"outputs": -1,
 	},
@@ -76,13 +76,28 @@ var nodes = {
 	}
 }
 onready var ge: GraphEdit = $GraphEdit
-func add_tree_node(node):
+func add_tree_node(node, title_s = ""):
 	var nodei = nodes[node].node.instance()
-	nodei.title = node
+	if title_s.length() == 0:
+		nodei.title = node
+	else:
+		nodei.title = title_s
+	var ok = false
+	while ok == false:
+		ok = true
+		for k in ge.get_children():
+			if k is GraphNode:
+				if k.title == nodei.title:
+					nodei.title += "@_"
+					ok = false
+					break
+				
+	nodei.node_type = node
 	ge.add_child(nodei)
 	if nodei.has_method("add_parameter"):
 		for k in nodes[node].parameters.keys():
-			nodei.add_parameter(k, nodes[node].parameters[k])
+			nodei.add_parameter(k, nodes[node].parameters[k].defval, nodes[node].parameters[k].type_id)
+	return nodei
 
 func on_connection_request(from, from_slot, to, to_slot):
 	print("connect: ", from, " ", from_slot, " ", to, " ", to_slot)
@@ -94,11 +109,11 @@ func on_connection_request(from, from_slot, to, to_slot):
 	if to_node.parent_node != null:
 		print("already have connection to parent")
 		can_connect = false
-	if nodes[to_node.title].inputs == 0:
+	if nodes[to_node.node_type].inputs == 0:
 		print("can't connect parent to this node")
 		can_connect = false
-	if nodes[from_node.title].outputs >= 0:
-		if from_node.children_nodes.size() >= nodes[from_node.title].outputs:
+	if nodes[from_node.node_type].outputs >= 0:
+		if from_node.children_nodes.size() >= nodes[from_node.node_type].outputs:
 			print("too many children")
 			can_connect = false
 	if can_connect:
@@ -120,6 +135,32 @@ func on_disconnection_request(from, from_slot, to, to_slot):
 	from_node.children_nodes.erase(to_node)
 	ge.disconnect_node(from, from_slot, to, to_slot)
 
+func vec2_to_str(v: Vector2) -> String:
+	return str(v.x) + " " + str(v.y)
+
+func str_to_vec2(s: String) -> Vector2:
+	var ret : = Vector2()
+	var sd = s.split(" ")
+	ret.x = float(sd[0])
+	ret.y = float(sd[1])
+	return ret
+
+func on_save():
+	json.tree = {}
+	for k in ge.get_children():
+		if k is GraphNode:
+			json.tree[k.title] = {}
+			json.tree[k.title].children = []
+			json.tree[k.title].node_type = k.node_type
+			json.tree[k.title].params = k.params
+			json.tree[k.title].position = vec2_to_str(k.get_offset())
+			for c in k.children_nodes:
+				json.tree[k.title].children.push_back(c.title)
+	print(json.tree)
+	var f : = File.new()
+	f.open(data_path, f.WRITE)
+	f.store_string(JSON.print(json, "\t", true))
+	f.close()
 func _ready():
 	var jf = File.new()
 	jf.open(data_path, File.READ)
@@ -146,8 +187,49 @@ func _ready():
 #					print(k.name, " ", k.type, " ", "%04x" % (k.usage))
 #					print(k)
 #					print(instance.get(k.name))
-					nodes[l].parameters[k.name] = instance.get(k.name)
+					nodes[l].parameters[k.name] = {}
+					nodes[l].parameters[k.name].defval = instance.get(k.name)
+					nodes[l].parameters[k.name].type_id = k.type
 			instance.free()
+	$v.add_child(HSeparator.new())
+	var l_head = Label.new()
+	l_head.text = "Name-based utility behaviors"
+	$v.add_child(l_head)
+	var utility_grid = GridContainer.new()
+	utility_grid.columns = 3
+	utility_grid.size_flags_horizontal = SIZE_EXPAND_FILL
+	$v.add_child(utility_grid)
+	var behavior_names = []
+	for k in awareness.utilities.keys():
+		var u = awareness.utilities[k]
+		if u.has("behavior") || u.has("tag"):
+			var lt = ""
+			if u.has("behavior"):
+				lt = u.behavior
+			elif u.has("tag"):
+				lt = u.tag
+			if !lt in behavior_names:
+				behavior_names.push_back(lt)
+	for lt in behavior_names:
+		var l = Label.new()
+		l.text = lt
+		utility_grid.add_child(l)
+		var b1 = Button.new()
+		b1.text = "selector"
+		utility_grid.add_child(b1)
+		b1.connect("pressed", self, "add_tree_node", ["BTSelector", lt])
+		var b2 = Button.new()
+		b2.text = "sequence"
+		utility_grid.add_child(b2)
+		b2.connect("pressed", self, "add_tree_node", ["BTSequence", lt])
 	print(nodes)
+	$v.add_child(HSeparator.new())
+	var save_button = Button.new()
+	save_button.text = "Save"
+	save_button.connect("pressed", self, "on_save")
+	$v.add_child(save_button)
 	ge.connect("connection_request", self, "on_connection_request")
 	ge.connect("disconnection_request", self, "on_disconnection_request")
+	for k in json.tree.keys():
+		var n = add_tree_node(json.tree[k].node_type, k)
+		n.set_offset(str_to_vec2(json.tree[k].position))
