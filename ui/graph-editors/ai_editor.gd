@@ -233,3 +233,4 @@ func _ready():
 	for k in json.tree.keys():
 		var n = add_tree_node(json.tree[k].node_type, k)
 		n.set_offset(str_to_vec2(json.tree[k].position))
+		n.set_parameters(json.tree[k].params)
