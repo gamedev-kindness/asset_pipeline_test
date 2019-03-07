@@ -35,7 +35,6 @@ script = ExtResource( 3 )
 script = ExtResource( 4 )
 
 [node name="toilet" type="Node" parent="states/BTRoot/BTUtilitySelector"]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="BTSequence" type="Node" parent="states/BTRoot/BTUtilitySelector/toilet"]
@@ -58,7 +57,6 @@ script = ExtResource( 10 )
 target = "toilet"
 
 [node name="shower" type="Node" parent="states/BTRoot/BTUtilitySelector"]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="BTSequence" type="Node" parent="states/BTRoot/BTUtilitySelector/shower"]
@@ -81,7 +79,6 @@ script = ExtResource( 10 )
 target = "shower"
 
 [node name="characters" type="Node" parent="states/BTRoot/BTUtilitySelector"]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="BTSequence" type="Node" parent="states/BTRoot/BTUtilitySelector/characters"]
@@ -105,7 +102,6 @@ target_distance = 0.6
 script = ExtResource( 12 )
 
 [node name="broken" type="Node" parent="states/BTRoot/BTUtilitySelector"]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="BTInitiateDialogue" type="Node" parent="states/BTRoot/BTUtilitySelector/broken"]
@@ -120,7 +116,6 @@ target_distance = 0.8
 script = ExtResource( 12 )
 
 [node name="slave" type="Node" parent="states/BTRoot/BTUtilitySelector"]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="BTWalkToTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/slave"]
@@ -132,7 +127,6 @@ script = ExtResource( 10 )
 target = "character_front_target"
 
 [node name="food" type="Node" parent="states/BTRoot/BTUtilitySelector"]
-editor/display_folded = true
 script = ExtResource( 5 )
 
 [node name="BTSelectTarget" type="Node" parent="states/BTRoot/BTUtilitySelector/food"]
@@ -140,7 +134,6 @@ script = ExtResource( 10 )
 target = "food"
 
 [node name="dialogue" type="Node" parent="states/BTRoot/BTUtilitySelector"]
-editor/display_folded = true
 script = ExtResource( 6 )
 
 [node name="BTSelector" type="Node" parent="states/BTRoot/BTUtilitySelector/dialogue"]

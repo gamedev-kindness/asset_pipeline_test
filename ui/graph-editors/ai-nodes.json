@@ -10,6 +10,9 @@
 			"BTPlayAnimationState": {
 
 			},
+			"BTSelectCharacterTarget": {
+
+			},
 			"BTSelectTarget": {
 
 			},
@@ -46,15 +49,270 @@
 		}
 	},
 	"tree": {
-		"BTRoot": {
+		"BTActivateTarget": {
 			"children": [
 
+			],
+			"node_type": "BTActivateTarget",
+			"params": {
+
+			},
+			"position": "1640 -200"
+		},
+		"BTActivateTarget@_": {
+			"children": [
+
+			],
+			"node_type": "BTActivateTarget",
+			"params": {
+
+			},
+			"position": "1900 200"
+		},
+		"BTActivateTarget@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTActivateTarget",
+			"params": {
+
+			},
+			"position": "700 -400"
+		},
+		"BTCondHasTarget": {
+			"children": [
+
+			],
+			"node_type": "BTCondHasTarget",
+			"params": {
+
+			},
+			"position": "1440 -200"
+		},
+		"BTCondHasTarget@_": {
+			"children": [
+
+			],
+			"node_type": "BTCondHasTarget",
+			"params": {
+
+			},
+			"position": "1680 320"
+		},
+		"BTCondHasTarget@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTCondHasTarget",
+			"params": {
+
+			},
+			"position": "1660 440"
+		},
+		"BTCondHasTarget@_@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTCondHasTarget",
+			"params": {
+
+			},
+			"position": "900 840"
+		},
+		"BTInitiateDialogue": {
+			"children": [
+
+			],
+			"node_type": "BTInitiateDialogue",
+			"params": {
+				"target_distance": {
+					"type_id": 3,
+					"value": 0.6
+				}
+			},
+			"position": "1900 440"
+		},
+		"BTInitiateDialogue@_": {
+			"children": [
+
+			],
+			"node_type": "BTInitiateDialogue",
+			"params": {
+				"target_distance": {
+					"type_id": 3,
+					"value": 0.8
+				}
+			},
+			"position": "500 340"
+		},
+		"BTPlayAnimationState": {
+			"children": [
+
+			],
+			"node_type": "BTPlayAnimationState",
+			"params": {
+				"sequence": {
+					"type_id": 4,
+					"value": "Stand"
+				}
+			},
+			"position": "900 720"
+		},
+		"BTRoot": {
+			"children": [
+				"BTUtilitySelector"
 			],
 			"node_type": "BTRoot",
 			"params": {
 
 			},
-			"position": "-60 40"
+			"position": "-160 -380"
+		},
+		"BTSelectCharacterTarget": {
+			"children": [
+
+			],
+			"node_type": "BTSelectCharacterTarget",
+			"params": {
+
+			},
+			"position": "1440 560"
+		},
+		"BTSelectCharacterTarget@_": {
+			"children": [
+
+			],
+			"node_type": "BTSelectCharacterTarget",
+			"params": {
+
+			},
+			"position": "500 580"
+		},
+		"BTSelectCharacterTarget@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTSelectCharacterTarget",
+			"params": {
+
+			},
+			"position": "-20 660"
+		},
+		"BTSelectTarget": {
+			"children": [
+
+			],
+			"node_type": "BTSelectTarget",
+			"params": {
+				"target": {
+					"type_id": 4,
+					"value": "toilet"
+				}
+			},
+			"position": "1260 -80"
+		},
+		"BTSelectTarget@_": {
+			"children": [
+
+			],
+			"node_type": "BTSelectTarget",
+			"params": {
+				"target": {
+					"type_id": 4,
+					"value": "shower"
+				}
+			},
+			"position": "1440 300"
+		},
+		"BTSelectTarget@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTSelectTarget",
+			"params": {
+				"target": {
+					"type_id": 4,
+					"value": "food"
+				}
+			},
+			"position": "700 -200"
+		},
+		"BTSelector": {
+			"children": [
+				"BTActivateTarget",
+				"BTWalkToTarget"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "1480 -80"
+		},
+		"BTSelector@_": {
+			"children": [
+				"BTActivateTarget@_",
+				"BTWalkToTarget@_"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "1680 200"
+		},
+		"BTSelector@_@_": {
+			"children": [
+				"BTInitiateDialogue",
+				"BTWalkToTarget@_@_"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "1700 560"
+		},
+		"BTSelector@_@_@_": {
+			"children": [
+				"walk_seq",
+				"stand_seq"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "440 880"
+		},
+		"BTSequence": {
+			"children": [
+				"BTSelector",
+				"BTCondHasTarget"
+			],
+			"node_type": "BTSequence",
+			"params": {
+
+			},
+			"position": "1260 -200"
+		},
+		"BTSequence@_": {
+			"children": [
+				"BTCondHasTarget@_",
+				"BTSelector@_"
+			],
+			"node_type": "BTSequence",
+			"params": {
+
+			},
+			"position": "1460 200"
+		},
+		"BTSequence@_@_": {
+			"children": [
+				"BTCondHasTarget@_@_",
+				"BTSelector@_@_"
+			],
+			"node_type": "BTSequence",
+			"params": {
+
+			},
+			"position": "1440 440"
 		},
 		"BTTargetDistanceLessCheck": {
 			"children": [
@@ -64,22 +322,121 @@
 			"params": {
 				"max_distance": {
 					"type_id": 3,
-					"value": 1.4
+					"value": 1
 				}
 			},
-			"position": "520 100"
+			"position": "900 580"
 		},
 		"BTUtilitySelector": {
 			"children": [
-
+				"classes",
+				"food",
+				"characters",
+				"toilet",
+				"shower",
+				"broken",
+				"slave",
+				"action",
+				"dialogue"
 			],
 			"node_type": "BTUtilitySelector",
 			"params": {
 
 			},
-			"position": "100 120"
+			"position": "20 -40"
 		},
-		"characters": {
+		"BTWalkToTarget": {
+			"children": [
+
+			],
+			"node_type": "BTWalkToTarget",
+			"params": {
+				"target_distance": {
+					"type_id": 3,
+					"value": 1.5
+				}
+			},
+			"position": "1640 -80"
+		},
+		"BTWalkToTarget@_": {
+			"children": [
+
+			],
+			"node_type": "BTWalkToTarget",
+			"params": {
+				"target_distance": {
+					"type_id": 3,
+					"value": 1.5
+				}
+			},
+			"position": "1920 300"
+		},
+		"BTWalkToTarget@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTWalkToTarget",
+			"params": {
+				"target_distance": {
+					"type_id": 3,
+					"value": 0.6
+				}
+			},
+			"position": "1900 560"
+		},
+		"BTWalkToTarget@_@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTWalkToTarget",
+			"params": {
+				"target_distance": {
+					"type_id": 3,
+					"value": 0.8
+				}
+			},
+			"position": "500 460"
+		},
+		"BTWalkToTarget@_@_@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTWalkToTarget",
+			"params": {
+				"target_distance": {
+					"type_id": 3,
+					"value": 4
+				}
+			},
+			"position": "-20 540"
+		},
+		"BTWalkToTarget@_@_@_@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTWalkToTarget",
+			"params": {
+				"target_distance": {
+					"type_id": 3,
+					"value": 0.6
+				}
+			},
+			"position": "700 -300"
+		},
+		"BTWalkToTarget@_@_@_@_@_@_": {
+			"children": [
+
+			],
+			"node_type": "BTWalkToTarget",
+			"params": {
+				"target_distance": {
+					"type_id": 3,
+					"value": 0.9
+				}
+			},
+			"position": "900 940"
+		},
+		"action": {
 			"children": [
 
 			],
@@ -87,7 +444,117 @@
 			"params": {
 
 			},
-			"position": "320 220"
+			"position": "660 0"
+		},
+		"broken": {
+			"children": [
+				"BTInitiateDialogue@_",
+				"BTWalkToTarget@_@_@_",
+				"BTSelectCharacterTarget@_"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "320 420"
+		},
+		"characters": {
+			"children": [
+				"BTSequence@_@_",
+				"BTSelectCharacterTarget"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "1200 480"
+		},
+		"classes": {
+			"children": [
+
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "280 -400"
+		},
+		"dialogue": {
+			"children": [
+				"BTSelector@_@_@_"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "280 880"
+		},
+		"food": {
+			"children": [
+				"BTSelectTarget@_@_",
+				"BTWalkToTarget@_@_@_@_@_",
+				"BTActivateTarget@_@_"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "500 -400"
+		},
+		"shower": {
+			"children": [
+				"BTSequence@_",
+				"BTSelectTarget@_"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "1200 200"
+		},
+		"slave": {
+			"children": [
+				"BTWalkToTarget@_@_@_@_",
+				"BTSelectCharacterTarget@_@_"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "-180 580"
+		},
+		"stand_seq": {
+			"children": [
+				"BTTargetDistanceLessCheck",
+				"BTPlayAnimationState"
+			],
+			"node_type": "BTSequence",
+			"params": {
+
+			},
+			"position": "720 680"
+		},
+		"toilet": {
+			"children": [
+				"BTSequence",
+				"BTSelectTarget"
+			],
+			"node_type": "BTSelector",
+			"params": {
+
+			},
+			"position": "1100 -200"
+		},
+		"walk_seq": {
+			"children": [
+				"BTCondHasTarget@_@_@_",
+				"BTWalkToTarget@_@_@_@_@_@_"
+			],
+			"node_type": "BTSequence",
+			"params": {
+
+			},
+			"position": "680 880"
 		}
 	}
 }

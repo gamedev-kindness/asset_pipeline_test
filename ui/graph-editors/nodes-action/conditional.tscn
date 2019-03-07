@@ -3,8 +3,8 @@
 [ext_resource path="res://ui/graph-editors/nodes-action/tree_node.gd" type="Script" id=1]
 
 [node name="conditional" type="GraphNode"]
-margin_right = 104.0
-margin_bottom = 76.0
+margin_right = 120.0
+margin_bottom = 101.0
 title = "Conditional"
 show_close = true
 slot/0/left_enabled = false
@@ -22,7 +22,7 @@ slot/1/right_color = Color( 1, 1, 1, 1 )
 slot/2/left_enabled = true
 slot/2/left_type = 0
 slot/2/left_color = Color( 1, 1, 1, 1 )
-slot/2/right_enabled = true
+slot/2/right_enabled = false
 slot/2/right_type = 0
 slot/2/right_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 1 )
@@ -57,24 +57,11 @@ rect_min_size = Vector2( 32, 32 )
 position = Vector2( -16, -24 )
 polygon = PoolVector2Array( 29.61, 37.6692, 47.6248, 26.5976, 63.9508, 37.8569, 46.1236, 51.1804, 32.9878, 39.5458, 35.4273, 37.2939, 45.7483, 47.4273, 59.2594, 37.6692, 47.6248, 28.4741, 31.2989, 39.1705 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Label" type="Label" parent="."]
 margin_left = 16.0
 margin_top = 81.0
 margin_right = 104.0
 margin_bottom = 95.0
 size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="HBoxContainer"]
-margin_right = 42.0
-margin_bottom = 14.0
-size_flags_horizontal = 3
 text = "in"
-
-[node name="Label2" type="Label" parent="HBoxContainer"]
-margin_left = 46.0
-margin_right = 88.0
-margin_bottom = 14.0
-size_flags_horizontal = 3
-text = "out"
-align = 2
 

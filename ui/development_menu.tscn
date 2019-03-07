@@ -22,31 +22,31 @@ margin_bottom = 24.5
 
 [node name="action_editor" type="Button" parent="v"]
 margin_right = 1024.0
-margin_bottom = 49.0
+margin_bottom = 47.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "Action editor"
 
 [node name="opportunity_editor" type="Button" parent="v"]
-margin_top = 53.0
+margin_top = 51.0
 margin_right = 1024.0
-margin_bottom = 102.0
+margin_bottom = 98.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "Opportunity editor"
 
 [node name="AI" type="Button" parent="v"]
-margin_top = 106.0
+margin_top = 102.0
 margin_right = 1024.0
-margin_bottom = 155.0
+margin_bottom = 149.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "AI"
 
 [node name="main_menu" type="Button" parent="v"]
-margin_top = 159.0
+margin_top = 153.0
 margin_right = 1024.0
-margin_bottom = 208.0
+margin_bottom = 200.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "Main menu"

@@ -5,6 +5,7 @@ extends HBoxContainer
 # var b = "text"
 const data_path = "res://ui/graph-editors/ai-nodes.json"
 const ai_path = "res://characters/AI/states/"
+var last_pos = Vector2()
 # Called when the node enters the scene tree for the first time.
 var json = {}
 var nodes = {
@@ -31,17 +32,17 @@ var nodes = {
 	"BTCondCanSpeak": {
 		"node": load("res://ui/graph-editors/nodes-action/conditional.tscn"),
 		"inputs": 1,
-		"outputs": 1,
+		"outputs": 0,
 	},
 	"BTCondHasTarget": {
 		"node": load("res://ui/graph-editors/nodes-action/conditional.tscn"),
 		"inputs": 1,
-		"outputs": 1,
+		"outputs": 0,
 	},
 	"BTTargetDistanceLessCheck": {
 		"node": load("res://ui/graph-editors/nodes-action/conditional.tscn"),
 		"inputs": 1,
-		"outputs": 1,
+		"outputs": 0,
 	},
 # Leaf nodes
 	"BTActivateTarget": {
@@ -97,6 +98,8 @@ func add_tree_node(node, title_s = ""):
 	if nodei.has_method("add_parameter"):
 		for k in nodes[node].parameters.keys():
 			nodei.add_parameter(k, nodes[node].parameters[k].defval, nodes[node].parameters[k].type_id)
+	nodei.set_position(last_pos + Vector2(200, 0))
+	last_pos = nodei.get_offset()
 	return nodei
 
 func on_connection_request(from, from_slot, to, to_slot):
@@ -234,3 +237,15 @@ func _ready():
 		var n = add_tree_node(json.tree[k].node_type, k)
 		n.set_offset(str_to_vec2(json.tree[k].position))
 		n.set_parameters(json.tree[k].params)
+	var title2node = {}
+	for r in ge.get_children():
+		if r is GraphNode:
+			title2node[r.title] = r
+	for k in json.tree.keys():
+		for c in json.tree[k].children:
+			var from_node = title2node[k]
+			var to_node = title2node[c]
+			ge.connect_node(from_node.name, 0, to_node.name, 0)
+			to_node.parent_node = from_node
+			if !to_node in from_node.children_nodes:
+				from_node.children_nodes.push_back(to_node)
