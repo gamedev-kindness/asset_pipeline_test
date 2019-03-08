@@ -393,8 +393,8 @@ func _process(delta):
 #				cooldown = 1.0
 		
 	elif !posessed:
-		if $AI.has_method("run"):
-			$AI.run(delta, self, $AnimationTree)
+		if AI.has_method("run"):
+			AI.run(delta, self)
 	if true:
 		var rm = $AnimationTree.get_root_motion_transform()
 		orientation *= rm

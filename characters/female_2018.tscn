@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://characters/female_2018.escn" type="PackedScene" id=1]
 [ext_resource path="res://characters/character.gd" type="Script" id=2]
@@ -18,10 +18,9 @@
 [ext_resource path="res://characters/female_tongue_material.tres" type="Material" id=16]
 [ext_resource path="res://characters/tears_material.tres" type="Material" id=17]
 [ext_resource path="res://characters/animtree_female.tres" type="AnimationNodeStateMachine" id=18]
-[ext_resource path="res://characters/AI.tscn" type="PackedScene" id=19]
-[ext_resource path="res://characters/rpg.tscn" type="PackedScene" id=20]
-[ext_resource path="res://characters/animation.gd" type="Script" id=21]
-[ext_resource path="res://characters/targets.tscn" type="PackedScene" id=22]
+[ext_resource path="res://characters/rpg.tscn" type="PackedScene" id=19]
+[ext_resource path="res://characters/animation.gd" type="Script" id=20]
+[ext_resource path="res://characters/targets.tscn" type="PackedScene" id=21]
 
 [sub_resource type="Animation" id=1]
 resource_name = "end-action"
@@ -240,29 +239,27 @@ parameters/Stand/wiggle/add_amount = 0
 parameters/UseToilet1/playback = SubResource( 8 )
 parameters/UseToilet2/playback = SubResource( 9 )
 
-[node name="AI" parent="." index="6" instance=ExtResource( 19 )]
-
-[node name="ray_far" type="RayCast" parent="." index="7"]
+[node name="ray_far" type="RayCast" parent="." index="6"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.12 )
 enabled = true
 cast_to = Vector3( 0, -1, -2.5 )
 
-[node name="minimal_shape" type="CollisionShape" parent="." index="8"]
+[node name="minimal_shape" type="CollisionShape" parent="." index="7"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0952968, 0 )
 shape = SubResource( 10 )
 
-[node name="rpg" parent="." index="9" instance=ExtResource( 20 )]
+[node name="rpg" parent="." index="8" instance=ExtResource( 19 )]
 
-[node name="animation" type="Node" parent="." index="10"]
-script = ExtResource( 21 )
+[node name="animation" type="Node" parent="." index="9"]
+script = ExtResource( 20 )
 
-[node name="targets" parent="." index="11" instance=ExtResource( 22 )]
+[node name="targets" parent="." index="10" instance=ExtResource( 21 )]
 
-[node name="ground" type="RayCast" parent="." index="12"]
+[node name="ground" type="RayCast" parent="." index="11"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0 )
 enabled = true
 cast_to = Vector3( 0, -0.1, 0 )
 
-[node name="sitting_ik_foot_target" type="Position3D" parent="." index="13"]
+[node name="sitting_ik_foot_target" type="Position3D" parent="." index="12"]
 transform = Transform( -0.999967, 0.00812274, 0, -0.00655629, -0.807125, 0.590344, 0.00479522, 0.590325, 0.807152, 0, 0.0636081, 0 )
 
