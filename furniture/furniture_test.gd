@@ -10,12 +10,12 @@ onready var room = {
 }
 onready var furniture = {
 	"toilet": {
-		"node": load("res://rooms/room_kit/toilet.tscn"),
-		"rect": Rect2(-0.5, -0.5, 1, 0.0)
+		"node": load("res://furniture/sets/toilet.tscn"),
+		"rect": Rect2(-0.5, -0.5, 1, 1)
 	},
 	"shower": {
-		"node": load("res://rooms/room_kit/shower.tscn"),
-		"rect": Rect2(-0.6, 0, 1.1, 0.0)
+		"node": load("res://furniture/sets/shower.tscn"),
+		"rect": Rect2(-0.5, -0.5, 1, 1)
 	},
 	"bed": {
 		"node": load("res://furniture/bed.tscn"),
@@ -26,11 +26,6 @@ onready var data = {
 	"furniture": furniture,
 	"room": room
 }
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	var points = $furniture_pack.pack(data)
 	for k in points.points:
@@ -41,6 +36,3 @@ func _ready():
 		nodei.translation = Vector3(k.position.x, 0.0, k.position.y)
 		nodei.rotation.y = -k.angle
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
