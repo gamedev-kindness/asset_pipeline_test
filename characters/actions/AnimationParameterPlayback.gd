@@ -238,13 +238,16 @@ func load_animations(at: AnimationTree):
 	var end_anim = AnimationNodeAnimation.new()
 	end_anim.animation = "signal-end"
 	at.tree_root.add_node("signal-end", end_anim)
+	var to_stand_transition = AnimationNodeStateMachineTransition.new()
+	at.tree_root.add_transition("signal-end", "Stand", to_stand_transition)
 	for k in get_state_list():
 		var pt = load(json.states[k].path)
 		at.tree_root.add_node(k, pt)
 		var back_transition = AnimationNodeStateMachineTransition.new()
-		back_transition.auto_advance = true
 		back_transition.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
 		at.tree_root.add_transition(k, "signal-end", back_transition)
+		var from_stand_transition = AnimationNodeStateMachineTransition.new()
+		at.tree_root.add_transition("Stand", k, from_stand_transition)
 
 func apply_object_transform(obj, other, pb, prefix = ""):
 	var data = get_parameter_playback_data(pb, prefix)
@@ -257,7 +260,7 @@ func apply_object_transform(obj, other, pb, prefix = ""):
 		other.global_transform = (obj.global_transform * xform).orthonormalized()
 		other.orientation.basis = other.global_transform.basis
 
-func play_parameter_block(obj, other, pb, prefix = ""):
+func play_parameter_block(obj: Node, other: Node, pb, prefix = ""):
 	var data = get_parameter_playback_data(pb, prefix)
 	var at1 = awareness.at[obj]
 	var at2 = awareness.at[other]
@@ -267,14 +270,28 @@ func play_parameter_block(obj, other, pb, prefix = ""):
 	var c2 = data.playback.secondary.conditions
 	awareness.action_mode[obj] = true
 	awareness.action_mode[other] = true
+	var is_end = false
 	for k in c1.keys():
+		print("conditions: 1: ", k, " = ", c1[k])
 		at1[k] = c1[k]
+		if k.ends_with("/end") && c1[k] == true:
+			is_end = true
 	for k in pl1:
 		at1[k.playback].travel(k.travel)
 	for k in c2.keys():
+		print("conditions: 2: ", k, " = ", c2[k])
 		at2[k] = c2[k]
+		if k.ends_with("/end") && c2[k] == true:
+			is_end = true
 	for k in pl2:
 		at2[k.playback].travel(k.travel)
+	if c1.keys().size() == 0 && c2.keys().size() == 0:
+		is_end = true
+	if is_end:
+		print("END")
+		at1["parameters/playback"].travel("Stand")
+		at2["parameters/playback"].travel("Stand")
+		
 	print("playing first: ", pl1, " second: ", pl2)
 func play(obj, other, pb, prefix=""):
 	apply_object_transform(obj, other, pb, prefix)

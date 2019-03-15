@@ -13,4 +13,5 @@ states/start/node = SubResource( 2 )
 states/start/position = Vector2( 1, 1 )
 start_node = "start"
 end_node = "start"
+graph_offset = Vector2( -414.272, -292.304 )
 

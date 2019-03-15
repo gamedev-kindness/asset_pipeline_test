@@ -104,18 +104,19 @@ advance_condition = "failure"
 
 [resource]
 states/down/node = SubResource( 9 )
-states/down/position = Vector2( 131, 521 )
+states/down/position = Vector2( 277, 411 )
 states/end/node = SubResource( 13 )
-states/end/position = Vector2( 1, 1 )
+states/end/position = Vector2( -244, 65 )
 states/end-failure/node = SubResource( 11 )
-states/end-failure/position = Vector2( 1, 131 )
+states/end-failure/position = Vector2( 307, 56 )
 states/loop/node = SubResource( 15 )
-states/loop/position = Vector2( 1, 261 )
+states/loop/position = Vector2( 1, 65 )
 states/start/node = SubResource( 17 )
-states/start/position = Vector2( 1, 391 )
+states/start/position = Vector2( -135, 245 )
 states/struggle-loop/node = SubResource( 19 )
 states/struggle-loop/position = Vector2( 1, 521 )
 transitions = [ "start", "loop", SubResource( 20 ), "loop", "end", SubResource( 21 ), "start", "end-failure", SubResource( 22 ), "loop", "struggle-loop", SubResource( 23 ), "struggle-loop", "loop", SubResource( 24 ), "struggle-loop", "end-failure", SubResource( 25 ) ]
 start_node = "start"
 end_node = "end"
+graph_offset = Vector2( -689.417, -110.628 )
 

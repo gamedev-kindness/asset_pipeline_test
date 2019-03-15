@@ -14,7 +14,7 @@
 	"opportunity": {
 		"FrontGrab": {
 			"direction": "FRONT",
-			"icon_path": "res://icons/icons__5.png",
+			"icon_path": "res://icons/icons__4.png",
 			"leave": false,
 			"param_block": "Front-grab",
 			"parent": "",
@@ -55,9 +55,9 @@
 				"end": false,
 				"failure": false,
 				"struggle": false,
-				"success": true
+				"success": false
 			},
-			"master_moves": false,
+			"master_moves": true,
 			"position": "500 620",
 			"title": "Front-grab",
 			"tree": "Front-grab",
@@ -120,7 +120,7 @@
 			"position": "1740 620",
 			"title": "Spank",
 			"tree": "Spank",
-			"xform": "1 0 0 0 1 0 0 0 1 0 0 -0.4"
+			"xform": "1 0 0 0 1 0 0 0 1 0 0 0.4"
 		}
 	},
 	"states": {

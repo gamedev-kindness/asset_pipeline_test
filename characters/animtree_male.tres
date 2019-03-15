@@ -134,7 +134,7 @@ nodes/turn_right/node = SubResource( 25 )
 nodes/turn_right/position = Vector2( 920, 60 )
 nodes/walk_speed/node = SubResource( 26 )
 nodes/walk_speed/position = Vector2( 1300, 100 )
-node_connections = [ "output", 0, "blink", "blink", 0, "walk_speed", "blink", 1, "Animation 4", "walk_speed", 0, "turn_right", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation" ]
+node_connections = [ "output", 0, "blink", "blink", 0, "walk_speed", "blink", 1, "Animation 4", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "walk_speed", 0, "turn_right" ]
 
 [sub_resource type="AnimationNodeAnimation" id=28]
 animation = "additive-wiggling-loop"
@@ -180,7 +180,7 @@ nodes/Blend2/position = Vector2( 440, 120 )
 nodes/output/position = Vector2( 1040, 180 )
 nodes/sleep_scale/node = SubResource( 36 )
 nodes/sleep_scale/position = Vector2( 820, 160 )
-node_connections = [ "output", 0, "sleep_scale", "sleep_scale", 0, "Blend2", "Blend2", 0, "Animation 2", "Blend2", 1, "Animation" ]
+node_connections = [ "output", 0, "sleep_scale", "Blend2", 0, "Animation 2", "Blend2", 1, "Animation", "sleep_scale", 0, "Blend2" ]
 
 [sub_resource type="AnimationNodeAnimation" id=38]
 animation = "additive-wiggling-loop"

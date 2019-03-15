@@ -83,18 +83,19 @@ func _input(event):
 		print("action")
 		if action != "Talk":
 			var other = awareness.get_actuator_body(awareness.player_character, "characters")
-			var act_obj = BasicAction.new()
-			get_node("/root").add_child(act_obj)
-			var pb = anim_param_pb.get_opportunity_param_block(action)
-			act_obj.pb_start = pb
-			act_obj.add_character(awareness.player_character)
-			act_obj.add_character(other)
-			act_obj.play()
-			if anim_param_pb.get_opportunity_leave(action):
-				current_mode = anim_param_pb.get_opportunity_parent(current_mode)
-			else:
-				current_mode = action
-#			anim_param_pb.play_opportunity(awareness.player_character, other, action)
+			if other != null:
+				var act_obj = BasicAction.new()
+				get_node("/root").add_child(act_obj)
+				var pb = anim_param_pb.get_opportunity_param_block(action)
+				act_obj.pb_start = pb
+				act_obj.add_character(awareness.player_character)
+				act_obj.add_character(other)
+				act_obj.play()
+				if anim_param_pb.get_opportunity_leave(action):
+					current_mode = anim_param_pb.get_opportunity_parent(current_mode)
+				else:
+					current_mode = action
+#				anim_param_pb.play_opportunity(awareness.player_character, other, action)
 		else:
 			awareness.player_character.emit_signal("ui_action", action)
 			current_mode = ""

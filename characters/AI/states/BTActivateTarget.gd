@@ -62,7 +62,6 @@ func run(obj, delta):
 			obj.global_transform = obj.global_transform.interpolate_with(awareness.targets[obj].global_transform, delta)
 			obj.global_transform.basis = awareness.targets[obj].global_transform.basis
 			obj.orientation.basis = awareness.targets[obj].global_transform.basis
-			print(obj.name, " teleport")
 		elif awareness.distance(obj, awareness.targets[obj]) <= 0.4:
 			obj.global_transform = awareness.targets[obj].global_transform
 			obj.orientation.basis = awareness.targets[obj].global_transform.basis

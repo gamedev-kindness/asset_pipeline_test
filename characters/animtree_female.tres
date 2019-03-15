@@ -44,7 +44,7 @@ nodes/turn_right/node = SubResource( 7 )
 nodes/turn_right/position = Vector2( 920, 60 )
 nodes/walk_speed/node = SubResource( 8 )
 nodes/walk_speed/position = Vector2( 1300, 100 )
-node_connections = [ "output", 0, "OneShot 3", "OneShot 3", 0, "walk_speed", "OneShot 3", 1, "Animation 4", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "walk_speed", 0, "turn_right" ]
+node_connections = [ "output", 0, "OneShot 3", "turn_left", 0, "Animation 2", "turn_left", 1, "Animation", "turn_right", 0, "turn_left", "turn_right", 1, "Animation 3", "OneShot 3", 0, "walk_speed", "OneShot 3", 1, "Animation 4", "walk_speed", 0, "turn_right" ]
 
 [sub_resource type="AnimationNodeAnimation" id=10]
 animation = "additive-wiggling-loop"
@@ -258,5 +258,5 @@ states/stand-to-walk/node = SubResource( 44 )
 states/stand-to-walk/position = Vector2( 300, 37 )
 transitions = [ "Navigate", "Stand", SubResource( 45 ), "Stand", "stand-to-walk", SubResource( 46 ), "stand-to-walk", "Navigate", SubResource( 47 ), "Sleep", "back_to_sit", SubResource( 48 ), "back_to_sit", "sit_to_stand", SubResource( 49 ), "sit_to_stand", "Stand", SubResource( 50 ), "Stand", "UseToilet1", SubResource( 51 ), "Stand", "UseToilet2", SubResource( 52 ), "UseToilet2", "Stand", SubResource( 53 ), "UseToilet1", "disable_pee_particles", SubResource( 54 ), "disable_pee_particles", "Stand", SubResource( 55 ), "Sitting", "sit_to_stand", SubResource( 56 ) ]
 start_node = "Sleep"
-graph_offset = Vector2( -178.03, -33.9551 )
+graph_offset = Vector2( -591.823, -324.485 )
 

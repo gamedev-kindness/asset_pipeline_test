@@ -52,9 +52,11 @@ func pack(d:Dictionary) -> Dictionary:
 	var wall = d.room.wall
 	var wall_points = []
 	var grid = {}
+	var out_rect : = Rect2()
 	for seg in range(wall.size()):
 		var p1 = wall[seg]
 		var p2 = wall[(seg + 1) % wall.size()]
+		out_rect = out_rect.expand(p1)
 		var size = p1.distance_to(p2)
 		var p = p1
 		var dir = (p2 - p1).normalized()
@@ -80,4 +82,21 @@ func pack(d:Dictionary) -> Dictionary:
 					fill_grid(grid, check_rect)
 					wall_points.push_back({"item": selected, "position": actual_pos, "angle": angle})
 			p += step
+	if main_furniture.size() > 0:
+		if out_rect.size.x > 2 && out_rect.size.y >= 2:
+			out_rect.grow(-1.0)
+		for t in range(10 + rnd.randi() % 100):
+			var selected = select_one(main_furniture)
+			var item = d.furniture[selected]
+			var width = item.rect.size.x
+			var depth = item.rect.size.y
+			var pos = out_rect.position + Vector2(rnd.randf() * out_rect.size.x, rnd.randf() * out_rect.size.y) - item.rect.position
+			var check_rect = Rect2(pos - item.rect.size * 0.5, item.rect.size)
+			var angles = [0, PI / 2.0, PI, -PI / 2.0]
+			var angle_no = rnd.randi() % angles.size()
+			var angle = angles[angle_no]
+			if can_place(grid, check_rect):
+				fill_grid(grid, check_rect)
+				wall_points.push_back({"item": selected, "position": pos, "angle": angle})
+	print("s")
 	return {"points": wall_points}

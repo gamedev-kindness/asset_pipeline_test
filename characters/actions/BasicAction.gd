@@ -21,7 +21,7 @@ var state = STATE_INIT
 #func _process(delta):
 #	pass
 func end_signal(obj):
-	print("SIGNAL")
+	print("SIGNAL ACTION ENDED")
 	remove_character(obj)
 func add_character(obj):
 	assert obj != null
@@ -45,15 +45,7 @@ func remove_character(obj):
 		awareness.action_mode.erase(obj)
 		print("removed character ", obj)
 		if character_list.size() < min_count:
-			for k in character_list:
-				for l in character_list:
-					if k == l:
-						continue
-					k.remove_collision_exception_with(l)
-					l.remove_collision_exception_with(k)
-					awareness.action_mode.erase(k)
-			character_list.clear()
-			queue_free()
+			finish()
 func play():
 	assert character_list.size() <= max_count
 	assert character_list.size() >= min_count
@@ -63,3 +55,14 @@ func play():
 		at.connect("end", self, "end_signal")
 	anim.play(character_list[0], character_list[1], pb_start)
 	state = STATE_PLAY
+
+func finish():
+		for k in character_list:
+			for l in character_list:
+				if k == l:
+					continue
+				k.remove_collision_exception_with(l)
+				l.remove_collision_exception_with(k)
+				awareness.action_mode.erase(k)
+		character_list.clear()
+		queue_free()
