@@ -244,9 +244,11 @@ func load_animations(at: AnimationTree):
 		var pt = load(json.states[k].path)
 		at.tree_root.add_node(k, pt)
 		var back_transition = AnimationNodeStateMachineTransition.new()
+		back_transition.xfade_time = 0.3
 		back_transition.switch_mode = AnimationNodeStateMachineTransition.SWITCH_MODE_AT_END
 		at.tree_root.add_transition(k, "signal-end", back_transition)
-		var from_stand_transition = AnimationNodeStateMachineTransition.new()
+		var from_stand_transition : = AnimationNodeStateMachineTransition.new()
+		from_stand_transition.xfade_time = 0.3
 		at.tree_root.add_transition("Stand", k, from_stand_transition)
 
 func apply_object_transform(obj, other, pb, prefix = ""):
@@ -259,6 +261,16 @@ func apply_object_transform(obj, other, pb, prefix = ""):
 	else:
 		other.global_transform = (obj.global_transform * xform).orthonormalized()
 		other.orientation.basis = other.global_transform.basis
+
+func play_deferred_finisher(obj: Node, other: Node, adata: String):
+	yield(obj.get_tree(), "idle_frame")
+	yield(obj.get_tree(), "idle_frame")
+	yield(obj.get_tree(), "idle_frame")
+	var at1 = awareness.at[obj]
+	var at2 = awareness.at[other]
+	print("playing finisher")
+	at1["parameters/playback"].travel(adata)
+	at2["parameters/playback"].travel(adata)
 
 func play_parameter_block(obj: Node, other: Node, pb, prefix = ""):
 	var data = get_parameter_playback_data(pb, prefix)
@@ -289,8 +301,7 @@ func play_parameter_block(obj: Node, other: Node, pb, prefix = ""):
 		is_end = true
 	if is_end:
 		print("END")
-		at1["parameters/playback"].travel("Stand")
-		at2["parameters/playback"].travel("Stand")
+		call_deferred("play_deferred_finisher", obj, other, "Stand")
 		
 	print("playing first: ", pl1, " second: ", pl2)
 func play(obj, other, pb, prefix=""):
