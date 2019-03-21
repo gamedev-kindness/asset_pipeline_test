@@ -6,7 +6,7 @@ import json
 
 sys.path = [os.getcwd()] + sys.path  # Ensure exporter from this folder
 
-TEST_SCENE_DIR = os.path.join(os.getcwd(), "blend/Quaternius/furniture")
+TEST_SCENE_DIR = os.path.join(os.getcwd(), "blend/furniture")
 EXPORTED_DIR = os.path.join(os.getcwd(), "furniture/data")
 
 def export_escn(out_file, config):
