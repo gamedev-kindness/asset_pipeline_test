@@ -1,0 +1,18 @@
+{
+	"layouts": {
+		"bedroom": [],
+		"kitchen": [],
+		"bathroom": [],
+		"office": [],
+		"classroom": [],
+		"study": [],
+		"sportroom": [],
+		"storage": [],
+		"cafeteria": [],
+		"gym": [],
+		"stadium": [],
+		"swimming_pool": [],
+		"cellar_room": [],
+		"prison_room": []
+	}
+}
