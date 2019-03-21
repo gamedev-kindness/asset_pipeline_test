@@ -20,7 +20,7 @@ def main():
     model_list = "furniture/data/list.json"
     data = {}
     if os.path.exists(model_list):
-        data = json.load(model_list)
+        data = json.load(open(model_list, "r"))
     while dir_queue:
         dir_relpath = dir_queue.pop(0)
 
@@ -65,7 +65,7 @@ def main():
                             dir_relpath,
                             dn
                             )
-                        data[dn] = {"name": obj.name, "path": os.path.join("furniture/data", dir_relpath, dn)}
+                        data[dn] = {"name": obj.name, "path": "res://" + os.path.join("furniture/data", dir_relpath, dn)}
                         export_escn(out_path, config)
                         print("Exported to {}".format(os.path.abspath(out_path)))
         fd = open(model_list, "w")
