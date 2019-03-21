@@ -1,0 +1,426 @@
+{
+    "furniture_Armchair.escn": {
+        "name": "Armchair",
+        "path": "res://furniture/data/./furniture_Armchair.escn"
+    },
+    "furniture_Bed.escn": {
+        "name": "Bed",
+        "path": "res://furniture/data/./furniture_Bed.escn"
+    },
+    "furniture_BedKing.escn": {
+        "name": "BedKing",
+        "path": "res://furniture/data/./furniture_BedKing.escn"
+    },
+    "furniture_BigSofa.escn": {
+        "name": "BigSofa",
+        "path": "res://furniture/data/./furniture_BigSofa.escn"
+    },
+    "furniture_BigTable.escn": {
+        "name": "BigTable",
+        "path": "res://furniture/data/./furniture_BigTable.escn"
+    },
+    "furniture_BookCase.escn": {
+        "name": "BookCase",
+        "path": "res://furniture/data/./furniture_BookCase.escn"
+    },
+    "furniture_BookCaseLarge.escn": {
+        "name": "BookCaseLarge",
+        "path": "res://furniture/data/./furniture_BookCaseLarge.escn"
+    },
+    "furniture_Chair.escn": {
+        "name": "Chair",
+        "path": "res://furniture/data/./furniture_Chair.escn"
+    },
+    "furniture_Chair2.escn": {
+        "name": "Chair2",
+        "path": "res://furniture/data/./furniture_Chair2.escn"
+    },
+    "furniture_Chair3.escn": {
+        "name": "Chair3",
+        "path": "res://furniture/data/./furniture_Chair3.escn"
+    },
+    "furniture_Closet1.escn": {
+        "name": "Closet1",
+        "path": "res://furniture/data/./furniture_Closet1.escn"
+    },
+    "furniture_Closet2.escn": {
+        "name": "Closet2",
+        "path": "res://furniture/data/./furniture_Closet2.escn"
+    },
+    "furniture_CofeeTable.escn": {
+        "name": "CofeeTable",
+        "path": "res://furniture/data/./furniture_CofeeTable.escn"
+    },
+    "furniture_CofeeTable2.escn": {
+        "name": "CofeeTable2",
+        "path": "res://furniture/data/./furniture_CofeeTable2.escn"
+    },
+    "furniture_CoffeeTable.escn": {
+        "name": "CoffeeTable",
+        "path": "res://furniture/data/./furniture_CoffeeTable.escn"
+    },
+    "furniture_CoffeeTable2.escn": {
+        "name": "CoffeeTable2",
+        "path": "res://furniture/data/./furniture_CoffeeTable2.escn"
+    },
+    "furniture_CushionedChair.escn": {
+        "name": "CushionedChair",
+        "path": "res://furniture/data/./furniture_CushionedChair.escn"
+    },
+    "furniture_FloorLamp.escn": {
+        "name": "FloorLamp",
+        "path": "res://furniture/data/./furniture_FloorLamp.escn"
+    },
+    "furniture_FloorLamp2.escn": {
+        "name": "FloorLamp2",
+        "path": "res://furniture/data/./furniture_FloorLamp2.escn"
+    },
+    "furniture_HandleChair.escn": {
+        "name": "HandleChair",
+        "path": "res://furniture/data/./furniture_HandleChair.escn"
+    },
+    "furniture_Plant.escn": {
+        "name": "Plant",
+        "path": "res://furniture/data/./furniture_Plant.escn"
+    },
+    "furniture_SmallSofa.escn": {
+        "name": "SmallSofa",
+        "path": "res://furniture/data/./furniture_SmallSofa.escn"
+    },
+    "furniture_SmallTable.escn": {
+        "name": "SmallTable",
+        "path": "res://furniture/data/./furniture_SmallTable.escn"
+    },
+    "furniture_Sofa.escn": {
+        "name": "Sofa",
+        "path": "res://furniture/data/./furniture_Sofa.escn"
+    },
+    "furniture_Stool.escn": {
+        "name": "Stool",
+        "path": "res://furniture/data/./furniture_Stool.escn"
+    },
+    "furniture_Stool2.escn": {
+        "name": "Stool2",
+        "path": "res://furniture/data/./furniture_Stool2.escn"
+    },
+    "furniture_Table.escn": {
+        "name": "Table",
+        "path": "res://furniture/data/./furniture_Table.escn"
+    },
+    "furniture_Vase.escn": {
+        "name": "Vase",
+        "path": "res://furniture/data/./furniture_Vase.escn"
+    },
+    "furniture_Vase2.escn": {
+        "name": "Vase2",
+        "path": "res://furniture/data/./furniture_Vase2.escn"
+    },
+    "furniture_bathroomCabinet.escn": {
+        "name": "bathroomCabinet",
+        "path": "res://furniture/data/./furniture_bathroomCabinet.escn"
+    },
+    "furniture_bathroomMirror.escn": {
+        "name": "bathroomMirror",
+        "path": "res://furniture/data/./furniture_bathroomMirror.escn"
+    },
+    "furniture_bathroomSink.escn": {
+        "name": "bathroomSink",
+        "path": "res://furniture/data/./furniture_bathroomSink.escn"
+    },
+    "furniture_bathtub.escn": {
+        "name": "bathtub",
+        "path": "res://furniture/data/./furniture_bathtub.escn"
+    },
+    "furniture_bear.escn": {
+        "name": "bear",
+        "path": "res://furniture/data/./furniture_bear.escn"
+    },
+    "furniture_bedBunk.escn": {
+        "name": "bedBunk",
+        "path": "res://furniture/data/./furniture_bedBunk.escn"
+    },
+    "furniture_bedDouble.escn": {
+        "name": "bedDouble",
+        "path": "res://furniture/data/./furniture_bedDouble.escn"
+    },
+    "furniture_bedSingle.escn": {
+        "name": "bedSingle",
+        "path": "res://furniture/data/./furniture_bedSingle.escn"
+    },
+    "furniture_bookcaseClosed.escn": {
+        "name": "bookcaseClosed",
+        "path": "res://furniture/data/./furniture_bookcaseClosed.escn"
+    },
+    "furniture_bookcaseClosedDoors.escn": {
+        "name": "bookcaseClosedDoors",
+        "path": "res://furniture/data/./furniture_bookcaseClosedDoors.escn"
+    },
+    "furniture_bookcaseClosedWide.escn": {
+        "name": "bookcaseClosedWide",
+        "path": "res://furniture/data/./furniture_bookcaseClosedWide.escn"
+    },
+    "furniture_bookcaseOpen.escn": {
+        "name": "bookcaseOpen",
+        "path": "res://furniture/data/./furniture_bookcaseOpen.escn"
+    },
+    "furniture_bookcaseOpenLow.escn": {
+        "name": "bookcaseOpenLow",
+        "path": "res://furniture/data/./furniture_bookcaseOpenLow.escn"
+    },
+    "furniture_chair.escn": {
+        "name": "chair",
+        "path": "res://furniture/data/./furniture_chair.escn"
+    },
+    "furniture_chairCushion.escn": {
+        "name": "chairCushion",
+        "path": "res://furniture/data/./furniture_chairCushion.escn"
+    },
+    "furniture_chairRounded.escn": {
+        "name": "chairRounded",
+        "path": "res://furniture/data/./furniture_chairRounded.escn"
+    },
+    "furniture_chair_1.escn": {
+        "name": "chair 1",
+        "path": "res://furniture/data/./furniture_chair_1.escn"
+    },
+    "furniture_desk.escn": {
+        "name": "desk",
+        "path": "res://furniture/data/./furniture_desk.escn"
+    },
+    "furniture_desk1.escn": {
+        "name": "desk1",
+        "path": "res://furniture/data/./furniture_desk1.escn"
+    },
+    "furniture_deskCorner.escn": {
+        "name": "deskCorner",
+        "path": "res://furniture/data/./furniture_deskCorner.escn"
+    },
+    "furniture_kitchenBar.escn": {
+        "name": "kitchenBar",
+        "path": "res://furniture/data/./furniture_kitchenBar.escn"
+    },
+    "furniture_kitchenBarEnd.escn": {
+        "name": "kitchenBarEnd",
+        "path": "res://furniture/data/./furniture_kitchenBarEnd.escn"
+    },
+    "furniture_kitchenCabinet.escn": {
+        "name": "kitchenCabinet",
+        "path": "res://furniture/data/./furniture_kitchenCabinet.escn"
+    },
+    "furniture_kitchenCabinetCornerInner.escn": {
+        "name": "kitchenCabinetCornerInner",
+        "path": "res://furniture/data/./furniture_kitchenCabinetCornerInner.escn"
+    },
+    "furniture_kitchenCabinetCornerRound.escn": {
+        "name": "kitchenCabinetCornerRound",
+        "path": "res://furniture/data/./furniture_kitchenCabinetCornerRound.escn"
+    },
+    "furniture_kitchenCabinetDrawer.escn": {
+        "name": "kitchenCabinetDrawer",
+        "path": "res://furniture/data/./furniture_kitchenCabinetDrawer.escn"
+    },
+    "furniture_kitchenCabinetDrawer_1.escn": {
+        "name": "kitchenCabinetDrawer 1",
+        "path": "res://furniture/data/./furniture_kitchenCabinetDrawer_1.escn"
+    },
+    "furniture_kitchenCabinetUpper.escn": {
+        "name": "kitchenCabinetUpper",
+        "path": "res://furniture/data/./furniture_kitchenCabinetUpper.escn"
+    },
+    "furniture_kitchenCabinetUpperCorner.escn": {
+        "name": "kitchenCabinetUpperCorner",
+        "path": "res://furniture/data/./furniture_kitchenCabinetUpperCorner.escn"
+    },
+    "furniture_kitchenCabinetUpperDouble.escn": {
+        "name": "kitchenCabinetUpperDouble",
+        "path": "res://furniture/data/./furniture_kitchenCabinetUpperDouble.escn"
+    },
+    "furniture_kitchenCabinetUpperLow.escn": {
+        "name": "kitchenCabinetUpperLow",
+        "path": "res://furniture/data/./furniture_kitchenCabinetUpperLow.escn"
+    },
+    "furniture_kitchenCoffeeMachine.escn": {
+        "name": "kitchenCoffeeMachine",
+        "path": "res://furniture/data/./furniture_kitchenCoffeeMachine.escn"
+    },
+    "furniture_kitchenFridge.escn": {
+        "name": "kitchenFridge",
+        "path": "res://furniture/data/./furniture_kitchenFridge.escn"
+    },
+    "furniture_kitchenFridgeBuiltIn.escn": {
+        "name": "kitchenFridgeBuiltIn",
+        "path": "res://furniture/data/./furniture_kitchenFridgeBuiltIn.escn"
+    },
+    "furniture_kitchenFridgeSmall.escn": {
+        "name": "kitchenFridgeSmall",
+        "path": "res://furniture/data/./furniture_kitchenFridgeSmall.escn"
+    },
+    "furniture_kitchenMicrowave.escn": {
+        "name": "kitchenMicrowave",
+        "path": "res://furniture/data/./furniture_kitchenMicrowave.escn"
+    },
+    "furniture_kitchenSink.escn": {
+        "name": "kitchenSink",
+        "path": "res://furniture/data/./furniture_kitchenSink.escn"
+    },
+    "furniture_kitchenStove.escn": {
+        "name": "kitchenStove",
+        "path": "res://furniture/data/./furniture_kitchenStove.escn"
+    },
+    "furniture_kitchenStoveElectric.escn": {
+        "name": "kitchenStoveElectric",
+        "path": "res://furniture/data/./furniture_kitchenStoveElectric.escn"
+    },
+    "furniture_lampRoundFloor.escn": {
+        "name": "lampRoundFloor",
+        "path": "res://furniture/data/./furniture_lampRoundFloor.escn"
+    },
+    "furniture_lampRoundTable.escn": {
+        "name": "lampRoundTable",
+        "path": "res://furniture/data/./furniture_lampRoundTable.escn"
+    },
+    "furniture_lampSquareCeiling.escn": {
+        "name": "lampSquareCeiling",
+        "path": "res://furniture/data/./furniture_lampSquareCeiling.escn"
+    },
+    "furniture_lampSquareFloor.escn": {
+        "name": "lampSquareFloor",
+        "path": "res://furniture/data/./furniture_lampSquareFloor.escn"
+    },
+    "furniture_lampSquareTable.escn": {
+        "name": "lampSquareTable",
+        "path": "res://furniture/data/./furniture_lampSquareTable.escn"
+    },
+    "furniture_loungeChair.escn": {
+        "name": "loungeChair",
+        "path": "res://furniture/data/./furniture_loungeChair.escn"
+    },
+    "furniture_loungeChairRelax.escn": {
+        "name": "loungeChairRelax",
+        "path": "res://furniture/data/./furniture_loungeChairRelax.escn"
+    },
+    "furniture_loungeSofa.escn": {
+        "name": "loungeSofa",
+        "path": "res://furniture/data/./furniture_loungeSofa.escn"
+    },
+    "furniture_loungeSofaCorner.escn": {
+        "name": "loungeSofaCorner",
+        "path": "res://furniture/data/./furniture_loungeSofaCorner.escn"
+    },
+    "furniture_loungeSofaLong.escn": {
+        "name": "loungeSofaLong",
+        "path": "res://furniture/data/./furniture_loungeSofaLong.escn"
+    },
+    "furniture_loungeSofaOttoman.escn": {
+        "name": "loungeSofaOttoman",
+        "path": "res://furniture/data/./furniture_loungeSofaOttoman.escn"
+    },
+    "furniture_paneling.escn": {
+        "name": "paneling",
+        "path": "res://furniture/data/./furniture_paneling.escn"
+    },
+    "furniture_pillowBottom.escn": {
+        "name": "pillowBottom",
+        "path": "res://furniture/data/./furniture_pillowBottom.escn"
+    },
+    "furniture_pillowTop.escn": {
+        "name": "pillowTop",
+        "path": "res://furniture/data/./furniture_pillowTop.escn"
+    },
+    "furniture_shower.escn": {
+        "name": "shower",
+        "path": "res://furniture/data/./furniture_shower.escn"
+    },
+    "furniture_shower1.escn": {
+        "name": "shower1",
+        "path": "res://furniture/data/./furniture_shower1.escn"
+    },
+    "furniture_sideTable.escn": {
+        "name": "sideTable",
+        "path": "res://furniture/data/./furniture_sideTable.escn"
+    },
+    "furniture_sideTableDrawers.escn": {
+        "name": "sideTableDrawers",
+        "path": "res://furniture/data/./furniture_sideTableDrawers.escn"
+    },
+    "furniture_sink.escn": {
+        "name": "sink",
+        "path": "res://furniture/data/./furniture_sink.escn"
+    },
+    "furniture_stoolBar.escn": {
+        "name": "stoolBar",
+        "path": "res://furniture/data/./furniture_stoolBar.escn"
+    },
+    "furniture_stoolBarSquare.escn": {
+        "name": "stoolBarSquare",
+        "path": "res://furniture/data/./furniture_stoolBarSquare.escn"
+    },
+    "furniture_table.escn": {
+        "name": "table",
+        "path": "res://furniture/data/./furniture_table.escn"
+    },
+    "furniture_tableCloth.escn": {
+        "name": "tableCloth",
+        "path": "res://furniture/data/./furniture_tableCloth.escn"
+    },
+    "furniture_tableCoffee.escn": {
+        "name": "tableCoffee",
+        "path": "res://furniture/data/./furniture_tableCoffee.escn"
+    },
+    "furniture_tableCoffeeGlass.escn": {
+        "name": "tableCoffeeGlass",
+        "path": "res://furniture/data/./furniture_tableCoffeeGlass.escn"
+    },
+    "furniture_tableCoffeeGlassSquare.escn": {
+        "name": "tableCoffeeGlassSquare",
+        "path": "res://furniture/data/./furniture_tableCoffeeGlassSquare.escn"
+    },
+    "furniture_tableCoffeeSquare.escn": {
+        "name": "tableCoffeeSquare",
+        "path": "res://furniture/data/./furniture_tableCoffeeSquare.escn"
+    },
+    "furniture_tableCross.escn": {
+        "name": "tableCross",
+        "path": "res://furniture/data/./furniture_tableCross.escn"
+    },
+    "furniture_tableCrossCloth.escn": {
+        "name": "tableCrossCloth",
+        "path": "res://furniture/data/./furniture_tableCrossCloth.escn"
+    },
+    "furniture_tableGlass.escn": {
+        "name": "tableGlass",
+        "path": "res://furniture/data/./furniture_tableGlass.escn"
+    },
+    "furniture_tableRound.escn": {
+        "name": "tableRound",
+        "path": "res://furniture/data/./furniture_tableRound.escn"
+    },
+    "furniture_toilet1.escn": {
+        "name": "toilet1",
+        "path": "res://furniture/data/./furniture_toilet1.escn"
+    },
+    "furniture_toilet2.escn": {
+        "name": "toilet2",
+        "path": "res://furniture/data/./furniture_toilet2.escn"
+    },
+    "furniture_toilet_paper.escn": {
+        "name": "toilet_paper",
+        "path": "res://furniture/data/./furniture_toilet_paper.escn"
+    },
+    "furniture_trashcan.escn": {
+        "name": "trashcan",
+        "path": "res://furniture/data/./furniture_trashcan.escn"
+    },
+    "furniture_washer.escn": {
+        "name": "washer",
+        "path": "res://furniture/data/./furniture_washer.escn"
+    },
+    "furniture_washerDryerStacked.escn": {
+        "name": "washerDryerStacked",
+        "path": "res://furniture/data/./furniture_washerDryerStacked.escn"
+    },
+    "furniture_window.escn": {
+        "name": "window",
+        "path": "res://furniture/data/./furniture_window.escn"
+    }
+}
