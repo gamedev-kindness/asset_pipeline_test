@@ -14,10 +14,13 @@ def export_escn(out_file, config):
     import io_scene_godot
     io_scene_godot.export(out_file, config)
 
-
 def main():
     dir_queue = list()
     dir_queue.append('.')
+    model_list = "furniture/data/list.json"
+    data = {}
+    if os.path.exists(model_list):
+        data = json.load(model_list)
     while dir_queue:
         dir_relpath = dir_queue.pop(0)
 
@@ -49,9 +52,11 @@ def main():
                     if obj.parent == None and obj.type == "MESH":
                         for obj2 in objects:
                             obj2.select = False
+                        obj.location = (0, 0, 0)
                         obj.select = True
                         bpy.context.scene.objects.active = obj
                         bpy.ops.object.select_grouped(type='CHILDREN_RECURSIVE')
+                        obj.select = True
                         dn = item.replace('.blend', '')
                         dn = dn + "_" + str(obj.name).replace(" ", "_")
                         dn = dn + ".escn"
@@ -60,8 +65,12 @@ def main():
                             dir_relpath,
                             dn
                             )
+                        data[dn] = {"name": obj.name, "path": os.path.join("furniture/data", dir_relpath, dn)}
                         export_escn(out_path, config)
                         print("Exported to {}".format(os.path.abspath(out_path)))
+        fd = open(model_list, "w")
+        fd.write(json.dumps(data, sort_keys = True, indent = 4, separators = [',', ': ']))
+        fd.close()
 
 
 def run_with_abort(function):
