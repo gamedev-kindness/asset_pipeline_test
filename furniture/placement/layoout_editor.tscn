@@ -3,11 +3,11 @@
 [ext_resource path="res://furniture/placement/layoout_editor.gd" type="Script" id=1]
 [ext_resource path="res://rooms/test_camera.gd" type="Script" id=2]
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.054902, 1, 0.247059, 1 )
 
-[sub_resource type="CubeMesh" id=1]
-material = SubResource( 2 )
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 1 )
 size = Vector3( 20, 0.1, 20 )
 subdivide_width = 5
 subdivide_height = 4
@@ -24,7 +24,7 @@ script = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 20, 0 )
 
 [node name="ground" type="MeshInstance" parent="."]
-mesh = SubResource( 1 )
+mesh = SubResource( 2 )
 material/0 = null
 
 [node name="p" type="Panel" parent="."]
@@ -35,37 +35,61 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="new_layout" type="Button" parent="p/v"]
-margin_right = 144.0
+margin_right = 202.0
 margin_bottom = 20.0
 text = "New layout"
 
 [node name="new_door" type="Button" parent="p/v"]
 margin_top = 24.0
-margin_right = 144.0
+margin_right = 202.0
 margin_bottom = 44.0
 text = "New Door"
 
 [node name="new_window" type="Button" parent="p/v"]
 margin_top = 48.0
-margin_right = 144.0
+margin_right = 202.0
 margin_bottom = 68.0
 text = "New Window"
 
-[node name="h" type="HBoxContainer" parent="p/v"]
+[node name="store_create_new" type="Button" parent="p/v"]
 margin_top = 72.0
-margin_right = 144.0
-margin_bottom = 96.0
+margin_right = 202.0
+margin_bottom = 92.0
+text = "Keep and create new"
+
+[node name="h" type="HBoxContainer" parent="p/v"]
+margin_top = 96.0
+margin_right = 202.0
+margin_bottom = 123.0
 
 [node name="Label" type="Label" parent="p/v/h"]
-margin_top = 5.0
-margin_right = 82.0
-margin_bottom = 19.0
-text = "Layout name"
+margin_top = 6.0
+margin_right = 74.0
+margin_bottom = 20.0
+text = "Layout type"
 
-[node name="LineEdit" type="LineEdit" parent="p/v/h"]
-margin_left = 86.0
-margin_right = 144.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-expand_to_text_length = true
+[node name="type" type="ItemList" parent="p/v/h"]
+margin_left = 78.0
+margin_right = 198.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 120, 0 )
+items = [ "miscellaneous", null, false ]
+auto_height = true
 
+[node name="furniture" type="HBoxContainer" parent="p/v"]
+margin_top = 127.0
+margin_right = 202.0
+margin_bottom = 287.0
+
+[node name="Label" type="Label" parent="p/v/furniture"]
+margin_top = 73.0
+margin_right = 58.0
+margin_bottom = 87.0
+text = "Furniture"
+
+[node name="item" type="ItemList" parent="p/v/furniture"]
+margin_left = 62.0
+margin_right = 202.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 140, 160 )
+allow_reselect = true
