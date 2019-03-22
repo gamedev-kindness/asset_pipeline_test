@@ -68,12 +68,23 @@ def main():
                         data[dn] = {"name": obj.name, "fspath": os.path.join("furniture/data", dir_relpath, dn), "path": "res://" + os.path.join("furniture/data", dir_relpath, dn)}
                         check_name = obj.name.lower()
                         cf = {
-                                "table": ["table", "desk"],
-                                "chair": ["armchair", "chair", "stool"],
-                                "sofa": ["sofa"],
-                                "bed": ["bed"],
-				"cabinet": ["bookcase", "closet", "cabinet", "bathroommirror", "sink"],
-				"accessories": ["floorlamp", "plant", "vase"]
+                                "table": ["type_bed", "table", "desk"],
+                                "chair": ["type_chair", "armchair", "chair", "stool"],
+                                "sofa": ["type_sofa", "sofa"],
+                                "bed": ["type_bed", "bed"],
+				"cabinet": [
+                                    "type_cabinet", "bookcase", "closet", "cabinet", "bathroommirror", "sink",
+                                    "bathtub", "kitchenbar", "kitchenfridge", "kitchenmicrowave",
+                                    "kitchenstove", "shower", "toilet1", "toilet2", "washer"
+                                ],
+				"accessory": [
+                                    "type_accessory", "floorlamp", "plant", "vase", "bear", "kitchencoffeemachine",
+                                    "lamproundfloor", "lampsquarefloor", "pillowbottom",
+                                    "pillowtop", "toilet_paper", "trashcan"
+                                ],
+                                "accessories_ceiling": ["type_accessories_ceiling", "lampsquareceiling"],
+                                "separator": ["type_separator", "paneling"],
+                                "wall": ["type_wall", "window"]
                         }
                         matched = False
                         for r in cf.keys():
