@@ -73,9 +73,12 @@ def main():
                                 "sofa": ["type_sofa", "sofa"],
                                 "bed": ["type_bed", "bed"],
 				"cabinet": [
-                                    "type_cabinet", "bookcase", "closet", "cabinet", "bathroommirror", "sink",
-                                    "bathtub", "kitchenbar", "kitchenfridge", "kitchenmicrowave",
-                                    "kitchenstove", "shower", "toilet1", "toilet2", "washer"
+                                    "type_cabinet", "bookcase", "closet", "bathroomcabinet", "bathroommirror", "sink",
+                                    "bathtub", "shower", "toilet1", "toilet2"
+                                ],
+                                "kitchen-cabinet": [
+                                    "type_kcabinet", "kitchenbar", "kitchencabinet", "kitchenfridge", "kitchenmicrowave",
+                                    "kitchenstove", "washer"
                                 ],
 				"accessory": [
                                     "type_accessory", "floorlamp", "plant", "vase", "bear", "kitchencoffeemachine",
