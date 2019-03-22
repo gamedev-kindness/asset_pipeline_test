@@ -43,11 +43,18 @@ size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "AI"
 
-[node name="main_menu" type="Button" parent="v"]
+[node name="furniture_layout" type="Button" parent="v"]
 margin_top = 153.0
 margin_right = 1024.0
 margin_bottom = 200.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
-text = "Main menu"
+text = "Furniture Layout Editor"
 
+[node name="main_menu" type="Button" parent="v"]
+margin_top = 204.0
+margin_right = 1024.0
+margin_bottom = 251.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "Main menu"

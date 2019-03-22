@@ -21,8 +21,12 @@ func display_opportunity_editor():
 func display_ai_editor():
 	var sc = load("res://ui/graph-editors/ai_editor.tscn")
 	get_tree().change_scene_to(sc)
+func display_furniture_layout_editor():
+	var sc = load("res://furniture/placement/layoout_editor.tscn")
+	get_tree().change_scene_to(sc)
 func _ready():
 	$v/main_menu.connect("pressed", self, "display_main")
 	$v/action_editor.connect("pressed", self, "display_action_editor")
 	$v/opportunity_editor.connect("pressed", self, "display_opportunity_editor")
 	$v/AI.connect("pressed", self, "display_ai_editor")
+	$v/furniture_layout.connect("pressed", self, "display_furniture_layout_editor")
