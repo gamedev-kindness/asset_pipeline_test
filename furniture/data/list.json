@@ -165,13 +165,13 @@
         "fspath": "furniture/data/./furniture_Vase.escn",
         "name": "Vase",
         "path": "res://furniture/data/./furniture_Vase.escn",
-        "type": "other"
+        "type": "accessories"
     },
     "furniture_Vase2.escn": {
         "fspath": "furniture/data/./furniture_Vase2.escn",
         "name": "Vase2",
         "path": "res://furniture/data/./furniture_Vase2.escn",
-        "type": "other"
+        "type": "accessories"
     },
     "furniture_bathroomCabinet.escn": {
         "fspath": "furniture/data/./furniture_bathroomCabinet.escn",
@@ -183,13 +183,13 @@
         "fspath": "furniture/data/./furniture_bathroomMirror.escn",
         "name": "bathroomMirror",
         "path": "res://furniture/data/./furniture_bathroomMirror.escn",
-        "type": "other"
+        "type": "cabinet"
     },
     "furniture_bathroomSink.escn": {
         "fspath": "furniture/data/./furniture_bathroomSink.escn",
         "name": "bathroomSink",
         "path": "res://furniture/data/./furniture_bathroomSink.escn",
-        "type": "other"
+        "type": "cabinet"
     },
     "furniture_bathtub.escn": {
         "fspath": "furniture/data/./furniture_bathtub.escn",
@@ -393,7 +393,7 @@
         "fspath": "furniture/data/./furniture_kitchenSink.escn",
         "name": "kitchenSink",
         "path": "res://furniture/data/./furniture_kitchenSink.escn",
-        "type": "other"
+        "type": "cabinet"
     },
     "furniture_kitchenStove.escn": {
         "fspath": "furniture/data/./furniture_kitchenStove.escn",
@@ -519,7 +519,7 @@
         "fspath": "furniture/data/./furniture_sink.escn",
         "name": "sink",
         "path": "res://furniture/data/./furniture_sink.escn",
-        "type": "other"
+        "type": "cabinet"
     },
     "furniture_stoolBar.escn": {
         "fspath": "furniture/data/./furniture_stoolBar.escn",

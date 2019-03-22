@@ -67,32 +67,45 @@ def main():
                             )
                         data[dn] = {"name": obj.name, "fspath": os.path.join("furniture/data", dir_relpath, dn), "path": "res://" + os.path.join("furniture/data", dir_relpath, dn)}
                         check_name = obj.name.lower()
-                        if check_name.find("table") >= 0:
-                            data[dn]["type"] = "table"
-                        elif check_name.find("desk") >= 0:
-                            data[dn]["type"] = "table"
-                        elif check_name.find("armchair") >= 0:
-                            data[dn]["type"] = "chair"
-                        elif check_name.find("chair") >= 0:
-                            data[dn]["type"] = "chair"
-                        elif check_name.find("sofa") >= 0:
-                            data[dn]["type"] = "sofa"
-                        elif check_name.find("bed") >= 0:
-                            data[dn]["type"] = "bed"
-                        elif check_name.find("bookcase") >= 0:
-                            data[dn]["type"] = "cabinet"
-                        elif check_name.find("closet") >= 0:
-                            data[dn]["type"] = "cabinet"
-                        elif check_name.find("cabinet") >= 0:
-                            data[dn]["type"] = "cabinet"
-                        elif check_name.find("floorlamp") >= 0:
-                            data[dn]["type"] = "accessories"
-                        elif check_name.find("plant") >= 0:
-                            data[dn]["type"] = "accessories"
-                        elif check_name.find("stool") >= 0:
-                            data[dn]["type"] = "chair"
-                        else:
-                            data[dn]["type"] = "other"
+                        cf = {
+                                "table": ["table", "desk"],
+                                "chair": ["armchair", "chair"]
+                        }
+                        matched = False
+                        for r in cf.keys():
+                            for h in cf[r]:
+                                if check_name.find(h) >= 0:
+                                    matched = True
+                                    break
+                            if matched:
+                                data[dn]["type"] = r
+                                break
+
+                        if not matched:
+                            if check_name.find("sofa") >= 0:
+                                data[dn]["type"] = "sofa"
+                            elif check_name.find("bed") >= 0:
+                                data[dn]["type"] = "bed"
+                            elif check_name.find("bookcase") >= 0:
+                                data[dn]["type"] = "cabinet"
+                            elif check_name.find("closet") >= 0:
+                                data[dn]["type"] = "cabinet"
+                            elif check_name.find("cabinet") >= 0:
+                                data[dn]["type"] = "cabinet"
+                            elif check_name.find("floorlamp") >= 0:
+                                data[dn]["type"] = "accessories"
+                            elif check_name.find("plant") >= 0:
+                                data[dn]["type"] = "accessories"
+                            elif check_name.find("vase") >= 0:
+                                data[dn]["type"] = "accessories"
+                            elif check_name.find("stool") >= 0:
+                                data[dn]["type"] = "chair"
+                            elif check_name.find("bathroommirror") >= 0:
+                                data[dn]["type"] = "cabinet"
+                            elif check_name.find("sink") >= 0:
+                                data[dn]["type"] = "cabinet"
+                            else:
+                                data[dn]["type"] = "other"
                         export_escn(out_path, config)
                         print("Exported to {}".format(os.path.abspath(out_path)))
         for k in data.keys():
