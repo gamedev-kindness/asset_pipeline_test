@@ -105,13 +105,13 @@
         "fspath": "furniture/data/./furniture_FloorLamp.escn",
         "name": "FloorLamp",
         "path": "res://furniture/data/./furniture_FloorLamp.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_FloorLamp2.escn": {
         "fspath": "furniture/data/./furniture_FloorLamp2.escn",
         "name": "FloorLamp2",
         "path": "res://furniture/data/./furniture_FloorLamp2.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_HandleChair.escn": {
         "fspath": "furniture/data/./furniture_HandleChair.escn",
@@ -123,7 +123,7 @@
         "fspath": "furniture/data/./furniture_Plant.escn",
         "name": "Plant",
         "path": "res://furniture/data/./furniture_Plant.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_SmallSofa.escn": {
         "fspath": "furniture/data/./furniture_SmallSofa.escn",
@@ -165,13 +165,13 @@
         "fspath": "furniture/data/./furniture_Vase.escn",
         "name": "Vase",
         "path": "res://furniture/data/./furniture_Vase.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_Vase2.escn": {
         "fspath": "furniture/data/./furniture_Vase2.escn",
         "name": "Vase2",
         "path": "res://furniture/data/./furniture_Vase2.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_bathroomCabinet.escn": {
         "fspath": "furniture/data/./furniture_bathroomCabinet.escn",
@@ -201,7 +201,7 @@
         "fspath": "furniture/data/./furniture_bear.escn",
         "name": "bear",
         "path": "res://furniture/data/./furniture_bear.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_bedBunk.escn": {
         "fspath": "furniture/data/./furniture_bedBunk.escn",
@@ -363,7 +363,7 @@
         "fspath": "furniture/data/./furniture_kitchenCoffeeMachine.escn",
         "name": "kitchenCoffeeMachine",
         "path": "res://furniture/data/./furniture_kitchenCoffeeMachine.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_kitchenFridge.escn": {
         "fspath": "furniture/data/./furniture_kitchenFridge.escn",
@@ -411,7 +411,7 @@
         "fspath": "furniture/data/./furniture_lampRoundFloor.escn",
         "name": "lampRoundFloor",
         "path": "res://furniture/data/./furniture_lampRoundFloor.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_lampRoundTable.escn": {
         "fspath": "furniture/data/./furniture_lampRoundTable.escn",
@@ -429,7 +429,7 @@
         "fspath": "furniture/data/./furniture_lampSquareFloor.escn",
         "name": "lampSquareFloor",
         "path": "res://furniture/data/./furniture_lampSquareFloor.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_lampSquareTable.escn": {
         "fspath": "furniture/data/./furniture_lampSquareTable.escn",
@@ -483,13 +483,13 @@
         "fspath": "furniture/data/./furniture_pillowBottom.escn",
         "name": "pillowBottom",
         "path": "res://furniture/data/./furniture_pillowBottom.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_pillowTop.escn": {
         "fspath": "furniture/data/./furniture_pillowTop.escn",
         "name": "pillowTop",
         "path": "res://furniture/data/./furniture_pillowTop.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_shower.escn": {
         "fspath": "furniture/data/./furniture_shower.escn",
@@ -609,25 +609,25 @@
         "fspath": "furniture/data/./furniture_toilet_paper.escn",
         "name": "toilet_paper",
         "path": "res://furniture/data/./furniture_toilet_paper.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_trashcan.escn": {
         "fspath": "furniture/data/./furniture_trashcan.escn",
         "name": "trashcan",
         "path": "res://furniture/data/./furniture_trashcan.escn",
-        "type": "accessories"
+        "type": "accessory"
     },
     "furniture_washer.escn": {
         "fspath": "furniture/data/./furniture_washer.escn",
         "name": "washer",
         "path": "res://furniture/data/./furniture_washer.escn",
-        "type": "other"
+        "type": "cabinet"
     },
     "furniture_washerDryerStacked.escn": {
         "fspath": "furniture/data/./furniture_washerDryerStacked.escn",
         "name": "washerDryerStacked",
         "path": "res://furniture/data/./furniture_washerDryerStacked.escn",
-        "type": "other"
+        "type": "cabinet"
     },
     "furniture_window.escn": {
         "fspath": "furniture/data/./furniture_window.escn",
