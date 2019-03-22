@@ -69,7 +69,11 @@ def main():
                         check_name = obj.name.lower()
                         cf = {
                                 "table": ["table", "desk"],
-                                "chair": ["armchair", "chair"]
+                                "chair": ["armchair", "chair", "stool"],
+                                "sofa": ["sofa"],
+                                "bed": ["bed"],
+				"cabinet": ["bookcase", "closet", "cabinet", "bathroommirror", "sink"],
+				"accessories": ["floorlamp", "plant", "vase"]
                         }
                         matched = False
                         for r in cf.keys():
@@ -82,30 +86,7 @@ def main():
                                 break
 
                         if not matched:
-                            if check_name.find("sofa") >= 0:
-                                data[dn]["type"] = "sofa"
-                            elif check_name.find("bed") >= 0:
-                                data[dn]["type"] = "bed"
-                            elif check_name.find("bookcase") >= 0:
-                                data[dn]["type"] = "cabinet"
-                            elif check_name.find("closet") >= 0:
-                                data[dn]["type"] = "cabinet"
-                            elif check_name.find("cabinet") >= 0:
-                                data[dn]["type"] = "cabinet"
-                            elif check_name.find("floorlamp") >= 0:
-                                data[dn]["type"] = "accessories"
-                            elif check_name.find("plant") >= 0:
-                                data[dn]["type"] = "accessories"
-                            elif check_name.find("vase") >= 0:
-                                data[dn]["type"] = "accessories"
-                            elif check_name.find("stool") >= 0:
-                                data[dn]["type"] = "chair"
-                            elif check_name.find("bathroommirror") >= 0:
-                                data[dn]["type"] = "cabinet"
-                            elif check_name.find("sink") >= 0:
-                                data[dn]["type"] = "cabinet"
-                            else:
-                                data[dn]["type"] = "other"
+                            data[dn]["type"] = "other"
                         export_escn(out_path, config)
                         print("Exported to {}".format(os.path.abspath(out_path)))
         for k in data.keys():
