@@ -16,6 +16,7 @@ var furniture_json : = {}
 var f2path : = {}
 var f2obj : = {}
 var rnd
+var type_item = {}
 class wall extends Reference:
 	var _p1: Vector2
 	var _p2: Vector2
@@ -162,10 +163,10 @@ func new_window():
 	layout_root.add_child(k)
 func furniture_selected(item_id: int, obj: ItemList):
 	var item = obj.get_item_text(item_id)
-	print(f2path[item])
 	if !layout_root:
 		return
-	var k = GenericItem.new(f2obj[item])
+	var t = type_item[item][0]
+	var k = GenericItem.new(f2obj[t])
 	k.set_meta("data", {"name": item})
 	layout_root.add_child(k)
 
@@ -251,11 +252,17 @@ func _ready():
 	for k in furniture_json.keys():
 		var kn = furniture_json[k].name
 		var fp = furniture_json[k].path
+		var ft = furniture_json[k].type
 		if jf.file_exists(fp.replace(".escn", ".tscn")):
 			fp = fp.replace(".escn", ".tscn")
 		f2path[kn] = fp
 		f2obj[kn] = load(fp)
-		$p/v/furniture/item.add_item(kn)
+		if type_item.has(ft):
+			type_item[ft].push_back(kn)
+		else:
+			type_item[ft] = [kn]
+	for ew in type_item.keys():
+		$p/v/furniture/item.add_item(ew)
 	print(f2path)
 	$p/v/furniture/item.connect("item_activated", self, "furniture_selected", [$p/v/furniture/item])
 # Called every frame. 'delta' is the elapsed time since the previous frame.

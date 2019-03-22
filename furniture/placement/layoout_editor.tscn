@@ -93,3 +93,8 @@ margin_right = 202.0
 margin_bottom = 160.0
 rect_min_size = Vector2( 140, 160 )
 allow_reselect = true
+
+[node name="sp" type="SpinBox" parent="p/v"]
+margin_top = 291.0
+margin_right = 202.0
+margin_bottom = 315.0
