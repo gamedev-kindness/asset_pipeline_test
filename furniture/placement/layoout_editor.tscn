@@ -98,3 +98,15 @@ allow_reselect = true
 margin_top = 291.0
 margin_right = 202.0
 margin_bottom = 315.0
+
+[node name="load" type="Button" parent="p/v"]
+margin_top = 319.0
+margin_right = 202.0
+margin_bottom = 339.0
+text = "Load"
+
+[node name="build_rules" type="Button" parent="p/v"]
+margin_top = 343.0
+margin_right = 202.0
+margin_bottom = 363.0
+text = "Build rules"

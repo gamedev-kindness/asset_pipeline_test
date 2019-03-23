@@ -3,7 +3,7 @@
         "fspath": "furniture/data/./furniture_Armchair.escn",
         "name": "Armchair",
         "path": "res://furniture/data/./furniture_Armchair.escn",
-        "type": "chair"
+        "type": "armchair"
     },
     "furniture_Bed.escn": {
         "fspath": "furniture/data/./furniture_Bed.escn",
@@ -15,7 +15,13 @@
         "fspath": "furniture/data/./furniture_BedKing.escn",
         "name": "BedKing",
         "path": "res://furniture/data/./furniture_BedKing.escn",
-        "type": "bed"
+        "type": "bed-double"
+    },
+    "furniture_BedSingle1.escn": {
+        "fspath": "furniture/data/./furniture_BedSingle1.escn",
+        "name": "BedSingle1",
+        "path": "res://furniture/data/./furniture_BedSingle1.escn",
+        "type": "other"
     },
     "furniture_BigSofa.escn": {
         "fspath": "furniture/data/./furniture_BigSofa.escn",
@@ -33,13 +39,13 @@
         "fspath": "furniture/data/./furniture_BookCase.escn",
         "name": "BookCase",
         "path": "res://furniture/data/./furniture_BookCase.escn",
-        "type": "cabinet"
+        "type": "bookcase"
     },
     "furniture_BookCaseLarge.escn": {
         "fspath": "furniture/data/./furniture_BookCaseLarge.escn",
         "name": "BookCaseLarge",
         "path": "res://furniture/data/./furniture_BookCaseLarge.escn",
-        "type": "cabinet"
+        "type": "bookcase"
     },
     "furniture_Chair.escn": {
         "fspath": "furniture/data/./furniture_Chair.escn",
@@ -63,25 +69,25 @@
         "fspath": "furniture/data/./furniture_Closet1.escn",
         "name": "Closet1",
         "path": "res://furniture/data/./furniture_Closet1.escn",
-        "type": "cabinet"
+        "type": "closet"
     },
     "furniture_Closet2.escn": {
         "fspath": "furniture/data/./furniture_Closet2.escn",
         "name": "Closet2",
         "path": "res://furniture/data/./furniture_Closet2.escn",
-        "type": "cabinet"
+        "type": "closet"
     },
     "furniture_CofeeTable.escn": {
         "fspath": "furniture/data/./furniture_CofeeTable.escn",
         "name": "CofeeTable",
         "path": "res://furniture/data/./furniture_CofeeTable.escn",
-        "type": "table"
+        "type": "cofee-table"
     },
     "furniture_CofeeTable2.escn": {
         "fspath": "furniture/data/./furniture_CofeeTable2.escn",
         "name": "CofeeTable2",
         "path": "res://furniture/data/./furniture_CofeeTable2.escn",
-        "type": "table"
+        "type": "cofee-table"
     },
     "furniture_CoffeeTable.escn": {
         "fspath": "furniture/data/./furniture_CoffeeTable.escn",
@@ -147,13 +153,13 @@
         "fspath": "furniture/data/./furniture_Stool.escn",
         "name": "Stool",
         "path": "res://furniture/data/./furniture_Stool.escn",
-        "type": "chair"
+        "type": "stool"
     },
     "furniture_Stool2.escn": {
         "fspath": "furniture/data/./furniture_Stool2.escn",
         "name": "Stool2",
         "path": "res://furniture/data/./furniture_Stool2.escn",
-        "type": "chair"
+        "type": "stool"
     },
     "furniture_Table.escn": {
         "fspath": "furniture/data/./furniture_Table.escn",
@@ -177,25 +183,25 @@
         "fspath": "furniture/data/./furniture_bathroomCabinet.escn",
         "name": "bathroomCabinet",
         "path": "res://furniture/data/./furniture_bathroomCabinet.escn",
-        "type": "cabinet"
+        "type": "bathroom-cabinet"
     },
     "furniture_bathroomMirror.escn": {
         "fspath": "furniture/data/./furniture_bathroomMirror.escn",
         "name": "bathroomMirror",
         "path": "res://furniture/data/./furniture_bathroomMirror.escn",
-        "type": "cabinet"
+        "type": "bathroom-mirror"
     },
     "furniture_bathroomSink.escn": {
         "fspath": "furniture/data/./furniture_bathroomSink.escn",
         "name": "bathroomSink",
         "path": "res://furniture/data/./furniture_bathroomSink.escn",
-        "type": "cabinet"
+        "type": "bathroom-sink"
     },
     "furniture_bathtub.escn": {
         "fspath": "furniture/data/./furniture_bathtub.escn",
         "name": "bathtub",
         "path": "res://furniture/data/./furniture_bathtub.escn",
-        "type": "cabinet"
+        "type": "bathroom-bathtub"
     },
     "furniture_bear.escn": {
         "fspath": "furniture/data/./furniture_bear.escn",
@@ -207,49 +213,49 @@
         "fspath": "furniture/data/./furniture_bedBunk.escn",
         "name": "bedBunk",
         "path": "res://furniture/data/./furniture_bedBunk.escn",
-        "type": "bed"
+        "type": "bed-bunk"
     },
     "furniture_bedDouble.escn": {
         "fspath": "furniture/data/./furniture_bedDouble.escn",
         "name": "bedDouble",
         "path": "res://furniture/data/./furniture_bedDouble.escn",
-        "type": "bed"
+        "type": "bed-double"
     },
     "furniture_bedSingle.escn": {
         "fspath": "furniture/data/./furniture_bedSingle.escn",
         "name": "bedSingle",
         "path": "res://furniture/data/./furniture_bedSingle.escn",
-        "type": "bed"
+        "type": "other"
     },
     "furniture_bookcaseClosed.escn": {
         "fspath": "furniture/data/./furniture_bookcaseClosed.escn",
         "name": "bookcaseClosed",
         "path": "res://furniture/data/./furniture_bookcaseClosed.escn",
-        "type": "cabinet"
+        "type": "bookcase"
     },
     "furniture_bookcaseClosedDoors.escn": {
         "fspath": "furniture/data/./furniture_bookcaseClosedDoors.escn",
         "name": "bookcaseClosedDoors",
         "path": "res://furniture/data/./furniture_bookcaseClosedDoors.escn",
-        "type": "cabinet"
+        "type": "bookcase"
     },
     "furniture_bookcaseClosedWide.escn": {
         "fspath": "furniture/data/./furniture_bookcaseClosedWide.escn",
         "name": "bookcaseClosedWide",
         "path": "res://furniture/data/./furniture_bookcaseClosedWide.escn",
-        "type": "cabinet"
+        "type": "bookcase"
     },
     "furniture_bookcaseOpen.escn": {
         "fspath": "furniture/data/./furniture_bookcaseOpen.escn",
         "name": "bookcaseOpen",
         "path": "res://furniture/data/./furniture_bookcaseOpen.escn",
-        "type": "cabinet"
+        "type": "bookcase"
     },
     "furniture_bookcaseOpenLow.escn": {
         "fspath": "furniture/data/./furniture_bookcaseOpenLow.escn",
         "name": "bookcaseOpenLow",
         "path": "res://furniture/data/./furniture_bookcaseOpenLow.escn",
-        "type": "cabinet"
+        "type": "bookcase"
     },
     "furniture_chair.escn": {
         "fspath": "furniture/data/./furniture_chair.escn",
@@ -279,31 +285,31 @@
         "fspath": "furniture/data/./furniture_desk.escn",
         "name": "desk",
         "path": "res://furniture/data/./furniture_desk.escn",
-        "type": "table"
+        "type": "desk"
     },
     "furniture_desk1.escn": {
         "fspath": "furniture/data/./furniture_desk1.escn",
         "name": "desk1",
         "path": "res://furniture/data/./furniture_desk1.escn",
-        "type": "table"
+        "type": "desk"
     },
     "furniture_deskCorner.escn": {
         "fspath": "furniture/data/./furniture_deskCorner.escn",
         "name": "deskCorner",
         "path": "res://furniture/data/./furniture_deskCorner.escn",
-        "type": "table"
+        "type": "desk"
     },
     "furniture_kitchenBar.escn": {
         "fspath": "furniture/data/./furniture_kitchenBar.escn",
         "name": "kitchenBar",
         "path": "res://furniture/data/./furniture_kitchenBar.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-bar"
     },
     "furniture_kitchenBarEnd.escn": {
         "fspath": "furniture/data/./furniture_kitchenBarEnd.escn",
         "name": "kitchenBarEnd",
         "path": "res://furniture/data/./furniture_kitchenBarEnd.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-bar"
     },
     "furniture_kitchenCabinet.escn": {
         "fspath": "furniture/data/./furniture_kitchenCabinet.escn",
@@ -369,43 +375,49 @@
         "fspath": "furniture/data/./furniture_kitchenFridge.escn",
         "name": "kitchenFridge",
         "path": "res://furniture/data/./furniture_kitchenFridge.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-fridge"
     },
     "furniture_kitchenFridgeBuiltIn.escn": {
         "fspath": "furniture/data/./furniture_kitchenFridgeBuiltIn.escn",
         "name": "kitchenFridgeBuiltIn",
         "path": "res://furniture/data/./furniture_kitchenFridgeBuiltIn.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-fridge"
     },
     "furniture_kitchenFridgeSmall.escn": {
         "fspath": "furniture/data/./furniture_kitchenFridgeSmall.escn",
         "name": "kitchenFridgeSmall",
         "path": "res://furniture/data/./furniture_kitchenFridgeSmall.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-fridge"
     },
     "furniture_kitchenMicrowave.escn": {
         "fspath": "furniture/data/./furniture_kitchenMicrowave.escn",
         "name": "kitchenMicrowave",
         "path": "res://furniture/data/./furniture_kitchenMicrowave.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-microwave"
     },
     "furniture_kitchenSink.escn": {
         "fspath": "furniture/data/./furniture_kitchenSink.escn",
         "name": "kitchenSink",
         "path": "res://furniture/data/./furniture_kitchenSink.escn",
-        "type": "cabinet"
+        "type": "kitchen-sink"
+    },
+    "furniture_kitchenSinkDrawer.escn": {
+        "fspath": "furniture/data/./furniture_kitchenSinkDrawer.escn",
+        "name": "kitchenSinkDrawer",
+        "path": "res://furniture/data/./furniture_kitchenSinkDrawer.escn",
+        "type": "kitchen-sink"
     },
     "furniture_kitchenStove.escn": {
         "fspath": "furniture/data/./furniture_kitchenStove.escn",
         "name": "kitchenStove",
         "path": "res://furniture/data/./furniture_kitchenStove.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-stove"
     },
     "furniture_kitchenStoveElectric.escn": {
         "fspath": "furniture/data/./furniture_kitchenStoveElectric.escn",
         "name": "kitchenStoveElectric",
         "path": "res://furniture/data/./furniture_kitchenStoveElectric.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-stove"
     },
     "furniture_lampRoundFloor.escn": {
         "fspath": "furniture/data/./furniture_lampRoundFloor.escn",
@@ -459,7 +471,7 @@
         "fspath": "furniture/data/./furniture_loungeSofaCorner.escn",
         "name": "loungeSofaCorner",
         "path": "res://furniture/data/./furniture_loungeSofaCorner.escn",
-        "type": "sofa"
+        "type": "corner-sofa"
     },
     "furniture_loungeSofaLong.escn": {
         "fspath": "furniture/data/./furniture_loungeSofaLong.escn",
@@ -495,13 +507,13 @@
         "fspath": "furniture/data/./furniture_shower.escn",
         "name": "shower",
         "path": "res://furniture/data/./furniture_shower.escn",
-        "type": "cabinet"
+        "type": "bathroom-shower"
     },
     "furniture_shower1.escn": {
         "fspath": "furniture/data/./furniture_shower1.escn",
         "name": "shower1",
         "path": "res://furniture/data/./furniture_shower1.escn",
-        "type": "cabinet"
+        "type": "bathroom-shower"
     },
     "furniture_sideTable.escn": {
         "fspath": "furniture/data/./furniture_sideTable.escn",
@@ -519,19 +531,19 @@
         "fspath": "furniture/data/./furniture_sink.escn",
         "name": "sink",
         "path": "res://furniture/data/./furniture_sink.escn",
-        "type": "cabinet"
+        "type": "other"
     },
     "furniture_stoolBar.escn": {
         "fspath": "furniture/data/./furniture_stoolBar.escn",
         "name": "stoolBar",
         "path": "res://furniture/data/./furniture_stoolBar.escn",
-        "type": "chair"
+        "type": "stool"
     },
     "furniture_stoolBarSquare.escn": {
         "fspath": "furniture/data/./furniture_stoolBarSquare.escn",
         "name": "stoolBarSquare",
         "path": "res://furniture/data/./furniture_stoolBarSquare.escn",
-        "type": "chair"
+        "type": "stool"
     },
     "furniture_table.escn": {
         "fspath": "furniture/data/./furniture_table.escn",
@@ -597,13 +609,13 @@
         "fspath": "furniture/data/./furniture_toilet1.escn",
         "name": "toilet1",
         "path": "res://furniture/data/./furniture_toilet1.escn",
-        "type": "cabinet"
+        "type": "bathroom-toilet"
     },
     "furniture_toilet2.escn": {
         "fspath": "furniture/data/./furniture_toilet2.escn",
         "name": "toilet2",
         "path": "res://furniture/data/./furniture_toilet2.escn",
-        "type": "cabinet"
+        "type": "bathroom-toilet"
     },
     "furniture_toilet_paper.escn": {
         "fspath": "furniture/data/./furniture_toilet_paper.escn",
@@ -621,13 +633,13 @@
         "fspath": "furniture/data/./furniture_washer.escn",
         "name": "washer",
         "path": "res://furniture/data/./furniture_washer.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-washer"
     },
     "furniture_washerDryerStacked.escn": {
         "fspath": "furniture/data/./furniture_washerDryerStacked.escn",
         "name": "washerDryerStacked",
         "path": "res://furniture/data/./furniture_washerDryerStacked.escn",
-        "type": "kitchen-cabinet"
+        "type": "kitchen-washer"
     },
     "furniture_window.escn": {
         "fspath": "furniture/data/./furniture_window.escn",

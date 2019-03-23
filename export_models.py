@@ -68,18 +68,33 @@ def main():
                         data[dn] = {"name": obj.name, "fspath": os.path.join("furniture/data", dir_relpath, dn), "path": "res://" + os.path.join("furniture/data", dir_relpath, dn)}
                         check_name = obj.name.lower()
                         cf = {
-                                "table": ["type_bed", "table", "desk"],
-                                "chair": ["type_chair", "armchair", "chair", "stool"],
-                                "sofa": ["type_sofa", "sofa"],
-                                "bed": ["type_bed", "bed"],
-				"cabinet": [
-                                    "type_cabinet", "bookcase", "closet", "bathroomcabinet", "bathroommirror", "sink",
-                                    "bathtub", "shower", "toilet1", "toilet2"
-                                ],
-                                "kitchen-cabinet": [
-                                    "type_kcabinet", "kitchenbar", "kitchencabinet", "kitchenfridge", "kitchenmicrowave",
-                                    "kitchenstove", "washer"
-                                ],
+                                "desk": ["desk"],
+                                "cofee-table": ["cofeetable", "tablecofee"],
+                                "table": ["type_bed", "table"],
+                                "armchair": ["armchair"],
+                                "stool": ["stool"],
+                                "chair": ["type_chair", "chair"],
+                                "large-sofa": ["loungesofa", "bigsofa"],
+                                "corner-sofa": ["sofacorner"],
+                                "sofa": ["sofa"],
+                                "bed": ["type_bed", "bedsignle"],
+                                "bed-double": ["beddouble", "bedking"],
+                                "bed-bunk": ["bedbunk"],
+                                "bookcase": ["bookcase"],
+				"closet": ["closet"],
+                                "kitchen-sink": ["kitchensink"],
+                                "bathroom-sink": ["bathroomsink"],
+                                "bathroom-cabinet": ["bathroomcabinet"],
+                                "bathroom-bathtub": ["bathtub"],
+                                "bathroom-mirror": ["bathroommirror"],
+                                "bathroom-shower": ["shower"],
+                                "bathroom-toilet": ["toilet1", "toilet2"],
+                                "kitchen-cabinet": ["type_kcabinet", "kitchencabinet"],
+                                "kitchen-stove": ["kitchenstove"],
+                                "kitchen-fridge": ["kitchenfridge"],
+                                "kitchen-bar": ["kitchenbar"],
+                                "kitchen-microwave": ["kitchenmicrowave"],
+                                "kitchen-washer": ["washer"],
 				"accessory": [
                                     "type_accessory", "floorlamp", "plant", "vase", "bear", "kitchencoffeemachine",
                                     "lamproundfloor", "lampsquarefloor", "pillowbottom",
