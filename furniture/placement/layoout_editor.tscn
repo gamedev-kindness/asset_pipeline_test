@@ -110,3 +110,9 @@ margin_top = 343.0
 margin_right = 202.0
 margin_bottom = 363.0
 text = "Build rules"
+
+[node name="generate_layout" type="Button" parent="p/v"]
+margin_top = 367.0
+margin_right = 202.0
+margin_bottom = 387.0
+text = "Generate layout"

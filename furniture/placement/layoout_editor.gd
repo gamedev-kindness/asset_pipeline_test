@@ -6,6 +6,7 @@ extends Spatial
 
 # Called when the node enters the scene tree for the first time.
 var room_rect : = Rect2()
+var room_aabb : = AABB()
 var layout_root: Spatial
 var walls = []
 
@@ -17,6 +18,7 @@ var f2path : = {}
 var f2obj : = {}
 var rnd
 var type_item = {}
+var f2aabb = {}
 class wall extends Reference:
 	var _p1: Vector2
 	var _p2: Vector2
@@ -175,7 +177,7 @@ func furniture_selected(item_id: int, obj: ItemList):
 func vec2_to_str(v: Vector2) -> String:
 	return str(v.x) + " " + str(v.y)
 func vec3_to_str(v: Vector3) -> String:
-	return str(v.x) + " " + str(v.y) + " " + str(v.x)
+	return str(v.x) + " " + str(v.y) + " " + str(v.z)
 
 func str_to_vec2(s: String) -> Vector2:
 	var ret : = Vector2()
@@ -316,17 +318,95 @@ func build_rules():
 					var tf_s = str_to_xform(ov.xform)
 					if o.name in ["wall", "door"]:
 						tf.origin.y = 0.0
-					if !o.name in ["door", "wall"]:
-						if tf.origin.distance_to(tf_s.origin) > 4.0:
-							continue
+					if tf.origin == tf_s.origin:
+						continue
 					tf_s = (tf.inverse() * tf_s).orthonormalized()
 					var rule = {
 						"name": ov.name,
 						"xform": xform_to_str(tf_s),
-						"origin": vec3_to_str(tf_s.origin)
+						"origin": vec3_to_str(tf_s.origin),
 					}
 					json.rules[k][o.name].push_back(rule)
 				json.rules[k][o.name].sort_custom(self, "distance_sort_helper")
+				if json.rules[k][o.name].size() > 8:
+					json.rules[k][o.name].resize(8)
+func build_aabbs():
+	print("build_aabbs")
+	for kn in f2obj.keys():
+		var queue = []
+		print(kn)
+		var aabb = AABB()
+		var sc = f2obj[kn].instance()
+		queue.push_back(sc)
+		while queue.size() > 0:
+			var m = queue[0]
+			queue.pop_front()
+			for h in m.get_children():
+				queue.push_back(h)
+				if h is MeshInstance:
+					aabb = aabb.merge(h.get_aabb())
+					aabb.position.y = 0.0
+					f2aabb[kn] = aabb
+		print(sc)
+#		sc.queue_free()
+func generate_layout():
+	room_aabb.position = Vector3(room_rect.position.x, 0, room_rect.position.y)
+	room_aabb.size = Vector3(room_rect.size.x, 2.7, room_rect.size.y)
+	var aabbs = []
+	if $p/v/h/type.get_selected_items().size() == 0:
+		return
+	var current_id = $p/v/h/type.get_selected_items()[0]
+	var item = $p/v/h/type.get_item_text(current_id)
+	var queue = []
+	var count = 0
+	var flip_door = false
+	while count == 0:
+		for c in layout_root.get_children():
+			var meta = c.get_meta("data")
+			if meta == null:
+				continue
+			if meta.name == "door":
+				queue.push_back(c)
+				if flip_door:
+					c.rotate_y(PI)
+		var rules = json.rules[item]
+		while queue.size() > 0:
+			var d = queue[0]
+			queue.pop_front()
+			var meta = d.get_meta("data")
+			var rule = rules[meta.name].duplicate()
+			rule.shuffle()
+			print(rule)
+			for o in rule:
+				var xform = str_to_xform(o.xform)
+				var kxform = (d.transform * xform).orthonormalized()
+				if o.name in ["door", "wall"]:
+					continue
+				var aabb = kxform.xform(f2aabb[type_item[o.name][0]])
+				if !room_aabb.encloses(aabb):
+					print(o.name, " origin: ", kxform.origin, " ", room_aabb, " ", aabb)
+					continue
+				var valid_aabb = true
+				for r in aabbs:
+					if r.intersects(aabb) || aabb.intersects(r):
+						valid_aabb = false
+						break
+					if r.encloses(aabb) || aabb.encloses(r):
+						valid_aabb = false
+						break
+				if !valid_aabb:
+					continue
+				var t = type_item[o.name][0]
+				var k = GenericItem.new(f2obj[t])
+				k.set_meta("data", {"name": o.name})
+				layout_root.add_child(k)
+				k.transform = kxform
+				aabbs.push_back(aabb)
+				queue.push_back(k)
+				count += 1
+		if count == 0:
+			flip_door = true
+
 func build_rules_and_save():
 	build_rules()
 	var f : = File.new()
@@ -372,9 +452,8 @@ func _ready():
 			type_item[ft] = [kn]
 	for ew in type_item.keys():
 		$p/v/furniture/item.add_item(ew)
+	build_aabbs()
 	print(f2path)
 	$p/v/furniture/item.connect("item_activated", self, "furniture_selected", [$p/v/furniture/item])
 	$p/v/load.connect("pressed", self, "load_layout")
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	$p/v/generate_layout.connect("pressed", self, "generate_layout")
