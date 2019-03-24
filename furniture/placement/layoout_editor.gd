@@ -12,6 +12,7 @@ var walls = []
 
 const data_path = "res://furniture/placement/placement.json"
 const furniture_data_path = "res://furniture/data/list.json"
+var wall_types = ["toilet1", "toilet2", "bookcase", "closet", "kitchen-sink", "bathroom-sink"]
 var json : = {}
 var furniture_json : = {}
 var f2path : = {}
@@ -349,10 +350,21 @@ func build_aabbs():
 					f2aabb[kn] = aabb
 		print(sc)
 #		sc.queue_free()
+func wall_constraint(aabb: AABB) -> bool:
+	if abs(room_aabb.position.x - aabb.position.x) < 0.5:
+		return true
+	elif abs(room_aabb.end.x - aabb.end.x) < 0.5:
+		return true
+	elif abs(room_aabb.position.z - aabb.position.z) < 0.5:
+		return true
+	elif abs(room_aabb.end.z - aabb.end.z) < 0.5:
+		return true
+	return false
 func generate_layout():
 	room_aabb.position = Vector3(room_rect.position.x, 0, room_rect.position.y)
 	room_aabb.size = Vector3(room_rect.size.x, 2.7, room_rect.size.y)
 	var aabbs = []
+	var door_clearance = []
 	if $p/v/h/type.get_selected_items().size() == 0:
 		return
 	var current_id = $p/v/h/type.get_selected_items()[0]
@@ -369,6 +381,8 @@ func generate_layout():
 				queue.push_back(c)
 				if flip_door:
 					c.rotate_y(PI)
+				var clearance = AABB(c.transform.origin - Vector3(-0.8, 0, -0.8), Vector3(1.6, 2.7, 1.6))
+				door_clearance.push_back(clearance)
 		var rules = json.rules[item]
 		while queue.size() > 0:
 			var d = queue[0]
@@ -386,7 +400,18 @@ func generate_layout():
 				if !room_aabb.encloses(aabb):
 					print(o.name, " origin: ", kxform.origin, " ", room_aabb, " ", aabb)
 					continue
+				if o.name in wall_types && !wall_constraint(aabb):
+					continue
 				var valid_aabb = true
+				for r in door_clearance:
+					if r.intersects(aabb) || aabb.intersects(r):
+						valid_aabb = false
+						break
+					if r.encloses(aabb) || aabb.encloses(r):
+						valid_aabb = false
+						break
+				if !valid_aabb:
+					continue
 				for r in aabbs:
 					if r.intersects(aabb) || aabb.intersects(r):
 						valid_aabb = false
@@ -413,6 +438,7 @@ func build_rules_and_save():
 	f.open(data_path, f.WRITE)
 	f.store_string(JSON.print(json, "\t", true))
 	f.close()
+
 func _ready():
 	rnd = RandomNumberGenerator.new()
 	$p/v/new_layout.connect("pressed", self, "new_layout")
