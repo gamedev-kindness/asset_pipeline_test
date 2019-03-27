@@ -16,10 +16,33 @@ var wall_types = ["toilet1", "toilet2", "bookcase", "closet", "kitchen-sink", "b
 var json : = {}
 var furniture_json : = {}
 var f2path : = {}
-var f2obj : = {}
 var rnd
-var type_item = {}
-var f2aabb = {}
+var builder: FurnitureLayoutGenerator
+
+func new_door():
+	if !layout_root:
+		return
+	print("d")
+	var k = builder.DoorItem.new()
+	k.set_meta("data", {"name": "door"})
+	layout_root.add_child(k)
+func new_window():
+	if !layout_root:
+		return
+	print("w")
+	var k = builder.WindowItem.new()
+	k.set_meta("data", {"name": "window"})
+	layout_root.add_child(k)
+func furniture_selected(item_id: int, obj: ItemList):
+	var item = obj.get_item_text(item_id)
+	if !layout_root:
+		return
+	var t = builder.type_item[item][0]
+	var k = builder.GenericItem.new(builder.f2obj[t])
+	k.set_meta("data", {"name": item})
+	layout_root.add_child(k)
+
+
 class wall extends Reference:
 	var _p1: Vector2
 	var _p2: Vector2
@@ -74,106 +97,6 @@ func new_layout():
 		w.mesh = mesh
 		w.set_meta("data", {"name": "wall"})
 
-class FurnitureItem extends KinematicBody:
-	var _dragging = false
-	var _move_data = Vector3()
-	func _ready():
-		input_capture_on_drag = true
-	func _input_event(camera, event, click_position, click_normal, shape_idx):
-		if event is InputEventMouseButton:
-			if event.button_index == BUTTON_RIGHT && event.pressed:
-				rotate_y(PI / 2.0)
-			if event.button_index == BUTTON_LEFT && event.pressed:
-				if Input.is_action_pressed("activate"):
-					queue_free()
-				_dragging = true
-			elif event.button_index == BUTTON_LEFT && !event.pressed:
-				_dragging = false
-		if event is InputEventMouseMotion:
-			if _dragging:
-				if abs(event.relative.x) > abs(event.relative.y):
-					if abs(event.relative.x) > 0.3:
-						_move_data += Vector3(sign(event.relative.x) * 0.1, 0, 0)
-				else:
-					if abs(event.relative.y) > 0.3:
-						_move_data += Vector3(0, 0, sign(event.relative.y) * 0.1)
-	func _physics_process(delta):
-		translation += _move_data
-		_move_data = Vector3()
-class DoorItem extends FurnitureItem:
-	func _ready():
-		var w = MeshInstance.new()
-		var mesh : = CubeMesh.new()
-		mesh.size.x = 1.0
-		mesh.size.y = 2.0
-		mesh.size.z = 0.2
-		w.mesh = mesh
-		add_child(w)
-		w.translation.y = 1.0
-		var c : = CollisionShape.new()
-		var shape : = BoxShape.new()
-		shape.extents.x = 0.5
-		shape.extents.y = 1.0
-		shape.extents.z = 0.1
-		c.shape = shape
-		c.translation.y = 1.0
-		add_child(c)
-class WindowItem extends FurnitureItem:
-	func _ready():
-		var w = MeshInstance.new()
-		var mesh : = CubeMesh.new()
-		mesh.size.x = 1.2
-		mesh.size.y = 1.2
-		mesh.size.z = 0.2
-		w.mesh = mesh
-		add_child(w)
-		w.translation.y = 1.4
-		var c : = CollisionShape.new()
-		var shape : = BoxShape.new()
-		shape.extents.x = 0.6
-		shape.extents.y = 0.6
-		shape.extents.z = 0.1
-		c.shape = shape
-		c.translation.y = 1.4
-		add_child(c)
-class GenericItem extends FurnitureItem:
-	var item_obj
-	func _ready():
-		var w = item_obj.instance()
-		add_child(w)
-		w.translation.y = 0.0
-		var c : = CollisionShape.new()
-		var shape : = BoxShape.new()
-		shape.extents.x = 0.6
-		shape.extents.y = 0.6
-		shape.extents.z = 0.1
-		c.shape = shape
-		c.translation.y = 1.4
-		add_child(c)
-	func _init(obj):
-		item_obj = obj
-func new_door():
-	if !layout_root:
-		return
-	print("d")
-	var k = DoorItem.new()
-	k.set_meta("data", {"name": "door"})
-	layout_root.add_child(k)
-func new_window():
-	if !layout_root:
-		return
-	print("w")
-	var k = WindowItem.new()
-	k.set_meta("data", {"name": "window"})
-	layout_root.add_child(k)
-func furniture_selected(item_id: int, obj: ItemList):
-	var item = obj.get_item_text(item_id)
-	if !layout_root:
-		return
-	var t = type_item[item][0]
-	var k = GenericItem.new(f2obj[t])
-	k.set_meta("data", {"name": item})
-	layout_root.add_child(k)
 
 func vec2_to_str(v: Vector2) -> String:
 	return str(v.x) + " " + str(v.y)
@@ -280,18 +203,18 @@ func load_layout():
 		if o.name == "wall":
 			continue
 		elif o.name == "door":
-			var door = DoorItem.new()
+			var door = builder.DoorItem.new()
 			door.set_meta("data", {"name": "door"})
 			layout_root.add_child(door)
 			door.transform = xform
 		elif o.name == "window":
-			var window = WindowItem.new()
+			var window = builder.WindowItem.new()
 			window.set_meta("data", {"name": "window"})
 			layout_root.add_child(window)
 			window.transform = xform
 		else:
-			var t = type_item[o.name][0]
-			var k = GenericItem.new(f2obj[t])
+			var t = builder.type_item[o.name][0]
+			var k = builder.GenericItem.new(builder.f2obj[t])
 			k.set_meta("data", {"name": o.name})
 			layout_root.add_child(k)
 			k.transform = xform
@@ -333,11 +256,11 @@ func build_rules():
 					json.rules[k][o.name].resize(8)
 func build_aabbs():
 	print("build_aabbs")
-	for kn in f2obj.keys():
+	for kn in builder.f2obj.keys():
 		var queue = []
 		print(kn)
 		var aabb = AABB()
-		var sc = f2obj[kn].instance()
+		var sc = builder.f2obj[kn].instance()
 		queue.push_back(sc)
 		while queue.size() > 0:
 			var m = queue[0]
@@ -347,88 +270,47 @@ func build_aabbs():
 				if h is MeshInstance:
 					aabb = aabb.merge(h.get_aabb())
 					aabb.position.y = 0.0
-					f2aabb[kn] = aabb
+					builder.f2aabb[kn] = aabb
 		print(sc)
 #		sc.queue_free()
-func wall_constraint(aabb: AABB) -> bool:
-	if abs(room_aabb.position.x - aabb.position.x) < 0.5:
-		return true
-	elif abs(room_aabb.end.x - aabb.end.x) < 0.5:
-		return true
-	elif abs(room_aabb.position.z - aabb.position.z) < 0.5:
-		return true
-	elif abs(room_aabb.end.z - aabb.end.z) < 0.5:
-		return true
-	return false
+func build_door_clearance(flip_door: bool) -> Array:
+	var door_clearance = []
+	for c in layout_root.get_children():
+			var meta = c.get_meta("data")
+			if meta == null:
+				continue
+			if meta.name == "door":
+				if flip_door:
+					c.rotate_y(PI)
+				var clearance = AABB(c.transform.origin - Vector3(-0.8, 0, -0.8), Vector3(1.6, 2.7, 1.6))
+				door_clearance.push_back(clearance)
+	return door_clearance
+func create_queue() -> Array:
+	var queue = []
+	for c in layout_root.get_children():
+		var meta = c.get_meta("data")
+		if meta == null:
+			continue
+		if meta.name == "door":
+			queue.push_back(c)
+	return queue
+
 func generate_layout():
 	room_aabb.position = Vector3(room_rect.position.x, 0, room_rect.position.y)
 	room_aabb.size = Vector3(room_rect.size.x, 2.7, room_rect.size.y)
-	var aabbs = []
 	var door_clearance = []
 	if $p/v/h/type.get_selected_items().size() == 0:
 		return
 	var current_id = $p/v/h/type.get_selected_items()[0]
 	var item = $p/v/h/type.get_item_text(current_id)
 	var queue = []
-	var count = 0
 	var flip_door = false
+	var count = 0
 	while count == 0:
-		for c in layout_root.get_children():
-			var meta = c.get_meta("data")
-			if meta == null:
-				continue
-			if meta.name == "door":
-				queue.push_back(c)
-				if flip_door:
-					c.rotate_y(PI)
-				var clearance = AABB(c.transform.origin - Vector3(-0.8, 0, -0.8), Vector3(1.6, 2.7, 1.6))
-				door_clearance.push_back(clearance)
+		queue = create_queue()
+		door_clearance = build_door_clearance(flip_door)
 		var rules = json.rules[item]
-		while queue.size() > 0:
-			var d = queue[0]
-			queue.pop_front()
-			var meta = d.get_meta("data")
-			var rule = rules[meta.name].duplicate()
-			rule.shuffle()
-			print(rule)
-			for o in rule:
-				var xform = str_to_xform(o.xform)
-				var kxform = (d.transform * xform).orthonormalized()
-				if o.name in ["door", "wall"]:
-					continue
-				var aabb = kxform.xform(f2aabb[type_item[o.name][0]])
-				if !room_aabb.encloses(aabb):
-					print(o.name, " origin: ", kxform.origin, " ", room_aabb, " ", aabb)
-					continue
-				if o.name in wall_types && !wall_constraint(aabb):
-					continue
-				var valid_aabb = true
-				for r in door_clearance:
-					if r.intersects(aabb) || aabb.intersects(r):
-						valid_aabb = false
-						break
-					if r.encloses(aabb) || aabb.encloses(r):
-						valid_aabb = false
-						break
-				if !valid_aabb:
-					continue
-				for r in aabbs:
-					if r.intersects(aabb) || aabb.intersects(r):
-						valid_aabb = false
-						break
-					if r.encloses(aabb) || aabb.encloses(r):
-						valid_aabb = false
-						break
-				if !valid_aabb:
-					continue
-				var t = type_item[o.name][0]
-				var k = GenericItem.new(f2obj[t])
-				k.set_meta("data", {"name": o.name})
-				layout_root.add_child(k)
-				k.transform = kxform
-				aabbs.push_back(aabb)
-				queue.push_back(k)
-				count += 1
+		count = builder.layout_builder(layout_root, room_aabb, door_clearance, queue, rules, wall_types)
 		if count == 0:
 			flip_door = true
 
@@ -441,6 +323,7 @@ func build_rules_and_save():
 
 func _ready():
 	rnd = RandomNumberGenerator.new()
+	builder = FurnitureLayoutGenerator.new()
 	$p/v/new_layout.connect("pressed", self, "new_layout")
 	$p/v/new_door.connect("pressed", self, "new_door")
 	$p/v/new_window.connect("pressed", self, "new_window")
@@ -471,12 +354,12 @@ func _ready():
 		if jf.file_exists(fp.replace(".escn", ".tscn")):
 			fp = fp.replace(".escn", ".tscn")
 		f2path[kn] = fp
-		f2obj[kn] = load(fp)
-		if type_item.has(ft):
-			type_item[ft].push_back(kn)
+		builder.f2obj[kn] = load(fp)
+		if builder.type_item.has(ft):
+			builder.type_item[ft].push_back(kn)
 		else:
-			type_item[ft] = [kn]
-	for ew in type_item.keys():
+			builder.type_item[ft] = [kn]
+	for ew in builder.type_item.keys():
 		$p/v/furniture/item.add_item(ew)
 	build_aabbs()
 	print(f2path)
