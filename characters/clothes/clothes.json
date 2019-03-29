@@ -1,0 +1,46 @@
+{
+	"female": {
+		"dress": [
+			{
+				"name": "dress_crudegown",
+				"path": "res://characters/clothes/female/dress/dress_crudegown.mesh"
+			},
+			{
+				"name": "dress_crudegown",
+				"path": "res://characters/clothes/female/dress/dress_crudegown.mesh"
+			}
+		],
+		"hair": [
+			{
+				"name": "hair_bob01",
+				"path": "res://characters/clothes/female/hair/hair_bob01.mesh"
+			},
+			{
+				"name": "hair_bob01",
+				"path": "res://characters/clothes/female/hair/hair_bob01.mesh"
+			}
+		],
+		"panties": [
+			{
+				"name": "panties_crudepanties",
+				"path": "res://characters/clothes/female/panties/panties_crudepanties.mesh"
+			},
+			{
+				"name": "panties_crudepanties",
+				"path": "res://characters/clothes/female/panties/panties_crudepanties.mesh"
+			}
+		]
+	},
+	"sets": {
+		"female": [
+			{
+				"clothes": [
+					"dress/dress_crudegown",
+					"hair/hair_bob01",
+					"panties/panties_crudepanties"
+				],
+				"name": "hairs"
+			}
+		]
+	}
+}
