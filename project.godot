@@ -170,6 +170,11 @@ _global_script_classes=[ {
 "path": "res://characters/dialogue/DialogueScheduler.gd"
 }, {
 "base": "Node",
+"class": "FurnitureLayoutGenerator",
+"language": "GDScript",
+"path": "res://furniture/FurnitureLayoutGenerator.gd"
+}, {
+"base": "Node",
 "class": "FurniturePack",
 "language": "GDScript",
 "path": "res://furniture/furniture_pack.gd"
@@ -227,6 +232,7 @@ _global_script_class_icons={
 "BaseAction": "",
 "BasicAction": "",
 "DialogueScheduler": "",
+"FurnitureLayoutGenerator": "",
 "FurniturePack": "",
 "ImporterCommon": "",
 "Pickable": "",
@@ -246,6 +252,7 @@ content="*res://autoloads/content.gd"
 action="*res://autoloads/action.gd"
 player="*res://autoloads/player.gd"
 AI="*res://autoloads/AI.gd"
+charman="*res://autoloads/charman.gd"
 
 [input]
 
