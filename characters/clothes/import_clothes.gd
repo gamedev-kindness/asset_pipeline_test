@@ -19,7 +19,7 @@ func post_import(scene):
 		gender = "male"
 	print(gender)
 	var export_path = "res://characters/clothes/" + gender
-	var mesh_prefixes = ["hair", "dress", "panties", "bra", "top", "bottom", "shoes"]
+	var mesh_prefixes = ["hair", "dress", "suit", "panties", "bra", "top", "bottom", "shoes"]
 	var queue = [scene]
 	var set = []
 	while queue.size() > 0:
@@ -39,7 +39,8 @@ func post_import(scene):
 					if !clothes[gender].has(k):
 						clothes[gender][k] = []
 					clothes[gender][k].push_back({"name": mesh.resource_name, "path": save_path})
-					set.push_back(k + "/" + mesh.resource_name)
+					if k != "hair":
+						set.push_back(k + "/" + mesh.resource_name)
 					item.queue_free()
 		for c in item.get_children():
 			queue.push_back(c)

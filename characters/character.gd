@@ -32,6 +32,23 @@ func create_signal_track_anim(signame) -> Animation:
 	var ap: AnimationPlayer = skel.get_node("AnimationPlayer")
 	ap.add_animation("signal-" + signame, anim)
 	return anim
+
+func remove_default_clothes():
+	var remove_meshes : = [
+	"underware",
+	"crudegown",
+	"male_worksuit"
+	]
+	var queue = [self]
+	while queue.size() > 0:
+		var item = queue[0]
+		queue.pop_front()
+		for k in item.get_children():
+			queue.push_back(k)
+		if item is MeshInstance:
+			for f in remove_meshes:
+				if item.name.find(f) >= 0:
+					item.queue_free()
 		
 #var actions = {
 #	"kick_to_bed": {
@@ -317,6 +334,7 @@ func init_data():
 	awareness.character_data[self].lastname = character_lastname
 	print("Done character initialization")
 func _ready():
+	remove_default_clothes()
 	awareness.at[self] = $AnimationTree
 	collision_layer = 1
 	collision_mask = 0x1f
@@ -378,8 +396,11 @@ func _process(delta):
 	orientation = global_transform
 	orientation.origin = Vector3()
 	var sm: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
-	if posessed && !awareness.action_mode.has(self):
-		player.process_player_navigation(self, delta)
+	if posessed:
+		orientation *= player.frame_tf
+		player.frame_tf = Transform()
+#	if posessed && !awareness.action_mode.has(self):
+#		player.process_player_navigation(self, delta)
 
 #	elif posessed && action:
 #		if settings.game_input_enabled:
@@ -392,7 +413,7 @@ func _process(delta):
 ##				print("action stopped")
 #				cooldown = 1.0
 		
-	elif !posessed:
+	if !posessed && !awareness.player_character == self:
 		if AI.has_method("run"):
 			AI.run(delta, self)
 	if true:
