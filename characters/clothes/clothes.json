@@ -4,17 +4,9 @@
 			{
 				"name": "dress_crudegown",
 				"path": "res://characters/clothes/female/dress/dress_crudegown.mesh"
-			},
-			{
-				"name": "dress_crudegown",
-				"path": "res://characters/clothes/female/dress/dress_crudegown.mesh"
 			}
 		],
 		"hair": [
-			{
-				"name": "hair_bob01",
-				"path": "res://characters/clothes/female/hair/hair_bob01.mesh"
-			},
 			{
 				"name": "hair_bob01",
 				"path": "res://characters/clothes/female/hair/hair_bob01.mesh"
@@ -24,10 +16,20 @@
 			{
 				"name": "panties_crudepanties",
 				"path": "res://characters/clothes/female/panties/panties_crudepanties.mesh"
-			},
+			}
+		]
+	},
+	"male": {
+		"hair": [
 			{
-				"name": "panties_crudepanties",
-				"path": "res://characters/clothes/female/panties/panties_crudepanties.mesh"
+				"name": "hair_short02",
+				"path": "res://characters/clothes/male/hair/hair_short02.mesh"
+			}
+		],
+		"suit": [
+			{
+				"name": "suit_male-worksuit01",
+				"path": "res://characters/clothes/male/suit/suit_male-worksuit01.mesh"
 			}
 		]
 	},
@@ -36,8 +38,15 @@
 			{
 				"clothes": [
 					"dress/dress_crudegown",
-					"hair/hair_bob01",
 					"panties/panties_crudepanties"
+				],
+				"name": "hairs"
+			}
+		],
+		"male": [
+			{
+				"clothes": [
+					"suit/suit_male-worksuit01"
 				],
 				"name": "hairs"
 			}
