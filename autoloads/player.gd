@@ -51,7 +51,7 @@ func process_player_nav_new(obj, delta):
 			Input.get_action_strength("up_control") - \
 			Input.get_action_strength("down_control"))
 		motion = motion.linear_interpolate(motion_target, MOTION_INTERPOLATE_SPEED * delta)
-		var cam = get_viewport().get_camera()
+		var cam = obj.get_viewport().get_camera()
 		var cam_z = cam.global_transform.basis.z
 		cam_z.y = 0
 		var cam_x = cam.global_transform.basis.x
