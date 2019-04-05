@@ -53,9 +53,9 @@ func _process(delta):
 	rotx = 0.0
 	roty = 0.0
 	if Input.is_action_pressed("up_control"):
-		rotation.y *= (1.0 - delta * 0.5)
+		rotation.y *= (1.0 - delta * 0.01)
 	else:
-		rotation.y *= (1.0 - delta * 0.1)
+		rotation.y *= (1.0 - delta * 0.01)
 	if mode_cooldown >= delta:
 		mode_cooldown -= delta
 
@@ -74,6 +74,7 @@ func _process(delta):
 #		elif mode == MODE_TPS:
 #			$fps_camera.run(delta, self, $Camera)
 func _physics_process(delta):
+	return
 	if target:
 		var space = get_world().direct_space_state
 		var data = space.intersect_ray(target.tps_target.global_transform.origin, $base/cam_control/Camera.global_transform.origin)
