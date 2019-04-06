@@ -37,3 +37,5 @@ func run(delta, obj, cam):
 		nt.origin = v
 		opos *= nt
 		obj.global_transform = obj.global_transform.interpolate_with(opos, delta)
+	cam.orthonormalize()
+	obj.orthonormalize()

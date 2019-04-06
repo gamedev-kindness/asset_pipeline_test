@@ -81,7 +81,7 @@ func spawn_player(spot, state, suit):
 	var c = spawn_character(spot, "male")
 	c.tps_camera = load("res://camera/camera.tscn").instance()
 	c.add_child(c.tps_camera)
-	c.tps_camera.get_node("base/cam_control/Camera").current = true
+	c.tps_camera.get_node("rotary/base/cam_control/Camera").current = true
 	wear_suit(c, suit)
 	while !awareness.at.has(c):
 		yield(get_tree(), "idle_frame")

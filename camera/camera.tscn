@@ -31,11 +31,13 @@ cast_to = Vector3( 0, -2, 0 )
 [node name="top" type="RayCast" parent="."]
 cast_to = Vector3( 0, 2, 0 )
 
-[node name="base" type="Spatial" parent="."]
+[node name="rotary" type="Spatial" parent="."]
+
+[node name="base" type="Spatial" parent="rotary"]
 transform = Transform( 1, 0, 0, 0, 1, 8.9407e-08, 0, -8.9407e-08, 1, -1.59302, -0.0966895, 6.29624 )
 
-[node name="cam_control" type="Spatial" parent="base"]
+[node name="cam_control" type="Spatial" parent="rotary/base"]
 transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0 )
 
-[node name="Camera" type="Camera" parent="base/cam_control"]
+[node name="Camera" type="Camera" parent="rotary/base/cam_control"]
 transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0 )
