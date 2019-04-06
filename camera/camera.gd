@@ -47,7 +47,7 @@ func _process(delta):
 	var diff = new_rotation - old_rotation
 	rotation.y -= diff / ((1.0 + delta) * 1.1)
 	old_rotation = new_rotation
-	rotation.y += rotx * delta
+	rotation.y += rotx * delta * 0.25
 	$rotary.rotation.x = clamp($rotary/base/cam_control.rotation.x + roty * delta, -PI / 2.5, PI / 2.5)
 	$rotary/base/cam_control.rotation.y = 0
 	$rotary/base/cam_control.orthonormalize()
