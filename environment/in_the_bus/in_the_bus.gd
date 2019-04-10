@@ -48,8 +48,9 @@ func _ready():
 	yield(get_tree(), "idle_frame")
 #	yield(get_tree(), "idle_frame")
 	print("Initial state: ", awareness.at.keys().size())
-	for k in get_tree().get_nodes_in_group("spawn"):
-		k.emit_signal("spawn")
+#	for k in get_tree().get_nodes_in_group("spawn"):
+#		k.emit_signal("spawn")
+	charman.main_scene = self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

@@ -29,28 +29,32 @@ func _ready():
 			for evts in keymap.get_value("input", action):
 				InputMap.action_add_event(action, evts)
 
-	for k in get_tree().get_nodes_in_group("spawn"):
-		k.emit_signal("spawn")
+#	for k in get_tree().get_nodes_in_group("spawn"):
+#		k.emit_signal("spawn")
+#	charman.main_scene = self
 	$the_bus.connect("arrived", self, "bus_arrived")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 var posessed = false
 func _process(delta):
 	if !posessed:
-#		$wtf_waiting/Control/sign.transform *= Transform2D(delta * 3.0, Vector2())
-		var chars = get_tree().get_nodes_in_group("characters")
-		for ch in chars:
-			if ch.name.begins_with("male"):
-				ch.posessed = true
-				posessed = true
-				ch.tps_camera = load("res://camera/camera.tscn").instance()
-				ch.add_child(ch.tps_camera)
-				ch.tps_camera.get_node("base/cam_control/Camera").current = true
-				awareness.player_character = ch
-#				waiting_cooldown = 3.0
-#				emit_signal("selected_player", ch)
-				settings.game_input_enabled = true
-				break
+		charman.main_scene = self
+		posessed = true
+#	if !posessed:
+##		$wtf_waiting/Control/sign.transform *= Transform2D(delta * 3.0, Vector2())
+#		var chars = get_tree().get_nodes_in_group("characters")
+#		for ch in chars:
+#			if ch.name.begins_with("male"):
+#				ch.posessed = true
+#				posessed = true
+#				ch.tps_camera = load("res://camera/camera.tscn").instance()
+#				ch.add_child(ch.tps_camera)
+#				ch.tps_camera.get_node("base/cam_control/Camera").current = true
+#				awareness.player_character = ch
+##				waiting_cooldown = 3.0
+##				emit_signal("selected_player", ch)
+#				settings.game_input_enabled = true
+#				break
 	if end_scene_time > 0.0:
 		end_scene_time -= delta
 		if end_scene_time <= 0.0:

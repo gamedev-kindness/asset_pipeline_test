@@ -9,4 +9,3 @@ anchor_bottom = 1.0
 margin_top = -80.0
 rect_min_size = Vector2( 0, 80 )
 script = ExtResource( 1 )
-

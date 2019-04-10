@@ -424,6 +424,5 @@ func _process(delta):
 			state = 11
 		11:
 			build_outline()
-			for k in get_tree().get_nodes_in_group("beds"):
-				k.emit_signal("spawn")
+			charman.main_scene = self
 			state = 12

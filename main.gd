@@ -76,20 +76,8 @@ func process_keyboard(delta):
 var waiting_cooldown = 5.0
 func _process(delta):
 	if !posessed:
-		$wtf_waiting/Control/sign.transform *= Transform2D(delta * 3.0, Vector2())
-		var chars = get_tree().get_nodes_in_group("characters")
-		for ch in chars:
-			if ch.name.begins_with("male"):
-				ch.posessed = true
-				posessed = true
-				ch.tps_camera = load("res://camera/camera.tscn").instance()
-				ch.add_child(ch.tps_camera)
-				ch.tps_camera.get_node("base/cam_control/Camera").current = true
-				awareness.player_character = ch
-				waiting_cooldown = 3.0
-				emit_signal("selected_player", ch)
-				settings.game_input_enabled = true
-				break
+		if awareness.player_character != null:
+			posessed = true
 	if posessed:
 		if waiting_cooldown > 0.0:
 			waiting_cooldown -= delta
