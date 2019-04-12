@@ -20,22 +20,22 @@ func run(delta, obj, cam):
 	var ct = obj.global_transform
 	var cc = cam.global_transform
 	mtf.origin = cc.origin
-	cam.global_transform = cam.global_transform.interpolate_with(mtf, delta)
+	cam.global_transform = cam.global_transform.interpolate_with(mtf, 0.1 * delta)
 	opos.origin = obj.target.tps_target.global_transform.origin
-	if obj.global_transform.origin.distance_to(obj.target.tps_target.global_transform.origin) > 2.0:
-		move_to_target = true
-	elif obj.global_transform.origin.distance_to(obj.target.tps_target.global_transform.origin) < 1.5:
-		move_to_target = false
-	elif obj.global_transform.origin.distance_to(obj.target.tps_target.global_transform.origin) < 1.0:
-		move_to_target = false
-		move_from_target = true
-	if move_to_target:
-		obj.global_transform = obj.global_transform.interpolate_with(opos, delta * 0.1)
-	elif move_from_target:
-		var nt = Transform()
-		var v = obj.global_transform.origin - obj.target.tps_target.global_transform.origin
-		nt.origin = v
-		opos *= nt
-		obj.global_transform = obj.global_transform.interpolate_with(opos, delta)
+#	if obj.global_transform.origin.distance_to(obj.target.tps_target.global_transform.origin) > 2.0:
+#		move_to_target = true
+#	elif obj.global_transform.origin.distance_to(obj.target.tps_target.global_transform.origin) < 1.5:
+#		move_to_target = false
+#	elif obj.global_transform.origin.distance_to(obj.target.tps_target.global_transform.origin) < 1.0:
+#		move_to_target = false
+#		move_from_target = true
+#	if move_to_target:
+#		obj.global_transform = obj.global_transform.interpolate_with(opos, delta * 0.1)
+#	elif move_from_target:
+#		var nt = Transform()
+#		var v = obj.global_transform.origin - obj.target.tps_target.global_transform.origin
+#		nt.origin = v
+#		opos *= nt
+#		obj.global_transform = obj.global_transform.interpolate_with(opos, delta)
 	cam.orthonormalize()
 	obj.orthonormalize()
